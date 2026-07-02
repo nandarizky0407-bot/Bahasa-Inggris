@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 5: Places & Transportation - Interactive Slides</title>
+    <style>
+        :root {
+            --bg-color: #f0f9ff; /* Light blue theme for travel/sky/sea feel */
+            --primary-color: #38bdf8;
+            --secondary-color: #6366f1;
+            --accent-color: #f43f5e;
+            --card-bg: #ffffff;
+            --text-dark: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #bae6fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            width: 950px;
+            max-width: 100%;
+            background: var(--bg-color);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Slides Holder */
+        .slides-wrapper {
+            flex: 1;
+            width: 100%;
+        }
+
+        .slide {
+            width: 100%;
+            max-height: 540px; 
+            overflow-y: auto;  
+            padding: 40px;
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Kustomisasi Scrollbar */
+        .slide::-webkit-scrollbar, .scroll-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb, .scroll-box::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        /* Typography */
+        h1 { font-size: 2.5rem; color: #0369a1; text-align: center; margin-bottom: 10px; }
+        h2 { font-size: 1.8rem; color: var(--text-dark); margin-bottom: 15px; text-align: center; }
+        p { font-size: 1.1rem; color: #4b5563; text-align: center; margin-bottom: 15px; }
+
+        /* Controls Bar di Bawah */
+        .controls {
+            height: 60px;
+            background: #ffffff;
+            border-top: 2px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+        .btn:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; }
+        .btn-accent { background: var(--accent-color); }
+        .btn-success { background: #10b981; }
+
+        /* Grid Sistem (Slide 3) */
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+        .travel-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 3px solid transparent;
+            transition: transform 0.2s;
+        }
+        .travel-card:hover { transform: scale(1.05); border-color: var(--primary-color); }
+        .emoji-block {
+            font-size: 2.3rem;
+            margin-bottom: 6px;
+        }
+
+        /* Kotak Teks Scroll Internal */
+        .scroll-box {
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        .chat-line { margin-bottom: 12px; font-size: 1rem; line-height: 1.5; }
+        .chat-line strong { color: #0369a1; }
+
+        /* Generator Dinamis (Slide 5) */
+        .travel-display {
+            display: flex;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: 100%;
+            gap: 20px;
+            align-items: center;
+        }
+        .img-box { width: 220px; height: 220px; display: flex; align-items: center; justify-content: center; background: #f9fafb; border-radius: 10px;}
+        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+
+        /* Pola Berjalan (Slide 6) */
+        .runner-area {
+            width: 100%;
+            height: 120px;
+            background: #1e293b;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .running-vehicle {
+            position: absolute;
+            top: 25px;
+            left: -70px;
+            font-size: 3.5rem;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Tutor Guide */
+        .tutor-alert {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            color: #166534;
+            border-radius: 4px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Input Form (Slide 8) */
+        .input-ans {
+            padding: 6px 10px;
+            font-size: 1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            width: 180px;
+            margin-right: 10px;
+        }
+        .input-ans.correct { border-color: #10b981; background: #ecfdf5; }
+        .input-ans.wrong { border-color: #ef4444; background: #fef2f2; }
+
+        .qa-row {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .progress-dots { display: flex; gap: 6px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; }
+        .dot.active { background: var(--secondary-color); width: 16px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        <div class="slides-wrapper">
+            
+            <!-- SLIDE 1: COVER -->
+            <div class="slide active">
+                <span style="font-size: 4rem;">🗺️🚌</span>
+                <h1>Lesson 5: Places & Transportation</h1>
+                <p>Belajar Nama Tempat dan Alat Transportasi dalam Bahasa Inggris</p>
+                <div style="background: white; padding: 8px 20px; border-radius: 20px; font-weight: bold; color: #0369a1; margin-top:20px;">
+                    Privat Course Interactive Presentation
+                </div>
+            </div>
+
+            <!-- SLIDE 2: TUJUAN -->
+            <div class="slide">
+                <h2>🎯 Tujuan Pembelajaran Hari Ini</h2>
+                <div style="background: white; padding: 25px; border-radius: 15px; text-align: left; max-width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                    <ul style="list-style-type: '🚀 '; padding-left: 20px; font-size: 1.1rem; line-height: 1.8;">
+                        <li>Siswa mampu <b>mengenali & melafalkan</b> 4 nama tempat umum dan 4 nama alat transportasi.</li>
+                        <li>Siswa dapat merespons pertanyaan tutor: <i>"How do you go to...?"</i> dengan jawaban yang lengkap.</li>
+                        <li>Siswa melatih kecepatan fokus melalui permainan membaca cerita gabungan.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: KARTU MATERI + SUARA -->
+            <div class="slide">
+                <h2>Klik Kartu untuk Mendengar Pelafalannya!</h2>
+                <div class="travel-grid">
+                    <!-- PLACES -->
+                    <div class="travel-card" onclick="speak('School')"><div class="emoji-block">🏫</div><b>School</b><br><small>Sekolah</small></div>
+                    <div class="travel-card" onclick="speak('Market')"><div class="emoji-block">🛒</div><b>Market</b><br><small>Pasar</small></div>
+                    <div class="travel-card" onclick="speak('Park')"><div class="emoji-block">🛝</div><b>Park</b><br><small>Taman</small></div>
+                    <div class="travel-card" onclick="speak('Hospital')"><div class="emoji-block">🏥</div><b>Hospital</b><br><small>Rumah Sakit</small></div>
+                    <!-- TRANSPORTATION -->
+                    <div class="travel-card" onclick="speak('Bus')"><div class="emoji-block">🚌</div><b>Bus</b><br><small>Bus</small></div>
+                    <div class="travel-card" onclick="speak('Bicycle')"><div class="emoji-block">🚲</div><b>Bicycle</b><br><small>Sepeda</small></div>
+                    <div class="travel-card" onclick="speak('Car')"><div class="emoji-block">🚗</div><b>Car</b><br><small>Mobil</small></div>
+                    <div class="travel-card" onclick="speak('Train')"><div class="emoji-block">🚂</div><b>Train</b><br><small>Kereta Api</small></div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: PERCAKAPAN PANJANG -->
+            <div class="slide">
+                <h2>🗣️ Percakapan Panjang (Review Gabungan)</h2>
+                <div class="scroll-box">
+                    <div class="chat-line"><strong>Tias:</strong> "Good morning, Leo! How are you doing today?"</div>
+                    <div class="chat-line"><strong>Leo:</strong> "Good morning, Tias! I am fine. I am <b>eight years old</b> now. Happy to see you!"</div>
+                    <div class="chat-line"><strong>Tias:</strong> "Happy to see you too! Look, I have <b>one new blue bicycle</b>. I go to <b>school</b> using this bicycle every morning."</div>
+                    <div class="chat-line"><strong>Leo:</strong> "Wow, that is a beautiful bicycle! My father also has <b>one big red car</b>. We always go to the <b>market</b> or the <b>park</b> on Sunday."</div>
+                    <div class="chat-line"><strong>Tias:</strong> "That sounds fun! There are <b>ten big trees</b> at the park. Let's go there together next week!"</div>
+                    <div class="chat-line"><strong>Leo:</strong> "Sure! Let's ride your blue bicycle and my father's red car."</div>
+                </div>
+                <div class="tutor-alert">💡 <b>Misi Siswa:</b> Tutor membaca bagian Tias, siswa membaca bagian Leo. Mintalah siswa mencari nama tempat (*places*) dan kendaraan (*transportation*) di teks!</div>
+            </div>
+
+            <!-- SLIDE 5: TEBAK KENDARAAN DAN TEMPAT (GENERATOR) -->
+            <div class="slide">
+                <h2>🚌 Bagaimana Kamu Pergi ke Sana?</h2>
+                <div class="travel-display">
+                    <div class="img-box">
+                        <img id="travel-pic" src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400" alt="Transportasi">
+                    </div>
+                    <div style="flex:1; text-align: left;">
+                        <h3 id="travel-title" style="color:var(--secondary-color); margin-bottom:10px;">1. Sebuah Bus Kuning</h3>
+                        <p style="text-align:left; font-size:1rem; margin-bottom:15px;">Tutor bertanya: <b>"How do you go to school?"</b></p>
+                        <div style="display:flex; gap:10px; margin-bottom:15px;">
+                            <button class="btn btn-accent" id="btn-travel-sound">🔊 Bunyikan Petunjuk</button>
+                            <button class="btn" id="btn-next-travel">🔄 Ganti Gambar</button>
+                        </div>
+                        <div style="font-weight:bold; background:#f3f4f6; padding:10px; border-radius:8px;" id="travel-guide-text">
+                            Siswa Menjawab: "I go to school by bus."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: KENDARAAN BERJALAN -->
+            <div class="slide">
+                <h2>⚡ Game Kecepatan: Sebutkan Kendaraannya!</h2>
+                <p>Sebutkan nama bahasa inggris dari kendaraan yang meluncur sebelum menghilang!</p>
+                <div class="runner-area">
+                    <div class="running-vehicle" id="runner-vehicle">🚌</div>
+                </div>
+                <div style="display:flex; gap:15px;">
+                    <button class="btn btn-success" id="btn-start-vehicle">▶️ START</button>
+                    <button class="btn btn-accent" id="btn-stop-vehicle">⏸️ STOP</button>
+                </div>
+                <div style="margin-top:10px; font-weight:bold;" id="vehicle-speed-indicator">Kecepatan: Normal</div>
+            </div>
+
+            <!-- SLIDE 7: BRING ME / CLAP GAME -->
+            <div class="slide" style="background:#e0e7ff;">
+                <span style="font-size:4rem;">🏃‍♂️💨🎬</span>
+                <h2>Game Waktu: "Act Like A..."</h2>
+                <div style="background:white; padding:20px; border-radius:15px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1); width:100%;">
+                    <p style="font-size:1.3rem; font-weight:bold; color:var(--accent-color);">Tutor berseru keras:</p>
+                    <h3 style="font-size:1.7rem; color:#4338ca; margin:10px 0;">"Drive a... <span id="game-target-vehicle" style="background:#fef08a; padding:2px 10px; border-radius:5px;">TRAIN</span>! One, two, three..."</h3>
+                    <p><i>Siswa harus memperagakan gerakan menyetir kendaraan tersebut sebelum hitungan ke-10!</i></p>
+                    <div style="font-weight:bold; color:#047857; margin-top:15px;">Misi: Menguji kefasihan asosiasi gerak tubuh dengan kosakata bahasa inggris.</div>
+                </div>
+                <button class="btn btn-accent" id="btn-spin-vehicle" style="margin-top:15px;">🎲 Acak Gerakan Baru</button>
+            </div>
+
+            <!-- SLIDE 8: 10 BANK CERITA INTERAKTIF -->
+            <div class="slide">
+                <div style="display: flex; justify-content: space-between; align-items: center; width:100%; margin-bottom: 10px;">
+                    <h2>📖 Membaca Cerita Perjalanan & Isi Jawaban</h2>
+                    <button class="btn btn-accent" id="btn-story-next">Cerita Selanjutnya ➡️ (<span id="story-num">1</span>/10)</button>
+                </div>
+                <div class="scroll-box" id="story-box-container" style="max-height:140px; border-left: 5px solid var(--primary-color);">
+                    <!-- Cerita dimuat via JS -->
+                </div>
+                <div style="text-align:left; width:100%; display:flex; flex-direction:column;" id="story-qa-container">
+                    <!-- Pertanyaan dimuat via JS -->
+                </div>
+            </div>
+
+            <!-- SLIDE 9: DUOLINGO -->
+            <div class="slide" style="background: #e0f2fe;">
+                <img src="https://images.squarespace-cdn.com/content/v1/6050b1e42a98e82a8594cd22/1616421061989-L38Q6ZDAU3M36N0XGOH5/duolingo-owl.png" style="width:100px;" alt="Duo">
+                <h2 style="margin-top:10px;">🦉 DUOLINGO TIME!</h2>
+                <p>Waktunya melatih kemampuan pelafalan mandiri di aplikasi Duolingo.</p>
+                <div style="background:white; padding:15px; border-radius:10px; font-weight:bold; color:#0369a1; text-align:center; width: 100%;">
+                    Buka Topik: "Materi Perjalanan / Travel & Places" -> Selesaikan 1 Tantangan!
+                </div>
+            </div>
+
+            <!-- SLIDE 10: REFLEKSI -->
+            <div class="slide">
+                <h2>🤔 Refleksi & Kesimpulan Hari Ini</h2>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; width:100%;">
+                    <div style="background:white; padding:15px; border-radius:10px; border-left:4px solid #6366f1; text-align:left;">
+                        <h4 style="color:#6366f1;">Preposisi Kendaraan (By vs On):</h4>
+                        <p style="text-align:left; font-size:0.95rem; margin-top:5px;">Gunakan <b>"By"</b> untuk kendaraan mekanis:<br>• By car, By bus, By train.<br>Pengecualian sepeda/jalan kaki:<br>• On bicycle / On foot.</p>
+                    </div>
+                    <div style="background:white; padding:15px; border-radius:10px; border-left:4px solid #10b981; text-align:left;">
+                        <h4 style="color:#10b981;">Kosakata Penting:</h4>
+                        <p style="text-align:left; font-size:0.95rem; margin-top:5px;"><b>Go to</b> = Pergi ke<br><b>Ride</b> = Mengendarai (sepeda)<br><b>Drive</b> = Menyetir (mobil)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: THANK YOU -->
+            <div class="slide" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+                <span style="font-size:5rem;">✈️🌍通</span>
+                <h1>Wonderful Adventure!</h1>
+                <h2>Thank You For Today!</h2>
+                <p>Kamu siap menjelajah dunia dengan kendaraan favoritmu!</p>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <div class="controls">
+            <button class="btn" id="btn-prev" disabled>⬅ Back</button>
+            <div class="progress-dots" id="dots-container"></div>
+            <button class="btn btn-success" id="btn-next">Next ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        // DATA OBJECTS SLIDE 5 (GAMBAR DAN PETUNJUK STRUKTUR KALIMAT)
+        const travelData = [
+            { title: "1. Sebuah Bus Kuning", img: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400", voice: "I go to school by bus", guide: "Siswa Menjawab: \"I go to school by bus.\"" },
+            { title: "2. Dua Mobil Merah", img: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400", voice: "I go to the market by red car", guide: "Siswa Menjawab: \"I go to the market by red car.\"" },
+            { title: "3. Tiga Sepeda Hijau", img: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400", voice: "I go to the park by bicycle", guide: "Siswa Menjawab: \"I go to the park by bicycle.\"" },
+            { title: "4. Sebuah Kereta Api Panjang", img: "https://images.unsplash.com/photo-1532103054090-334e6e60b73c?w=400", voice: "I go to the city by train", guide: "Siswa Menjawab: \"I go to the city by train.\"" }
+        ];
+
+        const vehiclesList = ["TRAIN", "BUS", "CAR", "BICYCLE", "AIRPLANE", "SHIP"];
+        const runnerVehicles = [
+            { emoji: "🚌", name: "Bus" },
+            { emoji: "🚗", name: "Car" },
+            { emoji: "🚲", name: "Bicycle" },
+            { emoji: "🚂", name: "Train" },
+            { emoji: "✈️", name: "Airplane" }
+        ];
+
+        // DATA BANK 10 CERITA INTERAKTIF UNTUK SLIDE 8
+        const travelStories = [
+            {
+                story: "Budi wants to go to <b>school</b>. He has <b>one blue bicycle</b>. On the way, he sees <b>two yellow buses</b> passing by.",
+                questions: [
+                    { q: "1. Where does Budi want to go?", ans: "school", hint: "school" },
+                    { q: "2. What vehicle does he have?", ans: "bicycle", hint: "bicycle" },
+                    { q: "3. How many buses does he see?", ans: "two", hint: "two" }
+                ]
+            },
+            {
+                story: "My mother goes to the <b>market</b>. She drives <b>one red car</b>. At the market, she buys <b>five green apples</b>.",
+                questions: [
+                    { q: "1. Where does mother go?", ans: "market", hint: "market" },
+                    { q: "2. What color is the car?", ans: "red", hint: "red" },
+                    { q: "3. How many apples does she buy?", ans: "five", hint: "five" }
+                ]
+            },
+            {
+                story: "Farhan and his sister go to the <b>park</b>. They take <b>one white bus</b>. They run around the <b>three big trees</b> there.",
+                questions: [
+                    { q: "1. Where do they go?", ans: "park", hint: "park" },
+                    { q: "2. What vehicle do they take?", ans: "bus", hint: "bus" },
+                    { q: "3. How many trees are there?", ans: "three", hint: "three" }
+                ]
+            },
+            {
+                story: "The doctor goes to the <b>hospital</b>. He goes by <b>one black car</b>. He has <b>two small bags</b> inside the car.",
+                questions: [
+                    { q: "1. Where does the doctor go?", ans: "hospital", hint: "hospital" },
+                    { q: "2. What color is his car?", ans: "black", hint: "black" },
+                    { q: "3. How many bags does he have?", ans: "two", hint: "two" }
+                ]
+            },
+            {
+                story: "Susi lives near a station. She goes to Jakarta by <b>train</b>. The train has <b>ten white windows</b> on each carriage.",
+                questions: [
+                    { q: "1. How does Susi travel to Jakarta?", ans: "train", hint: "train" },
+                    { q: "2. What color are the windows?", ans: "white", hint: "white" },
+                    { q: "3. How many windows are there?", ans: "ten", hint: "ten" }
+                ]
+            },
+            {
+                story: "We visit a beautiful <b>park</b> today. We ride <b>four green bicycles</b> together. We see <b>one pink flower</b> near the gate.",
+                questions: [
+                    { q: "1. What place do they visit?", ans: "park", hint: "park" },
+                    { q: "2. What color are the bicycles?", ans: "green", hint: "green" },
+                    { q: "3. How many pink flowers?", ans: "one", hint: "one" }
+                ]
+            },
+            {
+                story: "Mr. Andi is a teacher. He walks to <b>school</b> every morning. He sees <b>three blue cars</b> on the street.",
+                questions: [
+                    { q: "1. What is Mr. Andi's job?", ans: "teacher", hint: "teacher" },
+                    { q: "2. Where does he walk to?", ans: "school", hint: "school" },
+                    { q: "3. What color are the cars?", ans: "blue", hint: "blue" }
+                ]
+            },
+            {
+                story: "Anisa wants to buy books at the <b>market</b>. She takes <b>one yellow bus</b>. She counts <b>six old bicycles</b> at the parking area.",
+                questions: [
+                    { q: "1. Where does Anisa go?", ans: "market", hint: "market" },
+                    { q: "2. What vehicle does she take?", ans: "bus", hint: "bus" },
+                    { q: "3. How many bicycles does she count?", ans: "six", hint: "six" }
+                ]
+            },
+            {
+                story: "Rudi goes to the <b>hospital</b> to see his friend. He drives <b>one red motorcycle</b>. He arrives at <b>nine o'clock</b>.",
+                questions: [
+                    { q: "1. Where does Rudi go?", ans: "hospital", hint: "hospital" },
+                    { q: "2. What color is his motorcycle?", ans: "red", hint: "red" },
+                    { q: "3. At what clock/time does he arrive?", ans: "nine", hint: "nine" }
+                ]
+            },
+            {
+                story: "Look at that long <b>train</b> at the station! It is <b>one black train</b>. It is going to take people to the big city <b>park</b>.",
+                questions: [
+                    { q: "1. What vehicle is mentioned?", ans: "train", hint: "train" },
+                    { q: "2. What color is the train?", ans: "black", hint: "black" },
+                    { q: "3. What is the final place mentioned?", ans: "park", hint: "park" }
+                ]
+            }
+        ];
+
+        let currentSlide = 0;
+        let currentTravelIdx = 0;
+        let currentStoryIdx = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('dots-container');
+        
+        // SPEECH ENGINE
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'en-US';
+                u.rate = 0.85;
+                window.speechSynthesis.speak(u);
+            }
+        }
+
+        // NAVIGATION ENGINE
+        slides.forEach((_, i) => {
+            const d = document.createElement('div');
+            d.className = 'dot' + (i === 0 ? ' active' : '');
+            dotsContainer.appendChild(d);
+        });
+
+        function updateSlides() {
+            slides.forEach((s, i) => { 
+                s.classList.remove('active'); 
+                if(i === currentSlide) {
+                    s.classList.add('active');
+                    s.scrollTop = 0; 
+                }
+            });
+            document.getElementById('btn-prev').disabled = currentSlide === 0;
+            document.getElementById('btn-next').disabled = currentSlide === slides.length - 1;
+            document.querySelectorAll('.dot').forEach((d, i) => { 
+                d.classList.remove('active'); 
+                if(i === currentSlide) d.classList.add('active'); 
+            });
+        }
+
+        document.getElementById('btn-next').addEventListener('click', () => { if(currentSlide < slides.length-1){ currentSlide++; updateSlides(); } });
+        document.getElementById('btn-prev').addEventListener('click', () => { if(currentSlide > 0){ currentSlide--; updateSlides(); } });
+
+        // SLIDE 5 ENGINE
+        function updateTravelSlide() {
+            const data = travelData[currentTravelIdx];
+            document.getElementById('travel-pic').src = data.img;
+            document.getElementById('travel-title').innerText = data.title;
+            document.getElementById('travel-guide-text').innerText = data.guide;
+        }
+        document.getElementById('btn-travel-sound').addEventListener('click', () => { speak(travelData[currentTravelIdx].voice); });
+        document.getElementById('btn-next-travel').addEventListener('click', () => { currentTravelIdx = (currentTravelIdx + 1) % travelData.length; updateTravelSlide(); });
+
+        // SLIDE 6 ENGINE (RUNNING VEHICLES)
+        let vehicleInterval = null;
+        let speed = 4000;
+        const vehicleRunner = document.getElementById('runner-vehicle');
+        
+        function startVehicleRunner() {
+            clearInterval(vehicleInterval);
+            vehicleInterval = setInterval(() => {
+                const picked = runnerVehicles[Math.floor(Math.random()*runnerVehicles.length)];
+                vehicleRunner.innerText = picked.emoji;
+                
+                vehicleRunner.style.transition = 'none';
+                vehicleRunner.style.left = '-70px';
+                setTimeout(() => {
+                    vehicleRunner.style.transition = `left ${speed/1000}s linear`;
+                    vehicleRunner.style.left = '960px';
+                    speak(picked.name);
+                }, 50);
+
+                if(speed > 1200) {
+                    speed -= 400;
+                    document.getElementById('vehicle-speed-indicator').innerText = `Kecepatan: ${speed < 2000 ? '⚡ CEPAT!' : 'Normal'}`;
+                }
+            }, speed + 200);
+        }
+
+        document.getElementById('btn-start-vehicle').addEventListener('click', () => { speed = 4000; document.getElementById('vehicle-speed-indicator').innerText = "Kecepatan: Mulai"; startVehicleRunner(); });
+        document.getElementById('btn-stop-vehicle').addEventListener('click', () => { clearInterval(vehicleInterval); vehicleRunner.style.left = '-70px'; });
+
+        // SLIDE 7 ENGINE (SPIN GAME)
+        document.getElementById('btn-spin-vehicle').addEventListener('click', () => {
+            const randVehicle = vehiclesList[Math.floor(Math.random()*vehiclesList.length)];
+            document.getElementById('game-target-vehicle').innerText = randVehicle;
+            speak(`Drive a ${randVehicle}`);
+        });
+
+        // SLIDE 8 ENGINE (10 STORIES FOR PLACES & TRANSPORT)
+        function loadTravelStory() {
+            const currentData = travelStories[currentStoryIdx];
+            
+            document.getElementById('story-num').innerText = currentStoryIdx + 1;
+            document.getElementById('story-box-container').innerHTML = `<strong>Story:</strong><br>${currentData.story}`;
+            
+            const qaContainer = document.getElementById('story-qa-container');
+            qaContainer.innerHTML = ''; 
+            
+            currentData.questions.forEach((qObj, index) => {
+                const row = document.createElement('div');
+                row.className = 'qa-row';
+                row.innerHTML = `
+                    <span>${qObj.q}</span>
+                    <input type="text" class="input-ans" id="travel-ans-${index}" placeholder="${qObj.hint}">
+                    <button class="btn btn-success" onclick="validateTravelAns(${index}, '${qObj.ans}')">Cek</button>
+                `;
+                qaContainer.appendChild(row);
+            });
+            document.querySelector('.slide.active').scrollTop = 0;
+        }
+
+        function validateTravelAns(index, correctValue) {
+            const inputField = document.getElementById(`travel-ans-${index}`);
+            if (inputField.value.trim().toLowerCase() === correctValue.toLowerCase()) {
+                inputField.className = "input-ans correct";
+                speak("Nice");
+            } else {
+                inputField.className = "input-ans wrong";
+                speak("Try again");
+            }
+        }
+
+        document.getElementById('btn-story-next').addEventListener('click', () => {
+            currentStoryIdx = (currentStoryIdx + 1) % travelStories.length;
+            loadTravelStory();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTravelStory();
+        });
+    </script>
+</body>
+</html>
