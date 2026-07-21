@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazing Animals - Interactive English Class</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8E7;
+  --bg-soft: #FFEFD0;
+  --fg: #3D2817;
+  --muted: #8B6F47;
+  --jungle: #2D6A4F;
+  --jungle-dark: #1B4332;
+  --jungle-light: #52B788;
+  --orange: #FF8C42;
+  --orange-dark: #E76F26;
+  --yellow: #FFD23F;
+  --coral: #E63946;
+  --sky: #48CAE4;
+  --purple: #9D4EDD;
+  --card: #FFFFFF;
+  --border: #F0DDB5;
+  --shadow: 0 10px 30px rgba(61, 40, 23, 0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+  height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -10%; left: -10%;
+  width: 50%; height: 50%;
+  background: radial-gradient(circle, rgba(255, 210, 63, 0.3), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -10%; right: -10%;
+  width: 60%; height: 60%;
+  background: radial-gradient(circle, rgba(45, 106, 79, 0.15), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+.brand .logo {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--jungle), var(--jungle-light));
+  border-radius: 12px;
+  display: grid; place-items: center;
+  color: white; font-size: 22px;
+  box-shadow: var(--shadow);
+}
+
+.progress-wrap {
+  flex: 1; max-width: 420px;
+  margin: 0 24px;
+}
+.progress-bar {
+  height: 8px;
+  background: var(--bg-soft);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--jungle-light), var(--yellow));
+  border-radius: 99px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+.progress-text {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav-controls { display: flex; gap: 8px; }
+.nav-btn {
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  display: grid; place-items: center;
+  color: var(--fg);
+  transition: all 0.2s;
+  font-size: 16px;
+}
+.nav-btn:hover:not(:disabled) {
+  background: var(--jungle);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.slides {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 24px 40px 70px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.5s, transform 0.5s;
+  pointer-events: none;
+}
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.slide.prev { transform: translateX(-50px); }
+
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.slide-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: '';
+  width: 24px; height: 2px;
+  background: var(--orange);
+  border-radius: 2px;
+}
+.slide-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.slide-subtitle {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 24px;
+  max-width: 700px;
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  min-height: 70vh;
+}
+.hero-text h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 68px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.hero-text h1 .word {
+  color: var(--jungle);
+  position: relative;
+  display: inline-block;
+}
+.hero-text h1 .word::after {
+  content: '';
+  position: absolute;
+  bottom: 4px; left: 0; right: 0;
+  height: 12px;
+  background: var(--yellow);
+  z-index: -1;
+  border-radius: 4px;
+  transform: skew(-3deg);
+}
+.hero-text p {
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  max-width: 480px;
+  line-height: 1.6;
+}
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary {
+  background: var(--orange);
+  color: white;
+  box-shadow: 0 5px 0 var(--orange-dark);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--orange-dark); }
+.btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--orange-dark); }
+.btn-ghost {
+  background: white;
+  color: var(--fg);
+  border: 2px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--jungle); color: var(--jungle); transform: translateY(-2px); }
+
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 400px;
+}
+.hero-blob {
+  position: absolute;
+  width: 380px; height: 380px;
+  background: linear-gradient(135deg, var(--jungle-light), var(--yellow));
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  animation: morph 8s ease-in-out infinite;
+  opacity: 0.85;
+}
+@keyframes morph {
+  0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+  50% { border-radius: 55% 45% 40% 60% / 60% 50% 50% 40%; }
+}
+.hero-emoji {
+  position: relative;
+  z-index: 1;
+  font-size: 180px;
+  animation: bounce 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+.floating-emoji {
+  position: absolute;
+  font-size: 48px;
+  z-index: 2;
+  animation: floatAround 6s ease-in-out infinite;
+}
+.fe-1 { top: 5%; left: 5%; animation-delay: 0s; }
+.fe-2 { top: 15%; right: 0%; animation-delay: 1s; }
+.fe-3 { bottom: 10%; left: 10%; animation-delay: 2s; }
+.fe-4 { bottom: 20%; right: 5%; animation-delay: 3s; }
+@keyframes floatAround {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  25% { transform: translate(10px,-15px) rotate(8deg); }
+  50% { transform: translate(-5px,-10px) rotate(-5deg); }
+  75% { transform: translate(-10px,5px) rotate(3deg); }
+}
+
+/* Objectives */
+.obj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+.obj-card {
+  background: white;
+  padding: 22px;
+  border-radius: 18px;
+  border: 2px solid var(--border);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.obj-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--orange);
+}
+.obj-card:nth-child(2)::before { background: var(--jungle); }
+.obj-card:nth-child(3)::before { background: var(--yellow); }
+.obj-card:nth-child(4)::before { background: var(--coral); }
+.obj-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.obj-card .num {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--orange);
+  opacity: 0.3;
+  line-height: 1;
+}
+.obj-card h4 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 17px;
+  margin: 6px 0;
+}
+.obj-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* Animal Gallery */
+.gallery-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  background: white;
+  color: var(--fg);
+}
+.search-box input:focus { outline: none; border-color: var(--jungle-light); }
+.search-box i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+.filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 10px 16px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 99px;
+  cursor: pointer;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chip:hover { border-color: var(--jungle); color: var(--jungle); }
+.chip.active {
+  background: var(--jungle);
+  color: white;
+  border-color: var(--jungle);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+}
+.animal-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.animal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(255, 210, 63, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.animal-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow);
+  border-color: var(--jungle-light);
+}
+.animal-card:hover::before { opacity: 1; }
+.animal-card.active {
+  background: var(--jungle);
+  color: white;
+  border-color: var(--jungle);
+  transform: scale(1.05);
+}
+.animal-emoji {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 6px;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  transition: transform 0.3s;
+}
+.animal-card:hover .animal-emoji { transform: scale(1.15) rotate(-5deg); }
+.animal-en {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+.animal-id {
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+}
+.animal-card.active .animal-id { color: rgba(255,255,255,0.8); }
+.animal-sound-btn {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 26px; height: 26px;
+  background: var(--yellow);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid; place-items: center;
+  font-size: 11px;
+  color: var(--fg);
+  transition: all 0.2s;
+  z-index: 2;
+}
+.animal-sound-btn:hover { background: var(--orange); color: white; transform: scale(1.15); }
+.animal-card.active .animal-sound-btn { background: var(--yellow); color: var(--fg); }
+
+.animal-detail {
+  margin-top: 16px;
+  background: linear-gradient(135deg, var(--jungle), var(--jungle-dark));
+  border-radius: 18px;
+  padding: 20px 24px;
+  color: white;
+  display: none;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.animal-detail.show { display: flex; animation: slideUp 0.4s; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.detail-emoji {
+  font-size: 72px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+.detail-info { flex: 1; min-width: 200px; }
+.detail-info h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+.detail-info .idn {
+  font-size: 16px;
+  opacity: 0.85;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+.detail-info .sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.detail-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.detail-btn {
+  background: var(--yellow);
+  color: var(--fg);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.detail-btn:hover { background: white; transform: translateY(-2px); }
+.detail-btn.alt { background: rgba(255,255,255,0.2); color: white; }
+.detail-btn.alt:hover { background: rgba(255,255,255,0.35); }
+
+/* Conversation */
+.dialogue {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  border: 2px solid var(--border);
+  margin-bottom: 16px;
+}
+.dialogue-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 2px dashed var(--border);
+  flex-wrap: wrap;
+}
+.dialogue-header h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  flex: 1;
+}
+.dialogue-header .meta { display: flex; gap: 8px; }
+
+.line {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  align-items: flex-start;
+  transition: background 0.2s;
+}
+.line.tutor { background: linear-gradient(90deg, rgba(45,106,79,0.12), transparent); }
+.line.student { background: linear-gradient(90deg, rgba(255,140,66,0.12), transparent); }
+.avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: white;
+  font-weight: 800;
+  font-family: 'Fredoka', sans-serif;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+.avatar.tutor { background: var(--jungle); }
+.avatar.student { background: var(--orange); }
+.line-content { flex: 1; min-width: 0; }
+.line-name {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.line-text { font-size: 15px; line-height: 1.55; }
+.line-actions { display: flex; gap: 6px; margin-top: 8px; }
+.mini-btn {
+  background: white;
+  border: 1.5px solid var(--border);
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--muted);
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.mini-btn:hover { background: var(--orange); color: white; border-color: var(--orange); }
+.mini-btn.speaking { background: var(--yellow); color: var(--fg); border-color: var(--yellow); }
+
+/* Quiz */
+.q-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  transition: all 0.2s;
+}
+.q-card.answered.correct { border-color: var(--jungle-light); background: rgba(82,183,136,0.05); }
+.q-card.answered.wrong { border-color: var(--coral); background: rgba(230,57,70,0.05); }
+.q-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.q-num {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--fg);
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  text-align: center;
+  line-height: 30px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.q-card.answered.correct .q-num { background: var(--jungle-light); color: white; }
+.q-card.answered.wrong .q-num { background: var(--coral); color: white; }
+.q-text {
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+  flex: 1;
+  padding-top: 4px;
+}
+.q-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.q-opt {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.2s;
+  color: var(--fg);
+}
+.q-opt:hover:not(:disabled) { border-color: var(--orange); transform: translateX(2px); }
+.q-opt:disabled { cursor: not-allowed; }
+.q-opt.correct { background: rgba(82,183,136,0.2); border-color: var(--jungle-light); color: var(--jungle); }
+.q-opt.wrong { background: rgba(230,57,70,0.15); border-color: var(--coral); color: var(--coral); }
+.q-feedback {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+.q-feedback.show { display: flex; }
+.q-feedback.correct { color: var(--jungle); }
+.q-feedback.wrong { color: var(--coral); }
+
+.quiz-summary {
+  background: linear-gradient(135deg, var(--jungle), var(--jungle-light));
+  border-radius: 18px;
+  padding: 20px;
+  color: white;
+  margin-top: 16px;
+  text-align: center;
+  display: none;
+}
+.quiz-summary.show { display: block; }
+.quiz-summary h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+.quiz-summary p { font-size: 14px; opacity: 0.95; }
+
+/* Stories */
+.story-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+.story-tab {
+  padding: 8px 14px;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 99px;
+  cursor: pointer;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.story-tab:hover { border-color: var(--orange); }
+.story-tab.active {
+  background: var(--orange);
+  color: white;
+  border-color: var(--orange);
+}
+.story-tab.done {
+  border-color: var(--jungle-light);
+  color: var(--jungle);
+}
+.story-tab.done.active {
+  background: var(--jungle);
+  color: white;
+}
+
+.story-panel {
+  display: none;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.story-panel.active { display: block; animation: fadeIn 0.4s; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.story-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at top right, var(--yellow), transparent 70%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.story-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.story-num {
+  background: var(--orange);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.story-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  flex: 1;
+}
+.story-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--fg);
+  background: var(--bg-soft);
+  padding: 16px 18px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--orange);
+  position: relative;
+}
+.story-text::before {
+  content: '\f10d';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 10px; right: 14px;
+  color: var(--orange);
+  opacity: 0.2;
+  font-size: 24px;
+}
+.story-questions { display: grid; gap: 10px; }
+.story-q {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: all 0.2s;
+}
+.story-q.answered { border-color: var(--jungle-light); background: rgba(82,183,136,0.05); }
+.story-q label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.story-q label .qmark {
+  width: 22px; height: 22px;
+  background: var(--yellow);
+  border-radius: 6px;
+  display: grid; place-items: center;
+  font-size: 11px;
+  color: var(--fg);
+  font-family: 'Fredoka', sans-serif;
+}
+.story-input-row { display: flex; gap: 8px; }
+.story-q input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  background: white;
+  font-weight: 600;
+}
+.story-q input:focus { outline: none; border-color: var(--jungle-light); }
+.story-check {
+  background: var(--jungle);
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.story-check:hover { background: var(--jungle-dark); }
+.story-check:disabled { opacity: 0.5; cursor: not-allowed; }
+.story-feedback {
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 6px;
+  display: none;
+}
+.story-feedback.show { display: block; }
+.story-feedback.correct { color: var(--jungle); }
+.story-feedback.wrong { color: var(--coral); }
+
+/* Game */
+.game-area {
+  background: linear-gradient(135deg, var(--bg-soft), white);
+  border-radius: 24px;
+  padding: 28px;
+  border: 2px solid var(--border);
+  margin-top: 16px;
+}
+.game-stage {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+.game-prompt {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  border: 2px solid var(--yellow);
+  box-shadow: 0 6px 0 var(--yellow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.game-status {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.game-emoji {
+  font-size: 80px;
+  margin: 12px 0;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-word {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--orange);
+  min-height: 40px;
+}
+.game-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  min-height: 20px;
+}
+.game-listen-btn {
+  background: var(--jungle);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 0 var(--jungle-dark);
+  transition: all 0.15s;
+}
+.game-listen-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--jungle-dark); }
+.game-listen-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--jungle-dark); }
+
+.game-grid {
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  border: 2px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-content: center;
+}
+.game-cell {
+  aspect-ratio: 1;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 40px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.game-cell:hover:not(.disabled) {
+  transform: scale(1.05);
+  border-color: var(--orange);
+  background: var(--bg-soft);
+}
+.game-cell.disabled { cursor: not-allowed; }
+.game-cell.correct {
+  background: rgba(82,183,136,0.25);
+  border-color: var(--jungle-light);
+  animation: pop 0.4s;
+}
+.game-cell.wrong {
+  background: rgba(230,57,70,0.2);
+  border-color: var(--coral);
+  animation: shake 0.4s;
+}
+@keyframes pop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.game-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: white;
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  min-width: 100px;
+  text-align: center;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.stat-value {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--orange);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+.stat.streak .stat-value { color: var(--coral); }
+.stat.score .stat-value { color: var(--jungle); }
+
+.game-result {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+.game-result.show { display: block; }
+.result-stars { font-size: 40px; margin: 10px 0; }
+.result-msg {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 28px;
+  color: var(--orange);
+  margin: 10px 0;
+}
+.result-score { font-size: 16px; color: var(--muted); margin-bottom: 16px; }
+
+/* Conclusion */
+.conclusion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.conclusion-card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  border: 2px solid var(--border);
+  text-align: center;
+  transition: all 0.2s;
+}
+.conclusion-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.conclusion-card .ico {
+  width: 56px; height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 16px;
+  display: grid; place-items: center;
+  font-size: 24px;
+  color: white;
+}
+.conclusion-card:nth-child(1) .ico { background: var(--orange); }
+.conclusion-card:nth-child(2) .ico { background: var(--jungle); }
+.conclusion-card:nth-child(3) .ico { background: var(--yellow); color: var(--fg); }
+.conclusion-card:nth-child(4) .ico { background: var(--coral); }
+.conclusion-card h4 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+.conclusion-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.key-takeaways {
+  background: linear-gradient(135deg, var(--jungle), var(--jungle-light));
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+  margin-top: 20px;
+}
+.key-takeaways h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+.takeaway-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.takeaway-item {
+  background: rgba(255,255,255,0.15);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+}
+.takeaway-item i { color: var(--yellow); }
+
+/* Reflection */
+.reflect-prompts { display: grid; gap: 14px; margin-top: 16px; }
+.reflect-prompt {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: all 0.2s;
+}
+.reflect-prompt:focus-within {
+  border-color: var(--jungle-light);
+  box-shadow: 0 0 0 4px rgba(82,183,136,0.1);
+}
+.reflect-icon {
+  width: 48px; height: 48px;
+  background: var(--bg-soft);
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 20px;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+.reflect-prompt:nth-child(2) .reflect-icon { color: var(--jungle); }
+.reflect-prompt:nth-child(3) .reflect-icon { color: var(--coral); }
+.reflect-prompt:nth-child(4) .reflect-icon { color: var(--purple); }
+.reflect-content { flex: 1; min-width: 0; }
+.reflect-content h4 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.reflect-content textarea {
+  width: 100%;
+  border: none;
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 60px;
+  color: var(--fg);
+}
+.reflect-content textarea:focus { outline: 2px solid var(--jungle-light); }
+.emoji-pick {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.emoji-pick button {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 99px;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.emoji-pick button:hover { transform: scale(1.1); }
+.emoji-pick button.selected {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: white;
+  transform: scale(1.15);
+}
+
+/* Thank You */
+.thankyou {
+  text-align: center;
+  padding: 30px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.thankyou h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--jungle), var(--orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.thankyou p {
+  font-size: 19px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+.emoji-row {
+  font-size: 56px;
+  margin: 24px 0;
+  display: flex;
+  gap: 20px;
+}
+.emoji-row span {
+  animation: wave 2s ease-in-out infinite;
+  display: inline-block;
+}
+.emoji-row span:nth-child(2) { animation-delay: 0.2s; }
+.emoji-row span:nth-child(3) { animation-delay: 0.4s; }
+.emoji-row span:nth-child(4) { animation-delay: 0.6s; }
+.emoji-row span:nth-child(5) { animation-delay: 0.8s; }
+@keyframes wave {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-15deg); }
+  75% { transform: rotate(15deg); }
+}
+.thank-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  max-width: 700px;
+  width: 100%;
+  margin-top: 12px;
+}
+.thank-card {
+  background: white;
+  border: 2px solid var(--border);
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+.thank-card i { font-size: 20px; color: var(--orange); }
+.thank-card span { font-size: 13px; font-weight: 700; }
+
+/* Dot nav */
+.dotnav {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: rgba(255,255,255,0.85);
+  padding: 8px 16px;
+  border-radius: 99px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  z-index: 10;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.dot:hover { background: var(--orange-dark); }
+.dot.active {
+  background: var(--orange);
+  width: 28px;
+  border-radius: 99px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--fg);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-text h1 { font-size: 48px; }
+  .game-stage { grid-template-columns: 1fr; }
+  .q-options { grid-template-columns: 1fr; }
+  .slide { padding: 20px 20px 70px; }
+  .slide-title { font-size: 28px; }
+  .thankyou h1 { font-size: 56px; }
+  .game-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"><i class="fa-solid fa-paw"></i></div>
+      <div>Amazing Animals</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">Slide 1 of 10</div>
+    </div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" title="Previous (←)"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="nav-btn" id="nextBtn" title="Next (→)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </header>
+
+  <div class="slides" id="slides">
+
+    <!-- SLIDE 1: Welcome -->
+    <section class="slide active" data-slide="1">
+      <div class="slide-inner">
+        <div class="hero">
+          <div class="hero-text">
+            <div class="eyebrow"><i class="fa-solid fa-leaf"></i> English Class · Animals Unit</div>
+            <h1>Amazing<br><span class="word">Animals</span></h1>
+            <p>Today we will explore 200 wonderful animals! Learn their English names, hear how to say them, read fun stories, and play an exciting game. Let's begin our safari!</p>
+            <div class="cta-row">
+              <button class="btn btn-primary" onclick="goToSlide(2)">
+                <i class="fa-solid fa-rocket"></i> Start Adventure
+              </button>
+              <button class="btn btn-ghost" onclick="speak('Welcome to Amazing Animals class. Let us learn together.')">
+                <i class="fa-solid fa-volume-high"></i> Hear Intro
+              </button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-blob"></div>
+            <div class="hero-emoji">🦁</div>
+            <div class="floating-emoji fe-1">🐘</div>
+            <div class="floating-emoji fe-2">🦒</div>
+            <div class="floating-emoji fe-3">🐼</div>
+            <div class="floating-emoji fe-4">🦜</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Objectives -->
+    <section class="slide" data-slide="2">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-bullseye"></i> Lesson Goals</div>
+        <h2 class="slide-title">What We Will Learn Today</h2>
+        <p class="slide-subtitle">Four exciting activities are waiting for you! Each one helps you become an animal expert.</p>
+        <div class="obj-grid">
+          <div class="obj-card">
+            <div class="num">01</div>
+            <h4>200 Animal Names</h4>
+            <p>Discover 200 animals from pets to wild animals, birds, sea creatures, insects, and even dinosaurs with pictures and sounds.</p>
+          </div>
+          <div class="obj-card">
+            <div class="num">02</div>
+            <h4>Practice Speaking</h4>
+            <p>Listen to correct English pronunciation and repeat after the voice to improve your speaking skills.</p>
+          </div>
+          <div class="obj-card">
+            <div class="num">03</div>
+            <h4>Read Stories</h4>
+            <p>Enjoy 10 short animal stories and answer fun questions for each one to build reading comprehension.</p>
+          </div>
+          <div class="obj-card">
+            <div class="num">04</div>
+            <h4>Play a Game</h4>
+            <p>Test your knowledge in the "Listen and Match" game led by your tutor. Earn stars for correct answers!</p>
+          </div>
+        </div>
+        <div style="margin-top:24px; background:linear-gradient(135deg, var(--yellow), var(--orange)); padding:20px; border-radius:16px; color:white;">
+          <h4 style="font-family:'Fredoka',sans-serif; font-size:18px; margin-bottom:6px;"><i class="fa-solid fa-lightbulb"></i> Tutor Tip</h4>
+          <p style="font-size:14px; line-height:1.5;">Encourage the student to repeat each animal name out loud. Try making the animal sounds together for extra fun!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: 200 Animals Gallery -->
+    <section class="slide" data-slide="3">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-paw"></i> Animal Gallery</div>
+        <h2 class="slide-title">Meet 200 Amazing Animals</h2>
+        <p class="slide-subtitle">Click any animal to hear its English name. Use filters to explore by category. Listen carefully and repeat!</p>
+        <div class="gallery-controls">
+          <div class="search-box">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="animalSearch" placeholder="Search animal name...">
+          </div>
+          <div class="filter-chips" id="filterChips">
+            <button class="chip active" data-cat="all"><i class="fa-solid fa-grip"></i> All (200)</button>
+            <button class="chip" data-cat="pet"><i class="fa-solid fa-house"></i> Pets</button>
+            <button class="chip" data-cat="farm"><i class="fa-solid fa-tractor"></i> Farm</button>
+            <button class="chip" data-cat="wild"><i class="fa-solid fa-tree"></i> Wild</button>
+            <button class="chip" data-cat="bird"><i class="fa-solid fa-feather"></i> Birds</button>
+            <button class="chip" data-cat="sea"><i class="fa-solid fa-fish"></i> Sea</button>
+            <button class="chip" data-cat="reptile"><i class="fa-solid fa-dragon"></i> Reptiles</button>
+            <button class="chip" data-cat="insect"><i class="fa-solid fa-bug"></i> Insects</button>
+            <button class="chip" data-cat="prehistoric"><i class="fa-solid fa-skull"></i> Prehistoric</button>
+          </div>
+        </div>
+        <div class="gallery" id="animalGallery"></div>
+        <div class="animal-detail" id="animalDetail">
+          <div class="detail-emoji" id="detailEmoji">🦁</div>
+          <div class="detail-info">
+            <h3 id="detailEn">Lion</h3>
+            <div class="idn" id="detailId">Singa</div>
+            <div class="sound"><i class="fa-solid fa-volume-high"></i> Sound: <span id="detailSound">Roar</span></div>
+          </div>
+          <div class="detail-actions">
+            <button class="detail-btn" onclick="speak(currentDetail.en)"><i class="fa-solid fa-volume-high"></i> Hear Name</button>
+            <button class="detail-btn alt" onclick="speak('The ' + currentDetail.en + ' says ' + currentDetail.sound)"><i class="fa-solid fa-music"></i> Hear Sound</button>
+            <button class="detail-btn alt" onclick="speak(currentDetail.en + '. In Indonesian, ' + currentDetail.en + ' is ' + currentDetail.idn)"><i class="fa-solid fa-language"></i> Both Languages</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Conversation -->
+    <section class="slide" data-slide="4">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-comments"></i> Let's Talk</div>
+        <h2 class="slide-title">Conversation: Talking About Animals</h2>
+        <p class="slide-subtitle">Read this dialogue with your tutor. Click the speaker icon to hear each line, then repeat. Switch roles for extra practice!</p>
+        <div class="dialogue">
+          <div class="dialogue-header">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <div class="avatar tutor">T</div>
+              <div>
+                <div style="font-family:'Fredoka',sans-serif; font-size:18px;">Tutor & Student</div>
+                <div style="font-size:12px; color:var(--muted);">Topic: Amazing Animals</div>
+              </div>
+            </div>
+            <div class="meta">
+              <button class="mini-btn" onclick="speakDialogue()"><i class="fa-solid fa-play"></i> Play All</button>
+              <button class="mini-btn" onclick="stopSpeaking()"><i class="fa-solid fa-stop"></i> Stop</button>
+            </div>
+          </div>
+          <div id="dialogueLines"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Quiz -->
+    <section class="slide" data-slide="5">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-clipboard-question"></i> Check Understanding</div>
+        <h2 class="slide-title">10 Questions About the Conversation</h2>
+        <p class="slide-subtitle">Choose the best answer for each question. Read carefully and good luck!</p>
+        <div id="quizContainer"></div>
+        <div class="quiz-summary" id="quizSummary">
+          <h3 id="quizScoreText"></h3>
+          <p id="quizScoreMsg"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Stories -->
+    <section class="slide" data-slide="6">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-book-open"></i> Reading Time</div>
+        <h2 class="slide-title">10 Short Animal Stories</h2>
+        <p class="slide-subtitle">Pick a story tab, read it carefully, and answer the 3 questions. Your tutor can check your answers!</p>
+        <div class="story-tabs" id="storyTabs"></div>
+        <div id="storyPanels"></div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Game -->
+    <section class="slide" data-slide="7">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-gamepad"></i> Fun Activity</div>
+        <h2 class="slide-title">Game: Listen and Match the Animal!</h2>
+        <p class="slide-subtitle">The tutor will say an animal name. Click the correct animal on the grid. Get 10 correct to win the game!</p>
+        <div class="game-area">
+          <div class="game-stage">
+            <div class="game-prompt">
+              <div class="game-status" id="gameStatus">Ready to Play?</div>
+              <div class="game-emoji" id="gameEmoji">🎯</div>
+              <div class="game-word" id="gameWord">Click Start!</div>
+              <div class="game-hint" id="gameHint">Listen carefully, then click the matching animal.</div>
+              <button class="game-listen-btn" id="gameBtn" onclick="gameAction()">
+                <i class="fa-solid fa-play"></i> <span id="gameBtnText">Start Game</span>
+              </button>
+              <div class="game-result" id="gameResult">
+                <div class="result-stars" id="resultStars"></div>
+                <div class="result-msg" id="resultMsg"></div>
+                <div class="result-score" id="resultScore"></div>
+                <button class="btn btn-primary" onclick="resetGame()"><i class="fa-solid fa-rotate-right"></i> Play Again</button>
+              </div>
+            </div>
+            <div class="game-grid" id="gameGrid"></div>
+          </div>
+          <div class="game-stats">
+            <div class="stat"><div class="stat-label">Round</div><div class="stat-value" id="statRound">0/10</div></div>
+            <div class="stat score"><div class="stat-label">Score</div><div class="stat-value" id="statScore">0</div></div>
+            <div class="stat streak"><div class="stat-label">Streak</div><div class="stat-value" id="statStreak">0</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Conclusion -->
+    <section class="slide" data-slide="8">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> Wrap Up</div>
+        <h2 class="slide-title">What We Learned Today</h2>
+        <p class="slide-subtitle">Let's review the key points from today's lesson about amazing animals.</p>
+        <div class="conclusion-grid">
+          <div class="conclusion-card">
+            <div class="ico"><i class="fa-solid fa-paw"></i></div>
+            <h4>Animal Vocabulary</h4>
+            <p>You learned 200 animal names in English and Indonesian with pictures and pronunciation.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="ico"><i class="fa-solid fa-comments"></i></div>
+            <h4>Speaking Practice</h4>
+            <p>You practiced a real conversation and listened to native English pronunciation.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="ico"><i class="fa-solid fa-book"></i></div>
+            <h4>Reading Skills</h4>
+            <p>You read 10 short animal stories and answered questions to build comprehension.</p>
+          </div>
+          <div class="conclusion-card">
+            <div class="ico"><i class="fa-solid fa-trophy"></i></div>
+            <h4>Active Learning</h4>
+            <p>You played a listening game that tested your animal recognition skills.</p>
+          </div>
+        </div>
+        <div class="key-takeaways">
+          <h3><i class="fa-solid fa-star"></i> Key Takeaways</h3>
+          <div class="takeaway-list">
+            <div class="takeaway-item"><i class="fa-solid fa-check"></i> A lion says "roar" and is the king of the jungle.</div>
+            <div class="takeaway-item"><i class="fa-solid fa-check"></i> A cow gives us milk and says "moo".</div>
+            <div class="takeaway-item"><i class="fa-solid fa-check"></i> A cat says "meow" and a dog says "woof".</div>
+            <div class="takeaway-item"><i class="fa-solid fa-check"></i> An elephant has a long trunk and big ears.</div>
+            <div class="takeaway-item"><i class="fa-solid fa-check"></i> An octopus has eight arms and lives in the sea.</div>
+            <div class="takeaway-item"><i class="fa-solid fa-check"></i> A T-Rex was a giant dinosaur that roared!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Reflection -->
+    <section class="slide" data-slide="9">
+      <div class="slide-inner">
+        <div class="eyebrow"><i class="fa-solid fa-lightbulb"></i> Thinking Time</div>
+        <h2 class="slide-title">Reflection: How Did You Do?</h2>
+        <p class="slide-subtitle">Take a moment to think about your learning today. Be honest — your tutor will help you grow!</p>
+        <div class="reflect-prompts">
+          <div class="reflect-prompt">
+            <div class="reflect-icon"><i class="fa-solid fa-face-smile"></i></div>
+            <div class="reflect-content">
+              <h4>How do you feel about today's lesson?</h4>
+              <div class="emoji-pick" id="emojiPick">
+                <button data-v="sad">😢 Confused</button>
+                <button data-v="ok">😐 Okay</button>
+                <button data-v="good">🙂 Good</button>
+                <button data-v="great">😀 Amazing!</button>
+              </div>
+            </div>
+          </div>
+          <div class="reflect-prompt">
+            <div class="reflect-icon"><i class="fa-solid fa-pen"></i></div>
+            <div class="reflect-content">
+              <h4>Which animal name was the easiest to remember? Why?</h4>
+              <textarea placeholder="Type your answer here..."></textarea>
+            </div>
+          </div>
+          <div class="reflect-prompt">
+            <div class="reflect-icon"><i class="fa-solid fa-circle-question"></i></div>
+            <div class="reflect-content">
+              <h4>Which animal was the hardest to learn? What would help you remember it?</h4>
+              <textarea placeholder="Type your answer here..."></textarea>
+            </div>
+          </div>
+          <div class="reflect-prompt">
+            <div class="reflect-icon"><i class="fa-solid fa-leaf"></i></div>
+            <div class="reflect-content">
+              <h4>What is your favorite animal and why do you like it?</h4>
+              <textarea placeholder="Type your answer here..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Thank You -->
+    <section class="slide" data-slide="10">
+      <div class="slide-inner">
+        <div class="thankyou">
+          <div class="eyebrow" style="justify-content:center; display:flex;"><i class="fa-solid fa-heart"></i> The End</div>
+          <h1>Thank You<br>for Today!</h1>
+          <p>You did an amazing job learning about 200 wonderful animals. Keep practicing every day and your English will grow stronger and stronger!</p>
+          <div class="emoji-row">
+            <span>🦁</span><span>🐘</span><span>🦒</span><span>🐼</span><span>🦜</span>
+          </div>
+          <button class="btn btn-primary" onclick="speak('Thank you for today. You did a wonderful job learning about animals. See you next time. Goodbye!')">
+            <i class="fa-solid fa-volume-high"></i> Hear a Goodbye Message
+          </button>
+          <div class="thank-cards">
+            <div class="thank-card"><i class="fa-solid fa-book"></i><span>Keep reading stories</span></div>
+            <div class="thank-card"><i class="fa-solid fa-microphone"></i><span>Practice speaking daily</span></div>
+            <div class="thank-card"><i class="fa-solid fa-paw"></i><span>Love all animals</span></div>
+            <div class="thank-card"><i class="fa-solid fa-heart"></i><span>See you next class!</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <nav class="dotnav" id="dotnav"></nav>
+</div>
+
+<div class="toast" id="toast">
+  <i class="fa-solid fa-circle-info"></i>
+  <span id="toastText"></span>
+</div>
+
+<script>
+// ============= 200 ANIMALS DATA =============
+const animals = [
+  // 1-10
+  { en: 'Cat', idn: 'Kucing', emoji: '🐱', cat: 'pet', sound: 'Meow' },
+  { en: 'Dog', idn: 'Anjing', emoji: '🐶', cat: 'pet', sound: 'Woof' },
+  { en: 'Rabbit', idn: 'Kelinci', emoji: '🐰', cat: 'pet', sound: 'Squeak' },
+  { en: 'Mouse', idn: 'Tikus', emoji: '🐭', cat: 'pet', sound: 'Squeak' },
+  { en: 'Parrot', idn: 'Beo', emoji: '🦜', cat: 'pet', sound: 'Hello' },
+  { en: 'Cow', idn: 'Sapi', emoji: '🐮', cat: 'farm', sound: 'Moo' },
+  { en: 'Pig', idn: 'Babi', emoji: '🐷', cat: 'farm', sound: 'Oink' },
+  { en: 'Sheep', idn: 'Domba', emoji: '🐑', cat: 'farm', sound: 'Baa' },
+  { en: 'Goat', idn: 'Kambing', emoji: '🐐', cat: 'farm', sound: 'Maa' },
+  { en: 'Horse', idn: 'Kuda', emoji: '🐴', cat: 'farm', sound: 'Neigh' },
+  // 11-20
+  { en: 'Chicken', idn: 'Ayam', emoji: '🐔', cat: 'farm', sound: 'Cluck' },
+  { en: 'Duck', idn: 'Bebek', emoji: '🦆', cat: 'farm', sound: 'Quack' },
+  { en: 'Donkey', idn: 'Keledai', emoji: '🫏', cat: 'farm', sound: 'Hee-haw' },
+  { en: 'Turkey', idn: 'Kalkun', emoji: '🦃', cat: 'farm', sound: 'Gobble' },
+  { en: 'Elephant', idn: 'Gajah', emoji: '🐘', cat: 'wild', sound: 'Trumpet' },
+  { en: 'Lion', idn: 'Singa', emoji: '🦁', cat: 'wild', sound: 'Roar' },
+  { en: 'Tiger', idn: 'Harimau', emoji: '🐯', cat: 'wild', sound: 'Roar' },
+  { en: 'Bear', idn: 'Beruang', emoji: '🐻', cat: 'wild', sound: 'Growl' },
+  { en: 'Monkey', idn: 'Monyet', emoji: '🐵', cat: 'wild', sound: 'Ooh ooh' },
+  { en: 'Zebra', idn: 'Zebra', emoji: '🦓', cat: 'wild', sound: 'Neigh' },
+  // 21-30
+  { en: 'Giraffe', idn: 'Jerapah', emoji: '🦒', cat: 'wild', sound: 'Hum' },
+  { en: 'Kangaroo', idn: 'Kanguru', emoji: '🦘', cat: 'wild', sound: 'Chortle' },
+  { en: 'Deer', idn: 'Rusa', emoji: '🦌', cat: 'wild', sound: 'Bellow' },
+  { en: 'Buffalo', idn: 'Kerbau', emoji: '🐃', cat: 'wild', sound: 'Moo' },
+  { en: 'Camel', idn: 'Unta', emoji: '🐪', cat: 'wild', sound: 'Grunt' },
+  { en: 'Llama', idn: 'Llama', emoji: '🦙', cat: 'wild', sound: 'Hum' },
+  { en: 'Hippo', idn: 'Kuda Nil', emoji: '🦛', cat: 'wild', sound: 'Grunt' },
+  { en: 'Rhino', idn: 'Badak', emoji: '🦏', cat: 'wild', sound: 'Snort' },
+  { en: 'Panda', idn: 'Panda', emoji: '🐼', cat: 'wild', sound: 'Bleat' },
+  { en: 'Bird', idn: 'Burung', emoji: '🐦', cat: 'bird', sound: 'Tweet' },
+  // 31-40
+  { en: 'Owl', idn: 'Burung Hantu', emoji: '🦉', cat: 'bird', sound: 'Hoot' },
+  { en: 'Eagle', idn: 'Elang', emoji: '🦅', cat: 'bird', sound: 'Screech' },
+  { en: 'Penguin', idn: 'Penguin', emoji: '🐧', cat: 'bird', sound: 'Squawk' },
+  { en: 'Peacock', idn: 'Merak', emoji: '🦚', cat: 'bird', sound: 'Scream' },
+  { en: 'Bat', idn: 'Kelelawar', emoji: '🦇', cat: 'bird', sound: 'Screech' },
+  { en: 'Fish', idn: 'Ikan', emoji: '🐟', cat: 'sea', sound: 'Blub' },
+  { en: 'Shark', idn: 'Hiu', emoji: '🦈', cat: 'sea', sound: 'Chomp' },
+  { en: 'Dolphin', idn: 'Lumba-lumba', emoji: '🐬', cat: 'sea', sound: 'Click' },
+  { en: 'Whale', idn: 'Paus', emoji: '🐳', cat: 'sea', sound: 'Sing' },
+  { en: 'Octopus', idn: 'Gurita', emoji: '🐙', cat: 'sea', sound: 'Squish' },
+  // 41-50
+  { en: 'Crab', idn: 'Kepiting', emoji: '🦀', cat: 'sea', sound: 'Click' },
+  { en: 'Turtle', idn: 'Penyu', emoji: '🐢', cat: 'sea', sound: 'Hiss' },
+  { en: 'Seal', idn: 'Anjing Laut', emoji: '🦭', cat: 'sea', sound: 'Bark' },
+  { en: 'Snake', idn: 'Ular', emoji: '🐍', cat: 'reptile', sound: 'Hiss' },
+  { en: 'Frog', idn: 'Kodok', emoji: '🐸', cat: 'reptile', sound: 'Croak' },
+  { en: 'Crocodile', idn: 'Buaya', emoji: '🐊', cat: 'reptile', sound: 'Snap' },
+  { en: 'Butterfly', idn: 'Kupu-kupu', emoji: '🦋', cat: 'insect', sound: 'Flutter' },
+  { en: 'Bee', idn: 'Lebah', emoji: '🐝', cat: 'insect', sound: 'Buzz' },
+  { en: 'Ant', idn: 'Semut', emoji: '🐜', cat: 'insect', sound: 'Crawl' },
+  { en: 'Spider', idn: 'Laba-laba', emoji: '🕷️', cat: 'insect', sound: 'Hiss' },
+  // 51-60
+  { en: 'Snail', idn: 'Siput', emoji: '🐌', cat: 'insect', sound: 'Slide' },
+  { en: 'Fox', idn: 'Rubah', emoji: '🦊', cat: 'wild', sound: 'Yip' },
+  { en: 'Wolf', idn: 'Serigala', emoji: '🐺', cat: 'wild', sound: 'Howl' },
+  { en: 'Cheetah', idn: 'Cheetah', emoji: '🐆', cat: 'wild', sound: 'Purr' },
+  { en: 'Koala', idn: 'Koala', emoji: '🐨', cat: 'wild', sound: 'Snore' },
+  { en: 'Sloth', idn: 'Sloth', emoji: '🦥', cat: 'wild', sound: 'Squeak' },
+  { en: 'Squirrel', idn: 'Tupai', emoji: '🐿️', cat: 'wild', sound: 'Chatter' },
+  { en: 'Raccoon', idn: 'Rakun', emoji: '🦝', cat: 'wild', sound: 'Hiss' },
+  { en: 'Skunk', idn: 'Sigung', emoji: '🦨', cat: 'wild', sound: 'Spray' },
+  { en: 'Beaver', idn: 'Berang-berang', emoji: '🦫', cat: 'wild', sound: 'Slap' },
+  // 61-70
+  { en: 'Gorilla', idn: 'Gorila', emoji: '🦍', cat: 'wild', sound: 'Grunt' },
+  { en: 'Orangutan', idn: 'Orangutan', emoji: '🦧', cat: 'wild', sound: 'Grumble' },
+  { en: 'Polar Bear', idn: 'Beruang Kutub', emoji: '🐻‍❄️', cat: 'wild', sound: 'Growl' },
+  { en: 'Hamster', idn: 'Hamster', emoji: '🐹', cat: 'pet', sound: 'Squeak' },
+  { en: 'Goldfish', idn: 'Ikan Mas', emoji: '🐟', cat: 'pet', sound: 'Blub' },
+  { en: 'Hedgehog', idn: 'Landak', emoji: '🦔', cat: 'pet', sound: 'Snort' },
+  { en: 'Rooster', idn: 'Ayam Jantan', emoji: '🐓', cat: 'farm', sound: 'Cock-a-doodle' },
+  { en: 'Chick', idn: 'Anak Ayam', emoji: '🐤', cat: 'farm', sound: 'Cheep' },
+  { en: 'Ostrich', idn: 'Burung Unta', emoji: '🦤', cat: 'bird', sound: 'Boom' },
+  { en: 'Flamingo', idn: 'Flamingo', emoji: '🦩', cat: 'bird', sound: 'Honk' },
+  // 71-80
+  { en: 'Swan', idn: 'Angsa', emoji: '🦢', cat: 'bird', sound: 'Hiss' },
+  { en: 'Dove', idn: 'Merpati', emoji: '🕊️', cat: 'bird', sound: 'Coo' },
+  { en: 'Crow', idn: 'Gagak', emoji: '🐦‍⬛', cat: 'bird', sound: 'Caw' },
+  { en: 'Pigeon', idn: 'Merpati Kota', emoji: '🐦', cat: 'bird', sound: 'Coo' },
+  { en: 'Woodpecker', idn: 'Pelatuk', emoji: '🪶', cat: 'bird', sound: 'Drum' },
+  { en: 'Jellyfish', idn: 'Ubur-ubur', emoji: '🪼', cat: 'sea', sound: 'Squish' },
+  { en: 'Lobster', idn: 'Lobster', emoji: '🦞', cat: 'sea', sound: 'Snap' },
+  { en: 'Shrimp', idn: 'Udang', emoji: '🦐', cat: 'sea', sound: 'Snap' },
+  { en: 'Squid', idn: 'Cumi-cumi', emoji: '🦑', cat: 'sea', sound: 'Suck' },
+  { en: 'Pufferfish', idn: 'Ikan Buntal', emoji: '🐡', cat: 'sea', sound: 'Blub' },
+  // 81-90
+  { en: 'Tropical Fish', idn: 'Ikan Tropis', emoji: '🐠', cat: 'sea', sound: 'Blub' },
+  { en: 'Otter', idn: 'Berang Laut', emoji: '🦦', cat: 'sea', sound: 'Squeak' },
+  { en: 'Starfish', idn: 'Bintang Laut', emoji: '⭐', cat: 'sea', sound: 'Pulsate' },
+  { en: 'Clam', idn: 'Kerang', emoji: '🦪', cat: 'sea', sound: 'Snap' },
+  { en: 'Iguana', idn: 'Iguana', emoji: '🦎', cat: 'reptile', sound: 'Hiss' },
+  { en: 'Chameleon', idn: 'Bunglon', emoji: '🦎', cat: 'reptile', sound: 'Hiss' },
+  { en: 'Mosquito', idn: 'Nyamuk', emoji: '🦟', cat: 'insect', sound: 'Buzz' },
+  { en: 'Fly', idn: 'Lalat', emoji: '🪰', cat: 'insect', sound: 'Buzz' },
+  { en: 'Dragonfly', idn: 'Capung', emoji: '🦗', cat: 'insect', sound: 'Buzz' },
+  { en: 'Grasshopper', idn: 'Belalang', emoji: '🦗', cat: 'insect', sound: 'Chirp' },
+  // 91-100
+  { en: 'Cricket', idn: 'Jangkrik', emoji: '🦗', cat: 'insect', sound: 'Chirp' },
+  { en: 'Ladybug', idn: 'Kepik', emoji: '🐞', cat: 'insect', sound: 'Crawl' },
+  { en: 'Beetle', idn: 'Kumbang', emoji: '🪲', cat: 'insect', sound: 'Crawl' },
+  { en: 'Caterpillar', idn: 'Ulat', emoji: '🐛', cat: 'insect', sound: 'Munch' },
+  { en: 'Centipede', idn: 'Lipan', emoji: '🐛', cat: 'insect', sound: 'Crawl' },
+  { en: 'Ferret', idn: 'Musang', emoji: '🦫', cat: 'pet', sound: 'Dook' },
+  { en: 'Vulture', idn: 'Burung Bangkai', emoji: '🦅', cat: 'bird', sound: 'Screech' },
+  { en: 'Pelican', idn: 'Pelikan', emoji: '🦢', cat: 'bird', sound: 'Grunt' },
+  { en: 'Macaw', idn: 'Burung Macaw', emoji: '🦜', cat: 'bird', sound: 'Squawk' },
+  { en: 'Mole', idn: 'Tikus Tanah', emoji: '🐀', cat: 'wild', sound: 'Squeak' },
+  // 101-124 (Wild Mammals Extra)
+  { en: 'Bison', idn: 'Bison', emoji: '🐃', cat: 'wild', sound: 'Grunt' },
+  { en: 'Coyote', idn: 'Koyot', emoji: '🐶', cat: 'wild', sound: 'Howl' },
+  { en: 'Jaguar', idn: 'Jaguar', emoji: '🐆', cat: 'wild', sound: 'Roar' },
+  { en: 'Leopard', idn: 'Macan Tutul', emoji: '🐆', cat: 'wild', sound: 'Roar' },
+  { en: 'Panther', idn: 'Panther', emoji: '🐆', cat: 'wild', sound: 'Roar' },
+  { en: 'Hyena', idn: 'Hiena', emoji: '🦊', cat: 'wild', sound: 'Laugh' },
+  { en: 'Wildebeest', idn: 'Nyama', emoji: '🐂', cat: 'wild', sound: 'Moo' },
+  { en: 'Gazelle', idn: 'Gazel', emoji: '🦌', cat: 'wild', sound: 'Bark' },
+  { en: 'Antelope', idn: 'Antelop', emoji: '🦌', cat: 'wild', sound: 'Bark' },
+  { en: 'Baboon', idn: 'Babun', emoji: '🐒', cat: 'wild', sound: 'Bark' },
+  { en: 'Lemur', idn: 'Lemur', emoji: '🐒', cat: 'wild', sound: 'Howl' },
+  { en: 'Meerkat', idn: 'Surikat', emoji: '🦝', cat: 'wild', sound: 'Purr' },
+  { en: 'Mongoose', idn: 'Garangan', emoji: '🦝', cat: 'wild', sound: 'Giggle' },
+  { en: 'Warthog', idn: 'Babi Hutan', emoji: '🐗', cat: 'wild', sound: 'Grunt' },
+  { en: 'Tapir', idn: 'Tapir', emoji: '🐘', cat: 'wild', sound: 'Squeak' },
+  { en: 'Capybara', idn: 'Kapibara', emoji: '🦫', cat: 'wild', sound: 'Squeak' },
+  { en: 'Porcupine', idn: 'Landak Besar', emoji: '🦔', cat: 'wild', sound: 'Rattle' },
+  { en: 'Wombat', idn: 'Wombat', emoji: '🦡', cat: 'wild', sound: 'Chirp' },
+  { en: 'Platypus', idn: 'Platipus', emoji: '🦫', cat: 'wild', sound: 'Growl' },
+  { en: 'Badger', idn: 'Sigung', emoji: '🦡', cat: 'wild', sound: 'Hiss' },
+  { en: 'Lynx', idn: 'Lynx', emoji: '🐱', cat: 'wild', sound: 'Hiss' },
+  { en: 'Quokka', idn: 'Kuoka', emoji: '🦡', cat: 'wild', sound: 'Squeak' },
+  { en: 'Wallaby', idn: 'Wallaby', emoji: '🦘', cat: 'wild', sound: 'Click' },
+  { en: 'Ocelot', idn: 'Oselot', emoji: '🐱', cat: 'wild', sound: 'Meow' },
+  // 125-141 (Birds Extra)
+  { en: 'Toucan', idn: 'Tukan', emoji: '🦜', cat: 'bird', sound: 'Croak' },
+  { en: 'Cockatoo', idn: 'Kakaktua', emoji: '🦜', cat: 'bird', sound: 'Screech' },
+  { en: 'Canary', idn: 'Kenari', emoji: '🐦', cat: 'bird', sound: 'Chirp' },
+  { en: 'Sparrow', idn: 'Pipit', emoji: '🐦', cat: 'bird', sound: 'Chirp' },
+  { en: 'Robin', idn: 'Robin', emoji: '🐦', cat: 'bird', sound: 'Chirp' },
+  { en: 'Magpie', idn: 'Murai', emoji: '🐦', cat: 'bird', sound: 'Chatter' },
+  { en: 'Hummingbird', idn: 'Kolibri', emoji: '🐦', cat: 'bird', sound: 'Hum' },
+  { en: 'Kingfisher', idn: 'Raja Udang', emoji: '🐦', cat: 'bird', sound: 'Peep' },
+  { en: 'Heron', idn: 'Kuntul', emoji: '🦩', cat: 'bird', sound: 'Squawk' },
+  { en: 'Crane', idn: 'Bangau', emoji: '🦩', cat: 'bird', sound: 'Bugle' },
+  { en: 'Albatross', idn: 'Albatros', emoji: '🐦', cat: 'bird', sound: 'Squawk' },
+  { en: 'Seagull', idn: 'Camar', emoji: '🐦', cat: 'bird', sound: 'Mew' },
+  { en: 'Falcon', idn: 'Falkon', emoji: '🦅', cat: 'bird', sound: 'Kak' },
+  { en: 'Quail', idn: 'Puyuh', emoji: '🐦', cat: 'bird', sound: 'Whistle' },
+  { en: 'Goose', idn: 'Angsa', emoji: '🦢', cat: 'bird', sound: 'Honk' },
+  { en: 'Woodpecker', idn: 'Pelatuk', emoji: '🐦', cat: 'bird', sound: 'Drum' },
+  { en: 'Macaw', idn: 'Macaw', emoji: '🦜', cat: 'bird', sound: 'Squawk' },
+  // 142-156 (Sea & Aquatic Extra)
+  { en: 'Walrus', idn: 'Walrus', emoji: '🦭', cat: 'sea', sound: 'Bark' },
+  { en: 'Narwhal', idn: 'Narwhal', emoji: '🐳', cat: 'sea', sound: 'Click' },
+  { en: 'Orca', idn: 'Paus Orca', emoji: '🐬', cat: 'sea', sound: 'Click' },
+  { en: 'Manatee', idn: 'Sapi Laut', emoji: '🐋', cat: 'sea', sound: 'Squeak' },
+  { en: 'Seahorse', idn: 'Kuda Laut', emoji: '🦄', cat: 'sea', sound: 'Click' },
+  { en: 'Stingray', idn: 'Pari', emoji: '🐟', cat: 'sea', sound: 'Click' },
+  { en: 'Swordfish', idn: 'Ikan Pedang', emoji: '🐟', cat: 'sea', sound: 'Swish' },
+  { en: 'Piranha', idn: 'Piranha', emoji: '🐟', cat: 'sea', sound: 'Bite' },
+  { en: 'Salmon', idn: 'Salmon', emoji: '🐟', cat: 'sea', sound: 'Splash' },
+  { en: 'Anglerfish', idn: 'Ikan Pemancing', emoji: '🐟', cat: 'sea', sound: 'Lure' },
+  { en: 'Clownfish', idn: 'Ikan Badut', emoji: '🐠', cat: 'sea', sound: 'Click' },
+  { en: 'Sea Urchin', idn: 'Bulu Babi', emoji: '🦔', cat: 'sea', sound: 'Silent' },
+  { en: 'Cuttlefish', idn: 'Sotong', emoji: '🦑', cat: 'sea', sound: 'Squish' },
+  { en: 'Sea Turtle', idn: 'Penyu Laut', emoji: '🐢', cat: 'sea', sound: 'Grunt' },
+  { en: 'Eel', idn: 'Belut', emoji: '🐍', cat: 'sea', sound: 'Slurp' },
+  // 157-164 (Reptiles & Amphibians Extra)
+  { en: 'Alligator', idn: 'Aligator', emoji: '🐊', cat: 'reptile', sound: 'Bellow' },
+  { en: 'Gecko', idn: 'Tokek', emoji: '🦎', cat: 'reptile', sound: 'Click' },
+  { en: 'Komodo Dragon', idn: 'Komodo', emoji: '🦎', cat: 'reptile', sound: 'Hiss' },
+  { en: 'Salamander', idn: 'Salamander', emoji: '🦎', cat: 'reptile', sound: 'Squeak' },
+  { en: 'Toad', idn: 'Katak Bufo', emoji: '🐸', cat: 'reptile', sound: 'Croak' },
+  { en: 'Tortoise', idn: 'Kura Darat', emoji: '🐢', cat: 'reptile', sound: 'Hiss' },
+  { en: 'Iguana', idn: 'Iguana', emoji: '🦎', cat: 'reptile', sound: 'Sneeze' },
+  { en: 'Chameleon', idn: 'Bunglon', emoji: '🦎', cat: 'reptile', sound: 'Hiss' },
+  // 165-174 (Insects Extra)
+  { en: 'Wasp', idn: 'Tawon', emoji: '🐝', cat: 'insect', sound: 'Buzz' },
+  { en: 'Termite', idn: 'Rayap', emoji: '🐜', cat: 'insect', sound: 'Click' },
+  { en: 'Scorpion', idn: 'Kalajengking', emoji: '🦂', cat: 'insect', sound: 'Hiss' },
+  { en: 'Tarantula', idn: 'Tarantula', emoji: '🕷️', cat: 'insect', sound: 'Hiss' },
+  { en: 'Millipede', idn: 'Kaki Seribu', emoji: '🐛', cat: 'insect', sound: 'Crawl' },
+  { en: 'Earthworm', idn: 'Cacing Tanah', emoji: '🪱', cat: 'insect', sound: 'Slither' },
+  { en: 'Mantis', idn: 'Mantis', emoji: '🦗', cat: 'insect', sound: 'Rustle' },
+  { en: 'Cicada', idn: 'Tonggeret', emoji: '🦗', cat: 'insect', sound: 'Buzz' },
+  { en: 'Firefly', idn: 'Kunang-kunang', emoji: '🐞', cat: 'insect', sound: 'Flash' },
+  { en: 'Cockroach', idn: 'Kecoa', emoji: '🪳', cat: 'insect', sound: 'Scurry' },
+  // 175-180 (Pets & Farm Extra)
+  { en: 'Guinea Pig', idn: 'Marmut', emoji: '🐹', cat: 'pet', sound: 'Wheek' },
+  { en: 'Alpaca', idn: 'Alpaka', emoji: '🦙', cat: 'farm', sound: 'Hum' },
+  { en: 'Chinchilla', idn: 'Chinchilla', emoji: '🐭', cat: 'pet', sound: 'Squeak' },
+  { en: 'Gerbil', idn: 'Gerbil', emoji: '🐹', cat: 'pet', sound: 'Squeak' },
+  { en: 'Koi Fish', idn: 'Ikan Koi', emoji: '🐟', cat: 'pet', sound: 'Blub' },
+  { en: 'Goose', idn: 'Angsa', emoji: '🦢', cat: 'farm', sound: 'Honk' },
+  // 181-200 (Prehistoric)
+  { en: 'T-Rex', idn: 'Tyrannosaurus', emoji: '🦖', cat: 'prehistoric', sound: 'Roar' },
+  { en: 'Triceratops', idn: 'Triceratops', emoji: '🦕', cat: 'prehistoric', sound: 'Bellow' },
+  { en: 'Stegosaurus', idn: 'Stegosaurus', emoji: '🦕', cat: 'prehistoric', sound: 'Grunt' },
+  { en: 'Brachiosaurus', idn: 'Brachiosaurus', emoji: '🦕', cat: 'prehistoric', sound: 'Rumble' },
+  { en: 'Velociraptor', idn: 'Velociraptor', emoji: '🦖', cat: 'prehistoric', sound: 'Screech' },
+  { en: 'Pterodactyl', idn: 'Pterodactyl', emoji: '🦣', cat: 'prehistoric', sound: 'Screech' },
+  { en: 'Mammoth', idn: 'Mamut', emoji: '🦣', cat: 'prehistoric', sound: 'Trumpet' },
+  { en: 'Saber-toothed Tiger', idn: 'Harimau Taring', emoji: '🐅', cat: 'prehistoric', sound: 'Roar' },
+  { en: 'Dodo', idn: 'Dodo', emoji: '🦤', cat: 'prehistoric', sound: 'Cluck' },
+  { en: 'Diplodocus', idn: 'Diplodocus', emoji: '🦕', cat: 'prehistoric', sound: 'Whip' },
+  { en: 'Ankylosaurus', idn: 'Ankylosaurus', emoji: '🦕', cat: 'prehistoric', sound: 'Grunt' },
+  { en: 'Spinosaurus', idn: 'Spinosaurus', emoji: '🦖', cat: 'prehistoric', sound: 'Roar' },
+  { en: 'Parasaurolophus', idn: 'Parasaurolophus', emoji: '🦕', cat: 'prehistoric', sound: 'Honk' },
+  { en: 'Styracosaurus', idn: 'Styracosaurus', emoji: '🦕', cat: 'prehistoric', sound: 'Bellow' },
+  { en: 'Pachycephalosaurus', idn: 'Pachycephalosaurus', emoji: '🦕', cat: 'prehistoric', sound: 'Bonk' },
+  { en: 'Iguanodon', idn: 'Iguanodon', emoji: '🦕', cat: 'prehistoric', sound: 'Grunt' },
+  { en: 'Archaeopteryx', idn: 'Archaeopteryx', emoji: '🦖', cat: 'prehistoric', sound: 'Squawk' },
+  { en: 'Plesiosaurus', idn: 'Plesiosaurus', emoji: '🐢', cat: 'prehistoric', sound: 'Gurgle' },
+  { en: 'Dimetrodon', idn: 'Dimetrodon', emoji: '🦎', cat: 'prehistoric', sound: 'Hiss' },
+  { en: 'Megalodon', idn: 'Megalodon', emoji: '🦈', cat: 'prehistoric', sound: 'Chomp' }
+];
+
+// ============= CONVERSATION =============
+const dialogue = [
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Good morning, Cio! Today we are going to learn about animals. Are you ready?' },
+  { role: 'student', name: 'Student (Cio)', text: 'Good morning, Miss Nanda! Yes, I love animals! I want to learn all their names.' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Wonderful! Let us start. What is your favorite animal?' },
+  { role: 'student', name: 'Student (Cio)', text: 'My favorite animal is the lion. I think lions are very brave and strong.' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Great choice! A lion says "roar". Can you roar like a lion?' },
+  { role: 'student', name: 'Student (Cio)', text: 'Roar! Roar! Was that good, Miss Nanda?' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'That was perfect! Now, what animal says "moo"?' },
+  { role: 'student', name: 'Student (Cio)', text: 'A cow says "moo". Cows give us milk to drink.' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Excellent! And what animal says "meow"?' },
+  { role: 'student', name: 'Student (Cio)', text: 'A cat says "meow". I have a cat at home. Her name is Luna.' },
+  { role: 'tutor', name: 'Tutor (Ms. nanda)', text: 'How lovely! Do you know what a dog says?' },
+  { role: 'student', name: 'Student (Cio)', text: 'A dog says "woof". My friend has a big brown dog.' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Spot on! Now, can you name a big animal with a long trunk?' },
+  { role: 'student', name: 'Student (Cio)', text: 'That is an elephant! Elephants have big ears and long trunks.' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Brilliant! Last question. What animal lives in the sea and has eight arms?' },
+  { role: 'student', name: 'Student (Cio)', text: 'An octopus! Octopuses are very smart sea animals.' },
+  { role: 'tutor', name: 'Tutor (Ms. Nanda)', text: 'Amazing work, Cio! You really know your animals well.' }
+];
+
+// ============= QUIZ =============
+const questions = [
+  { q: 'What did they learn about today?', opts: ['Body parts', 'Animals', 'Colors', 'Food'], correct: 1 },
+  { q: 'What is the student\'s favorite animal?', opts: ['Tiger', 'Elephant', 'Lion', 'Bear'], correct: 2 },
+  { q: 'What does a lion say?', opts: ['Moo', 'Roar', 'Meow', 'Woof'], correct: 1 },
+  { q: 'What animal says "moo"?', opts: ['Cow', 'Sheep', 'Horse', 'Pig'], correct: 0 },
+  { q: 'What animal says "meow"?', opts: ['Dog', 'Rabbit', 'Cat', 'Mouse'], correct: 2 },
+  { q: 'What is the name of the student\'s cat?', opts: ['Luna', 'Bella', 'Molly', 'Daisy'], correct: 0 },
+  { q: 'What does a dog say?', opts: ['Woof', 'Moo', 'Roar', 'Baa'], correct: 0 },
+  { q: 'What big animal has a long trunk?', opts: ['Hippo', 'Rhino', 'Elephant', 'Buffalo'], correct: 2 },
+  { q: 'What sea animal has eight arms?', opts: ['Shark', 'Octopus', 'Crab', 'Fish'], correct: 1 },
+  { q: 'What does a cow give us?', opts: ['Eggs', 'Wool', 'Milk', 'Meat'], correct: 2 }
+];
+
+// ============= STORIES =============
+const stories = [
+  {
+    title: "The Brave Little Lion",
+    text: "Leo is a small lion cub who lives in the savanna. Every morning, Leo practices his roar behind a tall tree. One day, a big bug scared his sister. Leo ran fast and roared so loud that the bug flew away. Now everyone calls Leo the bravest little lion!",
+    questions: [
+      { q: 'What is the lion\'s name?', a: 'Leo' },
+      { q: 'Where does Leo live?', a: 'savanna' },
+      { q: 'What did Leo scare away?', a: 'bug' }
+    ]
+  },
+  {
+    title: "Molly the Milk Cow",
+    text: "Molly is a black and white cow on a happy farm. She eats green grass all day long. Every morning, the farmer milks Molly. Her milk is sweet and white. The farmer sells the milk at the market.",
+    questions: [
+      { q: 'What is the cow\'s name?', a: 'Molly' },
+      { q: 'What does Molly eat?', a: 'grass' },
+      { q: 'Where does the farmer sell milk?', a: 'market' }
+    ]
+  },
+  {
+    title: "Tom's Cat Luna",
+    text: "Tom has a small orange cat named Luna. Luna loves to sleep on Tom's bed. Every night, Luna catches mice in the kitchen. Tom gives Luna fish as a reward. Luna purrs happily when she eats.",
+    questions: [
+      { q: 'What is the cat\'s name?', a: 'Luna' },
+      { q: 'What color is Luna?', a: 'orange' },
+      { q: 'What does Luna catch?', a: 'mice' }
+    ]
+  },
+  {
+    title: "The Smart Dolphin",
+    text: "Daisy is a dolphin who lives in the deep blue sea. She swims very fast with her friends. Daisy can jump high out of the water. Sometimes she plays games with children on boats. Daisy is the smartest dolphin in the ocean!",
+    questions: [
+      { q: 'What is the dolphin\'s name?', a: 'Daisy' },
+      { q: 'Where does Daisy live?', a: 'sea' },
+      { q: 'What can Daisy do?', a: 'jump' }
+    ]
+  },
+  {
+    title: "Ellie the Elephant",
+    text: "Ellie is a baby elephant with very big ears. She uses her long trunk to drink water. Ellie loves to eat leaves from tall trees. Her mother walks slowly beside her. At night, Ellie sleeps under the stars.",
+    questions: [
+      { q: 'What is the elephant\'s name?', a: 'Ellie' },
+      { q: 'What does Ellie use to drink?', a: 'trunk' },
+      { q: 'What does Ellie eat?', a: 'leaves' }
+    ]
+  },
+  {
+    title: "The Happy Farm Dog",
+    text: "Max is a big brown dog on a farm. He helps the farmer herd the sheep. Every evening, Max sits by the door. He barks loudly if a stranger comes near. Max is a very good farm dog!",
+    questions: [
+      { q: 'What is the dog\'s name?', a: 'Max' },
+      { q: 'What color is Max?', a: 'brown' },
+      { q: 'What does Max herd?', a: 'sheep' }
+    ]
+  },
+  {
+    title: "The Clever Octopus",
+    text: "Oscar is an octopus with eight long arms. He lives in a small cave under the sea. Oscar can change his color to hide from big fish. He uses his arms to open shells for food. Oscar is the cleverest animal in the coral reef!",
+    questions: [
+      { q: 'What is the octopus\'s name?', a: 'Oscar' },
+      { q: 'How many arms does Oscar have?', a: 'eight' },
+      { q: 'What can Oscar do to hide?', a: 'change color' }
+    ]
+  },
+  {
+    title: "The Tiny Ant",
+    text: "Andy is a tiny ant who works all day. He carries food to his ant hill. Andy walks in a long line with his friends. They work together as a team. Soon, the ant hill is full of food for winter!",
+    questions: [
+      { q: 'What is the ant\'s name?', a: 'Andy' },
+      { q: 'What does Andy carry?', a: 'food' },
+      { q: 'Where does Andy put the food?', a: 'ant hill' }
+    ]
+  },
+  {
+    title: "The Beautiful Butterfly",
+    text: "Bella was a small caterpillar who ate leaves. One day, she made a cocoon on a branch. After two weeks, Bella came out as a butterfly! Her wings were orange and black. Bella flew happily from flower to flower!",
+    questions: [
+      { q: 'What was Bella before?', a: 'caterpillar' },
+      { q: 'What did Bella make?', a: 'cocoon' },
+      { q: 'What color are Bella\'s wings?', a: 'orange' }
+    ]
+  },
+  {
+    title: "The Fast Cheetah",
+    text: "Chester is a cheetah who runs very fast. He has spots all over his yellow fur. Chester lives on the wide grassland. He can run faster than any other animal. But Chester only runs for short distances!",
+    questions: [
+      { q: 'What animal is Chester?', a: 'cheetah' },
+      { q: 'What is on Chester\'s fur?', a: 'spots' },
+      { q: 'Where does Chester live?', a: 'grassland' }
+    ]
+  }
+];
+
+// ============= SPEECH =============
+const synth = window.speechSynthesis;
+let voices = [];
+function loadVoices() { voices = synth.getVoices(); }
+loadVoices();
+if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+
+function speak(text, rate = 0.9, onEnd = null) {
+  if (!synth) { showToast('Speech not supported'); return; }
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = rate;
+  u.pitch = 1.1;
+  const enVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Female')) || voices.find(v => v.lang.startsWith('en'));
+  if (enVoice) u.voice = enVoice;
+  if (onEnd) u.onend = onEnd;
+  synth.speak(u);
+}
+function stopSpeaking() {
+  if (synth) synth.cancel();
+  document.querySelectorAll('.mini-btn.speaking').forEach(b => b.classList.remove('speaking'));
+}
+
+// ============= TOAST =============
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastText').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+
+// ============= SLIDE NAVIGATION =============
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('dotnav');
+let currentSlide = 0;
+const totalSlides = slides.length;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.title = 'Slide ' + (i + 1);
+  dot.addEventListener('click', () => goToSlide(i + 1));
+  dotsContainer.appendChild(dot);
+});
+
+function goToSlide(n) {
+  if (n < 1 || n > totalSlides) return;
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'prev');
+    if (i === n - 1) s.classList.add('active');
+    else if (i < n - 1) s.classList.add('prev');
+  });
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === n - 1));
+  currentSlide = n - 1;
+  updateProgress();
+  stopSpeaking();
+  document.getElementById('prevBtn').disabled = (n === 1);
+  document.getElementById('nextBtn').disabled = (n === totalSlides);
+}
+function updateProgress() {
+  const pct = ((currentSlide + 1) / totalSlides) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+}
+document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentSlide));
+document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentSlide + 2));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') goToSlide(currentSlide + 2);
+  if (e.key === 'ArrowLeft') goToSlide(currentSlide);
+});
+updateProgress();
+document.getElementById('prevBtn').disabled = true;
+
+// ============= ANIMAL GALLERY =============
+const gallery = document.getElementById('animalGallery');
+let currentFilter = 'all';
+let currentDetail = animals[15]; // Lion default
+
+function renderGallery() {
+  const search = document.getElementById('animalSearch').value.toLowerCase();
+  gallery.innerHTML = '';
+  animals.forEach((a, i) => {
+    if (currentFilter !== 'all' && a.cat !== currentFilter) return;
+    if (search && !a.en.toLowerCase().includes(search) && !a.idn.toLowerCase().includes(search)) return;
+    const card = document.createElement('div');
+    card.className = 'animal-card';
+    card.dataset.idx = i;
+    card.innerHTML = `
+      <button class="animal-sound-btn" title="Hear name"><i class="fa-solid fa-volume-high"></i></button>
+      <span class="animal-emoji">${a.emoji}</span>
+      <div class="animal-en">${a.en}</div>
+      <div class="animal-id">${a.idn}</div>
+    `;
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.animal-sound-btn')) {
+        e.stopPropagation();
+        speak(a.en);
+        showDetail(a, card);
+      } else {
+        selectAnimal(a, card);
+      }
+    });
+    gallery.appendChild(card);
+  });
+  if (gallery.children.length === 0) {
+    gallery.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">No animals found. Try a different search!</div>';
+  }
+}
+
+function selectAnimal(a, el) {
+  speak(a.en);
+  showDetail(a, el);
+  document.querySelectorAll('.animal-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function showDetail(a, el) {
+  currentDetail = a;
+  const detail = document.getElementById('animalDetail');
+  document.getElementById('detailEmoji').textContent = a.emoji;
+  document.getElementById('detailEn').textContent = a.en;
+  document.getElementById('detailId').textContent = a.idn;
+  document.getElementById('detailSound').textContent = a.sound;
+  detail.classList.add('show');
+}
+
+renderGallery();
+
+document.getElementById('animalSearch').addEventListener('input', renderGallery);
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    currentFilter = chip.dataset.cat;
+    renderGallery();
+  });
+});
+
+// ============= DIALOGUE =============
+const dialogueLines = document.getElementById('dialogueLines');
+dialogue.forEach((line, i) => {
+  const div = document.createElement('div');
+  div.className = 'line ' + line.role;
+  div.innerHTML = `
+    <div class="avatar ${line.role}">${line.role === 'tutor' ? 'T' : 'S'}</div>
+    <div class="line-content">
+      <div class="line-name">${line.name}</div>
+      <div class="line-text">${line.text}</div>
+      <div class="line-actions">
+        <button class="mini-btn" data-i="${i}"><i class="fa-solid fa-volume-high"></i> Listen</button>
+        <button class="mini-btn" data-i="${i}" data-repeat="1"><i class="fa-solid fa-rotate-right"></i> Repeat Slowly</button>
+      </div>
+    </div>
+  `;
+  dialogueLines.appendChild(div);
+});
+
+document.querySelectorAll('.line-actions .mini-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const i = +btn.dataset.i;
+    const rate = btn.dataset.repeat ? 0.65 : 0.9;
+    document.querySelectorAll('.line-actions .mini-btn').forEach(b => b.classList.remove('speaking'));
+    btn.classList.add('speaking');
+    speak(dialogue[i].text, rate, () => btn.classList.remove('speaking'));
+  });
+});
+
+function speakDialogue() {
+  stopSpeaking();
+  let i = 0;
+  function next() {
+    if (i >= dialogue.length) return;
+    const btns = document.querySelectorAll('.line-actions .mini-btn');
+    btns.forEach(b => b.classList.remove('speaking'));
+    if (btns[i*2]) btns[i*2].classList.add('speaking');
+    speak(dialogue[i].text, 0.95, () => {
+      if (btns[i*2]) btns[i*2].classList.remove('speaking');
+      i++;
+      setTimeout(next, 300);
+    });
+  }
+  next();
+}
+
+// ============= QUIZ =============
+const quizContainer = document.getElementById('quizContainer');
+const quizState = {};
+
+questions.forEach((q, i) => {
+  quizState[i] = false;
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = 'qcard-' + i;
+  card.innerHTML = `
+    <div class="q-head">
+      <span class="q-num">${i+1}</span>
+      <div class="q-text">${q.q}</div>
+    </div>
+    <div class="q-options">
+      ${q.opts.map((o, j) => `<button class="q-opt" data-q="${i}" data-opt="${j}">${o}</button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qfb-${i}"></div>
+  `;
+  quizContainer.appendChild(card);
+});
+
+document.querySelectorAll('.q-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const qIdx = +opt.dataset.q;
+    const optIdx = +opt.dataset.opt;
+    const q = questions[qIdx];
+    const card = document.getElementById('qcard-' + qIdx);
+    if (card.classList.contains('answered')) return;
+    
+    card.classList.add('answered');
+    const isCorrect = optIdx === q.correct;
+    card.classList.add(isCorrect ? 'correct' : 'wrong');
+    
+    const allOpts = card.querySelectorAll('.q-opt');
+    allOpts.forEach((o, j) => {
+      o.disabled = true;
+      if (j === q.correct) o.classList.add('correct');
+      if (j === optIdx && !isCorrect) o.classList.add('wrong');
+    });
+    
+    const fb = document.getElementById('qfb-' + qIdx);
+    fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+    fb.innerHTML = isCorrect 
+      ? '<i class="fa-solid fa-circle-check"></i> Correct! Great job!'
+      : `<i class="fa-solid fa-circle-xmark"></i> Not quite. The answer is: <strong>${q.opts[q.correct]}</strong>`;
+    
+    quizState[qIdx] = isCorrect;
+    
+    const allAnswered = Object.keys(quizState).length === questions.length;
+    const correctCount = Object.values(quizState).filter(Boolean).length;
+    if (allAnswered) {
+      const summary = document.getElementById('quizSummary');
+      const pct = Math.round((correctCount / questions.length) * 100);
+      document.getElementById('quizScoreText').textContent = `${correctCount} / ${questions.length} Correct!`;
+      document.getElementById('quizScoreMsg').textContent = pct >= 80 ? 'Excellent work! You are an animal champion!' 
+        : pct >= 60 ? 'Good job! Keep practicing to improve more.' 
+        : 'Keep trying! Review the lesson and try again.';
+      summary.classList.add('show');
+      speak(`You got ${correctCount} out of ${questions.length} correct!`);
+    } else {
+      if (isCorrect) speak('Correct!');
+    }
+  });
+});
+
+// ============= STORIES =============
+const storyTabs = document.getElementById('storyTabs');
+const storyPanels = document.getElementById('storyPanels');
+const storyState = {};
+
+stories.forEach((s, i) => {
+  storyState[i] = { answered: [false, false, false], correct: [false, false, false] };
+  
+  const tab = document.createElement('button');
+  tab.className = 'story-tab' + (i === 0 ? ' active' : '');
+  tab.textContent = `Story ${i+1}`;
+  tab.addEventListener('click', () => switchStory(i));
+  storyTabs.appendChild(tab);
+  
+  const panel = document.createElement('div');
+  panel.className = 'story-panel' + (i === 0 ? ' active' : '');
+  panel.id = 'story-' + i;
+  panel.innerHTML = `
+    <div class="story-head">
+      <span class="story-num">STORY ${i+1}</span>
+      <div class="story-title">${s.title}</div>
+      <button class="mini-btn" onclick="speak(document.getElementById('story-text-${i}').innerText)"><i class="fa-solid fa-volume-high"></i> Listen</button>
+    </div>
+    <div class="story-text" id="story-text-${i}">${s.text}</div>
+    <div class="story-questions">
+      ${s.questions.map((sq, j) => `
+        <div class="story-q" id="sq-${i}-${j}">
+          <label><span class="qmark">Q${j+1}</span> ${sq.q}</label>
+          <div class="story-input-row">
+            <input type="text" placeholder="Type your answer..." id="sqi-${i}-${j}">
+            <button class="story-check" data-si="${i}" data-qi="${j}">Check</button>
+          </div>
+          <div class="story-feedback" id="sqf-${i}-${j}"></div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  storyPanels.appendChild(panel);
+});
+
+function switchStory(i) {
+  document.querySelectorAll('.story-tab').forEach((t, j) => t.classList.toggle('active', j === i));
+  document.querySelectorAll('.story-panel').forEach((p, j) => p.classList.toggle('active', j === i));
+}
+
+document.querySelectorAll('.story-check').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const si = +btn.dataset.si;
+    const qi = +btn.dataset.qi;
+    const input = document.getElementById('sqi-' + si + '-' + qi);
+    const answer = input.value.trim().toLowerCase();
+    const correct = stories[si].questions[qi].a.toLowerCase();
+    
+    if (!answer) { showToast('Please type your answer first'); return; }
+    
+    const isCorrect = answer === correct || answer.includes(correct) || correct.includes(answer);
+    storyState[si].answered[qi] = true;
+    storyState[si].correct[qi] = isCorrect;
+    
+    const qEl = document.getElementById('sq-' + si + '-' + qi);
+    const fb = document.getElementById('sqf-' + si + '-' + qi);
+    qEl.classList.add('answered');
+    fb.classList.add('show', isCorrect ? 'correct' : 'wrong');
+    fb.innerHTML = isCorrect 
+      ? `<i class="fa-solid fa-circle-check"></i> Correct! The answer is "${correct}".`
+      : `<i class="fa-solid fa-circle-xmark"></i> Not quite. The correct answer is "${correct}".`;
+    
+    input.disabled = true;
+    btn.disabled = true;
+    btn.textContent = 'Done';
+    
+    const allDone = storyState[si].answered.every(a => a);
+    if (allDone) {
+      document.querySelectorAll('.story-tab')[si].classList.add('done');
+      const correctCount = storyState[si].correct.filter(c => c).length;
+      showToast(`Story ${si+1}: ${correctCount}/3 correct!`);
+    }
+  });
+});
+
+document.querySelectorAll('.story-q input').forEach(inp => {
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const si = inp.id.split('-')[1];
+      const qi = inp.id.split('-')[2];
+      document.querySelector(`.story-check[data-si="${si}"][data-qi="${qi}"]`).click();
+    }
+  });
+});
+
+// ============= GAME =============
+let gameState = {
+  active: false,
+  round: 0,
+  score: 0,
+  streak: 0,
+  maxRound: 10,
+  currentAnimal: null,
+  awaiting: false,
+  gridAnimals: []
+};
+
+function buildGameGrid() {
+  const grid = document.getElementById('gameGrid');
+  grid.innerHTML = '';
+  // Pick 16 random animals for the grid
+  const shuffled = [...animals].sort(() => Math.random() - 0.5);
+  gameState.gridAnimals = shuffled.slice(0, 16);
+  gameState.gridAnimals.forEach(a => {
+    const cell = document.createElement('div');
+    cell.className = 'game-cell';
+    cell.dataset.en = a.en;
+    cell.textContent = a.emoji;
+    cell.title = a.en;
+    cell.addEventListener('click', () => handleGameGuess(a, cell));
+    grid.appendChild(cell);
+  });
+}
+buildGameGrid();
+
+function gameAction() {
+  if (!gameState.active) {
+    startGame();
+  } else if (gameState.awaiting) {
+    if (gameState.currentAnimal) speak(gameState.currentAnimal.en);
+  } else {
+    nextRound();
+  }
+}
+
+function startGame() {
+  gameState.active = true;
+  gameState.round = 0;
+  gameState.score = 0;
+  gameState.streak = 0;
+  document.getElementById('gameResult').classList.remove('show');
+  document.getElementById('gameWord').textContent = 'Get ready!';
+  document.getElementById('gameEmoji').textContent = '🎯';
+  document.getElementById('gameStatus').textContent = 'Listen and click!';
+  document.getElementById('gameBtnText').textContent = 'Replay Voice';
+  updateStats();
+  setTimeout(nextRound, 800);
+}
+
+function nextRound() {
+  if (gameState.round >= gameState.maxRound) { endGame(); return; }
+  gameState.round++;
+  gameState.awaiting = true;
+  
+  // Rebuild grid every 3 rounds for variety
+  if (gameState.round % 3 === 1 || gameState.round === 1) buildGameGrid();
+  
+  // Make sure current animal is in the grid
+  const target = gameState.gridAnimals[Math.floor(Math.random() * gameState.gridAnimals.length)];
+  gameState.currentAnimal = target;
+  
+  document.getElementById('gameEmoji').textContent = '👂';
+  document.getElementById('gameWord').innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+  document.getElementById('gameStatus').textContent = `Round ${gameState.round} of ${gameState.maxRound}`;
+  document.getElementById('gameHint').textContent = 'Listen, then click the animal you hear.';
+  document.getElementById('gameBtnText').textContent = 'Replay Voice';
+  
+  // Enable all cells
+  document.querySelectorAll('.game-cell').forEach(c => { c.classList.remove('disabled', 'correct', 'wrong'); });
+  
+  setTimeout(() => {
+    speak(`Click the ${target.en}`, 0.85);
+  }, 200);
+  
+  updateStats();
+}
+
+function handleGameGuess(animal, cell) {
+  if (!gameState.awaiting) return;
+  
+  const isCorrect = animal.en === gameState.currentAnimal.en;
+  
+  if (isCorrect) {
+    gameState.awaiting = false;
+    cell.classList.add('correct');
+    gameState.score++;
+    gameState.streak++;
+    document.getElementById('gameEmoji').textContent = gameState.currentAnimal.emoji;
+    document.getElementById('gameWord').innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--jungle)"></i>';
+    document.getElementById('gameStatus').textContent = 'Correct! Great job!';
+    speak('Correct! Well done!');
+    updateStats();
+    
+    document.querySelectorAll('.game-cell').forEach(c => c.classList.add('disabled'));
+    
+    setTimeout(() => {
+      if (gameState.round >= gameState.maxRound) endGame();
+      else nextRound();
+    }, 1800);
+  } else {
+    cell.classList.add('wrong');
+    cell.classList.add('disabled');
+    gameState.streak = 0;
+    document.getElementById('gameStatus').textContent = 'Try again!';
+    speak('Try again!');
+    updateStats();
+    setTimeout(() => cell.classList.remove('wrong'), 600);
+  }
+}
+
+function updateStats() {
+  document.getElementById('statRound').textContent = `${gameState.round}/${gameState.maxRound}`;
+  document.getElementById('statScore').textContent = gameState.score;
+  document.getElementById('statStreak').textContent = gameState.streak;
+}
+
+function endGame() {
+  gameState.active = false;
+  const score = gameState.score;
+  const pct = (score / gameState.maxRound) * 100;
+  let stars, msg;
+  if (pct === 100) { stars = '⭐⭐⭐'; msg = 'Perfect Score! Amazing!'; }
+  else if (pct >= 70) { stars = '⭐⭐'; msg = 'Great Work!'; }
+  else if (pct >= 50) { stars = '⭐'; msg = 'Good Try!'; }
+  else { stars = '💪'; msg = 'Keep Practicing!'; }
+  
+  document.getElementById('gameResult').classList.add('show');
+  document.getElementById('resultStars').textContent = stars;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultScore').textContent = `You scored ${score} out of ${gameState.maxRound}!`;
+  document.getElementById('gameEmoji').textContent = '🏆';
+  document.getElementById('gameWord').textContent = 'Game Over!';
+  document.getElementById('gameStatus').textContent = 'Final Result';
+  document.getElementById('gameBtnText').textContent = 'Play Again';
+  speak(`Game over! You scored ${score} out of ${gameState.maxRound}. ${msg}`);
+}
+
+function resetGame() {
+  gameState = { active: false, round: 0, score: 0, streak: 0, maxRound: 10, currentAnimal: null, awaiting: false, gridAnimals: [] };
+  document.getElementById('gameResult').classList.remove('show');
+  document.getElementById('gameEmoji').textContent = '🎯';
+  document.getElementById('gameWord').textContent = 'Click Start!';
+  document.getElementById('gameStatus').textContent = 'Ready to Play?';
+  document.getElementById('gameBtnText').textContent = 'Start Game';
+  buildGameGrid();
+  updateStats();
+}
+
+// ============= REFLECTION EMOJI =============
+document.querySelectorAll('#emojiPick button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#emojiPick button').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const feeling = btn.textContent.trim();
+    speak(`You feel ${feeling.split(' ')[1] || feeling}. Thank you for sharing!`);
+  });
+});
+
+// Welcome toast
+setTimeout(() => {
+  showToast('Welcome! Use arrow keys to navigate slides.');
+}, 800);
+</script>
+
+</body>
+</html>
