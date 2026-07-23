@@ -1,0 +1,3062 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Possessive Adventure — English Fun Class</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8EC;
+  --paper: #FFFFFF;
+  --ink: #1F2A4A;
+  --muted: #6B7280;
+  --coral: #FF6B6B;
+  --teal: #14B8A6;
+  --sun: #FFB627;
+  --grape: #9B5DE5;
+  --leaf: #06D6A0;
+  --sky: #4CC9F0;
+  --rose: #F43F5E;
+  --border: rgba(31, 42, 74, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--teal); bottom: -80px; right: -80px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: var(--sun); top: 40%; left: 60%; animation-delay: -10s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+.particle { position: absolute; font-size: 28px; opacity: 0.25; animation: drift 25s infinite linear; }
+@keyframes drift {
+  from { transform: translateY(100vh) rotate(0deg); }
+  to { transform: translateY(-150px) rotate(360deg); }
+}
+
+.deck { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 1.5rem 2.5rem 5.5rem;
+  overflow-y: auto;
+}
+.slide.active { display: flex; animation: slideIn 0.5s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(31,42,74,0.2); border-radius: 4px; }
+
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 50;
+}
+.nav-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 10px 22px; border-radius: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; font-family: 'Nunito', sans-serif;
+}
+.nav-btn:hover:not(:disabled) { background: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.dots { display: flex; gap: 6px; flex-wrap: wrap; max-width: 60vw; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(31,42,74,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--coral); width: 28px; border-radius: 4px; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--coral), var(--sun), var(--teal)); z-index: 60; transition: width 0.4s ease; }
+
+.word { position: relative; cursor: help; border-bottom: 2px dotted var(--teal); transition: all 0.2s; padding: 0 1px; }
+.word:hover { background: rgba(20, 184, 166, 0.18); color: var(--teal); }
+.word .tip { position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background: var(--ink); color: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 100; }
+.word .tip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+.word:hover .tip { opacity: 1; }
+
+.speak-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; border: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-left: 8px; vertical-align: middle; }
+.speak-btn:hover { background: #0F9488; transform: scale(1.05); }
+.speak-btn.speaking { background: var(--sun); animation: pulse 0.8s infinite; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+
+.card { background: var(--paper); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); border: 1px solid var(--border); transition: all 0.3s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(31, 42, 74, 0.12); }
+
+.quiz-option { background: var(--paper); border: 2px solid var(--border); border-radius: 12px; padding: 10px 14px; margin: 6px 0; cursor: pointer; transition: all 0.2s; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+.quiz-option:hover { border-color: var(--teal); background: rgba(20, 184, 166, 0.05); transform: translateX(4px); }
+.quiz-option.selected { border-color: var(--coral); background: rgba(255, 107, 107, 0.08); }
+.quiz-option.correct { border-color: var(--leaf); background: rgba(6, 214, 160, 0.15); color: #047857; }
+.quiz-option.incorrect { border-color: var(--rose); background: rgba(244, 63, 94, 0.15); color: #BE123C; }
+.quiz-option .letter { width: 28px; height: 28px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+.quiz-option.correct .letter { background: var(--leaf); color: white; }
+.quiz-option.incorrect .letter { background: var(--rose); color: white; }
+.quiz-option.disabled { pointer-events: none; }
+
+.btn-check { background: var(--coral); color: white; border: none; padding: 8px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif; }
+.btn-check:hover { background: #E55555; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+
+.explanation { margin-top: 10px; padding: 10px 14px; background: rgba(20, 184, 166, 0.08); border-left: 4px solid var(--teal); border-radius: 8px; font-size: 13px; display: none; }
+.explanation.show { display: block; animation: slideIn 0.3s; }
+
+.bubble { max-width: 78%; padding: 12px 18px; border-radius: 20px; margin: 6px 0; position: relative; font-weight: 600; line-height: 1.6; }
+.bubble.left { background: var(--paper); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.bubble.right { background: linear-gradient(135deg, var(--coral), #FF8787); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+.bubble .speaker { font-size: 11px; opacity: 0.7; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.05em; }
+.bubble.right .speaker { opacity: 0.85; }
+
+.story-text { font-size: 1rem; line-height: 1.85; background: var(--paper); padding: 1.25rem 1.75rem; border-radius: 20px; border-left: 6px solid var(--sun); box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.story-text p { margin: 0 0 0.75rem; }
+
+.vocab-card { background: var(--paper); border-radius: 14px; padding: 0.75rem; text-align: center; border: 2px solid var(--border); transition: all 0.2s; cursor: pointer; }
+.vocab-card:hover { transform: translateY(-4px) rotate(-2deg); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255, 182, 39, 0.25); }
+.vocab-card .icon { font-size: 1.75rem; margin-bottom: 4px; }
+.vocab-card .en { font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+.vocab-card .id { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.pronoun-card { background: var(--paper); border-radius: 24px; padding: 1.25rem 1rem; text-align: center; position: relative; overflow: hidden; transition: all 0.3s; border: 2px solid var(--border); }
+.pronoun-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--accent, var(--coral)); }
+.pronoun-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(31, 42, 74, 0.15); }
+.pronoun-card .word-big { font-family: 'Fredoka', sans-serif; font-size: 2.25rem; font-weight: 700; color: var(--accent, var(--coral)); margin: 6px 0; }
+.pronoun-card .example { font-size: 0.9rem; color: var(--muted); margin-top: 6px; font-weight: 600; line-height: 1.4; }
+.pronoun-card .trans { font-size: 11px; color: var(--accent, var(--coral)); font-weight: 700; margin-top: 2px; }
+
+.game-area { background: linear-gradient(135deg, rgba(155, 93, 229, 0.12), rgba(76, 201, 240, 0.12)); border-radius: 24px; padding: 1.5rem; }
+.game-option { background: var(--paper); border: 3px solid var(--border); border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 700; font-size: 1.05rem; text-align: center; }
+.game-option:hover:not(.disabled) { transform: scale(1.04); border-color: var(--grape); box-shadow: 0 6px 16px rgba(155, 93, 229, 0.25); }
+.game-option.correct { background: var(--leaf); color: white; border-color: var(--leaf); animation: bounce 0.5s; }
+.game-option.incorrect { background: var(--rose); color: white; border-color: var(--rose); animation: shake 0.5s; }
+.game-option.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+.cover-title { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.bob { animation: bob 3s infinite ease-in-out; display: inline-block; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: rgba(20, 184, 166, 0.1); color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.fade-up { animation: fadeUp 0.6s ease backwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; }
+.section-sub { color: var(--muted); font-weight: 600; }
+
+.rule-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.rule-table th { background: var(--ink); color: white; padding: 14px; font-weight: 800; text-align: left; }
+.rule-table td { background: var(--paper); padding: 12px 14px; border-top: 1px solid var(--border); }
+.rule-table tr:hover td { background: rgba(255, 182, 39, 0.05); }
+
+.toc-item { background: var(--paper); border-radius: 14px; padding: 10px 14px; border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+.toc-item:hover { transform: translateX(6px); border-color: var(--coral); box-shadow: 0 4px 12px rgba(255,107,107,0.15); }
+.toc-item .num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; color: white; flex-shrink: 0; }
+
+@media (max-width: 768px) {
+  .slide { padding: 1rem 1.25rem 5rem; }
+  .section-title { font-size: 1.5rem; }
+  .dots { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div id="particles"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width: 3.5%"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide active" data-slide="1">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-6xl mx-auto w-full">
+    <div class="chip mb-6 fade-up">
+      <i class="fas fa-star"></i> English Fun Class · Grade 5
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s">
+      <span style="color: var(--coral)">My</span>,
+      <span style="color: var(--teal)">Your</span>,
+      <span style="color: var(--grape)">Our</span>,
+      <span style="color: var(--sun)">Their</span>
+    </h1>
+    <h2 class="font-display text-2xl md:text-4xl mt-3 fade-up" style="animation-delay: 0.2s; color: var(--ink)">
+      The Possessive Adventure <span class="bob">✨</span>
+    </h2>
+    <p class="text-base md:text-xl mt-6 max-w-2xl fade-up" style="animation-delay: 0.3s; color: var(--muted)">
+      Learn <span class="word">possessive<span class="tip">kepemilikan</span></span> words through 
+      <span class="word">colors<span class="tip">warna</span></span>, 
+      <span class="word">animals<span class="tip">hewan</span></span>, 
+      <span class="word">places<span class="tip">tempat</span></span>, 
+      <span class="word">transportation<span class="tip">transportasi</span></span>,
+      <span class="word">body parts<span class="tip">anggota tubuh</span></span>,
+      <span class="word">numbers<span class="tip">angka</span></span>, and
+      <span class="word">days<span class="tip">hari</span></span>!
+    </p>
+    <div class="flex gap-6 md:gap-10 mt-10 text-5xl md:text-6xl fade-up" style="animation-delay: 0.4s">
+      <span class="bob" style="animation-delay: 0s">🐱</span>
+      <span class="bob" style="animation-delay: 0.4s">🚗</span>
+      <span class="bob" style="animation-delay: 0.8s">📚</span>
+      <span class="bob" style="animation-delay: 1.2s">🌈</span>
+      <span class="bob" style="animation-delay: 1.6s">🦁</span>
+    </div>
+    <button class="btn-check mt-10 text-lg fade-up" style="animation-delay: 0.5s; padding: 12px 32px" onclick="nextSlide()">
+      <i class="fas fa-play mr-2"></i> Start Adventure
+    </button>
+    <p class="text-xs mt-4 fade-up" style="animation-delay: 0.6s; color: var(--muted)">
+      <i class="fas fa-keyboard mr-1"></i> Use ← → arrow keys to navigate · Click any underlined word for translation
+    </p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: WELCOME ============ -->
+<section class="slide" data-slide="2">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-flag"></i> Slide 2</span>
+    <h1 class="section-title mt-2 mb-2">Welcome, Adventurers! <span class="bob">👋</span></h1>
+    <p class="section-sub mb-8">Today we will master possessive words in English through 5 conversations and 5 stories!</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-left: 6px solid var(--coral)">
+        <div class="flex items-start gap-3">
+          <div class="text-3xl">🎯</div>
+          <div>
+            <h3 class="font-display text-xl font-bold" style="color: var(--coral)">Learning Goals</h3>
+            <ul class="mt-2 space-y-1 text-sm font-semibold">
+              <li>• Use <b>my, your, our, their, his, her, its</b> correctly</li>
+              <li>• Differentiate <b>have</b> vs <b>has</b></li>
+              <li>• Use <b>'s</b> for possession (Andi's cat)</li>
+              <li>• Connect with colors, animals, places & more</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="border-left: 6px solid var(--teal)">
+        <div class="flex items-start gap-3">
+          <div class="text-3xl">🧭</div>
+          <div>
+            <h3 class="font-display text-xl font-bold" style="color: var(--teal)">Adventure Map</h3>
+            <ul class="mt-2 space-y-1 text-sm font-semibold">
+              <li>• 3 grammar lessons with examples</li>
+              <li>• 5 conversations + 5 stories with audio</li>
+              <li>• 40 quiz questions with explanations</li>
+              <li>• 1 exciting game (30 questions!) at the end</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-xl font-bold mb-3">💡 Quick Tip</h3>
+      <p class="text-sm font-semibold" style="line-height: 1.7">
+        <b>Possessive</b> shows <span class="word">ownership<span class="tip">kepemilikan</span></span> — who something belongs to.
+        In Indonesian, we usually say "<i>milikku, milikmu, punya-nya</i>". In English, we use special words like 
+        <b>my, your, his, her, our, their</b> or add <b>'s</b> after a name. Hover over any 
+        <span class="word">underlined<span class="tip">bergaris bawah</span></span> word to see its translation!
+      </p>
+    </div>
+
+    <div class="grid grid-cols-4 md:grid-cols-7 gap-3 mt-6">
+      <div class="vocab-card"><div class="icon">🎨</div><div class="en">Colors</div><div class="id">warna</div></div>
+      <div class="vocab-card"><div class="icon">🐾</div><div class="en">Animals</div><div class="id">hewan</div></div>
+      <div class="vocab-card"><div class="icon">📍</div><div class="en">Places</div><div class="id">tempat</div></div>
+      <div class="vocab-card"><div class="icon">🚍</div><div class="en">Transport</div><div class="id">transportasi</div></div>
+      <div class="vocab-card"><div class="icon">🧍</div><div class="en">Body</div><div class="id">tubuh</div></div>
+      <div class="vocab-card"><div class="icon">🔢</div><div class="en">Numbers</div><div class="id">angka</div></div>
+      <div class="vocab-card"><div class="icon">📅</div><div class="en">Days</div><div class="id">hari</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: POSSESSIVE PRONOUNS ============ -->
+<section class="slide" data-slide="3">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Lesson 1 · Possessive Adjectives</span>
+    <h1 class="section-title mt-2 mb-2">Meet the Possessive Family <span class="bob">👨‍👩‍👧‍👦</span></h1>
+    <p class="section-sub mb-6">These words show who owns something. They come <b>before</b> a noun.</p>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="pronoun-card" style="--accent: var(--coral)">
+        <div class="text-3xl">👦</div>
+        <div class="word-big">My</div>
+        <div class="trans">milikku</div>
+        <div class="example">
+          <span class="word">My<span class="tip">milikku</span></span> 
+          <span class="word">cat<span class="tip">kucing</span></span> is 
+          <span class="word">orange<span class="tip">oranye</span></span>.
+          <button class="speak-btn" onclick="speak('My cat is orange')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="pronoun-card" style="--accent: var(--teal)">
+        <div class="text-3xl">👧</div>
+        <div class="word-big">Your</div>
+        <div class="trans">milikmu</div>
+        <div class="example">
+          <span class="word">Your<span class="tip">milikmu</span></span> 
+          <span class="word">bag<span class="tip">tas</span></span> is 
+          <span class="word">blue<span class="tip">biru</span></span>.
+          <button class="speak-btn" onclick="speak('Your bag is blue')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="pronoun-card" style="--accent: var(--sun)">
+        <div class="text-3xl">👨</div>
+        <div class="word-big">His</div>
+        <div class="trans">miliknya (laki-laki)</div>
+        <div class="example">
+          <span class="word">His<span class="tip">miliknya (laki)</span></span> 
+          <span class="word">car<span class="tip">mobil</span></span> is 
+          <span class="word">red<span class="tip">merah</span></span>.
+          <button class="speak-btn" onclick="speak('His car is red')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="pronoun-card" style="--accent: var(--grape)">
+        <div class="text-3xl">👩</div>
+        <div class="word-big">Her</div>
+        <div class="trans">miliknya (perempuan)</div>
+        <div class="example">
+          <span class="word">Her<span class="tip">miliknya (perempuan)</span></span> 
+          <span class="word">hair<span class="tip">rambut</span></span> is 
+          <span class="word">long<span class="tip">panjang</span></span>.
+          <button class="speak-btn" onclick="speak('Her hair is long')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="pronoun-card" style="--accent: var(--leaf)">
+        <div class="text-3xl">👨‍👩‍👧</div>
+        <div class="word-big">Our</div>
+        <div class="trans">milik kami</div>
+        <div class="example">
+          <span class="word">Our<span class="tip">milik kami</span></span> 
+          <span class="word">school<span class="tip">sekolah</span></span> is 
+          <span class="word">big<span class="tip">besar</span></span>.
+          <button class="speak-btn" onclick="speak('Our school is big')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="pronoun-card" style="--accent: var(--sky)">
+        <div class="text-3xl">👥</div>
+        <div class="word-big">Their</div>
+        <div class="trans">milik mereka</div>
+        <div class="example">
+          <span class="word">Their<span class="tip">milik mereka</span></span> 
+          <span class="word">dog<span class="tip">anjing</span></span> is 
+          <span class="word">brown<span class="tip">coklat</span></span>.
+          <button class="speak-btn" onclick="speak('Their dog is brown')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-6" style="background: linear-gradient(135deg, rgba(20,184,166,0.08), rgba(76,201,240,0.08))">
+      <h3 class="font-display text-lg font-bold mb-2">📌 Remember!</h3>
+      <p class="text-sm font-semibold" style="line-height: 1.7">
+        We use <b>Its</b> for things and animals (no gender): 
+        "<i>The <span class="word">bird<span class="tip">burung</span></span> flaps 
+        <span class="word">its<span class="tip">miliknya</span></span> 
+        <span class="word">wings<span class="tip">sayap</span></span>.</i>" 
+        <button class="speak-btn" onclick="speak('The bird flaps its wings')"><i class="fas fa-volume-up"></i></button>
+        <br>Note: <b>Its</b> (possessive) has <u>no apostrophe</u>. <b>It's</b> = "it is".
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: HAVE vs HAS ============ -->
+<section class="slide" data-slide="4">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Lesson 2 · Have vs Has</span>
+    <h1 class="section-title mt-2 mb-2">The Have / Has Rule <span class="bob">⚖️</span></h1>
+    <p class="section-sub mb-6">Both show possession — but which one? It depends on the subject!</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--leaf)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--leaf)">HAVE ✅</h3>
+        <p class="text-sm font-semibold mb-3">Use with: <b>I, You, We, They</b> and plural subjects.</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <p>• <span class="word">I<span class="tip">saya</span></span> <b>have</b> two 
+            <span class="word">eyes<span class="tip">mata</span></span>. 
+            <button class="speak-btn" onclick="speak('I have two eyes')"><i class="fas fa-volume-up"></i></button></p>
+          <p>• <span class="word">You<span class="tip">kamu</span></span> <b>have</b> a 
+            <span class="word">blue<span class="tip">biru</span></span> 
+            <span class="word">bag<span class="tip">tas</span></span>. 
+            <button class="speak-btn" onclick="speak('You have a blue bag')"><i class="fas fa-volume-up"></i></button></p>
+          <p>• <span class="word">We<span class="tip">kami</span></span> <b>have</b> 
+            <span class="word">three<span class="tip">tiga</span></span> 
+            <span class="word">cats<span class="tip">kucing</span></span>. 
+            <button class="speak-btn" onclick="speak('We have three cats')"><i class="fas fa-volume-up"></i></button></p>
+          <p>• <span class="word">They<span class="tip">mereka</span></span> <b>have</b> five 
+            <span class="word">books<span class="tip">buku</span></span>. 
+            <button class="speak-btn" onclick="speak('They have five books')"><i class="fas fa-volume-up"></i></button></p>
+        </div>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--coral)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--coral)">HAS ✅</h3>
+        <p class="text-sm font-semibold mb-3">Use with: <b>He, She, It</b> and singular subjects.</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <p>• <span class="word">She<span class="tip">dia (pr)</span></span> <b>has</b> 
+            <span class="word">long<span class="tip">panjang</span></span> 
+            <span class="word">hair<span class="tip">rambut</span></span>. 
+            <button class="speak-btn" onclick="speak('She has long hair')"><i class="fas fa-volume-up"></i></button></p>
+          <p>• <span class="word">He<span class="tip">dia (lk)</span></span> <b>has</b> a 
+            <span class="word">red<span class="tip">merah</span></span> 
+            <span class="word">bicycle<span class="tip">sepeda</span></span>. 
+            <button class="speak-btn" onclick="speak('He has a red bicycle')"><i class="fas fa-volume-up"></i></button></p>
+          <p>• The <span class="word">elephant<span class="tip">gajah</span></span> <b>has</b> 
+            <span class="word">big<span class="tip">besar</span></span> 
+            <span class="word">ears<span class="tip">telinga</span></span>. 
+            <button class="speak-btn" onclick="speak('The elephant has big ears')"><i class="fas fa-volume-up"></i></button></p>
+          <p>• <span class="word">It<span class="tip">itu</span></span> <b>has</b> four 
+            <span class="word">legs<span class="tip">kaki</span></span>. 
+            <button class="speak-btn" onclick="speak('It has four legs')"><i class="fas fa-volume-up"></i></button></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,182,39,0.1), rgba(255,107,107,0.1))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 Quick Practice — Choose have or has!</h3>
+      <div class="grid md:grid-cols-2 gap-3 text-sm font-semibold">
+        <div>1. Andi <b style="color: var(--coral)">has</b> a black pencil. <span class="text-xs" style="color:var(--muted)">(He → has)</span></div>
+        <div>2. Sinta and I <b style="color: var(--leaf)">have</b> new books. <span class="text-xs" style="color:var(--muted)">(We → have)</span></div>
+        <div>3. The tiger <b style="color: var(--coral)">has</b> sharp teeth. <span class="text-xs" style="color:var(--muted)">(It → has)</span></div>
+        <div>4. My friends <b style="color: var(--leaf)">have</b> three cats. <span class="text-xs" style="color:var(--muted)">(They → have)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: POSSESSIVE 'S ============ -->
+<section class="slide" data-slide="5">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Lesson 3 · Possessive 's</span>
+    <h1 class="section-title mt-2 mb-2">The Magic Apostrophe <span class="bob">✨</span></h1>
+    <p class="section-sub mb-6">Add <b>'s</b> to a name or noun to show ownership. Like magic!</p>
+
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--coral)">
+        <div class="text-3xl mb-2">📝</div>
+        <h3 class="font-display text-lg font-bold" style="color: var(--coral)">For People</h3>
+        <p class="text-sm font-semibold mt-2" style="line-height: 1.7">
+          This is <span class="word">Andi<span class="tip">nama</span></span><b>'s</b> 
+          <span class="word">pencil<span class="tip">pensil</span></span>.
+          <button class="speak-btn" onclick="speak(\"This is Andi's pencil\")"><i class="fas fa-volume-up"></i></button>
+          <br><br>
+          <span class="word">Sinta<span class="tip">nama</span></span><b>'s</b> 
+          <span class="word">bag<span class="tip">tas</span></span> is 
+          <span class="word">yellow<span class="tip">kuning</span></span>.
+          <button class="speak-btn" onclick="speak(\"Sinta's bag is yellow\")"><i class="fas fa-volume-up"></i></button>
+        </p>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--teal)">
+        <div class="text-3xl mb-2">🐾</div>
+        <h3 class="font-display text-lg font-bold" style="color: var(--teal)">For Animals</h3>
+        <p class="text-sm font-semibold mt-2" style="line-height: 1.7">
+          Look at the 
+          <span class="word">cat<span class="tip">kucing</span></span><b>'s</b> 
+          <span class="word">tail<span class="tip">ekor</span></span>!
+          <button class="speak-btn" onclick="speak(\"Look at the cat's tail\")"><i class="fas fa-volume-up"></i></button>
+          <br><br>
+          The <span class="word">elephant<span class="tip">gajah</span></span><b>'s</b> 
+          <span class="word">trunk<span class="tip">belalai</span></span> is 
+          <span class="word">long<span class="tip">panjang</span></span>.
+          <button class="speak-btn" onclick="speak(\"The elephant's trunk is long\")"><i class="fas fa-volume-up"></i></button>
+        </p>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--grape)">
+        <div class="text-3xl mb-2">📅</div>
+        <h3 class="font-display text-lg font-bold" style="color: var(--grape)">For Days & Time</h3>
+        <p class="text-sm font-semibold mt-2" style="line-height: 1.7">
+          Today is <span class="word">Monday<span class="tip">Senin</span></span><b>'s</b> 
+          <span class="word">class<span class="tip">kelas</span></span>.
+          <button class="speak-btn" onclick="speak(\"Today is Monday's class\")"><i class="fas fa-volume-up"></i></button>
+          <br><br>
+          <span class="word">Friday<span class="tip">Jumat</span></span><b>'s</b> 
+          <span class="word">test<span class="tip">ulangan</span></span> is 
+          <span class="word">hard<span class="tip">sulit</span></span>.
+          <button class="speak-btn" onclick="speak(\"Friday's test is hard\")"><i class="fas fa-volume-up"></i></button>
+        </p>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(155,93,229,0.1), rgba(255,182,39,0.1))">
+      <h3 class="font-display text-lg font-bold mb-3">🔄 Compare: Pronoun vs 's</h3>
+      <div class="grid md:grid-cols-2 gap-3 text-sm font-semibold">
+        <div class="p-3 rounded-lg" style="background: var(--paper)">
+          <b>Andi's cat</b> = <b>His cat</b> 
+          <span style="color: var(--muted)">(kucingnya Andi)</span>
+          <button class="speak-btn" onclick="speak(\"Andi's cat. His cat.\")"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-3 rounded-lg" style="background: var(--paper)">
+          <b>Sinta's bag</b> = <b>Her bag</b>
+          <span style="color: var(--muted)">(tasnya Sinta)</span>
+          <button class="speak-btn" onclick="speak(\"Sinta's bag. Her bag.\")"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-3 rounded-lg" style="background: var(--paper)">
+          <b>Andi and Sinta's teacher</b> = <b>Their teacher</b>
+          <span style="color: var(--muted)">(guru mereka)</span>
+          <button class="speak-btn" onclick="speak(\"Their teacher\")"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-3 rounded-lg" style="background: var(--paper)">
+          <b>My family's car</b> = <b>Our car</b>
+          <span style="color: var(--muted)">(mobil keluarga kami)</span>
+          <button class="speak-btn" onclick="speak(\"Our car\")"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: VOCABULARY ============ -->
+<section class="slide" data-slide="6">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-bolt"></i> Vocabulary Power-Up</span>
+    <h1 class="section-title mt-2 mb-2">Word Bank <span class="bob">📚</span></h1>
+    <p class="section-sub mb-6">All the words we'll use in conversations and stories. Hover to translate!</p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--coral)">🎨 Colors</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">red</div><div class="id">merah</div></div>
+          <div class="vocab-card"><div class="en">blue</div><div class="id">biru</div></div>
+          <div class="vocab-card"><div class="en">green</div><div class="id">hijau</div></div>
+          <div class="vocab-card"><div class="en">yellow</div><div class="id">kuning</div></div>
+          <div class="vocab-card"><div class="en">orange</div><div class="id">oranye</div></div>
+          <div class="vocab-card"><div class="en">brown</div><div class="id">coklat</div></div>
+          <div class="vocab-card"><div class="en">black</div><div class="id">hitam</div></div>
+          <div class="vocab-card"><div class="en">white</div><div class="id">putih</div></div>
+          <div class="vocab-card"><div class="en">gray</div><div class="id">abu-abu</div></div>
+          <div class="vocab-card"><div class="en">purple</div><div class="id">ungu</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--teal)">🐾 Animals</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">cat</div><div class="id">kucing</div></div>
+          <div class="vocab-card"><div class="en">dog</div><div class="id">anjing</div></div>
+          <div class="vocab-card"><div class="en">bird</div><div class="id">burung</div></div>
+          <div class="vocab-card"><div class="en">fish</div><div class="id">ikan</div></div>
+          <div class="vocab-card"><div class="en">elephant</div><div class="id">gajah</div></div>
+          <div class="vocab-card"><div class="en">lion</div><div class="id">singa</div></div>
+          <div class="vocab-card"><div class="en">monkey</div><div class="id">monyet</div></div>
+          <div class="vocab-card"><div class="en">tiger</div><div class="id">harimau</div></div>
+          <div class="vocab-card"><div class="en">rabbit</div><div class="id">kelinci</div></div>
+          <div class="vocab-card"><div class="en">horse</div><div class="id">kuda</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--grape)">📍 Places</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">school</div><div class="id">sekolah</div></div>
+          <div class="vocab-card"><div class="en">home</div><div class="id">rumah</div></div>
+          <div class="vocab-card"><div class="en">park</div><div class="id">taman</div></div>
+          <div class="vocab-card"><div class="en">zoo</div><div class="id">kebun binatang</div></div>
+          <div class="vocab-card"><div class="en">market</div><div class="id">pasar</div></div>
+          <div class="vocab-card"><div class="en">library</div><div class="id">perpustakaan</div></div>
+          <div class="vocab-card"><div class="en">beach</div><div class="id">pantai</div></div>
+          <div class="vocab-card"><div class="en">class</div><div class="id">kelas</div></div>
+          <div class="vocab-card"><div class="en">village</div><div class="id">desa</div></div>
+          <div class="vocab-card"><div class="en">station</div><div class="id">stasiun</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--sun)">🚍 Transport</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">car</div><div class="id">mobil</div></div>
+          <div class="vocab-card"><div class="en">bus</div><div class="id">bis</div></div>
+          <div class="vocab-card"><div class="en">train</div><div class="id">kereta</div></div>
+          <div class="vocab-card"><div class="en">bicycle</div><div class="id">sepeda</div></div>
+          <div class="vocab-card"><div class="en">plane</div><div class="id">pesawat</div></div>
+          <div class="vocab-card"><div class="en">boat</div><div class="id">perahu</div></div>
+          <div class="vocab-card"><div class="en">ship</div><div class="id">kapal</div></div>
+          <div class="vocab-card"><div class="en">motorcycle</div><div class="id">motor</div></div>
+          <div class="vocab-card"><div class="en">truck</div><div class="id">truk</div></div>
+          <div class="vocab-card"><div class="en">scooter</div><div class="id">skuter</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--leaf)">🧍 Body Parts</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">eyes</div><div class="id">mata</div></div>
+          <div class="vocab-card"><div class="en">ears</div><div class="id">telinga</div></div>
+          <div class="vocab-card"><div class="en">nose</div><div class="id">hidung</div></div>
+          <div class="vocab-card"><div class="en">mouth</div><div class="id">mulut</div></div>
+          <div class="vocab-card"><div class="en">hands</div><div class="id">tangan</div></div>
+          <div class="vocab-card"><div class="en">feet</div><div class="id">kaki</div></div>
+          <div class="vocab-card"><div class="en">hair</div><div class="id">rambut</div></div>
+          <div class="vocab-card"><div class="en">teeth</div><div class="id">gigi</div></div>
+          <div class="vocab-card"><div class="en">tail</div><div class="id">ekor</div></div>
+          <div class="vocab-card"><div class="en">wings</div><div class="id">sayap</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--sky)">🔢 Numbers</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">one</div><div class="id">satu</div></div>
+          <div class="vocab-card"><div class="en">two</div><div class="id">dua</div></div>
+          <div class="vocab-card"><div class="en">three</div><div class="id">tiga</div></div>
+          <div class="vocab-card"><div class="en">four</div><div class="id">empat</div></div>
+          <div class="vocab-card"><div class="en">five</div><div class="id">lima</div></div>
+          <div class="vocab-card"><div class="en">six</div><div class="id">enam</div></div>
+          <div class="vocab-card"><div class="en">seven</div><div class="id">tujuh</div></div>
+          <div class="vocab-card"><div class="en">eight</div><div class="id">delapan</div></div>
+          <div class="vocab-card"><div class="en">nine</div><div class="id">sembilan</div></div>
+          <div class="vocab-card"><div class="en">ten</div><div class="id">sepuluh</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--rose)">📅 Days</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">Monday</div><div class="id">Senin</div></div>
+          <div class="vocab-card"><div class="en">Tuesday</div><div class="id">Selasa</div></div>
+          <div class="vocab-card"><div class="en">Wednesday</div><div class="id">Rabu</div></div>
+          <div class="vocab-card"><div class="en">Thursday</div><div class="id">Kamis</div></div>
+          <div class="vocab-card"><div class="en">Friday</div><div class="id">Jumat</div></div>
+          <div class="vocab-card"><div class="en">Saturday</div><div class="id">Sabtu</div></div>
+          <div class="vocab-card"><div class="en">Sunday</div><div class="id">Minggu</div></div>
+          <div class="vocab-card"><div class="en">today</div><div class="id">hari ini</div></div>
+          <div class="vocab-card"><div class="en">tomorrow</div><div class="id">besok</div></div>
+          <div class="vocab-card"><div class="en">yesterday</div><div class="id">kemarin</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color: var(--ink)">✏️ School Items</h3>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="vocab-card"><div class="en">book</div><div class="id">buku</div></div>
+          <div class="vocab-card"><div class="en">bag</div><div class="id">tas</div></div>
+          <div class="vocab-card"><div class="en">pencil</div><div class="id">pensil</div></div>
+          <div class="vocab-card"><div class="en">pen</div><div class="id">pulpen</div></div>
+          <div class="vocab-card"><div class="en">teacher</div><div class="id">guru</div></div>
+          <div class="vocab-card"><div class="en">friend</div><div class="id">teman</div></div>
+          <div class="vocab-card"><div class="en">student</div><div class="id">siswa</div></div>
+          <div class="vocab-card"><div class="en">uniform</div><div class="id">seragam</div></div>
+          <div class="vocab-card"><div class="en">ruler</div><div class="id">penggaris</div></div>
+          <div class="vocab-card"><div class="en">eraser</div><div class="id">penghapus</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: CONVERSATION 1 ============ -->
+<section class="slide" data-slide="7">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversation 1 · At School</span>
+    <h1 class="section-title mt-2 mb-2">Andi & Sinta at School <span class="bob">🏫</span></h1>
+    <p class="section-sub mb-4">Read the conversation. Click 🔊 to listen. Hover words for translation.</p>
+
+    <div class="flex flex-col">
+      <div class="bubble left">
+        <div class="speaker">Andi</div>
+        <span class="word">Hi<span class="tip">hai</span></span> 
+        <span class="word">Sinta<span class="tip">nama</span></span>! 
+        How are you 
+        <span class="word">today<span class="tip">hari ini</span></span>?
+        <button class="speak-btn" onclick="speak('Hi Sinta! How are you today?')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Sinta</div>
+        <span class="word">Hi<span class="tip">hai</span></span> 
+        <span class="word">Andi<span class="tip">nama</span></span>! I'm 
+        <span class="word">fine<span class="tip">baik</span></span>. 
+        <span class="word">Today<span class="tip">hari ini</span></span> is 
+        <span class="word">Monday<span class="tip">Senin</span></span>. 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <b>have</b> 
+        <span class="word">English<span class="tip">Bahasa Inggris</span></span> 
+        <span class="word">class<span class="tip">kelas</span></span>.
+        <button class="speak-btn" onclick="speak('Hi Andi! I am fine. Today is Monday. We have English class.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Andi</div>
+        Is this 
+        <span class="word">your<span class="tip">milikmu</span></span> 
+        <span class="word">bag<span class="tip">tas</span></span>? 
+        It's 
+        <span class="word">blue<span class="tip">biru</span></span> and 
+        <span class="word">yellow<span class="tip">kuning</span></span>.
+        <button class="speak-btn" onclick="speak(\"Is this your bag? It is blue and yellow.\")"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Sinta</div>
+        <span class="word">Yes<span class="tip">ya</span></span>, it's 
+        <span class="word">my<span class="tip">milikku</span></span> 
+        <span class="word">bag<span class="tip">tas</span></span>. 
+        I <b>have</b> 
+        <span class="word">three<span class="tip">tiga</span></span> 
+        <span class="word">books<span class="tip">buku</span></span> 
+        <span class="word">inside<span class="tip">di dalam</span></span>.
+        <button class="speak-btn" onclick="speak('Yes, it is my bag. I have three books inside.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Andi</div>
+        <span class="word">Look<span class="tip">lihat</span></span>! 
+        That is Mr. Budi. 
+        <span class="word">He<span class="tip">dia (lk)</span></span> 
+        <b>has</b> 
+        <span class="word">black<span class="tip">hitam</span></span> 
+        <span class="word">hair<span class="tip">rambut</span></span>.
+        <button class="speak-btn" onclick="speak('Look! That is Mr. Budi. He has black hair.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Sinta</div>
+        <span class="word">Yes<span class="tip">ya</span></span>, 
+        <span class="word">he<span class="tip">dia</span></span> is 
+        <span class="word">our<span class="tip">milik kami</span></span> 
+        <span class="word">English<span class="tip">Bahasa Inggris</span></span> 
+        <span class="word">teacher<span class="tip">guru</span></span>. 
+        <span class="word">His<span class="tip">miliknya</span></span> 
+        <span class="word">car<span class="tip">mobil</span></span> is 
+        <span class="word">red<span class="tip">merah</span></span>.
+        <button class="speak-btn" onclick="speak('Yes, he is our English teacher. His car is red.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Andi</div>
+        I <b>have</b> a 
+        <span class="word">new<span class="tip">baru</span></span> 
+        <span class="word">pencil<span class="tip">pensil</span></span>. 
+        <span class="word">Its<span class="tip">miliknya</span></span> 
+        <span class="word">color<span class="tip">warna</span></span> is 
+        <span class="word">orange<span class="tip">oranye</span></span>. 
+        What <span class="word">day<span class="tip">hari</span></span> is 
+        <span class="word">tomorrow<span class="tip">besok</span></span>?
+        <button class="speak-btn" onclick="speak('I have a new pencil. Its color is orange. What day is tomorrow?')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Sinta</div>
+        <span class="word">Tomorrow<span class="tip">besok</span></span> is 
+        <span class="word">Tuesday<span class="tip">Selasa</span></span>. 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <b>have</b> 
+        <span class="word">math<span class="tip">matematika</span></span> 
+        <span class="word">class<span class="tip">kelas</span></span> on 
+        <span class="word">Tuesday<span class="tip">Selasa</span></span>. 
+        See you!
+        <button class="speak-btn" onclick="speak('Tomorrow is Tuesday. We have math class on Tuesday. See you!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card mt-4" style="background: rgba(255,182,39,0.1); border-left: 4px solid var(--sun)">
+      <p class="text-sm font-semibold">
+        <b>💡 Notice:</b> Sinta says "<b>my</b> bag" (milikku), "<b>our</b> teacher" (milik kami), 
+        "<b>his</b> car" (miliknya). Andi says "<b>your</b> bag" (milikmu), "<b>its</b> color" (miliknya benda). 
+        And both use "<b>have</b>" for themselves and "<b>has</b>" for Mr. Budi (he).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: QUIZ 1 ============ -->
+<section class="slide" data-slide="8">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 1 · From Conversation 1</span>
+    <h1 class="section-title mt-2 mb-2">Let's Practice! <span class="bob">🧠</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Conversation 1. Choose the best answer!</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">1.</span> Whose bag is blue and yellow in Conversation 1?</p>
+        <div class="quiz-options" data-q="c1q1" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Andi's bag</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Sinta's bag</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Mr. Budi's bag</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Rina's bag</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c1q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c1q1">
+          <b>Answer: B — Sinta's bag.</b><br>
+          Andi asks "Is this <b>your</b> bag?" and Sinta replies "Yes, it's <b>my</b> bag." So the blue and yellow bag belongs to Sinta.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">2.</span> What color is Andi's new pencil?</p>
+        <div class="quiz-options" data-q="c1q2" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Blue</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Yellow</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Orange</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Red</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c1q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c1q2">
+          <b>Answer: C — Orange.</b><br>
+          Andi says "I have a new pencil. <b>Its</b> color is <b>orange</b>." <b>Its</b> is the possessive form for things/animals (no apostrophe!).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">3.</span> "Mr. Budi is ____ English teacher."</p>
+        <div class="quiz-options" data-q="c1q3" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> my</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> our</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> their</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> his</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c1q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c1q3">
+          <b>Answer: B — our.</b><br>
+          Sinta says "He is <b>our</b> English teacher." Because the teacher is shared by her and Andi (and classmates), she uses <b>our</b> (milik kami).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">4.</span> "He ____ black hair." Which is correct?</p>
+        <div class="quiz-options" data-q="c1q4" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> have</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> has</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> haves</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> is have</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c1q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c1q4">
+          <b>Answer: B — has.</b><br>
+          "He" (Mr. Budi) uses <b>has</b>. We use <b>has</b> with he/she/it. So: "He <b>has</b> black hair."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: CONVERSATION 2 ============ -->
+<section class="slide" data-slide="9">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversation 2 · At the Zoo</span>
+    <h1 class="section-title mt-2 mb-2">Budi & Rina at the Zoo <span class="bob">🦁</span></h1>
+    <p class="section-sub mb-4">Listen and read. Pay attention to the possessive words!</p>
+
+    <div class="flex flex-col">
+      <div class="bubble left">
+        <div class="speaker">Budi</div>
+        <span class="word">Hi<span class="tip">hai</span></span> 
+        <span class="word">Rina<span class="tip">nama</span></span>! 
+        <span class="word">Welcome<span class="tip">selamat datang</span></span> to the 
+        <span class="word">zoo<span class="tip">kebun binatang</span></span>. 
+        <span class="word">Today<span class="tip">hari ini</span></span> is 
+        <span class="word">Saturday<span class="tip">Sabtu</span></span>.
+        <button class="speak-btn" onclick="speak('Hi Rina! Welcome to the zoo. Today is Saturday.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Rina</div>
+        <span class="word">Hi<span class="tip">hai</span></span> 
+        <span class="word">Budi<span class="tip">nama</span></span>! 
+        Look at that 
+        <span class="word">elephant<span class="tip">gajah</span></span>! 
+        <span class="word">It<span class="tip">itu</span></span> 
+        <b>has</b> 
+        <span class="word">big<span class="tip">besar</span></span> 
+        <span class="word">ears<span class="tip">telinga</span></span>.
+        <button class="speak-btn" onclick="speak('Hi Budi! Look at that elephant! It has big ears.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Budi</div>
+        <span class="word">Yes<span class="tip">ya</span></span>! And 
+        <span class="word">its<span class="tip">miliknya</span></span> 
+        <span class="word">trunk<span class="tip">belalai</span></span> is 
+        <span class="word">long<span class="tip">panjang</span></span>. 
+        <span class="word">Gray<span class="tip">abu-abu</span></span> is 
+        <span class="word">my<span class="tip">milikku</span></span> 
+        <span class="word">favorite<span class="tip">favorit</span></span> 
+        <span class="word">color<span class="tip">warna</span></span>.
+        <button class="speak-btn" onclick="speak('Yes! And its trunk is long. Gray is my favorite color.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Rina</div>
+        Over there, 
+        <span class="word">two<span class="tip">dua</span></span> 
+        <span class="word">monkeys<span class="tip">monyet</span></span> are playing. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">tails<span class="tip">ekor</span></span> are 
+        <span class="word">long<span class="tip">panjang</span></span>.
+        <button class="speak-btn" onclick="speak('Over there, two monkeys are playing. Their tails are long.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Budi</div>
+        Hahaha, the 
+        <span class="word">monkeys<span class="tip">monyet</span></span> are 
+        <span class="word">funny<span class="tip">lucu</span></span>. 
+        <span class="word">They<span class="tip">mereka</span></span> 
+        <b>have</b> 
+        <span class="word">brown<span class="tip">coklat</span></span> 
+        <span class="word">fur<span class="tip">bulu</span></span>. 
+        Look at the 
+        <span class="word">lion<span class="tip">singa</span></span>!
+        <button class="speak-btn" onclick="speak('Hahaha, the monkeys are funny. They have brown fur. Look at the lion!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Rina</div>
+        The 
+        <span class="word">lion<span class="tip">singa</span></span> 
+        <b>has</b> 
+        <span class="word">sharp<span class="tip">tajam</span></span> 
+        <span class="word">teeth<span class="tip">gigi</span></span>. 
+        The 
+        <span class="word">lioness<span class="tip">singa betina</span></span> 
+        <b>has</b> 
+        <span class="word">four<span class="tip">empat</span></span> 
+        <span class="word">cubs<span class="tip">anak singa</span></span>. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">family<span class="tip">keluarga</span></span> is 
+        <span class="word">big<span class="tip">besar</span></span>.
+        <button class="speak-btn" onclick="speak('The lion has sharp teeth. The lioness has four cubs. Their family is big.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Budi</div>
+        I <b>have</b> a 
+        <span class="word">camera<span class="tip">kamera</span></span>. 
+        Let's take a 
+        <span class="word">picture<span class="tip">foto</span></span>! 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">photo<span class="tip">foto</span></span> will be 
+        <span class="word">amazing<span class="tip">menakjubkan</span></span>.
+        <button class="speak-btn" onclick="speak('I have a camera. Let us take a picture! Our photo will be amazing.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Rina</div>
+        <span class="word">Good<span class="tip">bagus</span></span> 
+        <span class="word">idea<span class="tip">ide</span></span>! 
+        After this, let's see the 
+        <span class="word">birds<span class="tip">burung</span></span>. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">wings<span class="tip">sayap</span></span> are 
+        <span class="word">colorful<span class="tip">penuh warna</span></span>.
+        <button class="speak-btn" onclick="speak('Good idea! After this, let us see the birds. Their wings are colorful.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card mt-4" style="background: rgba(20,184,166,0.1); border-left: 4px solid var(--teal)">
+      <p class="text-sm font-semibold">
+        <b>💡 Notice:</b> "<b>Its</b> trunk" (belalainya gajah), "<b>their</b> tails" (ekor mereka), 
+        "<b>my</b> favorite color" (warna favoritku), "<b>our</b> photo" (foto kami). 
+        For animals, we use "<b>it has</b>" or "<b>they have</b>".
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: QUIZ 2 ============ -->
+<section class="slide" data-slide="10">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 2 · From Conversation 2</span>
+    <h1 class="section-title mt-2 mb-2">Zoo Quiz Time! <span class="bob">🦁</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Conversation 2.</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">1.</span> Complete: "The elephant ____ big ears."</p>
+        <div class="quiz-options" data-q="c2q1" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> have</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> has</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> having</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> is have</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c2q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c2q1">
+          <b>Answer: B — has.</b><br>
+          "The elephant" = it (singular). We use <b>has</b> with he/she/it. So: "The elephant <b>has</b> big ears."
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">2.</span> "____ tails are long." — about the monkeys. Which is correct?</p>
+        <div class="quiz-options" data-q="c2q2" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Its</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> His</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Their</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Our</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c2q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c2q2">
+          <b>Answer: C — Their.</b><br>
+          "Monkeys" is plural (more than one), so we use <b>their</b> (milik mereka). <b>Its</b> is for singular things/animals.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">3.</span> What is Budi's favorite color?</p>
+        <div class="quiz-options" data-q="c2q3" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Brown</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Blue</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Gray</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Red</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c2q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c2q3">
+          <b>Answer: C — Gray.</b><br>
+          Budi says "<b>Gray</b> is <b>my</b> favorite color." <b>My</b> shows that the favorite color belongs to Budi.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">4.</span> How many cubs does the lioness have?</p>
+        <div class="quiz-options" data-q="c2q4" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Two</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Three</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Four</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Five</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c2q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c2q4">
+          <b>Answer: C — Four.</b><br>
+          Rina says "The lioness <b>has</b> four cubs." We use <b>has</b> because "the lioness" = she (singular).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11: CONVERSATION 3 ============ -->
+<section class="slide" data-slide="11">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversation 3 · Family Pet Day</span>
+    <h1 class="section-title mt-2 mb-2">Tom & Lina Talk About Pets <span class="bob">🐶</span></h1>
+    <p class="section-sub mb-4">A brother and sister talk about their pets at home!</p>
+
+    <div class="flex flex-col">
+      <div class="bubble left">
+        <div class="speaker">Tom</div>
+        <span class="word">Lina<span class="tip">nama</span></span>, 
+        <span class="word">look<span class="tip">lihat</span></span> at 
+        <span class="word">my<span class="tip">milikku</span></span> 
+        <span class="word">new<span class="tip">baru</span></span> 
+        <span class="word">puppy<span class="tip">anjing kecil</span></span>! 
+        <span class="word">His<span class="tip">miliknya</span></span> 
+        <span class="word">name<span class="tip">nama</span></span> is 
+        <span class="word">Rocky<span class="tip">nama</span></span>.
+        <button class="speak-btn" onclick="speak('Lina, look at my new puppy! His name is Rocky.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Lina</div>
+        <span class="word">Wow<span class="tip">wow</span></span>, 
+        <span class="word">he<span class="tip">dia</span></span> is 
+        <span class="word">cute<span class="tip">imut</span></span>! 
+        Rocky <b>has</b> 
+        <span class="word">brown<span class="tip">coklat</span></span> 
+        <span class="word">fur<span class="tip">bulu</span></span> and 
+        <span class="word">white<span class="tip">putih</span></span> 
+        <span class="word">paws<span class="tip">telapak kaki</span></span>. 
+        I <b>have</b> a 
+        <span class="word">kitten<span class="tip">kucing kecil</span></span>. 
+        <span class="word">Her<span class="tip">miliknya</span></span> 
+        <span class="word">name<span class="tip">nama</span></span> is 
+        <span class="word">Bella<span class="tip">nama</span></span>.
+        <button class="speak-btn" onclick="speak('Wow, he is cute! Rocky has brown fur and white paws. I have a kitten. Her name is Bella.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Tom</div>
+        What 
+        <span class="word">color<span class="tip">warna</span></span> is 
+        <span class="word">your<span class="tip">milikmu</span></span> 
+        <span class="word">kitten<span class="tip">kucing kecil</span></span>? 
+        Bella <b>has</b> 
+        <span class="word">small<span class="tip">kecil</span></span> 
+        <span class="word">ears<span class="tip">telinga</span></span>?
+        <button class="speak-btn" onclick="speak('What color is your kitten? Bella has small ears?')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Lina</div>
+        <span class="word">Yes<span class="tip">ya</span></span>! 
+        Bella is 
+        <span class="word">black<span class="tip">hitam</span></span> and 
+        <span class="word">white<span class="tip">putih</span></span>. 
+        <span class="word">She<span class="tip">dia</span></span> 
+        <b>has</b> 
+        <span class="word">green<span class="tip">hijau</span></span> 
+        <span class="word">eyes<span class="tip">mata</span></span>. 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">pets<span class="tip">hewan peliharaan</span></span> are 
+        <span class="word">friends<span class="tip">teman</span></span> now!
+        <button class="speak-btn" onclick="speak('Yes! Bella is black and white. She has green eyes. Our pets are friends now!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Tom</div>
+        <span class="word">Mom<span class="tip">ibu</span></span> 
+        <b>has</b> a 
+        <span class="word">bird<span class="tip">burung</span></span> 
+        <span class="word">too<span class="tip">juga</span></span>. 
+        <span class="word">Its<span class="tip">miliknya</span></span> 
+        <span class="word">wings<span class="tip">sayap</span></span> are 
+        <span class="word">yellow<span class="tip">kuning</span></span>. 
+        <span class="word">Dad<span class="tip">ayah</span></span> 
+        <b>has</b> a 
+        <span class="word">fish<span class="tip">ikan</span></span> 
+        <span class="word">tank<span class="tip">akuarium</span></span> with 
+        <span class="word">five<span class="tip">lima</span></span> 
+        <span class="word">fish<span class="tip">ikan</span></span>.
+        <button class="speak-btn" onclick="speak('Mom has a bird too. Its wings are yellow. Dad has a fish tank with five fish.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Lina</div>
+        So 
+        <span class="word">our<span class="tip">milik kami</span></span> 
+        <span class="word">family<span class="tip">keluarga</span></span> 
+        <b>has</b> 
+        <span class="word">four<span class="tip">empat</span></span> 
+        <span class="word">pets<span class="tip">hewan peliharaan</span></span>! 
+        Rocky, Bella, the 
+        <span class="word">bird<span class="tip">burung</span></span>, and the 
+        <span class="word">fish<span class="tip">ikan</span></span>. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">home<span class="tip">rumah</span></span> is 
+        <span class="word">our<span class="tip">milik kami</span></span> 
+        <span class="word">house<span class="tip">rumah</span></span>.
+        <button class="speak-btn" onclick="speak('So our family has four pets! Rocky, Bella, the bird, and the fish. Their home is our house.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Tom</div>
+        <span class="word">Today<span class="tip">hari ini</span></span> is 
+        <span class="word">Sunday<span class="tip">Minggu</span></span>. 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <b>have</b> 
+        <span class="word">time<span class="tip">waktu</span></span> to 
+        <span class="word">play<span class="tip">bermain</span></span> with 
+        <span class="word">our<span class="tip">milik kami</span></span> 
+        <span class="word">pets<span class="tip">hewan peliharaan</span></span> 
+        <span class="word">all<span class="tip">sepanjang</span></span> 
+        <span class="word">day<span class="tip">hari</span></span>!
+        <button class="speak-btn" onclick="speak('Today is Sunday. We have time to play with our pets all day!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card mt-4" style="background: rgba(155,93,229,0.1); border-left: 4px solid var(--grape)">
+      <p class="text-sm font-semibold">
+        <b>💡 Notice:</b> "<b>His</b> name" (miliknya - Rocky laki-laki), "<b>her</b> name" (miliknya - Bella perempuan), 
+        "<b>its</b> wings" (miliknya - burung), "<b>our</b> family" (milik kami), "<b>their</b> home" (milik mereka). 
+        For pets with names, we can use his/her!
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 12: QUIZ 3 ============ -->
+<section class="slide" data-slide="12">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 3 · From Conversation 3</span>
+    <h1 class="section-title mt-2 mb-2">Pet Quiz Time! <span class="bob">🐶</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Conversation 3.</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">1.</span> What is Tom's puppy's name?</p>
+        <div class="quiz-options" data-q="c3q1" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Bella</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Rocky</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Max</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Lucky</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c3q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c3q1">
+          <b>Answer: B — Rocky.</b><br>
+          Tom says "<b>My</b> new puppy! <b>His</b> name is Rocky." We use <b>his</b> because Tom considers the puppy as a male pet.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">2.</span> "____ name is Bella." — about Lina's kitten.</p>
+        <div class="quiz-options" data-q="c3q2" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> His</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Her</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Its</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Their</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c3q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c3q2">
+          <b>Answer: B — Her.</b><br>
+          Lina uses <b>her</b> for Bella (female cat). For pets with names, we often use <b>his</b> or <b>her</b> instead of <b>its</b>.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">3.</span> How many pets does their family have in total?</p>
+        <div class="quiz-options" data-q="c3q3" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Three</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Five</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Four</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Six</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c3q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c3q3">
+          <b>Answer: C — Four.</b><br>
+          Lina says "<b>Our</b> family <b>has</b> four pets!" — Rocky (puppy), Bella (kitten), Mom's bird, and Dad's fish. Note: there are five fish, but they count as one pet (the fish tank).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">4.</span> "Mom ____ a bird too." Which is correct?</p>
+        <div class="quiz-options" data-q="c3q4" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> have</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> has</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> haves</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> having</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c3q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c3q4">
+          <b>Answer: B — has.</b><br>
+          "Mom" = she (singular). We use <b>has</b> with he/she/it. So: "Mom <b>has</b> a bird too."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 13: CONVERSATION 4 ============ -->
+<section class="slide" data-slide="13">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversation 4 · At the Market</span>
+    <h1 class="section-title mt-2 mb-2">Mom & Doni Buy Fruits <span class="bob">🍎</span></h1>
+    <p class="section-sub mb-4">Mom and Doni are shopping. Listen to their conversation about colors and fruits!</p>
+
+    <div class="flex flex-col">
+      <div class="bubble left">
+        <div class="speaker">Mom</div>
+        <span class="word">Doni<span class="tip">nama</span></span>, 
+        <span class="word">today<span class="tip">hari ini</span></span> is 
+        <span class="word">Wednesday<span class="tip">Rabu</span></span>. 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <span class="word">need<span class="tip">perlu</span></span> to 
+        <span class="word">buy<span class="tip">membeli</span></span> 
+        <span class="word">fruits<span class="tip">buah</span></span>. 
+        Can you 
+        <span class="word">carry<span class="tip">membawa</span></span> 
+        <span class="word">our<span class="tip">milik kami</span></span> 
+        <span class="word">basket<span class="tip">keranjang</span></span>?
+        <button class="speak-btn" onclick="speak('Doni, today is Wednesday. We need to buy fruits. Can you carry our basket?')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Doni</div>
+        <span class="word">Sure<span class="tip">tentu</span></span>, 
+        <span class="word">Mom<span class="tip">ibu</span></span>! 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">basket<span class="tip">keranjang</span></span> is 
+        <span class="word">green<span class="tip">hijau</span></span> and 
+        <span class="word">big<span class="tip">besar</span></span>. 
+        I <b>have</b> 
+        <span class="word">my<span class="tip">milikku</span></span> 
+        <span class="word">own<span class="tip">sendiri</span></span> 
+        <span class="word">money<span class="tip">uang</span></span> — 
+        <span class="word">ten<span class="tip">sepuluh</span></span> 
+        <span class="word">thousand<span class="tip">ribu</span></span>.
+        <button class="speak-btn" onclick="speak('Sure, Mom! Our basket is green and big. I have my own money — ten thousand.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Mom</div>
+        Look at these 
+        <span class="word">apples<span class="tip">apel</span></span>. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">color<span class="tip">warna</span></span> is 
+        <span class="word">red<span class="tip">merah</span></span>. 
+        And these 
+        <span class="word">bananas<span class="tip">pisang</span></span> 
+        <b>have</b> 
+        <span class="word">yellow<span class="tip">kuning</span></span> 
+        <span class="word">skin<span class="tip">kulit</span></span>. 
+        <span class="word">Mrs.<span class="tip">Ny.</span></span> 
+        Sari <b>has</b> 
+        <span class="word">fresh<span class="tip">segar</span></span> 
+        <span class="word">oranges<span class="tip">jeruk</span></span>.
+        <button class="speak-btn" onclick="speak('Look at these apples. Their color is red. And these bananas have yellow skin. Mrs. Sari has fresh oranges.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Doni</div>
+        <span class="word">Mrs.<span class="tip">Ny.</span></span> 
+        Sari's 
+        <span class="word">oranges<span class="tip">jeruk</span></span> are 
+        <span class="word">orange<span class="tip">oranye</span></span>! 
+        Mom, what is 
+        <span class="word">your<span class="tip">milikmu</span></span> 
+        <span class="word">favorite<span class="tip">favorit</span></span> 
+        <span class="word">fruit<span class="tip">buah</span></span>? 
+        <span class="word">My<span class="tip">milikku</span></span> 
+        <span class="word">favorite<span class="tip">favorit</span></span> is 
+        <span class="word">mango<span class="tip">mangga</span></span>.
+        <button class="speak-btn" onclick="speak(\"Mrs. Sari's oranges are orange! Mom, what is your favorite fruit? My favorite is mango.\")"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Mom</div>
+        I <b>have</b> 
+        <span class="word">two<span class="tip">dua</span></span> 
+        <span class="word">favorites<span class="tip">favorit</span></span> — 
+        <span class="word">red<span class="tip">merah</span></span> 
+        <span class="word">apples<span class="tip">apel</span></span> and 
+        <span class="word">purple<span class="tip">ungu</span></span> 
+        <span class="word">grapes<span class="tip">anggur</span></span>. 
+        <span class="word">Mr.<span class="tip">Tn.</span></span> 
+        Adi <b>has</b> 
+        <span class="word">green<span class="tip">hijau</span></span> 
+        <span class="word">watermelons<span class="tip">semangka</span></span>.
+        <button class="speak-btn" onclick="speak('I have two favorites — red apples and purple grapes. Mr. Adi has green watermelons.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Doni</div>
+        <span class="word">His<span class="tip">miliknya</span></span> 
+        <span class="word">watermelons<span class="tip">semangka</span></span> are 
+        <span class="word">huge<span class="tip">besar sekali</span></span>! 
+        Mom, 
+        <span class="word">their<span class="tip">milik mereka</span></span> 
+        <span class="word">price<span class="tip">harga</span></span> is 
+        <span class="word">cheap<span class="tip">murah</span></span> 
+        <span class="word">today<span class="tip">hari ini</span></span>. 
+        Let's 
+        <span class="word">buy<span class="tip">membeli</span></span> 
+        <span class="word">three<span class="tip">tiga</span></span>!
+        <button class="speak-btn" onclick="speak('His watermelons are huge! Mom, their price is cheap today. Let us buy three!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Mom</div>
+        <span class="word">Good<span class="tip">bagus</span></span> 
+        <span class="word">idea<span class="tip">ide</span></span>! 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">family<span class="tip">keluarga</span></span> 
+        <b>has</b> a 
+        <span class="word">big<span class="tip">besar</span></span> 
+        <span class="word">fridge<span class="tip">kulkas</span></span> at 
+        <span class="word">home<span class="tip">rumah</span></span>. 
+        <span class="word">Tomorrow<span class="tip">besok</span></span> is 
+        <span class="word">Thursday<span class="tip">Kamis</span></span>. 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <b>have</b> a 
+        <span class="word">family<span class="tip">keluarga</span></span> 
+        <span class="word">dinner<span class="tip">makan malam</span></span>.
+        <button class="speak-btn" onclick="speak('Good idea! Our family has a big fridge at home. Tomorrow is Thursday. We have a family dinner.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card mt-4" style="background: rgba(255,107,107,0.1); border-left: 4px solid var(--coral)">
+      <p class="text-sm font-semibold">
+        <b>💡 Notice:</b> "<b>Mrs. Sari's</b> oranges" (jeruknya Mrs. Sari — pakai 's), 
+        "<b>their</b> color" (warnanya mereka — buah-buahan), "<b>his</b> watermelons" (semangkunya Mr. Adi), 
+        "<b>our</b> basket" (keranjang kami). Names of people use <b>'s</b> to show ownership.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 14: QUIZ 4 ============ -->
+<section class="slide" data-slide="14">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 4 · From Conversation 4</span>
+    <h1 class="section-title mt-2 mb-2">Market Quiz Time! <span class="bob">🍎</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Conversation 4.</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">1.</span> "____ oranges are fresh." — about Mrs. Sari's oranges.</p>
+        <div class="quiz-options" data-q="c4q1" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Mrs. Sari</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Mrs. Sari is</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Mrs. Sari's</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Mrs. Saris</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c4q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c4q1">
+          <b>Answer: C — Mrs. Sari's.</b><br>
+          To show that the oranges belong to Mrs. Sari, we add <b>'s</b> to her name: "Mrs. Sari's oranges are fresh."
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">2.</span> What is Doni's favorite fruit?</p>
+        <div class="quiz-options" data-q="c4q2" data-correct="d">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Apple</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Banana</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Orange</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Mango</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c4q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c4q2">
+          <b>Answer: D — Mango.</b><br>
+          Doni says "<b>My</b> favorite is mango." <b>My</b> shows that the favorite belongs to Doni.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">3.</span> "Their ____ is cheap today." — about watermelons.</p>
+        <div class="quiz-options" data-q="c4q3" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> colors</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> price</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> skin</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> name</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c4q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c4q3">
+          <b>Answer: B — price.</b><br>
+          Doni says "<b>Their</b> price is cheap today." <b>Their</b> refers to the watermelons (plural), showing the price belongs to them.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">4.</span> How much money does Doni have?</p>
+        <div class="quiz-options" data-q="c4q4" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Five thousand</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> One thousand</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Ten thousand</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Two thousand</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c4q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c4q4">
+          <b>Answer: C — Ten thousand.</b><br>
+          Doni says "I <b>have</b> my own money — ten thousand." We use <b>have</b> with I/you/we/they.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 15: CONVERSATION 5 ============ -->
+<section class="slide" data-slide="15">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversation 5 · Transportation Day</span>
+    <h1 class="section-title mt-2 mb-2">Fajar & Maya at the Station <span class="bob">🚉</span></h1>
+    <p class="section-sub mb-4">Fajar and Maya talk about transportation and places they visit!</p>
+
+    <div class="flex flex-col">
+      <div class="bubble left">
+        <div class="speaker">Fajar</div>
+        <span class="word">Hi<span class="tip">hai</span></span> 
+        <span class="word">Maya<span class="tip">nama</span></span>! 
+        <span class="word">Today<span class="tip">hari ini</span></span> is 
+        <span class="word">Friday<span class="tip">Jumat</span></span>. 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <b>have</b> a 
+        <span class="word">school<span class="tip">sekolah</span></span> 
+        <span class="word">trip<span class="tip">jalan-jalan</span></span> 
+        <span class="word">today<span class="tip">hari ini</span></span>!
+        <button class="speak-btn" onclick="speak('Hi Maya! Today is Friday. We have a school trip today!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Maya</div>
+        <span class="word">Yes<span class="tip">ya</span></span>! 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">class<span class="tip">kelas</span></span> 
+        <b>has</b> 
+        <span class="word">thirty<span class="tip">tiga puluh</span></span> 
+        <span class="word">students<span class="tip">siswa</span></span>. 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">teacher<span class="tip">guru</span></span>, 
+        Mr. Don, <b>has</b> a 
+        <span class="word">whistle<span class="tip">peluit</span></span>.
+        <button class="speak-btn" onclick="speak('Yes! Our class has thirty students. Our teacher, Mr. Don, has a whistle.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Fajar</div>
+        Look! 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">bus<span class="tip">bis</span></span> is 
+        <span class="word">blue<span class="tip">biru</span></span>. 
+        It <b>has</b> 
+        <span class="word">big<span class="tip">besar</span></span> 
+        <span class="word">windows<span class="tip">jendela</span></span>. 
+        <span class="word">Its<span class="tip">miliknya</span></span> 
+        <span class="word">wheels<span class="tip">roda</span></span> are 
+        <span class="word">black<span class="tip">hitam</span></span>.
+        <button class="speak-btn" onclick="speak('Look! Our bus is blue. It has big windows. Its wheels are black.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Maya</div>
+        <span class="word">My<span class="tip">milikku</span></span> 
+        <span class="word">father<span class="tip">ayah</span></span> 
+        <b>has</b> a 
+        <span class="word">red<span class="tip">merah</span></span> 
+        <span class="word">car<span class="tip">mobil</span></span>. 
+        <span class="word">His<span class="tip">miliknya</span></span> 
+        <span class="word">car<span class="tip">mobil</span></span> is 
+        <span class="word">faster<span class="tip">lebih cepat</span></span> than this 
+        <span class="word">bus<span class="tip">bis</span></span>. But I 
+        <span class="word">like<span class="tip">suka</span></span> 
+        <span class="word">our<span class="tip">milik kami</span></span> 
+        <span class="word">bus<span class="tip">bis</span></span>!
+        <button class="speak-btn" onclick="speak('My father has a red car. His car is faster than this bus. But I like our bus!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Fajar</div>
+        I <b>have</b> 
+        <span class="word">my<span class="tip">milikku</span></span> 
+        <span class="word">backpack<span class="tip">ransel</span></span>. 
+        It <b>has</b> 
+        <span class="word">water<span class="tip">air</span></span> and 
+        <span class="word">snacks<span class="tip">camilan</span></span>. 
+        Where are 
+        <span class="word">we<span class="tip">kami</span></span> 
+        <span class="word">going<span class="tip">pergi</span></span>?
+        <button class="speak-btn" onclick="speak('I have my backpack. It has water and snacks. Where are we going?')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Maya</div>
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">destination<span class="tip">tujuan</span></span> is the 
+        <span class="word">museum<span class="tip">museum</span></span>. 
+        The 
+        <span class="word">museum<span class="tip">museum</span></span> 
+        <b>has</b> 
+        <span class="word">old<span class="tip">tua</span></span> 
+        <span class="word">trains<span class="tip">kereta</span></span> and 
+        <span class="word">planes<span class="tip">pesawat</span></span>. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">colors<span class="tip">warna</span></span> are 
+        <span class="word">different<span class="tip">berbeda</span></span>.
+        <button class="speak-btn" onclick="speak('Our destination is the museum. The museum has old trains and planes. Their colors are different.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble left">
+        <div class="speaker">Fajar</div>
+        <span class="word">Awesome<span class="tip">keren</span></span>! 
+        <span class="word">Tomorrow<span class="tip">besok</span></span> is 
+        <span class="word">Saturday<span class="tip">Sabtu</span></span>. 
+        <span class="word">My<span class="tip">milikku</span></span> 
+        <span class="word">family<span class="tip">keluarga</span></span> 
+        <b>has</b> a 
+        <span class="word">plan<span class="tip">rencana</span></span> to 
+        <span class="word">ride<span class="tip">naik</span></span> a 
+        <span class="word">boat<span class="tip">perahu</span></span>. 
+        <span class="word">Your<span class="tip">milikmu</span></span> 
+        <span class="word">family<span class="tip">keluarga</span></span> 
+        <b>has</b> a 
+        <span class="word">bicycle<span class="tip">sepeda</span></span>, 
+        <span class="word">right<span class="tip">kan</span></span>?
+        <button class="speak-btn" onclick="speak('Awesome! Tomorrow is Saturday. My family has a plan to ride a boat. Your family has a bicycle, right?')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="bubble right">
+        <div class="speaker">Maya</div>
+        <span class="word">Yes<span class="tip">ya</span></span>! 
+        <span class="word">We<span class="tip">kami</span></span> 
+        <b>have</b> 
+        <span class="word">two<span class="tip">dua</span></span> 
+        <span class="word">bicycles<span class="tip">sepeda</span></span>. 
+        <span class="word">Their<span class="tip">milik mereka</span></span> 
+        <span class="word">colors<span class="tip">warna</span></span> are 
+        <span class="word">green<span class="tip">hijau</span></span> and 
+        <span class="word">purple<span class="tip">ungu</span></span>. 
+        <span class="word">Our<span class="tip">milik kami</span></span> 
+        <span class="word">weekend<span class="tip">akhir pekan</span></span> will be 
+        <span class="word">fun<span class="tip">menyenangkan</span></span>!
+        <button class="speak-btn" onclick="speak('Yes! We have two bicycles. Their colors are green and purple. Our weekend will be fun!')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card mt-4" style="background: rgba(76,201,240,0.1); border-left: 4px solid var(--sky)">
+      <p class="text-sm font-semibold">
+        <b>💡 Notice:</b> "<b>Our</b> bus" (bis kami), "<b>its</b> wheels" (rodanya - bis), 
+        "<b>my</b> father has" (ayahku punya), "<b>his</b> car" (mobilnya), 
+        "<b>their</b> colors" (warna mereka - kereta/pesawat). For vehicles, we use <b>its</b>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 16: QUIZ 5 ============ -->
+<section class="slide" data-slide="16">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 5 · From Conversation 5</span>
+    <h1 class="section-title mt-2 mb-2">Transportation Quiz! <span class="bob">🚉</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Conversation 5.</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">1.</span> "____ bus is blue." Which is correct?</p>
+        <div class="quiz-options" data-q="c5q1" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> My</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Our</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Their</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Her</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c5q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c5q1">
+          <b>Answer: B — Our.</b><br>
+          Fajar says "<b>Our</b> bus is blue." The bus belongs to the whole class (Fajar, Maya, and classmates), so they use <b>our</b>.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">2.</span> "Its ____ are black." — about the bus.</p>
+        <div class="quiz-options" data-q="c5q2" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> windows</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> doors</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> wheels</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> seats</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c5q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c5q2">
+          <b>Answer: C — wheels.</b><br>
+          Fajar says "<b>Its</b> wheels are black." <b>Its</b> (no apostrophe!) shows that the wheels belong to the bus.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">3.</span> How many students does their class have?</p>
+        <div class="quiz-options" data-q="c5q3" data-correct="d">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Twenty</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Twenty-five</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Forty</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Thirty</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c5q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c5q3">
+          <b>Answer: D — Thirty.</b><br>
+          Maya says "<b>Our</b> class <b>has</b> thirty students." We use <b>has</b> because "our class" is singular (it).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--coral)">4.</span> What color is Maya's father's car?</p>
+        <div class="quiz-options" data-q="c5q4" data-correct="a">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Red</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Blue</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Green</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Black</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('c5q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-c5q4">
+          <b>Answer: A — Red.</b><br>
+          Maya says "<b>My</b> father <b>has</b> a red car. <b>His</b> car is faster." <b>My</b> = milikku, <b>his</b> = miliknya (ayah).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 17: STORY 1 ============ -->
+<section class="slide" data-slide="17">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story 1 · My Wonderful Weekend</span>
+    <h1 class="section-title mt-2 mb-2">Dina's Weekend Adventure <span class="bob">🏖️</span></h1>
+    <p class="section-sub mb-4">Read the story carefully. The quiz questions will come from this story!</p>
+
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-sm font-bold" style="color: var(--muted)">Narrated by Dina</p>
+      <button class="btn-check" onclick="speak(story1Text, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div class="story-text">
+      <p><span class="word">Hello<span class="tip">halo</span></span>! 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">name<span class="tip">nama</span></span> is 
+      <span class="word">Dina<span class="tip">nama</span></span>. 
+      I want to tell you about 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">wonderful<span class="tip">menakjubkan</span></span> 
+      <span class="word">weekend<span class="tip">akhir pekan</span></span>.</p>
+
+      <p>On <span class="word">Saturday<span class="tip">Sabtu</span></span> 
+      <span class="word">morning<span class="tip">pagi</span></span>, 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">family<span class="tip">keluarga</span></span> and I went to the 
+      <span class="word">beach<span class="tip">pantai</span></span>. 
+      <span class="word">We<span class="tip">kami</span></span> rode 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">car<span class="tip">mobil</span></span>. 
+      The <span class="word">car<span class="tip">mobil</span></span> is 
+      <span class="word">blue<span class="tip">biru</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">father<span class="tip">ayah</span></span> drove the 
+      <span class="word">car<span class="tip">mobil</span></span>. 
+      <span class="word">He<span class="tip">dia (lk)</span></span> 
+      <b>has</b> a 
+      <span class="word">license<span class="tip">SIM</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">mother<span class="tip">ibu</span></span> brought 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">food<span class="tip">makanan</span></span>. 
+      <span class="word">She<span class="tip">dia (pr)</span></span> 
+      <b>has</b> a 
+      <span class="word">big<span class="tip">besar</span></span> 
+      <span class="word">basket<span class="tip">keranjang</span></span>.</p>
+
+      <p>At the <span class="word">beach<span class="tip">pantai</span></span>, 
+      I saw many things. I saw a 
+      <span class="word">big<span class="tip">besar</span></span> 
+      <span class="word">ship<span class="tip">kapal</span></span>. 
+      The <span class="word">ship<span class="tip">kapal</span></span> 
+      <b>has</b> 
+      <span class="word">white<span class="tip">putih</span></span> 
+      <span class="word">sails<span class="tip">layar</span></span>. 
+      I collected 
+      <span class="word">shells<span class="tip">kerang</span></span>. 
+      <span class="word">They<span class="tip">mereka</span></span> 
+      <b>have</b> 
+      <span class="word">beautiful<span class="tip">indah</span></span> 
+      <span class="word">colors<span class="tip">warna</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">brother<span class="tip">saudara laki-laki</span></span> made a 
+      <span class="word">sandcastle<span class="tip">istana pasir</span></span>. 
+      <span class="word">His<span class="tip">miliknya</span></span> 
+      <span class="word">sandcastle<span class="tip">istana pasir</span></span> was 
+      <span class="word">tall<span class="tip">tinggi</span></span>.</p>
+
+      <p>On <span class="word">Sunday<span class="tip">Minggu</span></span>, 
+      we visited 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">grandmother<span class="tip">nenek</span></span>. 
+      <span class="word">Her<span class="tip">miliknya</span></span> 
+      <span class="word">house<span class="tip">rumah</span></span> is in the 
+      <span class="word">village<span class="tip">desa</span></span>. 
+      <span class="word">She<span class="tip">dia</span></span> 
+      <b>has</b> 
+      <span class="word">five<span class="tip">lima</span></span> 
+      <span class="word">cats<span class="tip">kucing</span></span>. 
+      <span class="word">Their<span class="tip">milik mereka</span></span> 
+      <span class="word">colors<span class="tip">warna</span></span> are 
+      <span class="word">different<span class="tip">berbeda</span></span>. 
+      <span class="word">One<span class="tip">satu</span></span> 
+      <span class="word">cat<span class="tip">kucing</span></span> is 
+      <span class="word">black<span class="tip">hitam</span></span>, 
+      <span class="word">two<span class="tip">dua</span></span> are 
+      <span class="word">white<span class="tip">putih</span></span>, and 
+      <span class="word">two<span class="tip">dua</span></span> are 
+      <span class="word">orange<span class="tip">oranye</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">grandmother<span class="tip">nenek</span></span> 
+      <span class="word">loves<span class="tip">menyayangi</span></span> 
+      <span class="word">her<span class="tip">miliknya</span></span> 
+      <span class="word">cats<span class="tip">kucing</span></span>.</p>
+
+      <p><span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">weekend<span class="tip">akhir pekan</span></span> was 
+      <span class="word">amazing<span class="tip">menakjubkan</span></span>!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 18: QUIZ 6 ============ -->
+<section class="slide" data-slide="18">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 6 · From Story 1</span>
+    <h1 class="section-title mt-2 mb-2">Story 1 Quiz! <span class="bob">📖</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Story 1 (Dina's Weekend).</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">1.</span> Where did Dina's family go on Saturday?</p>
+        <div class="quiz-options" data-q="s1q1" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> The zoo</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> The beach</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> The library</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> The market</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s1q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s1q1">
+          <b>Answer: B — The beach.</b><br>
+          "On Saturday morning, <b>my</b> family and I went to the beach." <b>My</b> shows the family belongs to Dina.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">2.</span> "____ sandcastle was tall." — about Dina's brother.</p>
+        <div class="quiz-options" data-q="s1q2" data-correct="a">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> His</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Her</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Their</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> My</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s1q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s1q2">
+          <b>Answer: A — His.</b><br>
+          Dina's brother is male, so we use <b>his</b> (miliknya laki-laki). "His sandcastle was tall."
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">3.</span> How many cats does Dina's grandmother have?</p>
+        <div class="quiz-options" data-q="s1q3" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Three</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Four</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Five</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Six</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s1q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s1q3">
+          <b>Answer: C — Five.</b><br>
+          "She <b>has</b> five cats." We use <b>has</b> because "she" (grandmother) is singular. The cats: 1 black + 2 white + 2 orange = 5.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">4.</span> What color is Dina's family car?</p>
+        <div class="quiz-options" data-q="s1q4" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Red</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Blue</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Green</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> White</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s1q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s1q4">
+          <b>Answer: B — Blue.</b><br>
+          "We rode <b>our</b> car. The car is blue." <b>Our</b> shows the car belongs to Dina's family.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 19: STORY 2 ============ -->
+<section class="slide" data-slide="19">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story 2 · The Lost and Found Day</span>
+    <h1 class="section-title mt-2 mb-2">Andi's Lost Pencil Case <span class="bob">🔍</span></h1>
+    <p class="section-sub mb-4">A school story about losing and finding things!</p>
+
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-sm font-bold" style="color: var(--muted)">A school story</p>
+      <button class="btn-check" onclick="speak(story2Text, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div class="story-text" style="border-left-color: var(--grape)">
+      <p><span class="word">Today<span class="tip">hari ini</span></span> is 
+      <span class="word">Wednesday<span class="tip">Rabu</span></span>. 
+      It is a 
+      <span class="word">busy<span class="tip">sibuk</span></span> 
+      <span class="word">day<span class="tip">hari</span></span> at 
+      <span class="word">school<span class="tip">sekolah</span></span>. 
+      <span class="word">Andi<span class="tip">nama</span></span> lost 
+      <span class="word">his<span class="tip">miliknya</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span>. 
+      The <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span> is 
+      <span class="word">red<span class="tip">merah</span></span>. 
+      <span class="word">It<span class="tip">itu</span></span> 
+      <b>has</b> 
+      <span class="word">two<span class="tip">dua</span></span> 
+      <span class="word">pencils<span class="tip">pensil</span></span>, 
+      <span class="word">one<span class="tip">satu</span></span> 
+      <span class="word">pen<span class="tip">pulpen</span></span>, and 
+      <span class="word">one<span class="tip">satu</span></span> 
+      <span class="word">eraser<span class="tip">penghapus</span></span> 
+      <span class="word">inside<span class="tip">di dalam</span></span>.</p>
+
+      <p><span class="word">Andi<span class="tip">nama</span></span> asked 
+      <span class="word">his<span class="tip">miliknya</span></span> 
+      <span class="word">friends<span class="tip">teman-teman</span></span>, 
+      "Have you seen 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span>?"</p>
+
+      <p><span class="word">Sinta<span class="tip">nama</span></span> said, 
+      "<span class="word">No<span class="tip">tidak</span></span>, I 
+      <b>have</b> not seen 
+      <span class="word">your<span class="tip">milikmu</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span>. 
+      But I <b>have</b> an 
+      <span class="word">extra<span class="tip">tambahan</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span>. 
+      You can 
+      <span class="word">borrow<span class="tip">meminjam</span></span> 
+      <span class="word">it<span class="tip">itu</span></span>."</p>
+
+      <p><span class="word">Budi<span class="tip">nama</span></span> said, 
+      "I 
+      <span class="word">think<span class="tip">pikir</span></span> I saw a 
+      <span class="word">red<span class="tip">merah</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span> in the 
+      <span class="word">library<span class="tip">perpustakaan</span></span>. 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">owner<span class="tip">pemilik</span></span> 
+      <span class="word">might<span class="tip">mungkin</span></span> be 
+      <span class="word">you<span class="tip">kamu</span></span>!"</p>
+
+      <p><span class="word">Andi<span class="tip">nama</span></span> went to the 
+      <span class="word">library<span class="tip">perpustakaan</span></span>. 
+      He talked to the 
+      <span class="word">librarian<span class="tip">pustakawan</span></span>. 
+      The <span class="word">librarian<span class="tip">pustakawan</span></span> 
+      <b>has</b> 
+      <span class="word">glasses<span class="tip">kacamata</span></span>. 
+      <span class="word">She<span class="tip">dia</span></span> said, 
+      "<span class="word">Yes<span class="tip">ya</span></span>, we 
+      <span class="word">found<span class="tip">menemukan</span></span> a 
+      <span class="word">red<span class="tip">merah</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span>. 
+      <span class="word">Here<span class="tip">ini</span></span> it is!"</p>
+
+      <p><span class="word">Andi<span class="tip">nama</span></span> was 
+      <span class="word">happy<span class="tip">senang</span></span>. 
+      "<span class="word">Thank<span class="tip">terima</span></span> 
+      <span class="word">you<span class="tip">kamu</span></span>! 
+      This is 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">pencil<span class="tip">pensil</span></span> 
+      <span class="word">case<span class="tip">kotak</span></span>. 
+      I <b>have</b> 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">pencils<span class="tip">pensil</span></span> 
+      <span class="word">back<span class="tip">kembali</span></span>!"</p>
+
+      <p>The <span class="word">librarian<span class="tip">pustakawan</span></span> 
+      <span class="word">smiled<span class="tip">tersenyum</span></span>, 
+      "Be 
+      <span class="word">careful<span class="tip">hati-hati</span></span> with 
+      <span class="word">your<span class="tip">milikmu</span></span> 
+      <span class="word">things<span class="tip">barang</span></span>, 
+      <span class="word">Andi<span class="tip">nama</span></span>."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 20: QUIZ 7 ============ -->
+<section class="slide" data-slide="20">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 7 · From Story 2</span>
+    <h1 class="section-title mt-2 mb-2">Story 2 Quiz! <span class="bob">📖</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Story 2 (Andi's Lost Pencil Case).</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">1.</span> What did Andi lose in Story 2?</p>
+        <div class="quiz-options" data-q="s2q1" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> His book</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> His pencil case</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> His bag</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> His pen</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s2q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s2q1">
+          <b>Answer: B — His pencil case.</b><br>
+          "Andi lost <b>his</b> pencil case." <b>His</b> shows the pencil case belongs to Andi (male).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">2.</span> Where did Andi find his pencil case?</p>
+        <div class="quiz-options" data-q="s2q2" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> In the classroom</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> In the library</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> In the canteen</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> In the park</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s2q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s2q2">
+          <b>Answer: B — In the library.</b><br>
+          Budi said: "I saw a red pencil case in the library." The librarian (who <b>has</b> glasses) found it.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">3.</span> "The librarian ____ glasses." Which is correct?</p>
+        <div class="quiz-options" data-q="s2q3" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> have</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> has</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> haves</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> is have</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s2q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s2q3">
+          <b>Answer: B — has.</b><br>
+          "The librarian" = she (singular). We use <b>has</b> with he/she/it. So: "The librarian <b>has</b> glasses."
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">4.</span> "____ owner might be you!" — about the pencil case.</p>
+        <div class="quiz-options" data-q="s2q4" data-correct="a">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Its</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> His</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Her</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Their</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s2q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s2q4">
+          <b>Answer: A — Its.</b><br>
+          The pencil case is a thing, so we use <b>its</b> (miliknya - benda). "Its owner might be you!" = pemiliknya mungkin kamu!
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 21: STORY 3 ============ -->
+<section class="slide" data-slide="21">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story 3 · The Pet Show</span>
+    <h1 class="section-title mt-2 mb-2">Rian's Pet Show Adventure <span class="bob">🏆</span></h1>
+    <p class="section-sub mb-4">A story about a pet show competition!</p>
+
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-sm font-bold" style="color: var(--muted)">A competition story</p>
+      <button class="btn-check" onclick="speak(story3Text, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div class="story-text" style="border-left-color: var(--leaf)">
+      <p><span class="word">Today<span class="tip">hari ini</span></span> is 
+      <span class="word">Saturday<span class="tip">Sabtu</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">neighborhood<span class="tip">lingkungan</span></span> 
+      <b>has</b> a 
+      <span class="word">Pet<span class="tip">hewan peliharaan</span></span> 
+      <span class="word">Show<span class="tip">pertunjukan</span></span>. 
+      <span class="word">Many<span class="tip">banyak</span></span> 
+      <span class="word">children<span class="tip">anak-anak</span></span> 
+      <span class="word">bring<span class="tip">membawa</span></span> 
+      <span class="word">their<span class="tip">milik mereka</span></span> 
+      <span class="word">pets<span class="tip">hewan peliharaan</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">friend<span class="tip">teman</span></span> 
+      <span class="word">Rian<span class="tip">nama</span></span> 
+      <b>has</b> a 
+      <span class="word">white<span class="tip">putih</span></span> 
+      <span class="word">rabbit<span class="tip">kelinci</span></span>. 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">name<span class="tip">nama</span></span> is 
+      <span class="word">Snow<span class="tip">Salju</span></span>.</p>
+
+      <p><span class="word">Snow<span class="tip">nama</span></span> 
+      <b>has</b> 
+      <span class="word">long<span class="tip">panjang</span></span> 
+      <span class="word">ears<span class="tip">telinga</span></span> and 
+      <span class="word">red<span class="tip">merah</span></span> 
+      <span class="word">eyes<span class="tip">mata</span></span>. 
+      <span class="word">Rian's<span class="tip">milik Rian</span></span> 
+      <span class="word">sister<span class="tip">saudara perempuan</span></span>, 
+      <span class="word">Tia<span class="tip">nama</span></span>, 
+      <b>has</b> a 
+      <span class="word">yellow<span class="tip">kuning</span></span> 
+      <span class="word">bird<span class="tip">burung</span></span>. 
+      <span class="word">Her<span class="tip">miliknya</span></span> 
+      <span class="word">bird<span class="tip">burung</span></span> can 
+      <span class="word">sing<span class="tip">bernanyi</span></span>! 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">wings<span class="tip">sayap</span></span> are 
+      <span class="word">beautiful<span class="tip">indah</span></span>.</p>
+
+      <p><span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">neighbor<span class="tip">tetangga</span></span>, 
+      <span class="word">Mr.<span class="tip">Tn.</span></span> 
+      <span class="word">Don<span class="tip">nama</span></span>, 
+      <b>has</b> a 
+      <span class="word">big<span class="tip">besar</span></span> 
+      <span class="word">dog<span class="tip">anjing</span></span>. 
+      <span class="word">His<span class="tip">miliknya</span></span> 
+      <span class="word">dog<span class="tip">anjing</span></span> is 
+      <span class="word">brown<span class="tip">coklat</span></span> with 
+      <span class="word">black<span class="tip">hitam</span></span> 
+      <span class="word">spots<span class="tip">bintik</span></span>. 
+      <span class="word">They<span class="tip">mereka</span></span> 
+      <b>have</b> 
+      <span class="word">three<span class="tip">tiga</span></span> 
+      <span class="word">puppies<span class="tip">anjing kecil</span></span> at 
+      <span class="word">home<span class="tip">rumah</span></span>. 
+      <span class="word">Their<span class="tip">milik mereka</span></span> 
+      <span class="word">puppies<span class="tip">anjing kecil</span></span> are 
+      <span class="word">very<span class="tip">sangat</span></span> 
+      <span class="word">cute<span class="tip">imut</span></span>.</p>
+
+      <p>The <span class="word">judge<span class="tip">juri</span></span> 
+      <b>has</b> a 
+      <span class="word">difficult<span class="tip">sulit</span></span> 
+      <span class="word">job<span class="tip">tugas</span></span>. 
+      <span class="word">She<span class="tip">dia</span></span> 
+      <span class="word">looks<span class="tip">melihat</span></span> at 
+      <span class="word">all<span class="tip">semua</span></span> 
+      <span class="word">the<span class="tip">-</span></span> 
+      <span class="word">pets<span class="tip">hewan peliharaan</span></span> and 
+      <span class="word">their<span class="tip">milik mereka</span></span> 
+      <span class="word">owners<span class="tip">pemilik</span></span>. 
+      <span class="word">Snow<span class="tip">nama</span></span> 
+      <b>has</b> the 
+      <span class="word">softest<span class="tip">paling lembut</span></span> 
+      <span class="word">fur<span class="tip">bulu</span></span>. 
+      <span class="word">Tia's<span class="tip">milik Tia</span></span> 
+      <span class="word">bird<span class="tip">burung</span></span> 
+      <b>has</b> the 
+      <span class="word">sweetest<span class="tip">paling merdu</span></span> 
+      <span class="word">voice<span class="tip">suara</span></span>. 
+      <span class="word">Mr.<span class="tip">Tn.</span></span> 
+      <span class="word">Don's<span class="tip">milik Tn. Don</span></span> 
+      <span class="word">dog<span class="tip">anjing</span></span> 
+      <b>has</b> the 
+      <span class="word">best<span class="tip">terbaik</span></span> 
+      <span class="word">tricks<span class="tip">trik</span></span>.</p>
+
+      <p><span class="word">In<span class="tip">di</span></span> the 
+      <span class="word">end<span class="tip">akhir</span></span>, 
+      <span class="word">everyone<span class="tip">semua orang</span></span> 
+      <b>has</b> a 
+      <span class="word">prize<span class="tip">hadiah</span></span>. 
+      <span class="word">Their<span class="tip">milik mereka</span></span> 
+      <span class="word">pets<span class="tip">hewan peliharaan</span></span> are 
+      <span class="word">all<span class="tip">semua</span></span> 
+      <span class="word">winners<span class="tip">pemenang</span></span>! 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">neighborhood<span class="tip">lingkungan</span></span> 
+      <b>has</b> the 
+      <span class="word">best<span class="tip">terbaik</span></span> 
+      <span class="word">pets<span class="tip">hewan peliharaan</span></span> 
+      <span class="word">ever<span class="tip">selamanya</span></span>!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 22: QUIZ 8 ============ -->
+<section class="slide" data-slide="22">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 8 · From Story 3</span>
+    <h1 class="section-title mt-2 mb-2">Story 3 Quiz! <span class="bob">📖</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Story 3 (The Pet Show).</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">1.</span> What is the name of Rian's rabbit?</p>
+        <div class="quiz-options" data-q="s3q1" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Bella</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Rocky</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Snow</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Lucky</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s3q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s3q1">
+          <b>Answer: C — Snow.</b><br>
+          "Rian has a white rabbit. <b>Its</b> name is Snow." <b>Its</b> shows the name belongs to the rabbit.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">2.</span> "Tia's bird can sing." — Whose bird is it?</p>
+        <div class="quiz-options" data-q="s3q2" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Rian's bird</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Tia's bird</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Mr. Don's bird</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> The judge's bird</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s3q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s3q2">
+          <b>Answer: B — Tia's bird.</b><br>
+          "Tia<b>'s</b> bird" means the bird belongs to Tia. We add <b>'s</b> to a name to show ownership.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">3.</span> How many puppies does Mr. Don have at home?</p>
+        <div class="quiz-options" data-q="s3q3" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Two</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Three</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Four</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Five</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s3q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s3q3">
+          <b>Answer: B — Three.</b><br>
+          "They <b>have</b> three puppies at home." <b>They</b> (Mr. Don and his dog's family) uses <b>have</b>.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">4.</span> What color are Snow's eyes?</p>
+        <div class="quiz-options" data-q="s3q4" data-correct="a">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Red</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Blue</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Green</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Black</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s3q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s3q4">
+          <b>Answer: A — Red.</b><br>
+          "Snow <b>has</b> long ears and red eyes." We use <b>has</b> because Snow (the rabbit) = it (singular).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 23: STORY 4 ============ -->
+<section class="slide" data-slide="23">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story 4 · My Family's Big Trip</span>
+    <h1 class="section-title mt-2 mb-2">A Trip with Many Vehicles <span class="bob">🚗</span></h1>
+    <p class="section-sub mb-4">A story about a family trip using different transportation!</p>
+
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-sm font-bold" style="color: var(--muted)">A travel story</p>
+      <button class="btn-check" onclick="speak(story4Text, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div class="story-text" style="border-left-color: var(--sky)">
+      <p><span class="word">Last<span class="tip">lampau</span></span> 
+      <span class="word">week<span class="tip">minggu</span></span>, 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">family<span class="tip">keluarga</span></span> 
+      <b>had</b> a 
+      <span class="word">big<span class="tip">besar</span></span> 
+      <span class="word">trip<span class="tip">perjalanan</span></span>. 
+      <span class="word">We<span class="tip">kami</span></span> 
+      <span class="word">visited<span class="tip">mengunjungi</span></span> 
+      <span class="word">many<span class="tip">banyak</span></span> 
+      <span class="word">places<span class="tip">tempat</span></span> and 
+      <span class="word">used<span class="tip">menggunakan</span></span> 
+      <span class="word">different<span class="tip">berbeda</span></span> 
+      <span class="word">transportation<span class="tip">transportasi</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">trip<span class="tip">perjalanan</span></span> 
+      <span class="word">started<span class="tip">dimulai</span></span> on 
+      <span class="word">Monday<span class="tip">Senin</span></span> 
+      <span class="word">morning<span class="tip">pagi</span></span>.</p>
+
+      <p>On <span class="word">Monday<span class="tip">Senin</span></span>, 
+      <span class="word">my<span class="tip">milikku</span></span> 
+      <span class="word">father<span class="tip">ayah</span></span> 
+      <span class="word">drove<span class="tip">menyetir</span></span> 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">car<span class="tip">mobil</span></span> to the 
+      <span class="word">mountains<span class="tip">gunung</span></span>. 
+      The <span class="word">car<span class="tip">mobil</span></span> 
+      <b>has</b> 
+      <span class="word">four<span class="tip">empat</span></span> 
+      <span class="word">seats<span class="tip">kursi</span></span>. 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">color<span class="tip">warna</span></span> is 
+      <span class="word">silver<span class="tip">perak</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">mother<span class="tip">ibu</span></span> 
+      <span class="word">sat<span class="tip">duduk</span></span> in the 
+      <span class="word">front<span class="tip">depan</span></span>. 
+      <span class="word">She<span class="tip">dia</span></span> 
+      <b>has</b> a 
+      <span class="word">map<span class="tip">peta</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">brother<span class="tip">saudara laki-laki</span></span> and I 
+      <span class="word">sat<span class="tip">duduk</span></span> in the 
+      <span class="word">back<span class="tip">belakang</span></span>. 
+      <span class="word">We<span class="tip">kami</span></span> 
+      <b>have</b> 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">backpacks<span class="tip">ransel</span></span>.</p>
+
+      <p>On <span class="word">Tuesday<span class="tip">Selasa</span></span>, 
+      <span class="word">we<span class="tip">kami</span></span> 
+      <span class="word">rode<span class="tip">naik</span></span> a 
+      <span class="word">train<span class="tip">kereta</span></span> to the 
+      <span class="word">city<span class="tip">kota</span></span>. 
+      The <span class="word">train<span class="tip">kereta</span></span> 
+      <b>has</b> 
+      <span class="word">eight<span class="tip">delapan</span></span> 
+      <span class="word">carriages<span class="tip">gerbong</span></span>. 
+      <span class="word">Their<span class="tip">milik mereka</span></span> 
+      <span class="word">color<span class="tip">warna</span></span> is 
+      <span class="word">blue<span class="tip">biru</span></span> and 
+      <span class="word">white<span class="tip">putih</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">seats<span class="tip">kursi</span></span> were 
+      <span class="word">comfortable<span class="tip">nyaman</span></span>. 
+      <span class="word">The<span class="tip">-</span></span> 
+      <span class="word">train<span class="tip">kereta</span></span> 
+      <span class="word">driver<span class="tip">masinis</span></span> 
+      <b>has</b> a 
+      <span class="word">uniform<span class="tip">seragam</span></span>.</p>
+
+      <p>On <span class="word">Wednesday<span class="tip">Rabu</span></span>, 
+      <span class="word">we<span class="tip">kami</span></span> 
+      <span class="word">took<span class="tip">naik</span></span> a 
+      <span class="word">bus<span class="tip">bis</span></span> to the 
+      <span class="word">beach<span class="tip">pantai</span></span>. 
+      The <span class="word">bus<span class="tip">bis</span></span> 
+      <b>has</b> 
+      <span class="word">big<span class="tip">besar</span></span> 
+      <span class="word">windows<span class="tip">jendela</span></span>. 
+      At the <span class="word">beach<span class="tip">pantai</span></span>, 
+      <span class="word">we<span class="tip">kami</span></span> 
+      <span class="word">saw<span class="tip">melihat</span></span> a 
+      <span class="word">ship<span class="tip">kapal</span></span>. 
+      The <span class="word">ship<span class="tip">kapal</span></span> 
+      <b>has</b> 
+      <span class="word">tall<span class="tip">tinggi</span></span> 
+      <span class="word">masts<span class="tip">tiang</span></span>. 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">sails<span class="tip">layar</span></span> were 
+      <span class="word">white<span class="tip">putih</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">sister<span class="tip">saudara perempuan</span></span> 
+      <b>has</b> a 
+      <span class="word">camera<span class="tip">kamera</span></span>. 
+      <span class="word">She<span class="tip">dia</span></span> 
+      <span class="word">took<span class="tip">mengambil</span></span> 
+      <span class="word">many<span class="tip">banyak</span></span> 
+      <span class="word">photos<span class="tip">foto</span></span>.</p>
+
+      <p>On <span class="word">Thursday<span class="tip">Kamis</span></span>, 
+      <span class="word">we<span class="tip">kami</span></span> 
+      <span class="word">flew<span class="tip">terbang</span></span> in a 
+      <span class="word">plane<span class="tip">pesawat</span></span> to 
+      <span class="word">another<span class="tip">lain</span></span> 
+      <span class="word">island<span class="tip">pulau</span></span>. 
+      The <span class="word">plane<span class="tip">pesawat</span></span> 
+      <b>has</b> 
+      <span class="word">two<span class="tip">dua</span></span> 
+      <span class="word">wings<span class="tip">sayap</span></span>. 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">engine<span class="tip">mesin</span></span> was 
+      <span class="word">loud<span class="tip">keras</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">pilot<span class="tip">pilot</span></span> 
+      <b>has</b> 
+      <span class="word">many<span class="tip">banyak</span></span> 
+      <span class="word">years<span class="tip">tahun</span></span> of 
+      <span class="word">experience<span class="tip">pengalaman</span></span>. 
+      <span class="word">We<span class="tip">kami</span></span> 
+      <b>have</b> 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">seats<span class="tip">kursi</span></span> by the 
+      <span class="word">window<span class="tip">jendela</span></span>.</p>
+
+      <p>On <span class="word">Friday<span class="tip">Jumat</span></span>, 
+      <span class="word">we<span class="tip">kami</span></span> 
+      <span class="word">went<span class="tip">pergi</span></span> 
+      <span class="word">home<span class="tip">rumah</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">trip<span class="tip">perjalanan</span></span> was 
+      <span class="word">amazing<span class="tip">menakjubkan</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">family<span class="tip">keluarga</span></span> 
+      <b>has</b> 
+      <span class="word">many<span class="tip">banyak</span></span> 
+      <span class="word">wonderful<span class="tip">menakjubkan</span></span> 
+      <span class="word">memories<span class="tip">kenangan</span></span>!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 24: QUIZ 9 ============ -->
+<section class="slide" data-slide="24">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 9 · From Story 4</span>
+    <h1 class="section-title mt-2 mb-2">Story 4 Quiz! <span class="bob">📖</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Story 4 (My Family's Big Trip).</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">1.</span> How did the family go to the mountains on Monday?</p>
+        <div class="quiz-options" data-q="s4q1" data-correct="a">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> By car</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> By train</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> By bus</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> By plane</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s4q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s4q1">
+          <b>Answer: A — By car.</b><br>
+          "My father drove <b>our</b> car to the mountains." <b>Our</b> shows the car belongs to the family.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">2.</span> What color is the family's car?</p>
+        <div class="quiz-options" data-q="s4q2" data-correct="d">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Red</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Blue</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Black</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Silver</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s4q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s4q2">
+          <b>Answer: D — Silver.</b><br>
+          "<b>Its</b> color is silver." <b>Its</b> (no apostrophe) shows the color belongs to the car (a thing).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">3.</span> "The train ____ eight carriages." Which is correct?</p>
+        <div class="quiz-options" data-q="s4q3" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> have</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> has</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> haves</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> is have</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s4q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s4q3">
+          <b>Answer: B — has.</b><br>
+          "The train" = it (singular). We use <b>has</b> with he/she/it. So: "The train <b>has</b> eight carriages."
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">4.</span> What does the narrator's sister have?</p>
+        <div class="quiz-options" data-q="s4q4" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> A map</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> A backpack</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> A camera</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> A uniform</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s4q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s4q4">
+          <b>Answer: C — A camera.</b><br>
+          "<b>My</b> sister <b>has</b> a camera." <b>My</b> shows the sister belongs to the narrator, and <b>has</b> is used because "my sister" = she.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 25: STORY 5 ============ -->
+<section class="slide" data-slide="25">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story 5 · Our School Festival</span>
+    <h1 class="section-title mt-2 mb-2">A Festival to Remember <span class="bob">🎪</span></h1>
+    <p class="section-sub mb-4">A story about a school festival with many activities!</p>
+
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-sm font-bold" style="color: var(--muted)">A school story</p>
+      <button class="btn-check" onclick="speak(story5Text, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div class="story-text" style="border-left-color: var(--rose)">
+      <p><span class="word">Today<span class="tip">hari ini</span></span> is 
+      <span class="word">Friday<span class="tip">Jumat</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">school<span class="tip">sekolah</span></span> 
+      <b>has</b> a 
+      <span class="word">big<span class="tip">besar</span></span> 
+      <span class="word">festival<span class="tip">festival</span></span>. 
+      <span class="word">All<span class="tip">semua</span></span> 
+      <span class="word">students<span class="tip">siswa</span></span> 
+      <span class="word">wear<span class="tip">memakai</span></span> 
+      <span class="word">their<span class="tip">milik mereka</span></span> 
+      <span class="word">colorful<span class="tip">penuh warna</span></span> 
+      <span class="word">uniforms<span class="tip">seragam</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">uniform<span class="tip">seragam</span></span> is 
+      <span class="word">red<span class="tip">merah</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">friend<span class="tip">teman</span></span> 
+      <span class="word">Sari<span class="tip">nama</span></span> 
+      <b>has</b> a 
+      <span class="word">blue<span class="tip">biru</span></span> 
+      <span class="word">uniform<span class="tip">seragam</span></span>.</p>
+
+      <p><span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">class<span class="tip">kelas</span></span> 
+      <b>has</b> a 
+      <span class="word">food<span class="tip">makanan</span></span> 
+      <span class="word">stand<span class="tip">stan</span></span>. 
+      <span class="word">We<span class="tip">kami</span></span> 
+      <b>have</b> 
+      <span class="word">many<span class="tip">banyak</span></span> 
+      <span class="word">delicious<span class="tip">lezat</span></span> 
+      <span class="word">foods<span class="tip">makanan</span></span>. 
+      <span class="word">Mrs.<span class="tip">Ny.</span></span> 
+      <span class="word">Lina<span class="tip">nama</span></span> 
+      is <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">teacher<span class="tip">guru</span></span>. 
+      <span class="word">Her<span class="tip">miliknya</span></span> 
+      <span class="word">stand<span class="tip">stan</span></span> 
+      <b>has</b> 
+      <span class="word">yellow<span class="tip">kuning</span></span> 
+      <span class="word">balloons<span class="tip">balon</span></span>. 
+      <span class="word">Mr.<span class="tip">Tn.</span></span> 
+      <span class="word">Yoga<span class="tip">nama</span></span> 
+      <b>has</b> a 
+      <span class="word">game<span class="tip">permainan</span></span> 
+      <span class="word">stand<span class="tip">stan</span></span>. 
+      <span class="word">His<span class="tip">miliknya</span></span> 
+      <span class="word">stand<span class="tip">stan</span></span> 
+      <b>has</b> 
+      <span class="word">prizes<span class="tip">hadiah</span></span> for the 
+      <span class="word">winners<span class="tip">pemenang</span></span>.</p>
+
+      <p>The <span class="word">festival<span class="tip">festival</span></span> 
+      <span class="word">starts<span class="tip">dimulai</span></span> at 
+      <span class="word">eight<span class="tip">delapan</span></span> 
+      <span class="word">o'clock<span class="tip">jam</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">principal<span class="tip">kepala sekolah</span></span>, 
+      <span class="word">Mr.<span class="tip">Tn.</span></span> 
+      <span class="word">Don<span class="tip">nama</span></span>, 
+      <b>has</b> a 
+      <span class="word">microphone<span class="tip">mikrofon</span></span>. 
+      <span class="word">He<span class="tip">dia</span></span> 
+      <span class="word">welcomes<span class="tip">menyambut</span></span> 
+      <span class="word">everyone<span class="tip">semua orang</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">school<span class="tip">sekolah</span></span> 
+      <b>has</b> 
+      <span class="word">three<span class="tip">tiga</span></span> 
+      <span class="word">hundred<span class="tip">ratus</span></span> 
+      <span class="word">students<span class="tip">siswa</span></span>. 
+      <span class="word">Their<span class="tip">milik mereka</span></span> 
+      <span class="word">parents<span class="tip">orang tua</span></span> 
+      <span class="word">come<span class="tip">datang</span></span> to 
+      <span class="word">watch<span class="tip">menonton</span></span>.</p>
+
+      <p><span class="word">We<span class="tip">kami</span></span> 
+      <b>have</b> 
+      <span class="word">many<span class="tip">banyak</span></span> 
+      <span class="word">performances<span class="tip">pertunjukan</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">class<span class="tip">kelas</span></span> 
+      <b>has</b> a 
+      <span class="word">dance<span class="tip">tarian</span></span>. 
+      <span class="word">Sari's<span class="tip">milik Sari</span></span> 
+      <span class="word">team<span class="tip">tim</span></span> 
+      <b>has</b> a 
+      <span class="word">song<span class="tip">lagu</span></span>. 
+      <span class="word">Their<span class="tip">milik mereka</span></span> 
+      <span class="word">voices<span class="tip">suara</span></span> are 
+      <span class="word">beautiful<span class="tip">indah</span></span>. 
+      <span class="word">Budi's<span class="tip">milik Budi</span></span> 
+      <span class="word">group<span class="tip">kelompok</span></span> 
+      <b>has</b> a 
+      <span class="word">drama<span class="tip">drama</span></span>. 
+      <span class="word">Its<span class="tip">miliknya</span></span> 
+      <span class="word">story<span class="tip">cerita</span></span> is 
+      <span class="word">funny<span class="tip">lucu</span></span>. 
+      <span class="word">Everyone<span class="tip">semua orang</span></span> 
+      <span class="word">laughs<span class="tip">tertawa</span></span>.</p>
+
+      <p>At the <span class="word">end<span class="tip">akhir</span></span> of the 
+      <span class="word">day<span class="tip">hari</span></span>, 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">principal<span class="tip">kepala sekolah</span></span> 
+      <span class="word">gives<span class="tip">memberikan</span></span> 
+      <span class="word">awards<span class="tip">penghargaan</span></span>. 
+      <span class="word">My<span class="tip">milikku</span></span> 
+      <span class="word">class<span class="tip">kelas</span></span> 
+      <b>has</b> the 
+      <span class="word">best<span class="tip">terbaik</span></span> 
+      <span class="word">food<span class="tip">makanan</span></span> 
+      <span class="word">stand<span class="tip">stan</span></span>! 
+      <span class="word">We<span class="tip">kami</span></span> 
+      <b>have</b> 
+      <span class="word">our<span class="tip">milik kami</span></span> 
+      <span class="word">trophy<span class="tip">piala</span></span> now. 
+      <span class="word">Tomorrow<span class="tip">besok</span></span> is 
+      <span class="word">Saturday<span class="tip">Sabtu</span></span>. 
+      <span class="word">We<span class="tip">kami</span></span> 
+      <b>have</b> a 
+      <span class="word">rest<span class="tip">istirahat</span></span> 
+      <span class="word">day<span class="tip">hari</span></span>. 
+      <span class="word">Our<span class="tip">milik kami</span></span> 
+      <span class="word">festival<span class="tip">festival</span></span> was 
+      <span class="word">perfect<span class="tip">sempurna</span></span>!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 26: QUIZ 10 ============ -->
+<section class="slide" data-slide="26">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-question-circle"></i> Quiz 10 · From Story 5</span>
+    <h1 class="section-title mt-2 mb-2">Story 5 Quiz! <span class="bob">📖</span></h1>
+    <p class="section-sub mb-6">Answer questions based on Story 5 (Our School Festival).</p>
+
+    <div class="space-y-5">
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">1.</span> What color is the narrator's uniform?</p>
+        <div class="quiz-options" data-q="s5q1" data-correct="a">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Red</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Blue</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Green</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Yellow</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s5q1', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s5q1">
+          <b>Answer: A — Red.</b><br>
+          "<b>My</b> uniform is red." <b>My</b> shows the uniform belongs to the narrator. Sari's uniform is blue.
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">2.</span> "____ stand has yellow balloons." — about Mrs. Lina's stand.</p>
+        <div class="quiz-options" data-q="s5q2" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Mrs. Lina</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Mrs. Lina's</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Mrs. Lina is</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Mrs. Linas</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s5q2', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s5q2">
+          <b>Answer: B — Mrs. Lina's.</b><br>
+          To show the stand belongs to Mrs. Lina, we add <b>'s</b> to her name: "Mrs. Lina's stand has yellow balloons."
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">3.</span> How many students does the school have?</p>
+        <div class="quiz-options" data-q="s5q3" data-correct="c">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Two hundred</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> One hundred</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> Three hundred</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Four hundred</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s5q3', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s5q3">
+          <b>Answer: C — Three hundred.</b><br>
+          "Our school <b>has</b> three hundred students." We use <b>has</b> because "our school" is singular (it).
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="font-bold mb-3"><span style="color:var(--grape)">4.</span> Whose group has a drama performance?</p>
+        <div class="quiz-options" data-q="s5q4" data-correct="b">
+          <div class="quiz-option" data-val="a"><span class="letter">A</span> Sari's group</div>
+          <div class="quiz-option" data-val="b"><span class="letter">B</span> Budi's group</div>
+          <div class="quiz-option" data-val="c"><span class="letter">C</span> The narrator's class</div>
+          <div class="quiz-option" data-val="d"><span class="letter">D</span> Mr. Don's group</div>
+        </div>
+        <button class="btn-check mt-3" onclick="checkAnswer('s5q4', this)"><i class="fas fa-check mr-2"></i>Check Answer</button>
+        <div class="explanation" id="exp-s5q4">
+          <b>Answer: B — Budi's group.</b><br>
+          "Budi<b>'s</b> group <b>has</b> a drama. <b>Its</b> story is funny." <b>Budi's</b> shows the group belongs to Budi, and <b>its</b> shows the story belongs to the drama.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 27: GAME ============ -->
+<section class="slide" data-slide="27">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-gamepad"></i> Game Time!</span>
+    <h1 class="section-title mt-2 mb-2">Whose Is It? Game <span class="bob">🎮</span></h1>
+    <p class="section-sub mb-4">Choose the correct possessive word. Get points for each correct answer!</p>
+
+    <div class="game-area">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="gameScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="gameQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/30</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Streak:</span> 
+          <span id="gameStreak" style="color:var(--sun); font-size:1.5rem; font-weight:700">🔥 0</span>
+        </div>
+      </div>
+
+      <div id="gameStartScreen" class="text-center py-8">
+        <div class="text-6xl mb-4">🎯</div>
+        <h3 class="font-display text-2xl font-bold mb-2">Ready to Play?</h3>
+        <p class="text-sm font-semibold mb-6" style="color:var(--muted)">30 questions · Mixed possessive forms · Beat your high score!</p>
+        <button class="btn-check text-lg" style="padding:12px 32px" onclick="startGame()">
+          <i class="fas fa-play mr-2"></i>Start Game
+        </button>
+      </div>
+
+      <div id="gamePlayScreen" style="display:none">
+        <div class="text-center mb-6">
+          <div id="gameIcon" class="text-6xl mb-3">🐱</div>
+          <div id="gameQuestion" class="font-display text-xl md:text-2xl font-bold mb-2" style="line-height:1.5"></div>
+          <div id="gameHint" class="text-sm font-semibold" style="color:var(--muted)"></div>
+        </div>
+        <div id="gameOptions" class="grid grid-cols-2 gap-3"></div>
+        <div id="gameFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+      </div>
+
+      <div id="gameEndScreen" style="display:none" class="text-center py-8">
+        <div id="gameEndIcon" class="text-7xl mb-4">🏆</div>
+        <h3 class="font-display text-3xl font-bold mb-2" id="gameEndTitle">Amazing!</h3>
+        <p class="text-lg font-semibold mb-2">Your Score: <span id="finalScore" style="color:var(--coral); font-weight:800">0</span> / 300</p>
+        <p id="gameEndMessage" class="text-sm font-semibold mb-6" style="color:var(--muted)"></p>
+        <button class="btn-check text-lg" style="padding:12px 32px" onclick="startGame()">
+          <i class="fas fa-redo mr-2"></i>Play Again
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 28: CLOSING ============ -->
+<section class="slide" data-slide="28">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full">
+    <div class="chip mb-4 fade-up">
+      <i class="fas fa-trophy"></i> Congratulations!
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s; font-size: clamp(2.5rem, 6vw, 4.5rem)">
+      You Did It! <span class="bob">🎉</span>
+    </h1>
+    <p class="text-lg md:text-xl mt-4 max-w-2xl fade-up" style="animation-delay: 0.2s; color:var(--muted)">
+      You've completed the Possessive Adventure with 5 conversations, 5 stories, and 40+ quiz questions!
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-4 mt-8 w-full max-w-4xl">
+      <div class="card fade-up" style="animation-delay: 0.3s; border-top:6px solid var(--coral)">
+        <div class="text-3xl mb-2">📖</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--coral)">Possessive Words</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted)">
+          my, your, his, her, its, our, their — show ownership before a noun
+        </p>
+      </div>
+      <div class="card fade-up" style="animation-delay: 0.4s; border-top:6px solid var(--teal)">
+        <div class="text-3xl mb-2">⚖️</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--teal)">Have vs Has</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted)">
+          I/You/We/They → <b>have</b><br>He/She/It → <b>has</b>
+        </p>
+      </div>
+      <div class="card fade-up" style="animation-delay: 0.5s; border-top:6px solid var(--grape)">
+        <div class="text-3xl mb-2">✨</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--grape)">The 's Rule</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted)">
+          Add <b>'s</b> to a name/noun: Andi's cat, the cat's tail, Monday's class
+        </p>
+      </div>
+    </div>
+
+    <div class="flex gap-4 mt-10 fade-up flex-wrap justify-center" style="animation-delay: 0.6s">
+      <button class="btn-check" style="background:var(--teal); padding:12px 28px" onclick="goToSlide(0)">
+        <i class="fas fa-redo mr-2"></i>Restart Lesson
+      </button>
+      <button class="btn-check" style="background:var(--grape); padding:12px 28px" onclick="goToSlide(26)">
+        <i class="fas fa-gamepad mr-2"></i>Play Game Again
+      </button>
+    </div>
+
+    <div class="flex gap-6 mt-10 text-5xl fade-up" style="animation-delay: 0.7s">
+      <span class="bob" style="animation-delay:0s">🌟</span>
+      <span class="bob" style="animation-delay:0.3s">📚</span>
+      <span class="bob" style="animation-delay:0.6s">🎨</span>
+      <span class="bob" style="animation-delay:0.9s">🚀</span>
+    </div>
+
+    <p class="text-xs mt-8 fade-up" style="animation-delay: 0.8s; color:var(--muted)">
+      Keep practicing! Try making your own sentences using possessive words. 🌈
+    </p>
+  </div>
+</section>
+
+</div>
+
+<!-- Navigation -->
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+    <i class="fas fa-arrow-left"></i> Prev
+  </button>
+  <div class="flex items-center gap-4">
+    <span class="text-sm font-bold" style="color:var(--muted)">
+      <span id="slideNum">1</span> / <span id="slideTotal">28</span>
+    </span>
+    <div class="dots" id="dots"></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+    Next <i class="fas fa-arrow-right"></i>
+  </button>
+</nav>
+
+<script>
+// ============ Navigation ============
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+
+document.getElementById('slideTotal').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  document.getElementById('slideNum').textContent = currentSlide + 1;
+  document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = Math.max(0, Math.min(totalSlides - 1, index));
+  slides[currentSlide].classList.add('active');
+  updateNav();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  document.querySelectorAll('.speak-btn.speaking').forEach(b => b.classList.remove('speaking'));
+  window.scrollTo(0, 0);
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ============ Text-to-Speech ============
+let englishVoice = null;
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.startsWith('en') && /female|samantha|google/i.test(v.name)) 
+              || voices.find(v => v.lang.startsWith('en-US'))
+              || voices.find(v => v.lang.startsWith('en'));
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, longText = false) {
+  if (!window.speechSynthesis) {
+    alert('Maaf, browser Anda tidak mendukung Text-to-Speech.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = longText ? 0.9 : 0.85;
+  utter.pitch = 1.1;
+  if (englishVoice) utter.voice = englishVoice;
+  
+  const btn = event && event.currentTarget ? event.currentTarget : null;
+  if (btn) {
+    btn.classList.add('speaking');
+    utter.onend = () => btn.classList.remove('speaking');
+    utter.onerror = () => btn.classList.remove('speaking');
+  }
+  window.speechSynthesis.speak(utter);
+}
+
+// ============ Story texts for narration ============
+const story1Text = `Hello! My name is Dina. I want to tell you about my wonderful weekend. On Saturday morning, my family and I went to the beach. We rode our car. The car is blue. My father drove the car. He has a license. My mother brought our food. She has a big basket. At the beach, I saw many things. I saw a big ship. The ship has white sails. I collected shells. They have beautiful colors. My brother made a sandcastle. His sandcastle was tall. On Sunday, we visited my grandmother. Her house is in the village. She has five cats. Their colors are different. One cat is black, two are white, and two are orange. My grandmother loves her cats. My weekend was amazing!`;
+
+const story2Text = `Today is Wednesday. It is a busy day at school. Andi lost his pencil case. The pencil case is red. It has two pencils, one pen, and one eraser inside. Andi asked his friends, "Have you seen my pencil case?" Sinta said, "No, I have not seen your pencil case. But I have an extra pencil. You can borrow it." Budi said, "I think I saw a red pencil case in the library. Its owner might be you!" Andi went to the library. He talked to the librarian. The librarian has glasses. She said, "Yes, we found a red pencil case. Here it is!" Andi was happy. "Thank you! This is my pencil case. I have my pencils back!" The librarian smiled, "Be careful with your things, Andi."`;
+
+const story3Text = `Today is Saturday. Our neighborhood has a Pet Show. Many children bring their pets. My friend Rian has a white rabbit. Its name is Snow. Snow has long ears and red eyes. Rian's sister, Tia, has a yellow bird. Her bird can sing! Its wings are beautiful. Our neighbor, Mr. Don, has a big dog. His dog is brown with black spots. They have three puppies at home. Their puppies are very cute. The judge has a difficult job. She looks at all the pets and their owners. Snow has the softest fur. Tia's bird has the sweetest voice. Mr. Don's dog has the best tricks. In the end, everyone has a prize. Their pets are all winners! Our neighborhood has the best pets ever!`;
+
+const story4Text = `Last week, my family had a big trip. We visited many places and used different transportation. Our trip started on Monday morning. On Monday, my father drove our car to the mountains. The car has four seats. Its color is silver. My mother sat in the front. She has a map. My brother and I sat in the back. We have our backpacks. On Tuesday, we rode a train to the city. The train has eight carriages. Their color is blue and white. Our seats were comfortable. The train driver has a uniform. On Wednesday, we took a bus to the beach. The bus has big windows. At the beach, we saw a ship. The ship has tall masts. Its sails were white. My sister has a camera. She took many photos. On Thursday, we flew in a plane to another island. The plane has two wings. Its engine was loud. Our pilot has many years of experience. We have our seats by the window. On Friday, we went home. Our trip was amazing. My family has many wonderful memories!`;
+
+const story5Text = `Today is Friday. Our school has a big festival. All students wear their colorful uniforms. My uniform is red. My friend Sari has a blue uniform. Our class has a food stand. We have many delicious foods. Mrs. Lina is our teacher. Her stand has yellow balloons. Mr. Yoga has a game stand. His stand has prizes for the winners. The festival starts at eight o'clock. Our principal, Mr. Don, has a microphone. He welcomes everyone. Our school has three hundred students. Their parents come to watch. We have many performances. My class has a dance. Sari's team has a song. Their voices are beautiful. Budi's group has a drama. Its story is funny. Everyone laughs. At the end of the day, our principal gives awards. My class has the best food stand! We have our trophy now. Tomorrow is Saturday. We have a rest day. Our festival was perfect!`;
+
+// ============ Quiz Logic ============
+function checkAnswer(qId, btn) {
+  const container = document.querySelector(`[data-q="${qId}"]`);
+  const correct = container.dataset.correct;
+  const options = container.querySelectorAll('.quiz-option');
+  const explanation = document.getElementById(`exp-${qId}`);
+  
+  let selected = null;
+  options.forEach(opt => {
+    if (opt.classList.contains('selected')) selected = opt.dataset.val;
+  });
+  
+  if (!selected) {
+    btn.style.background = 'var(--sun)';
+    btn.innerHTML = '<i class="fas fa-exclamation mr-2"></i>Please choose an answer first!';
+    setTimeout(() => {
+      btn.style.background = '';
+      btn.innerHTML = '<i class="fas fa-check mr-2"></i>Check Answer';
+    }, 1500);
+    return;
+  }
+  
+  options.forEach(opt => {
+    opt.classList.add('disabled');
+    opt.style.pointerEvents = 'none';
+    if (opt.dataset.val === correct) opt.classList.add('correct');
+    else if (opt.dataset.val === selected) opt.classList.add('incorrect');
+  });
+  
+  explanation.classList.add('show');
+  btn.style.display = 'none';
+  
+  if (selected === correct) playSound(true);
+  else playSound(false);
+}
+
+document.addEventListener('click', (e) => {
+  const opt = e.target.closest('.quiz-option');
+  if (opt && !opt.classList.contains('correct') && !opt.classList.contains('incorrect') && !opt.classList.contains('disabled')) {
+    const container = opt.parentElement;
+    container.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+  }
+});
+
+// ============ Sound effects ============
+let audioCtx = null;
+function playSound(correct) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (correct) {
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ============ Game with 30 questions ============
+const gameQuestions = [
+  { icon: '🐱', q: "This is Sinta's cat. It is ___ cat.", hint: '(Sinta = perempuan)', options: ['his', 'her', 'their', 'my'], correct: 'her' },
+  { icon: '👁️', q: 'I ___ two eyes.', hint: '(I = saya)', options: ['has', 'have', 'is', 'are'], correct: 'have' },
+  { icon: '👧', q: 'She ___ long hair.', hint: '(She = dia perempuan)', options: ['have', 'has', 'is', 'haves'], correct: 'has' },
+  { icon: '📚', q: 'This book belongs to me. It is ___ book.', hint: '(me = saya)', options: ['my', 'your', 'his', 'their'], correct: 'my' },
+  { icon: '🏫', q: 'We learn at this school. ___ school is big.', hint: '(We = kami)', options: ['My', 'Our', 'Their', 'His'], correct: 'Our' },
+  { icon: '🐘', q: "Look at the elephant! ___ ears are huge.", hint: '(elephant = singular animal)', options: ['Its', 'His', 'Her', 'Their'], correct: 'Its' },
+  { icon: '🚗', q: 'They have three cars. ___ cars are red.', hint: '(They = mereka)', options: ['Our', 'My', 'Their', 'Your'], correct: 'Their' },
+  { icon: '🚲', q: 'He ___ a new bicycle.', hint: '(He = dia laki-laki)', options: ['have', 'has', 'is', 'haves'], correct: 'has' },
+  { icon: '✏️', q: "This pencil belongs to Andi. It is ___.", hint: '(Andi = nama orang)', options: ["Andi", "Andis", "Andi's", "Andi is"], correct: "Andi's" },
+  { icon: '📅', q: "Today is Budi's birthday. ___ birthday is on Monday.", hint: '(Budi = laki-laki)', options: ['His', 'Her', 'Its', 'Their'], correct: 'His' },
+  { icon: '🐶', q: "The dog wags ___ tail happily.", hint: '(dog = singular animal)', options: ['its', 'his', 'her', 'their'], correct: 'its' },
+  { icon: '🍎', q: 'You ___ a red apple in your bag.', hint: '(You = kamu)', options: ['has', 'have', 'is', 'are'], correct: 'have' },
+  { icon: '👗', q: "Rina's dress is beautiful. ___ dress is pink.", hint: '(Rina = perempuan)', options: ['His', 'Her', 'Its', 'Their'], correct: 'Her' },
+  { icon: '🚂', q: 'The train ___ ten carriages.', hint: '(The train = it)', options: ['have', 'has', 'is', 'are'], correct: 'has' },
+  { icon: '✏️', q: 'I lost ___ pencil. Can you help me find it?', hint: '(I = saya)', options: ['my', 'your', 'his', 'her'], correct: 'my' },
+  { icon: '👨‍👩‍👧', q: "Our family ___ a new house.", hint: '(Our family = singular)', options: ['have', 'has', 'is', 'are'], correct: 'has' },
+  { icon: '🦁', q: "Look at the lions! ___ manes are golden.", hint: '(lions = plural)', options: ['Its', 'His', 'Her', 'Their'], correct: 'Their' },
+  { icon: '🚢', q: 'The ship ___ white sails.', hint: '(The ship = it)', options: ['have', 'has', 'is', 'are'], correct: 'has' },
+  { icon: '👦', q: 'This is Andi and this is ___ brother.', hint: "(Andi's brother)", options: ['my', 'his', 'her', 'their'], correct: 'his' },
+  { icon: '🎒', q: 'You and I are friends. ___ friendship is strong.', hint: '(You and I = we)', options: ['My', 'Our', 'Their', 'Your'], correct: 'Our' },
+  { icon: '🧑‍🤝‍🧑', q: 'The students ___ new uniforms.', hint: '(students = plural)', options: ['has', 'have', 'is', 'are'], correct: 'have' },
+  { icon: '🌷', q: "Mrs. Lina's flowers are beautiful. ___ flowers are yellow.", hint: '(Mrs. Lina = perempuan)', options: ['His', 'Her', 'Its', 'Their'], correct: 'Her' },
+  { icon: '✈️', q: 'The plane ___ two big wings.', hint: '(The plane = it)', options: ['have', 'has', 'is', 'are'], correct: 'has' },
+  { icon: '🐟', q: 'My fish ___ colorful scales.', hint: '(My fish = singular)', options: ['have', 'has', 'is', 'are'], correct: 'has' },
+  { icon: '📅', q: "Friday's test is hard. ___ test is on Friday.", hint: '(Friday = hari)', options: ["Friday", "Fridays", "Friday's", "Friday is"], correct: "Friday's" },
+  { icon: '🏠', q: "The cat's tail is long. ___ tail is fluffy.", hint: '(the cat = singular animal)', options: ['Its', 'His', 'Her', 'Their'], correct: 'Its' },
+  { icon: '📚', q: 'We ___ five English books.', hint: '(We = kami)', options: ['has', 'have', 'is', 'are'], correct: 'have' },
+  { icon: '🐰', q: "The rabbit ___ long ears and red eyes.", hint: '(The rabbit = it)', options: ['have', 'has', 'is', 'are'], correct: 'has' },
+  { icon: '🖍️', q: 'You ___ beautiful crayons in your bag.', hint: '(You = kamu)', options: ['has', 'have', 'is', 'are'], correct: 'have' },
+  { icon: '🏆', q: "Our class ___ the best food stand!", hint: '(Our class = singular)', options: ['have', 'has', 'is', 'are'], correct: 'has' }
+];
+
+let gameState = { score: 0, qNum: 0, streak: 0, answered: false };
+
+function startGame() {
+  gameState = { score: 0, streak: 0, qNum: 0, answered: false };
+  document.getElementById('gameStartScreen').style.display = 'none';
+  document.getElementById('gameEndScreen').style.display = 'none';
+  document.getElementById('gamePlayScreen').style.display = 'block';
+  updateGameHUD();
+  loadGameQuestion();
+}
+
+function loadGameQuestion() {
+  gameState.answered = false;
+  const q = gameQuestions[gameState.qNum];
+  document.getElementById('gameIcon').textContent = q.icon;
+  document.getElementById('gameQuestion').innerHTML = q.q;
+  document.getElementById('gameHint').textContent = q.hint;
+  document.getElementById('gameFeedback').textContent = '';
+  
+  const shuffled = [...q.options].sort(() => Math.random() - 0.5);
+  const optionsContainer = document.getElementById('gameOptions');
+  optionsContainer.innerHTML = '';
+  shuffled.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerGame(opt, q.correct, btn);
+    optionsContainer.appendChild(btn);
+  });
+  
+  setTimeout(() => speak(q.q.replace(/___/g, 'blank')), 300);
+}
+
+function answerGame(chosen, correct, btn) {
+  if (gameState.answered) return;
+  gameState.answered = true;
+  
+  const allOptions = document.querySelectorAll('.game-option');
+  allOptions.forEach(o => o.classList.add('disabled'));
+  
+  const feedback = document.getElementById('gameFeedback');
+  
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    gameState.score += 10;
+    gameState.streak += 1;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+    
+    if (gameState.streak >= 3) {
+      gameState.score += 5;
+      feedback.innerHTML += ` <span style="color:var(--sun)">🔥 Streak bonus +5!</span>`;
+    }
+  } else {
+    btn.classList.add('incorrect');
+    gameState.streak = 0;
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! Correct answer: <b>${correct}</b></span>`;
+    playSound(false);
+    allOptions.forEach(o => {
+      if (o.textContent === correct) o.classList.add('correct');
+    });
+  }
+  
+  updateGameHUD();
+  
+  setTimeout(() => {
+    gameState.qNum++;
+    if (gameState.qNum >= gameQuestions.length) {
+      endGame();
+    } else {
+      loadGameQuestion();
+    }
+  }, 1500);
+}
+
+function updateGameHUD() {
+  document.getElementById('gameScore').textContent = gameState.score;
+  document.getElementById('gameQNum').textContent = `${Math.min(gameState.qNum + 1, gameQuestions.length)}/${gameQuestions.length}`;
+  document.getElementById('gameStreak').textContent = `🔥 ${gameState.streak}`;
+}
+
+function endGame() {
+  document.getElementById('gamePlayScreen').style.display = 'none';
+  document.getElementById('gameEndScreen').style.display = 'block';
+  document.getElementById('finalScore').textContent = gameState.score;
+  
+  const maxScore = gameQuestions.length * 10;
+  const percentage = (gameState.score / maxScore) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 90) {
+    icon = '🏆'; title = 'Perfect Champion!';
+    message = "You're a Possessive Master! Amazing work!";
+  } else if (percentage >= 70) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know possessives well. Keep it up!';
+  } else if (percentage >= 50) {
+    icon = '😊'; title = 'Good Effort!';
+    message = "You're getting there. Review and try again!";
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Practice makes perfect. Try again to improve!';
+  }
+  
+  document.getElementById('gameEndIcon').textContent = icon;
+  document.getElementById('gameEndTitle').textContent = title;
+  document.getElementById('gameEndMessage').textContent = message;
+}
+
+// ============ Particles ============
+const particles = ['🌟', '✨', '📚', '🎨', '🐾', '🌈', '⭐'];
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 12; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.textContent = particles[Math.floor(Math.random() * particles.length)];
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDelay = Math.random() * 25 + 's';
+  p.style.animationDuration = (20 + Math.random() * 15) + 's';
+  particlesContainer.appendChild(p);
+}
+
+updateNav();
+</script>
+</body>
+</html>
