@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Like & Dislike - English Fun Class</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8EC;
+  --paper: #FFFFFF;
+  --ink: #1F2A4A;
+  --muted: #6B7280;
+  --coral: #FF6B6B;
+  --teal: #14B8A6;
+  --sun: #FFB627;
+  --grape: #9B5DE5;
+  --leaf: #06D6A0;
+  --sky: #4CC9F0;
+  --rose: #F43F5E;
+  --border: rgba(31, 42, 74, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--teal); bottom: -80px; right: -80px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: var(--sun); top: 40%; left: 60%; animation-delay: -10s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.deck { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 1.5rem 2.5rem 5.5rem;
+  overflow-y: auto;
+}
+.slide.active { display: flex; animation: slideIn 0.5s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(31,42,74,0.2); border-radius: 4px; }
+
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 50;
+}
+.nav-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 10px 22px; border-radius: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; font-family: 'Nunito', sans-serif;
+}
+.nav-btn:hover:not(:disabled) { background: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.dots { display: flex; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(31,42,74,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--coral); width: 28px; border-radius: 4px; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--coral), var(--sun), var(--teal)); z-index: 60; transition: width 0.4s ease; }
+
+.flashcard {
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 0.5rem;
+  text-align: center;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.flashcard:hover { transform: translateY(-4px) scale(1.03); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255, 182, 39, 0.25); }
+.flashcard:active { transform: scale(0.95); }
+.flashcard .icon { font-size: 2rem; margin-bottom: 4px; }
+.flashcard .en { font-weight: 800; color: var(--ink); font-size: 0.85rem; }
+.flashcard .id { font-size: 11px; color: var(--muted); }
+.flashcard.playing { border-color: var(--teal); background: rgba(20, 184, 166, 0.1); }
+
+.quiz-option {
+  background: var(--paper); border: 2px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; margin: 6px 0; cursor: pointer;
+  transition: all 0.2s; font-weight: 600; display: flex; align-items: center; gap: 12px;
+}
+.quiz-option:hover { border-color: var(--teal); background: rgba(20, 184, 166, 0.05); transform: translateX(4px); }
+.quiz-option.selected { border-color: var(--coral); background: rgba(255, 107, 107, 0.08); }
+.quiz-option.correct { border-color: var(--leaf); background: rgba(6, 214, 160, 0.15); color: #047857; }
+.quiz-option.incorrect { border-color: var(--rose); background: rgba(244, 63, 94, 0.15); color: #BE123C; }
+.quiz-option .letter { width: 28px; height: 28px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; flex-shrink: 0; }
+.quiz-option.correct .letter { background: var(--leaf); color: white; }
+.quiz-option.incorrect .letter { background: var(--rose); color: white; }
+.quiz-option.disabled { pointer-events: none; }
+
+.btn-check { background: var(--coral); color: white; border: none; padding: 8px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif; }
+.btn-check:hover { background: #E55555; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+
+.explanation { margin-top: 10px; padding: 10px 14px; background: rgba(20, 184, 166, 0.08); border-left: 4px solid var(--teal); border-radius: 8px; font-size: 13px; display: none; }
+.explanation.show { display: block; animation: slideIn 0.3s; }
+
+.btn-word { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 20px; font-weight: 800; border: 2px solid var(--coral); background: white; color: var(--coral); cursor: pointer; transition: all 0.2s; margin: 4px; font-family: 'Fredoka', sans-serif; font-size: 0.9rem; }
+.btn-word:hover { background: var(--coral); color: white; transform: scale(1.05); }
+.btn-word.placed { background: var(--coral); color: white; pointer-events: none; opacity: 0.5; }
+.fill-blank { display: inline-block; min-width: 90px; padding: 4px 12px; border-bottom: 3px solid var(--coral); text-align: center; font-weight: 800; color: var(--coral); font-family: 'Fredoka', sans-serif; cursor: pointer; }
+
+.card { background: var(--paper); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); border: 1px solid var(--border); transition: all 0.3s; }
+
+.bubble { max-width: 78%; padding: 12px 18px; border-radius: 20px; margin: 6px 0; position: relative; font-weight: 600; line-height: 1.6; }
+.bubble.left { background: var(--paper); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.bubble.right { background: linear-gradient(135deg, var(--coral), #FF8787); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+.bubble .speaker { font-size: 11px; opacity: 0.7; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.05em; }
+.bubble.right .speaker { opacity: 0.85; }
+
+.story-text { font-size: 1rem; line-height: 1.85; background: var(--paper); padding: 1.25rem 1.75rem; border-radius: 20px; border-left: 6px solid var(--sun); box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.story-text .underline-answer { background: rgba(255, 182, 39, 0.3); border-bottom: 3px solid var(--sun); padding: 2px 4px; border-radius: 4px; font-weight: 800; }
+
+.speak-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; border: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-left: 8px; vertical-align: middle; }
+.speak-btn:hover { background: #0F9488; transform: scale(1.05); }
+
+.section-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; }
+.section-sub { color: var(--muted); font-weight: 600; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: rgba(20, 184, 166, 0.1); color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.cover-title { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.bob { animation: bob 3s infinite ease-in-out; display: inline-block; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.fade-up { animation: fadeUp 0.6s ease backwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-btn { padding: 8px 18px; border-radius: 20px; font-weight: 800; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Fredoka', sans-serif; }
+.tab-btn.active { background: var(--coral); color: white; }
+.tab-btn:not(.active) { background: white; color: var(--coral); border: 2px solid var(--coral); }
+
+.story-input { border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; font-weight: 600; font-family: 'Nunito', sans-serif; width: 100%; margin-top: 4px; }
+.story-input:focus { outline: none; border-color: var(--teal); }
+
+.game-area { background: linear-gradient(135deg, rgba(155, 93, 229, 0.12), rgba(76, 201, 240, 0.12)); border-radius: 24px; padding: 1.5rem; }
+.game-option { background: var(--paper); border: 3px solid var(--border); border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 700; font-size: 1.05rem; text-align: center; }
+.game-option:hover:not(.disabled) { transform: scale(1.04); border-color: var(--grape); box-shadow: 0 6px 16px rgba(155, 93, 229, 0.25); }
+.game-option.correct { background: var(--leaf); color: white; border-color: var(--leaf); animation: bounce 0.5s; }
+.game-option.incorrect { background: var(--rose); color: white; border-color: var(--rose); animation: shake 0.5s; }
+.game-option.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width: 10%"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide active" data-slide="1">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-6xl mx-auto w-full">
+    <div class="chip mb-6 fade-up">
+      <i class="fas fa-star"></i> English Fun Class · Grade 5
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s">
+      <span style="color: var(--coral)">Like</span> & 
+      <span style="color: var(--teal)">Dislike</span>
+    </h1>
+    <h2 class="font-display text-2xl md:text-4xl mt-3 fade-up" style="animation-delay: 0.2s; color: var(--ink)">
+      Fruits & Vegetables Adventure <span class="bob">🍓🥕</span>
+    </h2>
+    <p class="text-base md:text-xl mt-6 max-w-2xl fade-up" style="animation-delay: 0.3s; color: var(--muted)">
+      Let's learn how to express our <b>likes</b> and <b>dislikes</b> about fruits, vegetables, animals, food, and beverages in English!
+    </p>
+    <div class="flex gap-6 md:gap-10 mt-10 text-5xl md:text-6xl fade-up" style="animation-delay: 0.4s">
+      <span class="bob" style="animation-delay: 0s">🍎</span>
+      <span class="bob" style="animation-delay: 0.3s">🥕</span>
+      <span class="bob" style="animation-delay: 0.6s">🍌</span>
+      <span class="bob" style="animation-delay: 0.9s">🥦</span>
+      <span class="bob" style="animation-delay: 1.2s">🍇</span>
+    </div>
+    <button class="btn-check mt-10 text-lg fade-up" style="animation-delay: 0.5s; padding: 12px 32px" onclick="nextSlide()">
+      <i class="fas fa-play mr-2"></i> Start Adventure
+    </button>
+    <p class="text-xs mt-4 fade-up" style="animation-delay: 0.6s; color: var(--muted)">
+      <i class="fas fa-keyboard mr-1"></i> Use ← → arrow keys to navigate
+    </p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: FLASHCARDS ============ -->
+<section class="slide" data-slide="2">
+  <div class="max-w-7xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-leaf"></i> Vocabulary · Fruits & Vegetables</span>
+    <h1 class="section-title mt-2 mb-2">Flashcards Time! <span class="bob">🃏</span></h1>
+    <p class="section-sub mb-4">Click any card to hear how to say it in English!</p>
+    
+    <div class="flex gap-3 mb-6">
+      <button class="tab-btn active" onclick="switchTab('fruits', this)">🍎 Fruits (20)</button>
+      <button class="tab-btn" onclick="switchTab('veggies', this)">🥕 Vegetables (20)</button>
+    </div>
+
+    <div id="fruitsGrid" class="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-3"></div>
+    <div id="veggiesGrid" class="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-10 gap-3" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: DESCRIBE & GUESS ============ -->
+<section class="slide" data-slide="3">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-search"></i> Guess the Fruit or Vegetable!</span>
+    <h1 class="section-title mt-2 mb-2">Describe & Guess <span class="bob">🔍</span></h1>
+    <p class="section-sub mb-4">Read the description and choose the correct answer. Pay attention to <b>is</b> (singular) and <b>are</b> (plural)!</p>
+    
+    <div class="flex justify-between items-center mb-4">
+      <div class="font-display text-lg">
+        Question: <span id="guessQNum" style="color:var(--coral); font-weight:700">1</span> / 20
+      </div>
+      <button class="btn-check" onclick="nextGuess()" id="nextGuessBtn" style="display:none">
+        Next <i class="fas fa-arrow-right ml-1"></i>
+      </button>
+    </div>
+    
+    <div id="guessContainer" class="card">
+      <p id="guessDescription" class="text-lg md:text-xl font-bold mb-6" style="line-height:1.6"></p>
+      <div id="guessOptions" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+      <div id="guessFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: MATERIAL ============ -->
+<section class="slide" data-slide="4">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Grammar Lesson</span>
+    <h1 class="section-title mt-2 mb-2">Like / Likes & Don't Like / Doesn't Like <span class="bob">💚</span></h1>
+    <p class="section-sub mb-6">Learn how to express what you enjoy and what you don't enjoy!</p>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div class="card" style="border-top: 6px solid var(--leaf)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--leaf)">👍 Like / Likes</h3>
+        <p class="text-sm font-semibold mb-4">Use <b>like</b> for I, You, We, They. Use <b>likes</b> for He, She, It.</p>
+        <div class="space-y-3 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-3 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            <b>I</b> like <span class="text-2xl">🍎</span> apples.<br>
+            <span style="color:var(--muted); font-size:12px">(Saya suka apel.)</span>
+            <button class="speak-btn" onclick="speak('I like apples')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            <b>They</b> like <span class="text-2xl">🍌</span> bananas.<br>
+            <span style="color:var(--muted); font-size:12px">(Mereka suka pisang.)</span>
+            <button class="speak-btn" onclick="speak('They like bananas')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            <b>She</b> likes <span class="text-2xl">🥕</span> carrots.<br>
+            <span style="color:var(--muted); font-size:12px">(Dia (pr) suka wortel.)</span>
+            <button class="speak-btn" onclick="speak('She likes carrots')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            <b>He</b> likes <span class="text-2xl">🥦</span> broccoli.<br>
+            <span style="color:var(--muted); font-size:12px">(Dia (lk) suka brokoli.)</span>
+            <button class="speak-btn" onclick="speak('He likes broccoli')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--rose)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--rose)">👎 Don't Like / Doesn't Like</h3>
+        <p class="text-sm font-semibold mb-4">Use <b>don't like</b> for I, You, We, They. Use <b>doesn't like</b> for He, She, It.</p>
+        <div class="space-y-3 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-3 rounded-lg" style="background: rgba(244, 63, 94, 0.08)">
+            <b>I</b> don't like <span class="text-2xl">🥒</span> cucumbers.<br>
+            <span style="color:var(--muted); font-size:12px">(Saya tidak suka mentimun.)</span>
+            <button class="speak-btn" onclick="speak('I do not like cucumbers')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(244, 63, 94, 0.08)">
+            <b>We</b> don't like <span class="text-2xl">🍋</span> lemons.<br>
+            <span style="color:var(--muted); font-size:12px">(Kami tidak suka lemon.)</span>
+            <button class="speak-btn" onclick="speak('We do not like lemons')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(244, 63, 94, 0.08)">
+            <b>He</b> doesn't like <span class="text-2xl">🍅</span> tomatoes.<br>
+            <span style="color:var(--muted); font-size:12px">(Dia (lk) tidak suka tomat.)</span>
+            <button class="speak-btn" onclick="speak('He does not like tomatoes')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(244, 63, 94, 0.08)">
+            <b>She</b> doesn't like <span class="text-2xl">🥑</span> avocados.<br>
+            <span style="color:var(--muted); font-size:12px">(Dia (pr) tidak suka alpukat.)</span>
+            <button class="speak-btn" onclick="speak('She does not like avocados')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 Quick Summary</h3>
+      <div class="grid md:grid-cols-2 gap-4 text-sm font-semibold">
+        <div>
+          <p><b>I / You / We / They</b></p>
+          <p>✅ like / don't like</p>
+          <p style="color:var(--muted); font-size:12px">Example: "I like grapes. I don't like onions."</p>
+        </div>
+        <div>
+          <p><b>He / She / It</b></p>
+          <p>✅ likes / doesn't like</p>
+          <p style="color:var(--muted); font-size:12px">Example: "She likes strawberries. She doesn't like garlic."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: FILL IN THE BLANKS ============ -->
+<section class="slide" data-slide="5">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-pen"></i> Fill in the Blanks</span>
+    <h1 class="section-title mt-2 mb-2">Complete the Story! <span class="bob">✍️</span></h1>
+    <p class="section-sub mb-4">Click a word, then click a blank to fill it. Choose from: is, are, like, likes, don't like, doesn't like.</p>
+    
+    <div class="flex gap-3 mb-4 flex-wrap">
+      <button class="btn-word" onclick="fillBlank(event, 'is')">is</button>
+      <button class="btn-word" onclick="fillBlank(event, 'are')">are</button>
+      <button class="btn-word" onclick="fillBlank(event, 'like')">like</button>
+      <button class="btn-word" onclick="fillBlank(event, 'likes')">likes</button>
+      <button class="btn-word" onclick="fillBlank(event, 'dont like')">don't like</button>
+      <button class="btn-word" onclick="fillBlank(event, 'doesnt like')">doesn't like</button>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+      <div class="font-display text-lg">
+        Story: <span id="fillStoryNum" style="color:var(--coral); font-weight:700">1</span> / 5
+      </div>
+      <div class="flex gap-2">
+        <button class="btn-check" style="background:var(--teal)" onclick="checkFillBlanks()" id="checkFillBtn"><i class="fas fa-check mr-2"></i>Check Answers</button>
+        <button class="btn-check" style="background:var(--grape); display:none" onclick="nextFillStory()" id="nextFillBtn">Next Story <i class="fas fa-arrow-right ml-1"></i></button>
+      </div>
+    </div>
+    
+    <div id="fillStoryContainer" class="story-text"></div>
+    <div id="fillFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: LISTENING ============ -->
+<section class="slide" data-slide="6">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-headphones"></i> Listening Practice</span>
+    <h1 class="section-title mt-2 mb-2">Listen and Choose! <span class="bob">🎧</span></h1>
+    <p class="section-sub mb-4">Click the play button to listen, then choose the correct fruit or vegetable!</p>
+    
+    <div class="flex justify-between items-center mb-4">
+      <div class="font-display text-lg">
+        Question: <span id="listenQNum" style="color:var(--coral); font-weight:700">1</span> / 10
+      </div>
+      <button class="btn-check" onclick="nextListen()" id="nextListenBtn" style="display:none">
+        Next <i class="fas fa-arrow-right ml-1"></i>
+      </button>
+    </div>
+    
+    <div class="card mb-6 text-center" style="background: linear-gradient(135deg, rgba(20,184,166,0.1), rgba(76,201,240,0.1))">
+      <p class="text-sm font-bold mb-3" style="color:var(--muted)">🔊 Click to listen:</p>
+      <button class="btn-check text-lg" style="padding:14px 32px; background:var(--teal)" onclick="playListenAudio()" id="playListenBtn">
+        <i class="fas fa-volume-up mr-2"></i> Play Audio
+      </button>
+      <p id="listenText" class="mt-4 font-bold text-lg" style="color:var(--coral); min-height: 28px"></p>
+    </div>
+    
+    <div id="listenOptions" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+    <div id="listenFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: CONVERSATIONS ============ -->
+<section class="slide" data-slide="7">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversations · Ms. Nanda & Cio</span>
+    <h1 class="section-title mt-2 mb-2">Let's Read Together! <span class="bob">💬</span></h1>
+    <p class="section-sub mb-4">Read 5 conversations between Ms. Nanda (Tutor) and Cio (Student). Then answer the questions!</p>
+    
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button class="tab-btn active" onclick="switchConv(1, this)">Conv 1</button>
+      <button class="tab-btn" onclick="switchConv(2, this)">Conv 2</button>
+      <button class="tab-btn" onclick="switchConv(3, this)">Conv 3</button>
+      <button class="tab-btn" onclick="switchConv(4, this)">Conv 4</button>
+      <button class="tab-btn" onclick="switchConv(5, this)">Conv 5</button>
+    </div>
+    
+    <div id="convContainer"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: STORY & QUESTIONS ============ -->
+<section class="slide" data-slide="8">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story Time</span>
+    <h1 class="section-title mt-2 mb-2">Read & Answer <span class="bob">📖</span></h1>
+    <p class="section-sub mb-4">Read the story carefully, then answer 10 questions. Type your answer and check!</p>
+    
+    <div class="flex justify-between items-center mb-3">
+      <p class="text-sm font-bold" style="color:var(--muted)">A story about food preferences</p>
+      <button class="btn-check" onclick="speak(storyText, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div id="storyContainer" class="story-text mb-6"></div>
+    
+    <h3 class="font-display text-xl font-bold mb-4">📋 Answer these questions:</h3>
+    <div id="storyQuestions" class="space-y-4"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: QUICK QUIZ ============ -->
+<section class="slide" data-slide="9">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-bolt"></i> Quick Quiz</span>
+    <h1 class="section-title mt-2 mb-2">Answer Fast! <span class="bob">⚡</span></h1>
+    <p class="section-sub mb-4">Choose the correct answer for each question!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="quizScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="quizQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/10</span>
+        </div>
+      </div>
+      <div id="quizContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: CLOSING ============ -->
+<section class="slide" data-slide="10">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full">
+    <div class="chip mb-4 fade-up">
+      <i class="fas fa-trophy"></i> Congratulations!
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s; font-size: clamp(2.5rem, 6vw, 4.5rem)">
+      Great Job! <span class="bob">🎉</span>
+    </h1>
+    <p class="text-lg md:text-xl mt-4 max-w-2xl fade-up" style="animation-delay: 0.2s; color:var(--muted)">
+      You've completed the Like & Dislike Adventure!
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-4 mt-8 w-full max-w-4xl">
+      <div class="card fade-up" style="animation-delay: 0.3s; border-top:6px solid var(--leaf)">
+        <div class="text-3xl mb-2">📚</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--leaf)">What We Learned</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          • Like/Likes & Don't like/Doesn't like<br>
+          • Is (singular) & Are (plural)<br>
+          • 20 Fruits & 20 Vegetables vocabulary<br>
+          • Listening, reading, and writing skills
+        </p>
+      </div>
+      <div class="card fade-up" style="animation-delay: 0.4s; border-top:6px solid var(--coral)">
+        <div class="text-3xl mb-2">💭</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--coral)">Reflection</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          Ask yourself:<br>
+          • What fruit do you like the most?<br>
+          • What vegetable don't you like?<br>
+          • Can you say it in English now?
+        </p>
+      </div>
+    </div>
+
+    <div class="flex gap-6 mt-10 text-5xl fade-up" style="animation-delay: 0.5s">
+      <span class="bob" style="animation-delay:0s">🍎</span>
+      <span class="bob" style="animation-delay:0.3s">🥕</span>
+      <span class="bob" style="animation-delay:0.6s">💛</span>
+      <span class="bob" style="animation-delay:0.9s">🥦</span>
+    </div>
+
+    <h2 class="font-display text-2xl md:text-3xl mt-8 fade-up" style="animation-delay: 0.6s; color: var(--coral)">
+      Thank You for Today! <span class="bob">🌈</span>
+    </h2>
+    <p class="text-sm mt-3 fade-up" style="animation-delay: 0.7s; color:var(--muted)">
+      Keep practicing your English. See you next time!
+    </p>
+    
+    <button class="btn-check mt-6 fade-up" style="animation-delay: 0.8s" onclick="goToSlide(0)">
+      <i class="fas fa-redo mr-2"></i>Start Again
+    </button>
+  </div>
+</section>
+
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+    <i class="fas fa-arrow-left"></i> Prev
+  </button>
+  <div class="flex items-center gap-4">
+    <span class="text-sm font-bold" style="color:var(--muted)">
+      <span id="slideNum">1</span> / <span id="slideTotal">10</span>
+    </span>
+    <div class="dots" id="dots"></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+    Next <i class="fas fa-arrow-right"></i>
+  </button>
+</nav>
+
+<script>
+// ============ Data: Fruits & Vegetables ============
+const fruits = [
+  { en: 'Apple', id: 'Apel', icon: '🍎' },
+  { en: 'Banana', id: 'Pisang', icon: '🍌' },
+  { en: 'Orange', id: 'Jeruk', icon: '🍊' },
+  { en: 'Grapes', id: 'Anggur', icon: '🍇' },
+  { en: 'Strawberry', id: 'Stroberi', icon: '🍓' },
+  { en: 'Watermelon', id: 'Semangka', icon: '🍉' },
+  { en: 'Mango', id: 'Mangga', icon: '🥭' },
+  { en: 'Pineapple', id: 'Nanas', icon: '🍍' },
+  { en: 'Lemon', id: 'Lemon', icon: '🍋' },
+  { en: 'Cherry', id: 'Ceri', icon: '🍒' },
+  { en: 'Pear', id: 'Pir', icon: '🍐' },
+  { en: 'Peach', id: 'Persik', icon: '🍑' },
+  { en: 'Avocado', id: 'Alpukat', icon: '🥑' },
+  { en: 'Kiwi', id: 'Kiwi', icon: '🥝' },
+  { en: 'Coconut', id: 'Kelapa', icon: '🥥' },
+  { en: 'Blueberry', id: 'Blueberry', icon: '🫐' },
+  { en: 'Papaya', id: 'Pepaya', icon: '🟠' },
+  { en: 'Durian', id: 'Durian', icon: '🟢' },
+  { en: 'Rambutan', id: 'Rambutan', icon: '🔴' },
+  { en: 'Tomato', id: 'Tomat', icon: '🍅' }
+];
+
+const veggies = [
+  { en: 'Carrot', id: 'Wortel', icon: '🥕' },
+  { en: 'Broccoli', id: 'Brokoli', icon: '🥦' },
+  { en: 'Cucumber', id: 'Mentimun', icon: '🥒' },
+  { en: 'Corn', id: 'Jagung', icon: '🌽' },
+  { en: 'Onion', id: 'Bawang Merah', icon: '🧅' },
+  { en: 'Garlic', id: 'Bawang Putih', icon: '🧄' },
+  { en: 'Potato', id: 'Kentang', icon: '🥔' },
+  { en: 'Sweet Potato', id: 'Ubi Jalar', icon: '🍠' },
+  { en: 'Pumpkin', id: 'Labu', icon: '🎃' },
+  { en: 'Bell Pepper', id: 'Paprika', icon: '🫑' },
+  { en: 'Chili', id: 'Cabe', icon: '🌶️' },
+  { en: 'Mushroom', id: 'Jamur', icon: '🍄' },
+  { en: 'Eggplant', id: 'Terong', icon: '🍆' },
+  { en: 'Cabbage', id: 'Kubis', icon: '🥬' },
+  { en: 'Lettuce', id: 'Selada', icon: '🥗' },
+  { en: 'Spinach', id: 'Bayam', icon: '🍃' },
+  { en: 'Green Bean', id: 'Buncis', icon: '🌱' },
+  { en: 'Radish', id: 'Lobak', icon: '🟣' },
+  { en: 'Ginger', id: 'Jahe', icon: '🟫' },
+  { en: 'Celery', id: 'Seledri', icon: '🌿' }
+];
+
+// ============ Navigation ============
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+document.getElementById('slideTotal').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  document.getElementById('slideNum').textContent = currentSlide + 1;
+  document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = Math.max(0, Math.min(totalSlides - 1, index));
+  slides[currentSlide].classList.add('active');
+  updateNav();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  window.scrollTo(0, 0);
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ============ Text-to-Speech ============
+let englishVoice = null;
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.startsWith('en') && /female|samantha|google/i.test(v.name)) 
+              || voices.find(v => v.lang.startsWith('en-US'))
+              || voices.find(v => v.lang.startsWith('en'));
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, longText = false) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = longText ? 0.9 : 0.85;
+  utter.pitch = 1.1;
+  if (englishVoice) utter.voice = englishVoice;
+  window.speechSynthesis.speak(utter);
+}
+
+// ============ SLIDE 2: Flashcards ============
+function renderFlashcards() {
+  const fruitsGrid = document.getElementById('fruitsGrid');
+  const veggiesGrid = document.getElementById('veggiesGrid');
+  
+  fruits.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `<div class="icon">${f.icon}</div><div class="en">${f.en}</div><div class="id">${f.id}</div>`;
+    card.onclick = () => {
+      speak(f.en);
+      document.querySelectorAll('.flashcard').forEach(c => c.classList.remove('playing'));
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 1000);
+    };
+    fruitsGrid.appendChild(card);
+  });
+  
+  veggies.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `<div class="icon">${v.icon}</div><div class="en">${v.en}</div><div class="id">${v.id}</div>`;
+    card.onclick = () => {
+      speak(v.en);
+      document.querySelectorAll('.flashcard').forEach(c => c.classList.remove('playing'));
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 1000);
+    };
+    veggiesGrid.appendChild(card);
+  });
+}
+
+function switchTab(tab, btn) {
+  document.getElementById('fruitsGrid').style.display = tab === 'fruits' ? 'grid' : 'none';
+  document.getElementById('veggiesGrid').style.display = tab === 'veggies' ? 'grid' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ============ SLIDE 3: Guess Description ============
+const guessData = [
+  { desc: "It is red and round. It is sweet. An apple a day keeps the doctor away.", options: ['Apple', 'Banana', 'Carrot', 'Onion'], correct: 0 },
+  { desc: "They are yellow and long. Monkeys like them very much.", options: ['Apples', 'Bananas', 'Grapes', 'Cucumbers'], correct: 1 },
+  { desc: "It is orange and long. Rabbits like it very much.", options: ['Potato', 'Tomato', 'Carrot', 'Pumpkin'], correct: 2 },
+  { desc: "They are small, round, and purple. They are sweet.", options: ['Grapes', 'Apples', 'Cherries', 'Blueberries'], correct: 0 },
+  { desc: "It is green and looks like a small tree. It is a vegetable.", options: ['Cabbage', 'Spinach', 'Broccoli', 'Lettuce'], correct: 2 },
+  { desc: "It is big, green outside, and red inside. It is very watery and sweet.", options: ['Pumpkin', 'Watermelon', 'Papaya', 'Coconut'], correct: 1 },
+  { desc: "They are green and long. They are crunchy.", options: ['Cucumbers', 'Carrots', 'Beans', 'Chilis'], correct: 0 },
+  { desc: "It is yellow outside and white inside. It is sour. We make juice from it.", options: ['Orange', 'Lemon', 'Mango', 'Pineapple'], correct: 1 },
+  { desc: "It is brown outside and yellow inside. It is a vegetable. We make fries from it.", options: ['Sweet Potato', 'Potato', 'Onion', 'Garlic'], correct: 1 },
+  { desc: "They are red and small. They have a seed inside. They are very sweet.", options: ['Strawberries', 'Cherries', 'Tomatoes', 'Chilis'], correct: 1 },
+  { desc: "It is white and smells strong. We use it for cooking. Vampires don't like it!", options: ['Onion', 'Garlic', 'Ginger', 'Mushroom'], correct: 1 },
+  { desc: "It is yellow and has a spiky outside. It is sweet and sour. It is a fruit.", options: ['Pineapple', 'Durian', 'Lemon', 'Banana'], correct: 0 },
+  { desc: "They are orange and small. They are crunchy. We use them in soup.", options: ['Carrots', 'Potatoes', 'Onions', 'Chilis'], correct: 0 },
+  { desc: "It is green or red. It is spicy! We don't like eating it alone.", options: ['Chili', 'Bell Pepper', 'Cucumber', 'Broccoli'], correct: 0 },
+  { desc: "It is round and red. It is a fruit, but we use it as a vegetable in salad.", options: ['Apple', 'Tomato', 'Cherry', 'Strawberry'], correct: 1 },
+  { desc: "It is purple and long. We use it in cooking. It is a vegetable.", options: ['Eggplant', 'Onion', 'Cabbage', 'Radish'], correct: 0 },
+  { desc: "They are white and smell strong. They make us cry when we cut them.", options: ['Garlic', 'Onions', 'Potatoes', 'Mushrooms'], correct: 1 },
+  { desc: "It is green and leafy. Popeye likes it very much to make him strong!", options: ['Lettuce', 'Cabbage', 'Spinach', 'Broccoli'], correct: 2 },
+  { desc: "It is yellow and sweet. It has a big seed in the middle. It is a tropical fruit.", options: ['Mango', 'Banana', 'Pineapple', 'Papaya'], correct: 0 },
+  { desc: "It is orange inside and green outside. It is big and round. We carve it on Halloween.", options: ['Pumpkin', 'Watermelon', 'Papaya', 'Coconut'], correct: 0 }
+];
+
+let guessIndex = 0;
+function loadGuess() {
+  const g = guessData[guessIndex];
+  document.getElementById('guessQNum').textContent = guessIndex + 1;
+  document.getElementById('guessDescription').textContent = g.desc;
+  document.getElementById('guessFeedback').textContent = '';
+  document.getElementById('nextGuessBtn').style.display = 'none';
+  
+  const optsContainer = document.getElementById('guessOptions');
+  optsContainer.innerHTML = '';
+  g.options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.innerHTML = `${opt}`;
+    btn.onclick = () => answerGuess(i, g.correct, btn);
+    optsContainer.appendChild(btn);
+  });
+  
+  speak(g.desc);
+}
+
+function answerGuess(chosen, correct, btn) {
+  document.querySelectorAll('#guessOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('guessFeedback');
+  
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! Great job!</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The answer is <b>${guessData[guessIndex].options[correct]}</b>.</span>`;
+    document.querySelectorAll('#guessOptions .game-option')[correct].classList.add('correct');
+    playSound(false);
+  }
+  
+  document.getElementById('nextGuessBtn').style.display = 'inline-flex';
+}
+
+function nextGuess() {
+  guessIndex = (guessIndex + 1) % guessData.length;
+  loadGuess();
+}
+
+// ============ SLIDE 5: Fill in the Blanks ============
+const fillStories = [
+  {
+    topic: "🍎 Fruits",
+    text: "Apples <span class='fill-blank' data-correct='are'></span> red and sweet. I <span class='fill-blank' data-correct='like'></span> apples very much. My brother <span class='fill-blank' data-correct='doesnt like'></span> apples. He <span class='fill-blank' data-correct='likes'></span> bananas."
+  },
+  {
+    topic: "🥕 Vegetables",
+    text: "Carrots <span class='fill-blank' data-correct='are'></span> orange. Rabbits <span class='fill-blank' data-correct='like'></span> carrots. My sister <span class='fill-blank' data-correct='doesnt like'></span> broccoli. She <span class='fill-blank' data-correct='doesnt like'></span> the taste."
+  },
+  {
+    topic: "🐶 Animals",
+    text: "Cats <span class='fill-blank' data-correct='are'></span> cute. I <span class='fill-blank' data-correct='like'></span> cats. My friend <span class='fill-blank' data-correct='likes'></span> dogs. We <span class='fill-blank' data-correct='dont like'></span> snakes."
+  },
+  {
+    topic: "🍔 Food",
+    text: "Pizza <span class='fill-blank' data-correct='is'></span> delicious. Children <span class='fill-blank' data-correct='like'></span> pizza. My father <span class='fill-blank' data-correct='doesnt like'></span> fast food. He <span class='fill-blank' data-correct='likes'></span> healthy food."
+  },
+  {
+    topic: "🥤 Beverages",
+    text: "Milk <span class='fill-blank' data-correct='is'></span> white. Babies <span class='fill-blank' data-correct='like'></span> milk. My mother <span class='fill-blank' data-correct='likes'></span> coffee. I <span class='fill-blank' data-correct='dont like'></span> coffee because it is bitter."
+  }
+];
+
+let fillStoryIndex = 0;
+let selectedWord = null;
+
+function loadFillStory() {
+  const s = fillStories[fillStoryIndex];
+  document.getElementById('fillStoryNum').textContent = fillStoryIndex + 1;
+  document.getElementById('fillFeedback').textContent = '';
+  document.getElementById('checkFillBtn').style.display = 'inline-flex';
+  document.getElementById('nextFillBtn').style.display = 'none';
+  
+  document.querySelectorAll('.btn-word').forEach(b => b.classList.remove('placed'));
+  
+  const container = document.getElementById('fillStoryContainer');
+  container.innerHTML = `<p style="margin-bottom:10px;"><span class="chip">${s.topic}</span></p><p>${s.text}</p>`;
+  
+  container.querySelectorAll('.fill-blank').forEach(blank => {
+    blank.onclick = () => {
+      if (selectedWord) {
+        const displayWord = selectedWord === 'dont like' ? "don't like" : selectedWord === 'doesnt like' ? "doesn't like" : selectedWord;
+        blank.textContent = displayWord;
+        blank.dataset.filled = selectedWord;
+        document.querySelectorAll('.btn-word').forEach(b => {
+          if (b.dataset.word === selectedWord) b.classList.add('placed');
+        });
+        selectedWord = null;
+      }
+    };
+  });
+}
+
+function fillBlank(e, word) {
+  const btn = e.target;
+  if (btn.classList.contains('placed')) return;
+  
+  document.querySelectorAll('.btn-word').forEach(b => b.style.borderColor = 'var(--coral)');
+  btn.style.borderColor = 'var(--teal)';
+  btn.style.background = 'var(--teal)';
+  btn.style.color = 'white';
+  selectedWord = word;
+  
+  // Store word in dataset for matching
+  btn.dataset.word = word;
+  
+  setTimeout(() => {
+    document.querySelectorAll('.btn-word').forEach(b => {
+      if (!b.classList.contains('placed') && b !== btn) {
+        b.style.borderColor = '';
+        b.style.background = '';
+        b.style.color = '';
+      }
+    });
+  }, 10);
+}
+
+function checkFillBlanks() {
+  const blanks = document.querySelectorAll('.fill-blank');
+  let allCorrect = true;
+  blanks.forEach(blank => {
+    const filled = blank.dataset.filled || '';
+    const correct = blank.dataset.correct;
+    const displayFilled = filled === 'dont like' ? "don't like" : filled === 'doesnt like' ? "doesn't like" : filled;
+    const displayCorrect = correct === 'dont like' ? "don't like" : correct === 'doesnt like' ? "doesn't like" : correct;
+    
+    if (filled === correct) {
+      blank.style.color = 'var(--leaf)';
+      blank.style.borderBottomColor = 'var(--leaf)';
+      blank.style.background = 'rgba(6, 214, 160, 0.15)';
+      blank.textContent = displayFilled;
+    } else {
+      blank.style.color = 'var(--rose)';
+      blank.style.borderBottomColor = 'var(--rose)';
+      blank.style.background = 'rgba(244, 63, 94, 0.15)';
+      blank.textContent = `${displayFilled || '___'} (✓ ${displayCorrect})`;
+      allCorrect = false;
+    }
+  });
+  
+  const feedback = document.getElementById('fillFeedback');
+  if (allCorrect) {
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ All correct! Great job!</span>';
+    playSound(true);
+  } else {
+    feedback.innerHTML = '<span style="color:var(--rose)">Some answers are wrong. Check the red blanks!</span>';
+    playSound(false);
+  }
+  
+  document.getElementById('checkFillBtn').style.display = 'none';
+  document.getElementById('nextFillBtn').style.display = 'inline-flex';
+}
+
+function nextFillStory() {
+  fillStoryIndex = (fillStoryIndex + 1) % fillStories.length;
+  loadFillStory();
+}
+
+// ============ SLIDE 6: Listening ============
+const listenData = [
+  { text: "I like apples", options: ['🍎', '🍌', '🥕', '🥦'], correct: 0 },
+  { text: "She likes bananas", options: ['🍎', '🍌', '🍇', '🍓'], correct: 1 },
+  { text: "They don't like carrots", options: ['🥕', '🥒', '🌽', '🥔'], correct: 0 },
+  { text: "He likes grapes", options: ['🍇', '🍉', '🥭', '🍍'], correct: 0 },
+  { text: "We don't like onions", options: ['🧅', '🧄', '🥔', '🍠'], correct: 0 },
+  { text: "I like strawberries", options: ['🍓', '🍒', '🍎', '🍑'], correct: 0 },
+  { text: "She doesn't like broccoli", options: ['🥦', '🥬', '🥒', '🌶️'], correct: 0 },
+  { text: "They like watermelons", options: ['🍉', '🎃', '🥥', '🟠'], correct: 0 },
+  { text: "He doesn't like lemons", options: ['🍋', '🍊', '🥭', '🍐'], correct: 0 },
+  { text: "We like potatoes", options: ['🥔', '🍠', '🥕', '🌽'], correct: 0 }
+];
+
+let listenIndex = 0;
+function loadListen() {
+  const l = listenData[listenIndex];
+  document.getElementById('listenQNum').textContent = listenIndex + 1;
+  document.getElementById('listenText').textContent = '';
+  document.getElementById('listenFeedback').textContent = '';
+  document.getElementById('nextListenBtn').style.display = 'none';
+  
+  const optsContainer = document.getElementById('listenOptions');
+  optsContainer.innerHTML = '';
+  l.options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.style.fontSize = '2.5rem';
+    btn.innerHTML = opt;
+    btn.onclick = () => answerListen(i, l.correct, btn);
+    optsContainer.appendChild(btn);
+  });
+}
+
+function playListenAudio() {
+  const l = listenData[listenIndex];
+  speak(l.text);
+  document.getElementById('listenText').textContent = '🔊 Listening...';
+  setTimeout(() => {
+    document.getElementById('listenText').textContent = '';
+  }, 2000);
+}
+
+function answerListen(chosen, correct, btn) {
+  document.querySelectorAll('#listenOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('listenFeedback');
+  const l = listenData[listenIndex];
+  
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct!</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The answer is ${l.options[correct]}.</span>`;
+    document.querySelectorAll('#listenOptions .game-option')[correct].classList.add('correct');
+    playSound(false);
+  }
+  
+  document.getElementById('listenText').textContent = `"${l.text}"`;
+  document.getElementById('nextListenBtn').style.display = 'inline-flex';
+}
+
+function nextListen() {
+  listenIndex = (listenIndex + 1) % listenData.length;
+  loadListen();
+}
+
+// ============ SLIDE 7: Conversations ============
+const conversations = [
+  {
+    title: "Conversation 1 · At the Lunch Table",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, do you like apples?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, Ms. Nanda. I like apples. They are sweet.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What about bananas? Do you like them?', side: 'left' },
+      { speaker: 'Cio', text: "No, I don't like bananas. They are too soft.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'I see. Does your sister like bananas?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, she likes bananas very much!", side: 'right' }
+    ],
+    questions: [
+      { q: "Does Cio like apples?", a: "Yes, he does. He likes apples because they are sweet." },
+      { q: "Does Cio like bananas?", a: "No, he doesn't. He doesn't like bananas because they are too soft." },
+      { q: "Does Cio's sister like bananas?", a: "Yes, she likes bananas very much." },
+      { q: "Why doesn't Cio like bananas?", a: "Because they are too soft." },
+      { q: "Who asks the questions in the conversation?", a: "Ms. Nanda." }
+    ]
+  },
+  {
+    title: "Conversation 2 · Cooking Class",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, look at this vegetable. It is a carrot. Do you like carrots?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I like carrots. They are crunchy.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Good! What about broccoli? Do you like it?', side: 'left' },
+      { speaker: 'Cio', text: "No, I don't like broccoli. It is bitter.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Does your mother like broccoli?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, she likes broccoli. She says it is healthy.", side: 'right' }
+    ],
+    questions: [
+      { q: "Does Cio like carrots?", a: "Yes, he does. He likes carrots because they are crunchy." },
+      { q: "Does Cio like broccoli?", a: "No, he doesn't. He doesn't like broccoli because it is bitter." },
+      { q: "Why doesn't Cio like broccoli?", a: "Because it is bitter." },
+      { q: "Does Cio's mother like broccoli?", a: "Yes, she likes broccoli because it is healthy." },
+      { q: "What are crunchy?", a: "Carrots." }
+    ]
+  },
+  {
+    title: "Conversation 3 · At the Zoo",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, look at the monkeys! Do you like monkeys?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I like monkeys. They are funny.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Do you like lions?', side: 'left' },
+      { speaker: 'Cio', text: "No, I don't like lions. They are scary.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Does your friend like lions?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, he likes lions. He thinks they are brave.", side: 'right' }
+    ],
+    questions: [
+      { q: "Does Cio like monkeys?", a: "Yes, he does. He likes monkeys because they are funny." },
+      { q: "Does Cio like lions?", a: "No, he doesn't. He doesn't like lions because they are scary." },
+      { q: "Why doesn't Cio like lions?", a: "Because they are scary." },
+      { q: "Does Cio's friend like lions?", a: "Yes, he likes lions because he thinks they are brave." },
+      { q: "What does Cio think is funny?", a: "Monkeys." }
+    ]
+  },
+  {
+    title: "Conversation 4 · Dinner Time",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, do you like pizza?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I like pizza. It is delicious.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Does your father like pizza?', side: 'left' },
+      { speaker: 'Cio', text: "No, he doesn't like pizza. He likes healthy food.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What about milk? Do you like milk?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I like milk. I drink it every morning.", side: 'right' }
+    ],
+    questions: [
+      { q: "Does Cio like pizza?", a: "Yes, he does. He likes pizza because it is delicious." },
+      { q: "Does Cio's father like pizza?", a: "No, he doesn't. He likes healthy food." },
+      { q: "What kind of food does Cio's father like?", a: "Healthy food." },
+      { q: "Does Cio like milk?", a: "Yes, he likes milk. He drinks it every morning." },
+      { q: "When does Cio drink milk?", a: "Every morning." }
+    ]
+  },
+  {
+    title: "Conversation 5 · Beverage Shop",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, do you like orange juice?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I like orange juice. It is fresh and sweet.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Do you like coffee?', side: 'left' },
+      { speaker: 'Cio', text: "No, I don't like coffee. It is bitter.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Does your mother like coffee?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, she likes coffee. She drinks it every morning.", side: 'right' }
+    ],
+    questions: [
+      { q: "Does Cio like orange juice?", a: "Yes, he does. He likes orange juice because it is fresh and sweet." },
+      { q: "Does Cio like coffee?", a: "No, he doesn't. He doesn't like coffee because it is bitter." },
+      { q: "Why doesn't Cio like coffee?", a: "Because it is bitter." },
+      { q: "Does Cio's mother like coffee?", a: "Yes, she likes coffee. She drinks it every morning." },
+      { q: "What does Cio think is fresh and sweet?", a: "Orange juice." }
+    ]
+  }
+];
+
+let currentConv = 1;
+function switchConv(num, btn) {
+  currentConv = num;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderConv();
+}
+
+function renderConv() {
+  const c = conversations[currentConv - 1];
+  const container = document.getElementById('convContainer');
+  let html = `<h3 class="font-display text-lg font-bold mb-4" style="color:var(--coral)">${c.title}</h3>`;
+  html += '<div class="flex flex-col mb-6">';
+  c.dialog.forEach(d => {
+    html += `<div class="bubble ${d.side}"><div class="speaker">${d.speaker}</div>${d.text} <button class="speak-btn" onclick="speak('${d.text.replace(/'/g, "\\'")}')"><i class="fas fa-volume-up"></i></button></div>`;
+  });
+  html += '</div>';
+  html += '<h4 class="font-display text-lg font-bold mb-3">📋 Questions:</h4><div class="space-y-3">';
+  c.questions.forEach((q, i) => {
+    html += `
+      <div class="card" style="padding:1rem">
+        <p class="font-bold mb-2">${i+1}. ${q.q}</p>
+        <button class="btn-check" style="background:var(--teal)" onclick="toggleConvAnswer(${i}, this)"><i class="fas fa-eye mr-2"></i>Show Answer</button>
+        <div class="explanation" id="exp-conv-${i}">${q.a}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function toggleConvAnswer(i, btn) {
+  const exp = document.getElementById(`exp-conv-${i}`);
+  if (exp.classList.contains('show')) {
+    exp.classList.remove('show');
+    btn.innerHTML = '<i class="fas fa-eye mr-2"></i>Show Answer';
+  } else {
+    exp.classList.add('show');
+    btn.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Hide Answer';
+  }
+}
+
+// ============ SLIDE 8: Story & Questions ============
+const storyText = `Cio is a healthy boy. He likes fruits and vegetables. His favorite fruit is apple because apples are sweet and red. He also likes bananas and grapes. However, he doesn't like durian because the smell is too strong. For vegetables, Cio likes carrots and broccoli. He doesn't like onions because they make him cry. Cio's sister, Mia, has different preferences. She likes strawberries and mangoes, but she doesn't like vegetables. She doesn't like carrots and she doesn't like broccoli. Their mother says they need to eat healthy food every day.`;
+
+const storyQuestions = [
+  { q: "Does Cio like fruits and vegetables?", a: "Yes, he does. He likes fruits and vegetables.", sentence: "He likes fruits and vegetables." },
+  { q: "What is Cio's favorite fruit?", a: "His favorite fruit is apple.", sentence: "His favorite fruit is apple because apples are sweet and red." },
+  { q: "Why does Cio like apples?", a: "Because apples are sweet and red.", sentence: "His favorite fruit is apple because apples are sweet and red." },
+  { q: "Does Cio like bananas?", a: "Yes, he does. He also likes bananas and grapes.", sentence: "He also likes bananas and grapes." },
+  { q: "Does Cio like durian?", a: "No, he doesn't. He doesn't like durian.", sentence: "However, he doesn't like durian because the smell is too strong." },
+  { q: "Why doesn't Cio like durian?", a: "Because the smell is too strong.", sentence: "However, he doesn't like durian because the smell is too strong." },
+  { q: "What vegetables does Cio like?", a: "He likes carrots and broccoli.", sentence: "For vegetables, Cio likes carrots and broccoli." },
+  { q: "Why doesn't Cio like onions?", a: "Because they make him cry.", sentence: "He doesn't like onions because they make him cry." },
+  { q: "Does Mia like vegetables?", a: "No, she doesn't. She doesn't like carrots and she doesn't like broccoli.", sentence: "She doesn't like carrots and she doesn't like broccoli." },
+  { q: "What does their mother say?", a: "Their mother says they need to eat healthy food every day.", sentence: "Their mother says they need to eat healthy food every day." }
+];
+
+function renderStory() {
+  const container = document.getElementById('storyContainer');
+  const sentences = storyText.match(/[^.!?]+[.!?]+/g) || [];
+  let html = '';
+  sentences.forEach((s, i) => {
+    html += `<span data-sentence="${i}">${s.trim()} </span>`;
+  });
+  container.innerHTML = html;
+  
+  const qContainer = document.getElementById('storyQuestions');
+  qContainer.innerHTML = '';
+  storyQuestions.forEach((sq, i) => {
+    const sentIndex = sentences.findIndex(s => s.trim() === sq.sentence);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <p class="font-bold mb-2">${i+1}. ${sq.q}</p>
+      <input type="text" class="story-input" placeholder="Type your answer here..." id="storyAns${i}">
+      <button class="btn-check mt-3" onclick="checkStoryAnswer(${i}, ${sentIndex})"><i class="fas fa-check mr-2"></i>Check Answer</button>
+      <div class="explanation" id="exp-story${i}">
+        <b>Answer:</b> ${sq.a}<br>
+        <i>Look at the underlined sentence in the story!</i>
+      </div>
+    `;
+    qContainer.appendChild(card);
+  });
+}
+
+function checkStoryAnswer(qIndex, sentIndex) {
+  const input = document.getElementById(`storyAns${qIndex}`);
+  const exp = document.getElementById(`exp-story${qIndex}`);
+  const userAns = input.value.toLowerCase().trim();
+  
+  if (userAns === '') {
+    input.style.borderColor = 'var(--sun)';
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+  
+  exp.classList.add('show');
+  
+  if (sentIndex >= 0) {
+    document.querySelectorAll('.underline-answer').forEach(el => {
+      el.classList.remove('underline-answer');
+    });
+    const sentSpan = document.querySelector(`[data-sentence="${sentIndex}"]`);
+    if (sentSpan) {
+      sentSpan.classList.add('underline-answer');
+      sentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  const keyWords = storyQuestions[qIndex].a.toLowerCase().split(' ').filter(w => w.length > 3);
+  const matched = keyWords.some(w => userAns.includes(w));
+  
+  if (matched) {
+    input.style.borderColor = 'var(--leaf)';
+    input.style.background = 'rgba(6, 214, 160, 0.1)';
+    playSound(true);
+  } else {
+    input.style.borderColor = 'var(--rose)';
+    input.style.background = 'rgba(244, 63, 94, 0.1)';
+    playSound(false);
+  }
+}
+
+// ============ SLIDE 9: Quick Quiz ============
+const quizData = [
+  { q: "I ___ apples.", options: ['like', 'likes', "don't likes", 'liking'], correct: 0 },
+  { q: "She ___ bananas.", options: ['like', 'likes', "don't like", 'liking'], correct: 1 },
+  { q: "They ___ carrots.", options: ['likes', "doesn't like", "don't like", 'liking'], correct: 2 },
+  { q: "He ___ broccoli.", options: ['like', 'likes', "don't like", "doesn't likes"], correct: 1 },
+  { q: "We ___ grapes.", options: ['like', 'likes', "doesn't like", 'liking'], correct: 0 },
+  { q: "Apples ___ red.", options: ['is', 'are', 'am', 'be'], correct: 1 },
+  { q: "A banana ___ yellow.", options: ['is', 'are', 'am', 'be'], correct: 0 },
+  { q: "Cio doesn't ___ onions.", options: ['likes', 'like', 'liking', 'liked'], correct: 1 },
+  { q: "Mia ___ strawberries.", options: ['like', 'likes', "don't like", "doesn't like"], correct: 1 },
+  { q: "They ___ like durian.", options: ["doesn't", "don't", "isn't", "aren't"], correct: 1 }
+];
+
+let quizState = { score: 0, qNum: 0, answered: false };
+
+function loadQuiz() {
+  quizState.answered = false;
+  const q = quizData[quizState.qNum];
+  document.getElementById('quizQNum').textContent = `${quizState.qNum + 1}/${quizData.length}`;
+  
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = `
+    <div class="text-center mb-6">
+      <div class="font-display text-xl md:text-2xl font-bold mb-4" style="line-height:1.5">${q.q}</div>
+    </div>
+    <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    <div id="quizFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  `;
+  
+  const optsContainer = document.getElementById('quizOptions');
+  const shuffled = q.options.map((opt, i) => ({opt, isCorrect: i === q.correct})).sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = item.opt;
+    btn.onclick = () => answerQuiz(item.isCorrect, btn, item.opt);
+    optsContainer.appendChild(btn);
+  });
+  
+  speak(q.q.replace(/___/g, 'blank'));
+}
+
+function answerQuiz(isCorrect, btn, optText) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  
+  document.querySelectorAll('#quizOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('quizFeedback');
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = '<span style="color:var(--rose)">✗ Wrong!</span>';
+    document.querySelectorAll('#quizOptions .game-option').forEach(o => {
+      if (!o.classList.contains('incorrect')) {
+        o.classList.add('correct');
+      }
+    });
+    playSound(false);
+  }
+  
+  document.getElementById('quizScore').textContent = quizState.score;
+  
+  setTimeout(() => {
+    quizState.qNum++;
+    if (quizState.qNum >= quizData.length) {
+      endQuiz();
+    } else {
+      loadQuiz();
+    }
+  }, 1800);
+}
+
+function endQuiz() {
+  const container = document.getElementById('quizContainer');
+  const percentage = (quizState.score / (quizData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect!';
+    message = "You're a Like/Dislike Master!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know this material well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${quizState.score}</span> / ${quizData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartQuiz()">
+        <i class="fas fa-redo mr-2"></i>Play Again
+      </button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  quizState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('quizScore').textContent = '0';
+  loadQuiz();
+}
+
+// ============ Sound Effects ============
+let audioCtx = null;
+function playSound(correct) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (correct) {
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ============ Initialize ============
+renderFlashcards();
+loadGuess();
+loadFillStory();
+loadListen();
+renderConv();
+renderStory();
+loadQuiz();
+updateNav();
+</script>
+</body>
+</html>
