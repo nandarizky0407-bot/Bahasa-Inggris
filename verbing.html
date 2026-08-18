@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verb + ing - English Fun Class</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8EC;
+  --paper: #FFFFFF;
+  --ink: #1F2A4A;
+  --muted: #6B7280;
+  --coral: #FF6B6B;
+  --teal: #14B8A6;
+  --sun: #FFB627;
+  --grape: #9B5DE5;
+  --leaf: #06D6A0;
+  --sky: #4CC9F0;
+  --rose: #F43F5E;
+  --border: rgba(31, 42, 74, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--teal); bottom: -80px; right: -80px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: var(--sun); top: 40%; left: 60%; animation-delay: -10s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.deck { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 1.5rem 2.5rem 5.5rem;
+  overflow-y: auto;
+}
+.slide.active { display: flex; animation: slideIn 0.5s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(31,42,74,0.2); border-radius: 4px; }
+
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 50;
+}
+.nav-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 10px 22px; border-radius: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; font-family: 'Nunito', sans-serif;
+}
+.nav-btn:hover:not(:disabled) { background: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.dots { display: flex; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(31,42,74,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--coral); width: 28px; border-radius: 4px; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--coral), var(--sun), var(--teal)); z-index: 60; transition: width 0.4s ease; }
+
+.flashcard {
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 120px;
+}
+.flashcard:hover { transform: translateY(-4px) scale(1.03); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255, 182, 39, 0.25); }
+.flashcard:active { transform: scale(0.95); }
+.flashcard .icon { font-size: 2.2rem; margin-bottom: 4px; }
+.flashcard .base { font-weight: 600; color: var(--muted); font-size: 0.75rem; }
+.flashcard .ing { font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+.flashcard .ing .hl { color: var(--coral); }
+.flashcard .id { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.flashcard.playing { border-color: var(--teal); background: rgba(20, 184, 166, 0.1); animation: pulse 0.6s; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+.card { background: var(--paper); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); border: 1px solid var(--border); transition: all 0.3s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(31, 42, 74, 0.12); }
+
+.bubble { max-width: 78%; padding: 12px 18px; border-radius: 20px; margin: 6px 0; position: relative; font-weight: 600; line-height: 1.6; }
+.bubble.left { background: var(--paper); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.bubble.right { background: linear-gradient(135deg, var(--coral), #FF8787); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+.bubble .speaker { font-size: 11px; opacity: 0.7; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.05em; }
+.bubble.right .speaker { opacity: 0.85; }
+
+.story-text { font-size: 1rem; line-height: 1.85; background: var(--paper); padding: 1.25rem 1.75rem; border-radius: 20px; border-left: 6px solid var(--sun); box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.story-text .underline-answer { background: rgba(255, 182, 39, 0.3); border-bottom: 3px solid var(--sun); padding: 2px 4px; border-radius: 4px; font-weight: 800; }
+.story-text .ing-hl { color: var(--coral); font-weight: 700; }
+
+.speak-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; border: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-left: 8px; vertical-align: middle; }
+.speak-btn:hover { background: #0F9488; transform: scale(1.05); }
+
+.section-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; }
+.section-sub { color: var(--muted); font-weight: 600; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: rgba(20, 184, 166, 0.1); color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.cover-title { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.bob { animation: bob 3s infinite ease-in-out; display: inline-block; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.fade-up { animation: fadeUp 0.6s ease backwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-btn { padding: 8px 18px; border-radius: 20px; font-weight: 800; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Fredoka', sans-serif; font-size: 0.9rem; }
+.tab-btn.active { background: var(--coral); color: white; }
+.tab-btn:not(.active) { background: white; color: var(--coral); border: 2px solid var(--coral); }
+
+.story-input { border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; font-weight: 600; font-family: 'Nunito', sans-serif; width: 100%; margin-top: 4px; font-size: 0.95rem; }
+.story-input:focus { outline: none; border-color: var(--teal); }
+
+.btn-check { background: var(--coral); color: white; border: none; padding: 8px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.9rem; }
+.btn-check:hover { background: #E55555; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+
+.explanation { margin-top: 10px; padding: 10px 14px; background: rgba(20, 184, 166, 0.08); border-left: 4px solid var(--teal); border-radius: 8px; font-size: 13px; display: none; }
+.explanation.show { display: block; animation: slideIn 0.3s; }
+
+.game-area { background: linear-gradient(135deg, rgba(155, 93, 229, 0.12), rgba(76, 201, 240, 0.12)); border-radius: 24px; padding: 1.5rem; }
+.game-option { background: var(--paper); border: 3px solid var(--border); border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 700; font-size: 1.05rem; text-align: center; }
+.game-option:hover:not(.disabled) { transform: scale(1.04); border-color: var(--grape); box-shadow: 0 6px 16px rgba(155, 93, 229, 0.25); }
+.game-option.correct { background: var(--leaf); color: white; border-color: var(--leaf); animation: bounce 0.5s; }
+.game-option.incorrect { background: var(--rose); color: white; border-color: var(--rose); animation: shake 0.5s; }
+.game-option.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+.rule-card { background: var(--paper); border-radius: 16px; padding: 1rem; border: 2px solid var(--border); transition: all 0.2s; cursor: pointer; }
+.rule-card:hover { transform: translateY(-4px); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255,182,39,0.15); }
+.rule-card .rule-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1rem; }
+.rule-card .rule-ex { font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.rule-card .arrow { font-size: 1.5rem; color: var(--coral); }
+
+.use-banner { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 30px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95rem; }
+.example-box { background: var(--paper); border-radius: 12px; padding: 12px 16px; border-left: 4px solid; font-weight: 600; font-size: 0.95rem; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width: 8%"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide active" data-slide="1">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-6xl mx-auto w-full">
+    <div class="chip mb-6 fade-up">
+      <i class="fas fa-star"></i> English Fun Class · Grade 5
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s">
+      <span style="color: var(--coral)">Verb</span> + 
+      <span style="color: var(--teal)">ing</span>
+    </h1>
+    <h2 class="font-display text-2xl md:text-4xl mt-3 fade-up" style="animation-delay: 0.2s; color: var(--ink)">
+      The 5 Magical Uses <span class="bob">✨</span>
+    </h2>
+    <p class="text-base md:text-xl mt-6 max-w-2xl fade-up" style="animation-delay: 0.3s; color: var(--muted)">
+      Discover how <b>verb + ing</b> works in daily activities — from Continuous Tense to Gerund, Prepositions, Certain Verbs, and Adjectives!
+    </p>
+    <div class="flex gap-4 md:gap-8 mt-10 text-4xl md:text-5xl fade-up" style="animation-delay: 0.4s">
+      <span class="bob" style="animation-delay: 0s">🍳</span>
+      <span class="bob" style="animation-delay: 0.2s">📚</span>
+      <span class="bob" style="animation-delay: 0.4s">⚽</span>
+      <span class="bob" style="animation-delay: 0.6s">🎨</span>
+      <span class="bob" style="animation-delay: 0.8s">🛏️</span>
+    </div>
+    <button class="btn-check mt-10 text-lg fade-up" style="animation-delay: 0.5s; padding: 12px 32px" onclick="nextSlide()">
+      <i class="fas fa-play mr-2"></i> Start Adventure
+    </button>
+    <p class="text-xs mt-4 fade-up" style="animation-delay: 0.6s; color: var(--muted)">
+      <i class="fas fa-keyboard mr-1"></i> Use ← → arrow keys to navigate
+    </p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: FLASHCARDS ============ -->
+<section class="slide" data-slide="2">
+  <div class="max-w-7xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-images"></i> Vocabulary · Activity + ing</span>
+    <h1 class="section-title mt-2 mb-2">Verb + ing Flashcards! <span class="bob">🃏</span></h1>
+    <p class="section-sub mb-4">Click any card to hear how to say it. Notice the <b style="color:var(--coral)">-ing</b> ending!</p>
+    <div id="flashcardsGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: SPELLING RULES ============ -->
+<section class="slide" data-slide="3">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-spell-check"></i> Spelling Rules</span>
+    <h1 class="section-title mt-2 mb-2">How to Add -ing <span class="bob">✏️</span></h1>
+    <p class="section-sub mb-6">There are 4 simple rules for adding <b>-ing</b> to verbs. Click any card to hear examples!</p>
+    
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="rule-card" style="border-top: 6px solid var(--leaf)" onclick="speak('walk walking, eat eating, read reading')">
+        <div class="rule-title" style="color: var(--leaf)">Rule 1: Most Verbs</div>
+        <p class="text-xs font-bold mt-1" style="color:var(--muted)">Just add -ing</p>
+        <div class="rule-ex">
+          walk <span class="arrow">→</span> walk<b style="color:var(--coral)">ing</b><br>
+          eat <span class="arrow">→</span> eat<b style="color:var(--coral)">ing</b><br>
+          read <span class="arrow">→</span> read<b style="color:var(--coral)">ing</b><br>
+          play <span class="arrow">→</span> play<b style="color:var(--coral)">ing</b>
+        </div>
+        <button class="speak-btn mt-2"><i class="fas fa-volume-up"></i></button>
+      </div>
+      
+      <div class="rule-card" style="border-top: 6px solid var(--coral)" onclick="speak('make making, write writing, dance dancing')">
+        <div class="rule-title" style="color: var(--coral)">Rule 2: Ends in -e</div>
+        <p class="text-xs font-bold mt-1" style="color:var(--muted)">Drop the -e, then add -ing</p>
+        <div class="rule-ex">
+          make <span class="arrow">→</span> mak<b style="color:var(--coral)">ing</b><br>
+          write <span class="arrow">→</span> writ<b style="color:var(--coral)">ing</b><br>
+          dance <span class="arrow">→</span> danc<b style="color:var(--coral)">ing</b><br>
+          cook<b style="color:var(--coral)">e</b> → cook<b style="color:var(--coral)">ing</b>
+        </div>
+        <button class="speak-btn mt-2"><i class="fas fa-volume-up"></i></button>
+      </div>
+      
+      <div class="rule-card" style="border-top: 6px solid var(--grape)" onclick="speak('lie lying, die dying, tie tying')">
+        <div class="rule-title" style="color: var(--grape)">Rule 3: Ends in -ie</div>
+        <p class="text-xs font-bold mt-1" style="color:var(--muted)">Change -ie to -y, add -ing</p>
+        <div class="rule-ex">
+          l<b style="color:var(--coral)">ie</b> <span class="arrow">→</span> l<b style="color:var(--coral)">y</b>ing<br>
+          d<b style="color:var(--coral)">ie</b> <span class="arrow">→</span> d<b style="color:var(--coral)">y</b>ing<br>
+          t<b style="color:var(--coral)">ie</b> <span class="arrow">→</span> t<b style="color:var(--coral)">y</b>ing
+        </div>
+        <button class="speak-btn mt-2"><i class="fas fa-volume-up"></i></button>
+      </div>
+      
+      <div class="rule-card" style="border-top: 6px solid var(--sun)" onclick="speak('run running, swim swimming, sit sitting')">
+        <div class="rule-title" style="color: var(--sun)">Rule 4: CVC Pattern</div>
+        <p class="text-xs font-bold mt-1" style="color:var(--muted)">Short verb ending in C+V+C: double the last consonant</p>
+        <div class="rule-ex">
+          run <span class="arrow">→</span> ru<b style="color:var(--coral)">nn</b>ing<br>
+          swim <span class="arrow">→</span> swi<b style="color:var(--coral)">mm</b>ing<br>
+          sit <span class="arrow">→</span> si<b style="color:var(--coral)">tt</b>ing
+        </div>
+        <button class="speak-btn mt-2"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+    
+    <div class="card mt-6" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-2">💡 Quick Tip</h3>
+      <p class="text-sm font-semibold" style="line-height: 1.7">
+        <b>CVC</b> means <b>C</b>onsonant + <b>V</b>owel + <b>C</b>onsonant — like "run" (r-u-n). 
+        For these short verbs, we double the last letter before adding -ing!<br>
+        But verbs ending in <b>w, x, y</b> don't double: <i>fix → fixing, snow → snowing, play → playing</i>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: USE 1 - CONTINUOUS TENSE ============ -->
+<section class="slide" data-slide="4">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-clock"></i> Use 1 of 5</span>
+    <h1 class="section-title mt-2 mb-2">Continuous Tense <span class="bob">⏰</span></h1>
+    <p class="section-sub mb-6">Verb + ing shows an action that is <b>happening right now</b> or <b>around now</b>.</p>
+
+    <div class="card mb-6" style="border-top: 6px solid var(--coral)">
+      <div class="use-banner mb-4" style="background: rgba(255,107,107,0.15); color: var(--coral)">
+        <i class="fas fa-bolt"></i> Pattern: Subject + am/is/are + Verb + ing
+      </div>
+      <p class="text-sm font-semibold mb-4" style="color: var(--muted)">
+        Use <b>am</b> with I, <b>is</b> with he/she/it, <b>are</b> with you/we/they
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="example-box" style="border-color: var(--coral)">
+          <b>I</b> am eat<b style="color:var(--coral)">ing</b> breakfast now.<br>
+          <span style="color:var(--muted); font-size:12px">(Saya sedang makan sarapan sekarang.)</span>
+          <button class="speak-btn" onclick="speak('I am eating breakfast now.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--coral)">
+          <b>She</b> is cook<b style="color:var(--coral)">ing</b> in the kitchen.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia sedang memasak di dapur.)</span>
+          <button class="speak-btn" onclick="speak('She is cooking in the kitchen.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--coral)">
+          <b>They</b> are play<b style="color:var(--coral)">ing</b> football.<br>
+          <span style="color:var(--muted); font-size:12px">(Mereka sedang bermain sepak bola.)</span>
+          <button class="speak-btn" onclick="speak('They are playing football.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--coral)">
+          <b>We</b> are study<b style="color:var(--coral)">ing</b> English.<br>
+          <span style="color:var(--muted); font-size:12px">(Kami sedang belajar bahasa Inggris.)</span>
+          <button class="speak-btn" onclick="speak('We are studying English.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🔑 Key Words</h3>
+      <div class="flex gap-2 flex-wrap">
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">now</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">right now</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">at the moment</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">today</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">Look!</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">Listen!</span>
+      </div>
+      <p class="text-sm font-semibold mt-3" style="line-height: 1.7">
+        These words often appear with the Continuous Tense to show the action is happening <b>right now</b>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: USE 2 - GERUND ============ -->
+<section class="slide" data-slide="5">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-tag"></i> Use 2 of 5</span>
+    <h1 class="section-title mt-2 mb-2">Gerund <span class="bob">🏷️</span></h1>
+    <p class="section-sub mb-6">Verb + ing can work as a <b>noun</b> (kata benda). It becomes the name of an activity!</p>
+
+    <div class="card mb-6" style="border-top: 6px solid var(--teal)">
+      <div class="use-banner mb-4" style="background: rgba(20,184,166,0.15); color: var(--teal)">
+        <i class="fas fa-bolt"></i> As Subject: Verb+ing + is/are + ...
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="example-box" style="border-color: var(--teal)">
+          <b style="color:var(--teal)">Swimming</b> is fun.<br>
+          <span style="color:var(--muted); font-size:12px">(Berenang itu menyenangkan.)</span>
+          <button class="speak-btn" onclick="speak('Swimming is fun.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--teal)">
+          <b style="color:var(--teal)">Reading</b> is my hobby.<br>
+          <span style="color:var(--muted); font-size:12px">(Membaca adalah hobiku.)</span>
+          <button class="speak-btn" onclick="speak('Reading is my hobby.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--teal)">
+          <b style="color:var(--teal)">Cooking</b> is her favorite activity.<br>
+          <span style="color:var(--muted); font-size:12px">(Memasak adalah aktivitas favoritnya.)</span>
+          <button class="speak-btn" onclick="speak('Cooking is her favorite activity.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--teal)">
+          <b style="color:var(--teal)">Walking</b> is good for health.<br>
+          <span style="color:var(--muted); font-size:12px">(Berjalan baik untuk kesehatan.)</span>
+          <button class="speak-btn" onclick="speak('Walking is good for health.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-top: 6px solid var(--leaf)">
+      <div class="use-banner mb-4" style="background: rgba(6,214,160,0.15); color: var(--leaf)">
+        <i class="fas fa-bolt"></i> As Object: Subject + verb + Verb+ing
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="example-box" style="border-color: var(--leaf)">
+          I like <b style="color:var(--leaf)">reading</b> books.<br>
+          <span style="color:var(--muted); font-size:12px">(Saya suka membaca buku.)</span>
+          <button class="speak-btn" onclick="speak('I like reading books.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--leaf)">
+          She loves <b style="color:var(--leaf)">dancing</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia suka menari.)</span>
+          <button class="speak-btn" onclick="speak('She loves dancing.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--leaf)">
+          My hobby is <b style="color:var(--leaf)">drawing</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Hobiku adalah menggambar.)</span>
+          <button class="speak-btn" onclick="speak('My hobby is drawing.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--leaf)">
+          He enjoys <b style="color:var(--leaf)">playing</b> football.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia menikmati bermain sepak bola.)</span>
+          <button class="speak-btn" onclick="speak('He enjoys playing football.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-6" style="background: linear-gradient(135deg, rgba(20,184,166,0.08), rgba(6,214,160,0.08))">
+      <h3 class="font-display text-lg font-bold mb-2">💡 Remember!</h3>
+      <p class="text-sm font-semibold" style="line-height: 1.7">
+        When verb+ing works as a <b>gerund</b>, it acts like a <b>noun</b>. 
+        It can be a subject (Swimming is fun) or an object (I like swimming). 
+        The -ing form <b>names</b> the activity!
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: USE 3 - AFTER PREPOSITION ============ -->
+<section class="slide" data-slide="6">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-map-signs"></i> Use 3 of 5</span>
+    <h1 class="section-title mt-2 mb-2">After Prepositions <span class="bob">📍</span></h1>
+    <p class="section-sub mb-6">After a <b>preposition</b> (kata depan), we always use Verb + ing — never the base verb!</p>
+
+    <div class="card mb-6" style="border-top: 6px solid var(--sun)">
+      <div class="use-banner mb-4" style="background: rgba(255,182,39,0.15); color: var(--sun)">
+        <i class="fas fa-bolt"></i> Pattern: Preposition + Verb + ing
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="example-box" style="border-color: var(--sun)">
+          I am good <b style="color:var(--sun)">at</b> <b style="color:var(--coral)">drawing</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Saya pintar menggambar.)</span>
+          <button class="speak-btn" onclick="speak('I am good at drawing.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sun)">
+          She is interested <b style="color:var(--sun)">in</b> <b style="color:var(--coral)">reading</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia tertarik membaca.)</span>
+          <button class="speak-btn" onclick="speak('She is interested in reading.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sun)">
+          He is afraid <b style="color:var(--sun)">of</b> <b style="color:var(--coral)">falling</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia takut jatuh.)</span>
+          <button class="speak-btn" onclick="speak('He is afraid of falling.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sun)">
+          Thank you <b style="color:var(--sun)">for</b> <b style="color:var(--coral)">helping</b> me.<br>
+          <span style="color:var(--muted); font-size:12px">(Terima kasih telah membantu saya.)</span>
+          <button class="speak-btn" onclick="speak('Thank you for helping me.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sun)">
+          She is good <b style="color:var(--sun)">at</b> <b style="color:var(--coral)">cooking</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia pintar memasak.)</span>
+          <button class="speak-btn" onclick="speak('She is good at cooking.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sun)">
+          We are tired <b style="color:var(--sun)">of</b> <b style="color:var(--coral)">waiting</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Kami lelah menunggu.)</span>
+          <button class="speak-btn" onclick="speak('We are tired of waiting.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,182,39,0.08), rgba(255,107,107,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🔑 Common Prepositions</h3>
+      <div class="flex gap-2 flex-wrap">
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">at</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">in</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">of</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">for</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">about</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">before</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">after</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">without</span>
+        <span class="chip" style="background: rgba(255,182,39,0.15); color: var(--sun)">by</span>
+      </div>
+      <p class="text-sm font-semibold mt-3" style="line-height: 1.7">
+        <b>Examples:</b> "before sleeping" (sebelum tidur) · "after eating" (setelah makan) · "by walking" (dengan berjalan) · "without drinking" (tanpa minum)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: USE 4 - AFTER CERTAIN VERBS ============ -->
+<section class="slide" data-slide="7">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-link"></i> Use 4 of 5</span>
+    <h1 class="section-title mt-2 mb-2">After Certain Verbs <span class="bob">🔗</span></h1>
+    <p class="section-sub mb-6">Some verbs are always followed by <b>Verb + ing</b> — not "to + verb".</p>
+
+    <div class="card mb-6" style="border-top: 6px solid var(--grape)">
+      <div class="use-banner mb-4" style="background: rgba(155,93,229,0.15); color: var(--grape)">
+        <i class="fas fa-bolt"></i> Pattern: Certain Verb + Verb + ing
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="example-box" style="border-color: var(--grape)">
+          I <b style="color:var(--grape)">enjoy</b> <b style="color:var(--coral)">reading</b> books.<br>
+          <span style="color:var(--muted); font-size:12px">(Saya menikmati membaca buku.)</span>
+          <button class="speak-btn" onclick="speak('I enjoy reading books.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--grape)">
+          She <b style="color:var(--grape)">loves</b> <b style="color:var(--coral)">dancing</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia sangat menyukai menari.)</span>
+          <button class="speak-btn" onclick="speak('She loves dancing.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--grape)">
+          He <b style="color:var(--grape)">stops</b> <b style="color:var(--coral)">talking</b>.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia berhenti berbicara.)</span>
+          <button class="speak-btn" onclick="speak('He stops talking.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--grape)">
+          They <b style="color:var(--grape)">finish</b> <b style="color:var(--coral)">eating</b> lunch.<br>
+          <span style="color:var(--muted); font-size:12px">(Mereka selesai makan siang.)</span>
+          <button class="speak-btn" onclick="speak('They finish eating lunch.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--grape)">
+          I <b style="color:var(--grape)">practice</b> <b style="color:var(--coral)">playing</b> football.<br>
+          <span style="color:var(--muted); font-size:12px">(Saya berlatih bermain sepak bola.)</span>
+          <button class="speak-btn" onclick="speak('I practice playing football.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--grape)">
+ She <b style="color:var(--grape)">keeps</b> <b style="color:var(--coral)">drawing</b> pictures.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia terus menggambar gambar.)</span>
+          <button class="speak-btn" onclick="speak('She keeps drawing pictures.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(155,93,229,0.08), rgba(76,201,240,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🔑 Verbs Always Followed by -ing</h3>
+      <div class="flex gap-2 flex-wrap">
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">enjoy</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">like</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">love</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">stop</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">finish</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">mind</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">practice</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">keep</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">avoid</span>
+        <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">consider</span>
+      </div>
+      <p class="text-sm font-semibold mt-3" style="line-height: 1.7">
+        <b>⚠️ Common mistake:</b> "I enjoy <u>to read</u>" ❌ → "I enjoy <b>reading</b>" ✅<br>
+        With these verbs, <b>always</b> use verb + ing!
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: USE 5 - AS ADJECTIVE ============ -->
+<section class="slide" data-slide="8">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-paint-brush"></i> Use 5 of 5</span>
+    <h1 class="section-title mt-2 mb-2">As an Adjective <span class="bob">🎨</span></h1>
+    <p class="section-sub mb-6">Verb + ing can describe a noun — like an <b>adjective</b> (kata sifat)!</p>
+
+    <div class="card mb-6" style="border-top: 6px solid var(--sky)">
+      <div class="use-banner mb-4" style="background: rgba(76,201,240,0.15); color: var(--sky)">
+        <i class="fas fa-bolt"></i> Pattern: Verb+ing + Noun (describing the noun)
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="example-box" style="border-color: var(--sky)">
+          Look at the <b style="color:var(--coral)">sleeping</b> cat.<br>
+          <span style="color:var(--muted); font-size:12px">(Lihat kucing yang sedang tidur.)</span>
+          <button class="speak-btn" onclick="speak('Look at the sleeping cat.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sky)">
+          The <b style="color:var(--coral)">running</b> water is cold.<br>
+          <span style="color:var(--muted); font-size:12px">(Air yang mengalir itu dingin.)</span>
+          <button class="speak-btn" onclick="speak('The running water is cold.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sky)">
+          I like <b style="color:var(--coral)">interesting</b> books.<br>
+          <span style="color:var(--muted); font-size:12px">(Saya suka buku yang menarik.)</span>
+          <button class="speak-btn" onclick="speak('I like interesting books.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sky)">
+          This is a <b style="color:var(--coral)">boring</b> movie.<br>
+          <span style="color:var(--muted); font-size:12px">(Ini film yang membosankan.)</span>
+          <button class="speak-btn" onclick="speak('This is a boring movie.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sky)">
+          The <b style="color:var(--coral)">crying</b> baby is hungry.<br>
+          <span style="color:var(--muted); font-size:12px">(Bayi yang menangis itu lapar.)</span>
+          <button class="speak-btn" onclick="speak('The crying baby is hungry.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example-box" style="border-color: var(--sky)">
+          She is a <b style="color:var(--coral)">loving</b> mother.<br>
+          <span style="color:var(--muted); font-size:12px">(Dia ibu yang penuh kasih.)</span>
+          <button class="speak-btn" onclick="speak('She is a loving mother.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(76,201,240,0.08), rgba(6,214,160,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 Summary: The 5 Uses</h3>
+      <div class="grid md:grid-cols-1 gap-2 text-sm font-semibold">
+        <div>1️⃣ <b style="color:var(--coral)">Continuous Tense:</b> She is cooking. (action now)</div>
+        <div>2️⃣ <b style="color:var(--teal)">Gerund (Noun):</b> Cooking is fun. (subject/object)</div>
+        <div>3️⃣ <b style="color:var(--sun)">After Preposition:</b> good at cooking. (after at/in/of/for)</div>
+        <div>4️⃣ <b style="color:var(--grape)">After Certain Verbs:</b> enjoy cooking. (after enjoy/love/stop)</div>
+        <div>5️⃣ <b style="color:var(--sky)">As Adjective:</b> a cooking smell. (describing noun)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: CONVERSATIONS ============ -->
+<section class="slide" data-slide="9">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversations · Ms. Nanda & Cio</span>
+    <h1 class="section-title mt-2 mb-2">Let's Read Together! <span class="bob">💬</span></h1>
+    <p class="section-sub mb-4">5 conversations between Ms. Nanda and Cio. Each focuses on a different use of verb + ing!</p>
+    
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button class="tab-btn active" onclick="switchConv(1, this)">Conv 1</button>
+      <button class="tab-btn" onclick="switchConv(2, this)">Conv 2</button>
+      <button class="tab-btn" onclick="switchConv(3, this)">Conv 3</button>
+      <button class="tab-btn" onclick="switchConv(4, this)">Conv 4</button>
+      <button class="tab-btn" onclick="switchConv(5, this)">Conv 5</button>
+    </div>
+    
+    <div id="convContainer"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: STORY & QUESTIONS ============ -->
+<section class="slide" data-slide="10">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story Time</span>
+    <h1 class="section-title mt-2 mb-2">Read & Answer <span class="bob">📖</span></h1>
+    <p class="section-sub mb-4">Read the story carefully, then answer 10 questions. Type your answer and check!</p>
+    
+    <div class="flex justify-between items-center mb-3">
+      <p class="text-sm font-bold" style="color:var(--muted)">Cio's Busy Day — with all 5 uses of verb + ing</p>
+      <button class="btn-check" onclick="speak(storyText, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div id="storyContainer" class="story-text mb-6"></div>
+    
+    <h3 class="font-display text-xl font-bold mb-4">📋 Answer these questions:</h3>
+    <div id="storyQuestions" class="space-y-4"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11: QUICK QUIZ ============ -->
+<section class="slide" data-slide="11">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-bolt"></i> Quick Quiz</span>
+    <h1 class="section-title mt-2 mb-2">Answer Fast! <span class="bob">⚡</span></h1>
+    <p class="section-sub mb-4">Choose the correct answer for each question!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="quizScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="quizQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/10</span>
+        </div>
+      </div>
+      <div id="quizContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 12: CLOSING ============ -->
+<section class="slide" data-slide="12">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full">
+    <div class="chip mb-4 fade-up">
+      <i class="fas fa-trophy"></i> Congratulations!
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s; font-size: clamp(2.5rem, 6vw, 4.5rem)">
+      Great Job! <span class="bob">🎉</span>
+    </h1>
+    <p class="text-lg md:text-xl mt-4 max-w-2xl fade-up" style="animation-delay: 0.2s; color:var(--muted)">
+      You've mastered the 5 uses of Verb + ing!
+    </p>
+
+    <div class="card mt-8 w-full max-w-3xl fade-up" style="animation-delay: 0.3s; background: linear-gradient(135deg, rgba(255,107,107,0.05), rgba(76,201,240,0.05))">
+      <h3 class="font-display text-xl font-bold mb-4">📚 The 5 Uses of Verb + ing</h3>
+      <div class="grid md:grid-cols-1 gap-2 text-sm font-semibold text-left">
+        <div>1️⃣ <b style="color:var(--coral)">Continuous Tense:</b> "I am eating now." — action in progress</div>
+        <div>2️⃣ <b style="color:var(--teal)">Gerund (Noun):</b> "Swimming is fun." — as subject/object</div>
+        <div>3️⃣ <b style="color:var(--sun)">After Preposition:</b> "good at drawing" — after at/in/of/for</div>
+        <div>4️⃣ <b style="color:var(--grape)">After Certain Verbs:</b> "enjoy reading" — after enjoy/love/stop</div>
+        <div>5️⃣ <b style="color:var(--sky)">As Adjective:</b> "a sleeping cat" — describing a noun</div>
+      </div>
+    </div>
+
+    <div class="card mt-6 w-full max-w-3xl fade-up" style="animation-delay: 0.4s; border-top:6px solid var(--coral)">
+      <div class="text-3xl mb-2">💭</div>
+      <h3 class="font-display font-bold text-lg" style="color:var(--coral)">Reflection</h3>
+      <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+        Ask yourself:<br>
+        • What are you doing right now? → "I am ___ing."<br>
+        • What is your hobby? → "My hobby is ___ing."<br>
+        • What are you good at? → "I am good at ___ing."<br>
+        • What do you enjoy? → "I enjoy ___ing."
+      </p>
+    </div>
+
+    <div class="flex gap-6 mt-10 text-5xl fade-up" style="animation-delay: 0.5s">
+      <span class="bob" style="animation-delay:0s">⏰</span>
+      <span class="bob" style="animation-delay:0.2s">🏷️</span>
+      <span class="bob" style="animation-delay:0.4s">📍</span>
+      <span class="bob" style="animation-delay:0.6s">🔗</span>
+      <span class="bob" style="animation-delay:0.8s">🎨</span>
+    </div>
+
+    <h2 class="font-display text-2xl md:text-3xl mt-8 fade-up" style="animation-delay: 0.6s; color: var(--coral)">
+      Thank You for Today! <span class="bob">🌈</span>
+    </h2>
+    <p class="text-sm mt-3 fade-up" style="animation-delay: 0.7s; color:var(--muted)">
+      Keep practicing your English. See you next time!
+    </p>
+    
+    <button class="btn-check mt-6 fade-up" style="animation-delay: 0.8s" onclick="goToSlide(0)">
+      <i class="fas fa-redo mr-2"></i>Start Again
+    </button>
+  </div>
+</section>
+
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+    <i class="fas fa-arrow-left"></i> Prev
+  </button>
+  <div class="flex items-center gap-4">
+    <span class="text-sm font-bold" style="color:var(--muted)">
+      <span id="slideNum">1</span> / <span id="slideTotal">12</span>
+    </span>
+    <div class="dots" id="dots"></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+    Next <i class="fas fa-arrow-right"></i>
+  </button>
+</nav>
+
+<script>
+// ============ Data: Activities with verb+ing ============
+const activities = [
+  { base: 'wake', ing: 'waking', id: 'bangun tidur', icon: '⏰' },
+  { base: 'brush', ing: 'brushing', id: 'menggosok gigi', icon: '🪥' },
+  { base: 'bath', ing: 'bathing', id: 'mandi', icon: '🛁' },
+  { base: 'dress', ing: 'dressing', id: 'berpakaian', icon: '👕' },
+  { base: 'eat', ing: 'eating', id: 'makan', icon: '🍳' },
+  { base: 'go', ing: 'going', id: 'pergi', icon: '🏫' },
+  { base: 'study', ing: 'studying', id: 'belajar', icon: '📚' },
+  { base: 'read', ing: 'reading', id: 'membaca', icon: '📖' },
+  { base: 'write', ing: 'writing', id: 'menulis', icon: '✏️' },
+  { base: 'draw', ing: 'drawing', id: 'menggambar', icon: '🎨' },
+  { base: 'play', ing: 'playing', id: 'bermain', icon: '⚽' },
+  { base: 'drink', ing: 'drinking', id: 'minum', icon: '💧' },
+  { base: 'wash', ing: 'washing', id: 'mencuci', icon: '🧼' },
+  { base: 'watch', ing: 'watching', id: 'menonton', icon: '📺' },
+  { base: 'cook', ing: 'cooking', id: 'memasak', icon: '👨‍🍳' },
+  { base: 'clean', ing: 'cleaning', id: 'membersihkan', icon: '🧹' },
+  { base: 'do', ing: 'doing', id: 'mengerjakan', icon: '📝' },
+  { base: 'sleep', ing: 'sleeping', id: 'tidur', icon: '🌙' },
+  { base: 'walk', ing: 'walking', id: 'berjalan', icon: '🚶' },
+  { base: 'run', ing: 'running', id: 'berlari', icon: '🏃' }
+];
+
+// ============ Navigation ============
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+document.getElementById('slideTotal').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  document.getElementById('slideNum').textContent = currentSlide + 1;
+  document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = Math.max(0, Math.min(totalSlides - 1, index));
+  slides[currentSlide].classList.add('active');
+  updateNav();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  window.scrollTo(0, 0);
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ============ Text-to-Speech ============
+let englishVoice = null;
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.startsWith('en') && /female|samantha|google/i.test(v.name)) 
+              || voices.find(v => v.lang.startsWith('en-US'))
+              || voices.find(v => v.lang.startsWith('en'));
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, longText = false) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = longText ? 0.9 : 0.85;
+  utter.pitch = 1.1;
+  if (englishVoice) utter.voice = englishVoice;
+  window.speechSynthesis.speak(utter);
+}
+
+// ============ SLIDE 2: Flashcards ============
+function renderFlashcards() {
+  const grid = document.getElementById('flashcardsGrid');
+  activities.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `
+      <div class="icon">${a.icon}</div>
+      <div class="base">${a.base}</div>
+      <div class="ing">${a.ing.replace('ing', '')}<span class="hl">ing</span></div>
+      <div class="id">${a.id}</div>
+    `;
+    card.onclick = () => {
+      speak(a.ing);
+      document.querySelectorAll('.flashcard').forEach(c => c.classList.remove('playing'));
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 1000);
+    };
+    grid.appendChild(card);
+  });
+}
+
+// ============ SLIDE 9: Conversations ============
+const conversations = [
+  {
+    title: "Conversation 1 · What Are You Doing? (Continuous Tense)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, what are you doing now?', side: 'left' },
+      { speaker: 'Cio', text: "I am eating breakfast, Ms. Nanda.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What is your mother doing?', side: 'left' },
+      { speaker: 'Cio', text: "She is cooking in the kitchen.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is your sister studying?', side: 'left' },
+      { speaker: 'Cio', text: "No, she isn't. She is watching TV.", side: 'right' }
+    ],
+    questions: [
+      { q: "What is Cio doing now?", a: "He is eating breakfast." },
+      { q: "What is Cio's mother doing?", a: "She is cooking in the kitchen." },
+      { q: "Is Cio's sister studying?", a: "No, she isn't. She is watching TV." },
+      { q: "Who is cooking in the kitchen?", a: "Cio's mother." },
+      { q: "What is Cio's sister doing?", a: "She is watching TV." }
+    ]
+  },
+  {
+    title: "Conversation 2 · What Is Your Hobby? (Gerund)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, what is your hobby?', side: 'left' },
+      { speaker: 'Cio', text: "My hobby is reading books.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is swimming your hobby too?', side: 'left' },
+      { speaker: 'Cio', text: "No, swimming is not my hobby. I don't like swimming.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What about your sister? Is cooking her hobby?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, cooking is her favorite hobby!", side: 'right' }
+    ],
+    questions: [
+      { q: "What is Cio's hobby?", a: "His hobby is reading books." },
+      { q: "Is swimming Cio's hobby?", a: "No, swimming is not his hobby. He doesn't like swimming." },
+      { q: "What is Cio's sister's hobby?", a: "Cooking is her favorite hobby." },
+      { q: "Does Cio like swimming?", a: "No, he doesn't like swimming." },
+      { q: "What does Cio's sister love doing?", a: "She loves cooking." }
+    ]
+  },
+  {
+    title: "Conversation 3 · What Are You Good At? (After Preposition)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, what are you good at?', side: 'left' },
+      { speaker: 'Cio', text: "I am good at drawing, Ms. Nanda.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Are you interested in painting too?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I am interested in painting pictures.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is your sister afraid of anything?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, she is afraid of falling down.", side: 'right' }
+    ],
+    questions: [
+      { q: "What is Cio good at?", a: "He is good at drawing." },
+      { q: "Is Cio interested in painting?", a: "Yes, he is interested in painting pictures." },
+      { q: "What is Cio's sister afraid of?", a: "She is afraid of falling down." },
+      { q: "What is Cio interested in?", a: "He is interested in painting pictures." },
+      { q: "Who is good at drawing?", a: "Cio." }
+    ]
+  },
+  {
+    title: "Conversation 4 · What Do You Enjoy? (After Certain Verbs)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, what do you enjoy doing on Sunday?', side: 'left' },
+      { speaker: 'Cio', text: "I enjoy playing football on Sunday.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Do you like reading comic books too?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I love reading comic books.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Does your sister practice dancing?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, she practices dancing every day.", side: 'right' }
+    ],
+    questions: [
+      { q: "What does Cio enjoy doing on Sunday?", a: "He enjoys playing football on Sunday." },
+      { q: "Does Cio like reading comic books?", a: "Yes, he loves reading comic books." },
+      { q: "What does Cio's sister practice?", a: "She practices dancing every day." },
+      { q: "When does Cio's sister practice dancing?", a: "Every day." },
+      { q: "What does Cio love doing?", a: "He loves reading comic books." }
+    ]
+  },
+  {
+    title: "Conversation 5 · Look At That! (As Adjective)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, look at that sleeping cat!', side: 'left' },
+      { speaker: 'Cio', text: "Aww, the sleeping cat is so cute!", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Do you like reading interesting books?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I love interesting books with surprising endings.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'The running water in the river is clean.', side: 'left' },
+      { speaker: 'Cio', text: "Yes, it is! I like swimming in running water.", side: 'right' }
+    ],
+    questions: [
+      { q: "What does Ms. Nanda want Cio to look at?", a: "A sleeping cat." },
+      { q: "What kind of books does Cio like reading?", a: "He likes reading interesting books with surprising endings." },
+      { q: "What is in the river?", a: "Running water that is clean." },
+      { q: "Where does Cio like swimming?", a: "In running water." },
+      { q: "What does Cio think of the sleeping cat?", a: "He thinks the sleeping cat is so cute." }
+    ]
+  }
+];
+
+let currentConv = 1;
+function switchConv(num, btn) {
+  currentConv = num;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderConv();
+}
+
+function renderConv() {
+  const c = conversations[currentConv - 1];
+  const container = document.getElementById('convContainer');
+  let html = `<h3 class="font-display text-lg font-bold mb-4" style="color:var(--coral)">${c.title}</h3>`;
+  html += '<div class="flex flex-col mb-6">';
+  c.dialog.forEach(d => {
+    const escapedText = d.text.replace(/'/g, "\\'");
+    html += `<div class="bubble ${d.side}"><div class="speaker">${d.speaker}</div>${d.text} <button class="speak-btn" onclick="speak('${escapedText}')"><i class="fas fa-volume-up"></i></button></div>`;
+  });
+  html += '</div>';
+  html += '<h4 class="font-display text-lg font-bold mb-3">📋 Questions:</h4><div class="space-y-3">';
+  c.questions.forEach((q, i) => {
+    html += `
+      <div class="card" style="padding:1rem">
+        <p class="font-bold mb-2">${i+1}. ${q.q}</p>
+        <button class="btn-check" style="background:var(--teal)" onclick="toggleConvAnswer(${i}, this)"><i class="fas fa-eye mr-2"></i>Show Answer</button>
+        <div class="explanation" id="exp-conv-${i}">${q.a}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function toggleConvAnswer(i, btn) {
+  const exp = document.getElementById(`exp-conv-${i}`);
+  if (exp.classList.contains('show')) {
+    exp.classList.remove('show');
+    btn.innerHTML = '<i class="fas fa-eye mr-2"></i>Show Answer';
+  } else {
+    exp.classList.add('show');
+    btn.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Hide Answer';
+  }
+}
+
+// ============ SLIDE 10: Story & Questions ============
+const storyText = `Cio is having a busy day. Right now, he is brushing his teeth in the bathroom. His mother is cooking breakfast in the kitchen. The cooking smell is wonderful. Cio enjoys eating his mother's food. Eating breakfast is important for him. After breakfast, he is walking to school. On the way, he sees a sleeping cat and a running dog. At school, he is studying English. He loves learning English. Reading English books is his hobby. He is interested in reading stories. After school, he is playing football. Playing football is his favorite activity. At home, his sister is drawing a picture. Drawing is her hobby. She is good at drawing flowers. Their father is watching TV. He stopped working at five o'clock. Before sleeping, Cio enjoys reading a book. The interesting book makes him happy.`;
+
+const storyQuestions = [
+  { q: "What is Cio doing right now?", a: "He is brushing his teeth in the bathroom.", sentence: "Right now, he is brushing his teeth in the bathroom." },
+  { q: "What is his mother doing?", a: "She is cooking breakfast in the kitchen.", sentence: "His mother is cooking breakfast in the kitchen." },
+  { q: "What does Cio enjoy?", a: "He enjoys eating his mother's food.", sentence: "Cio enjoys eating his mother's food." },
+  { q: "What does Cio see on the way to school?", a: "He sees a sleeping cat and a running dog.", sentence: "On the way, he sees a sleeping cat and a running dog." },
+  { q: "What is Cio studying at school?", a: "He is studying English.", sentence: "At school, he is studying English." },
+  { q: "What is Cio's hobby?", a: "Reading English books is his hobby.", sentence: "Reading English books is his hobby." },
+  { q: "What is Cio interested in?", a: "He is interested in reading stories.", sentence: "He is interested in reading stories." },
+  { q: "What is Cio's sister's hobby?", a: "Drawing is her hobby.", sentence: "Drawing is her hobby." },
+  { q: "What is Cio's sister good at?", a: "She is good at drawing flowers.", sentence: "She is good at drawing flowers." },
+  { q: "What does Cio enjoy before sleeping?", a: "He enjoys reading a book.", sentence: "Before sleeping, Cio enjoys reading a book." }
+];
+
+function renderStory() {
+  const container = document.getElementById('storyContainer');
+  const sentences = storyText.match(/[^.!?]+[.!?]+/g) || [];
+  let html = '';
+  sentences.forEach((s, i) => {
+    html += `<span data-sentence="${i}">${s.trim()} </span>`;
+  });
+  container.innerHTML = html;
+  
+  const qContainer = document.getElementById('storyQuestions');
+  qContainer.innerHTML = '';
+  storyQuestions.forEach((sq, i) => {
+    const sentIndex = sentences.findIndex(s => s.trim() === sq.sentence);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <p class="font-bold mb-2">${i+1}. ${sq.q}</p>
+      <input type="text" class="story-input" placeholder="Type your answer here..." id="storyAns${i}">
+      <button class="btn-check mt-3" onclick="checkStoryAnswer(${i}, ${sentIndex})"><i class="fas fa-check mr-2"></i>Check Answer</button>
+      <div class="explanation" id="exp-story${i}">
+        <b>Answer:</b> ${sq.a}<br>
+        <i>Look at the underlined sentence in the story!</i>
+      </div>
+    `;
+    qContainer.appendChild(card);
+  });
+}
+
+function checkStoryAnswer(qIndex, sentIndex) {
+  const input = document.getElementById(`storyAns${qIndex}`);
+  const exp = document.getElementById(`exp-story${qIndex}`);
+  const userAns = input.value.toLowerCase().trim();
+  
+  if (userAns === '') {
+    input.style.borderColor = 'var(--sun)';
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+  
+  exp.classList.add('show');
+  
+  document.querySelectorAll('.underline-answer').forEach(el => {
+    el.classList.remove('underline-answer');
+  });
+  
+  if (sentIndex >= 0) {
+    const sentSpan = document.querySelector(`[data-sentence="${sentIndex}"]`);
+    if (sentSpan) {
+      sentSpan.classList.add('underline-answer');
+      sentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  const keyWords = storyQuestions[qIndex].a.toLowerCase().split(' ').filter(w => w.length > 3);
+  const matched = keyWords.some(w => userAns.includes(w));
+  
+  if (matched) {
+    input.style.borderColor = 'var(--leaf)';
+    input.style.background = 'rgba(6, 214, 160, 0.1)';
+    playSound(true);
+  } else {
+    input.style.borderColor = 'var(--rose)';
+    input.style.background = 'rgba(244, 63, 94, 0.1)';
+    playSound(false);
+  }
+}
+
+// ============ SLIDE 11: Quick Quiz ============
+const quizData = [
+  { q: "I am ___ breakfast now.", options: ['eat', 'eating', 'eats', 'ate'], correct: 1, use: 'Continuous' },
+  { q: "___ is fun! (berenang)", options: ['Swim', 'Swimming', 'Swims', 'Swam'], correct: 1, use: 'Gerund' },
+  { q: "She is good at ___.", options: ['draw', 'draws', 'drawing', 'drew'], correct: 2, use: 'Preposition' },
+  { q: "I enjoy ___ books.", options: ['read', 'reads', 'reading', 'to read'], correct: 2, use: 'Certain Verbs' },
+  { q: "Look at the ___ cat!", options: ['sleep', 'sleeps', 'sleeping', 'slept'], correct: 2, use: 'Adjective' },
+  { q: "They are ___ football now.", options: ['play', 'plays', 'playing', 'played'], correct: 2, use: 'Continuous' },
+  { q: "___ is her hobby.", options: ['Cook', 'Cooks', 'Cooking', 'Cooked'], correct: 2, use: 'Gerund' },
+  { q: "He is afraid of ___.", options: ['fall', 'falls', 'falling', 'fell'], correct: 2, use: 'Preposition' },
+  { q: "She loves ___ every day.", options: ['dance', 'dances', 'dancing', 'danced'], correct: 2, use: 'Certain Verbs' },
+  { q: "The ___ water is very cold.", options: ['run', 'runs', 'running', 'ran'], correct: 2, use: 'Adjective' }
+];
+
+let quizState = { score: 0, qNum: 0, answered: false };
+
+function loadQuiz() {
+  quizState.answered = false;
+  const q = quizData[quizState.qNum];
+  document.getElementById('quizQNum').textContent = `${quizState.qNum + 1}/${quizData.length}`;
+  
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = `
+    <div class="text-center mb-4">
+      <span class="chip" style="background: rgba(155,93,229,0.15); color: var(--grape)">${q.use}</span>
+    </div>
+    <div class="text-center mb-6">
+      <div class="font-display text-xl md:text-2xl font-bold mb-4" style="line-height:1.5">${q.q}</div>
+    </div>
+    <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    <div id="quizFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  `;
+  
+  const optsContainer = document.getElementById('quizOptions');
+  const shuffled = q.options.map((opt, i) => ({opt, isCorrect: i === q.correct})).sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = item.opt;
+    btn.onclick = () => answerQuiz(item.isCorrect, btn);
+    optsContainer.appendChild(btn);
+  });
+}
+
+function answerQuiz(isCorrect, btn) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  
+  document.querySelectorAll('#quizOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('quizFeedback');
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = '<span style="color:var(--rose)">✗ Wrong!</span>';
+    document.querySelectorAll('#quizOptions .game-option').forEach(o => {
+      if (!o.classList.contains('incorrect')) {
+        o.classList.add('correct');
+      }
+    });
+    playSound(false);
+  }
+  
+  document.getElementById('quizScore').textContent = quizState.score;
+  
+  setTimeout(() => {
+    quizState.qNum++;
+    if (quizState.qNum >= quizData.length) {
+      endQuiz();
+    } else {
+      loadQuiz();
+    }
+  }, 1800);
+}
+
+function endQuiz() {
+  const container = document.getElementById('quizContainer');
+  const percentage = (quizState.score / (quizData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect!';
+    message = "You're a Verb + ing Master!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know the 5 uses well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${quizState.score}</span> / ${quizData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartQuiz()">
+        <i class="fas fa-redo mr-2"></i>Play Again
+      </button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  quizState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('quizScore').textContent = '0';
+  loadQuiz();
+}
+
+// ============ Sound Effects ============
+let audioCtx = null;
+function playSound(correct) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (correct) {
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ============ Initialize ============
+renderFlashcards();
+renderConv();
+renderStory();
+loadQuiz();
+updateNav();
+</script>
+</body>
+</html>
