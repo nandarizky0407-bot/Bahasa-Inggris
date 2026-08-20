@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preposition - English Fun Class</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8EC;
+  --paper: #FFFFFF;
+  --ink: #1F2A4A;
+  --muted: #6B7280;
+  --coral: #FF6B6B;
+  --teal: #14B8A6;
+  --sun: #FFB627;
+  --grape: #9B5DE5;
+  --leaf: #06D6A0;
+  --sky: #4CC9F0;
+  --rose: #F43F5E;
+  --border: rgba(31, 42, 74, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--teal); bottom: -80px; right: -80px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: var(--sun); top: 40%; left: 60%; animation-delay: -10s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.deck { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 1.5rem 2.5rem 5.5rem;
+  overflow-y: auto;
+}
+.slide.active { display: flex; animation: slideIn 0.5s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(31,42,74,0.2); border-radius: 4px; }
+
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 50;
+}
+.nav-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 10px 22px; border-radius: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; font-family: 'Nunito', sans-serif;
+}
+.nav-btn:hover:not(:disabled) { background: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.dots { display: flex; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(31,42,74,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--coral); width: 28px; border-radius: 4px; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--coral), var(--sun), var(--teal)); z-index: 60; transition: width 0.4s ease; }
+
+.flashcard {
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 130px;
+}
+.flashcard:hover { transform: translateY(-4px) scale(1.03); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255, 182, 39, 0.25); }
+.flashcard:active { transform: scale(0.95); }
+.flashcard .icon { font-size: 2rem; margin-bottom: 4px; }
+.flashcard .prep { font-family: 'Fredoka', sans-serif; font-weight: 700; color: var(--ink); font-size: 1.1rem; }
+.flashcard .id { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.flashcard .ex { font-size: 10px; color: var(--teal); margin-top: 4px; font-weight: 700; line-height: 1.3; }
+.flashcard.playing { border-color: var(--teal); background: rgba(20, 184, 166, 0.1); animation: pulse 0.6s; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+.card { background: var(--paper); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); border: 1px solid var(--border); transition: all 0.3s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(31, 42, 74, 0.12); }
+
+.bubble { max-width: 78%; padding: 12px 18px; border-radius: 20px; margin: 6px 0; position: relative; font-weight: 600; line-height: 1.6; }
+.bubble.left { background: var(--paper); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.bubble.right { background: linear-gradient(135deg, var(--coral), #FF8787); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+.bubble .speaker { font-size: 11px; opacity: 0.7; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.05em; }
+.bubble.right .speaker { opacity: 0.85; }
+
+.story-text { font-size: 1rem; line-height: 1.85; background: var(--paper); padding: 1.25rem 1.75rem; border-radius: 20px; border-left: 6px solid var(--sun); box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.story-text .underline-answer { background: rgba(255, 182, 39, 0.3); border-bottom: 3px solid var(--sun); padding: 2px 4px; border-radius: 4px; font-weight: 800; }
+.story-text .prep-hl { color: var(--coral); font-weight: 700; }
+
+.speak-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; border: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-left: 8px; vertical-align: middle; }
+.speak-btn:hover { background: #0F9488; transform: scale(1.05); }
+
+.section-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; }
+.section-sub { color: var(--muted); font-weight: 600; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: rgba(20, 184, 166, 0.1); color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.cover-title { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.bob { animation: bob 3s infinite ease-in-out; display: inline-block; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.fade-up { animation: fadeUp 0.6s ease backwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-btn { padding: 8px 18px; border-radius: 20px; font-weight: 800; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Fredoka', sans-serif; font-size: 0.9rem; }
+.tab-btn.active { background: var(--coral); color: white; }
+.tab-btn:not(.active) { background: white; color: var(--coral); border: 2px solid var(--coral); }
+
+.story-input { border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; font-weight: 600; font-family: 'Nunito', sans-serif; width: 100%; margin-top: 4px; font-size: 0.95rem; }
+.story-input:focus { outline: none; border-color: var(--teal); }
+
+.btn-check { background: var(--coral); color: white; border: none; padding: 8px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.9rem; }
+.btn-check:hover { background: #E55555; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+
+.explanation { margin-top: 10px; padding: 10px 14px; background: rgba(20, 184, 166, 0.08); border-left: 4px solid var(--teal); border-radius: 8px; font-size: 13px; display: none; }
+.explanation.show { display: block; animation: slideIn 0.3s; }
+
+.game-area { background: linear-gradient(135deg, rgba(155, 93, 229, 0.12), rgba(76, 201, 240, 0.12)); border-radius: 24px; padding: 1.5rem; }
+.game-option { background: var(--paper); border: 3px solid var(--border); border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 700; font-size: 1.05rem; text-align: center; }
+.game-option:hover:not(.disabled) { transform: scale(1.02); border-color: var(--grape); box-shadow: 0 6px 16px rgba(155, 93, 229, 0.25); }
+.game-option.correct { background: var(--leaf); color: white; border-color: var(--leaf); animation: bounce 0.5s; }
+.game-option.incorrect { background: var(--rose); color: white; border-color: var(--rose); animation: shake 0.5s; }
+.game-option.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+.example-box { background: var(--paper); border-radius: 12px; padding: 12px 16px; border-left: 4px solid; font-weight: 600; font-size: 0.95rem; line-height: 1.7; }
+.use-banner { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 30px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95rem; }
+
+.translate-box { background: linear-gradient(135deg, rgba(255,182,39,0.15), rgba(255,107,107,0.1)); border-radius: 16px; padding: 1.25rem; text-align: center; border: 2px dashed var(--sun); }
+.translate-box .id-text { font-size: 1.25rem; font-weight: 800; color: var(--ink); font-family: 'Fredoka', sans-serif; }
+.translate-box .arrow { font-size: 1.5rem; color: var(--coral); margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width: 8%"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide active" data-slide="1">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-6xl mx-auto w-full">
+    <div class="chip mb-6 fade-up">
+      <i class="fas fa-star"></i> English Fun Class · Grade 5
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s">
+      <span style="color: var(--coral)">Pre</span><span style="color: var(--teal)">position</span>
+    </h1>
+    <h2 class="font-display text-2xl md:text-4xl mt-3 fade-up" style="animation-delay: 0.2s; color: var(--ink)">
+      Where, When & How! <span class="bob">📍</span>
+    </h2>
+    <p class="text-base md:text-xl mt-6 max-w-2xl fade-up" style="animation-delay: 0.3s; color: var(--muted)">
+      Learn about <b>place</b>, <b>time</b>, and <b>direction</b> prepositions — and practice translating Indonesian sentences into English!
+    </p>
+    <div class="flex gap-4 md:gap-8 mt-10 text-4xl md:text-5xl fade-up" style="animation-delay: 0.4s">
+      <span class="bob" style="animation-delay: 0s">📦</span>
+      <span class="bob" style="animation-delay: 0.2s">⏰</span>
+      <span class="bob" style="animation-delay: 0.4s">🚶</span>
+      <span class="bob" style="animation-delay: 0.6s">🤝</span>
+      <span class="bob" style="animation-delay: 0.8s">🏠</span>
+    </div>
+    <button class="btn-check mt-10 text-lg fade-up" style="animation-delay: 0.5s; padding: 12px 32px" onclick="nextSlide()">
+      <i class="fas fa-play mr-2"></i> Start Adventure
+    </button>
+    <p class="text-xs mt-4 fade-up" style="animation-delay: 0.6s; color: var(--muted)">
+      <i class="fas fa-keyboard mr-1"></i> Use ← → arrow keys to navigate
+    </p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: WHAT IS A PREPOSITION ============ -->
+<section class="slide" data-slide="2">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Introduction</span>
+    <h1 class="section-title mt-2 mb-2">What is a Preposition? <span class="bob">🧭</span></h1>
+    <p class="section-sub mb-6">A <b>preposition</b> is a word that shows the relationship between a noun/pronoun and other words in a sentence. It tells us about <b>place</b>, <b>time</b>, and <b>direction</b>.</p>
+
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--coral)">
+        <div class="text-3xl mb-2">📍</div>
+        <h3 class="font-display text-xl font-bold" style="color: var(--coral)">Place</h3>
+        <p class="text-sm font-semibold mt-2" style="color: var(--muted); line-height: 1.7">
+          Shows <b>where</b> something is.<br>
+          <span style="font-size:12px">in, on, at, under, behind, between, next to</span>
+        </p>
+        <div class="mt-3 p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+          <b>The cat is <span style="color:var(--coral)">on</span> the table.</b>
+          <button class="speak-btn" onclick="speak('The cat is on the table.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--teal)">
+        <div class="text-3xl mb-2">⏰</div>
+        <h3 class="font-display text-xl font-bold" style="color: var(--teal)">Time</h3>
+        <p class="text-sm font-semibold mt-2" style="color: var(--muted); line-height: 1.7">
+          Shows <b>when</b> something happens.<br>
+          <span style="font-size:12px">in, on, at, before, after, during</span>
+        </p>
+        <div class="mt-3 p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+          <b>I wake up <span style="color:var(--teal)">at</span> six o'clock.</b>
+          <button class="speak-btn" onclick="speak('I wake up at six o clock.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="card" style="border-top: 6px solid var(--sun)">
+        <div class="text-3xl mb-2">🚶</div>
+        <h3 class="font-display text-xl font-bold" style="color: var(--sun)">Direction</h3>
+        <p class="text-sm font-semibold mt-2" style="color: var(--muted); line-height: 1.7">
+          Shows <b>where to</b> or <b>where from</b>.<br>
+          <span style="font-size:12px">to, into, out of, through, across, along</span>
+        </p>
+        <div class="mt-3 p-2 rounded-lg" style="background: rgba(255,182,39,0.08)">
+          <b>She walks <span style="color:var(--sun)">to</span> school.</b>
+          <button class="speak-btn" onclick="speak('She walks to school.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">💡 Why are Prepositions Important?</h3>
+      <p class="text-sm font-semibold" style="line-height: 1.7">
+        Prepositions help us understand <b>where</b>, <b>when</b>, and <b>how</b> things happen.
+        Without prepositions, we wouldn't know if the cat is <i>on</i> the table, <i>under</i> the table, or <i>behind</i> the table! They give us important details about location, time, and movement.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: PLACE PREPOSITIONS ============ -->
+<section class="slide" data-slide="3">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-map-marker-alt"></i> Preposition of Place</span>
+    <h1 class="section-title mt-2 mb-2">Where is it? <span class="bob">📍</span></h1>
+    <p class="section-sub mb-6">These prepositions show <b>position</b> or <b>location</b>.</p>
+
+    <div class="grid md:grid-cols-3 gap-3 mb-6">
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">in</b> = di dalam<br>
+        The book is <b>in</b> the bag.<br>
+        <span style="color:var(--muted); font-size:12px">(Buku itu di dalam tas.)</span>
+        <button class="speak-btn" onclick="speak('The book is in the bag.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">on</b> = di atas (menempel)<br>
+        The cup is <b>on</b> the table.<br>
+        <span style="color:var(--muted); font-size:12px">(Cangkir itu di atas meja.)</span>
+        <button class="speak-btn" onclick="speak('The cup is on the table.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">at</b> = di (lokasi spesifik)<br>
+        I am <b>at</b> school.<br>
+        <span style="color:var(--muted); font-size:12px">(Saya di sekolah.)</span>
+        <button class="speak-btn" onclick="speak('I am at school.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">under</b> = di bawah<br>
+        The cat is <b>under</b> the chair.<br>
+        <span style="color:var(--muted); font-size:12px">(Kucing itu di bawah kursi.)</span>
+        <button class="speak-btn" onclick="speak('The cat is under the chair.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">behind</b> = di belakang<br>
+        The ball is <b>behind</b> the door.<br>
+        <span style="color:var(--muted); font-size:12px">(Bola itu di belakang pintu.)</span>
+        <button class="speak-btn" onclick="speak('The ball is behind the door.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">in front of</b> = di depan<br>
+        The car is <b>in front of</b> the house.<br>
+        <span style="color:var(--muted); font-size:12px">(Mobil itu di depan rumah.)</span>
+        <button class="speak-btn" onclick="speak('The car is in front of the house.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">between</b> = di antara (2 benda)<br>
+        The pencil is <b>between</b> the books.<br>
+        <span style="color:var(--muted); font-size:12px">(Pensil itu di antara buku.)</span>
+        <button class="speak-btn" onclick="speak('The pencil is between the books.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">next to</b> = di sebelah<br>
+        I sit <b>next to</b> my friend.<br>
+        <span style="color:var(--muted); font-size:12px">(Saya duduk di sebelah temanku.)</span>
+        <button class="speak-btn" onclick="speak('I sit next to my friend.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--coral)">
+        <b style="color:var(--coral)">above</b> = di atas (tidak menempel)<br>
+        The lamp is <b>above</b> the desk.<br>
+        <span style="color:var(--muted); font-size:12px">(Lampu di atas meja.)</span>
+        <button class="speak-btn" onclick="speak('The lamp is above the desk.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 in vs on vs at — What's the difference?</h3>
+      <div class="grid md:grid-cols-3 gap-3 text-sm font-semibold">
+        <div><b style="color:var(--coral)">in</b> = di dalam ruang/area<br><span style="font-size:12px; color:var(--muted)">in the room, in the bag, in the park</span></div>
+        <div><b style="color:var(--coral)">on</b> = di atas permukaan<br><span style="font-size:12px; color:var(--muted)">on the table, on the wall, on the floor</span></div>
+        <div><b style="color:var(--coral)">at</b> = titik lokasi spesifik<br><span style="font-size:12px; color:var(--muted)">at school, at home, at the door</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: TIME PREPOSITIONS ============ -->
+<section class="slide" data-slide="4">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-clock"></i> Preposition of Time</span>
+    <h1 class="section-title mt-2 mb-2">When does it happen? <span class="bob">⏰</span></h1>
+    <p class="section-sub mb-6">These prepositions show <b>when</b> something happens.</p>
+
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--teal)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--teal)">in</h3>
+        <p class="text-xs font-bold mb-3" style="color:var(--muted)">Use with: months, years, seasons, parts of day</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            <b>in</b> January, <b>in</b> March<br>
+            <span style="color:var(--muted); font-size:11px">(di bulan Januari, Maret)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            <b>in</b> 2024, <b>in</b> 2010<br>
+            <span style="color:var(--muted); font-size:11px">(di tahun 2024)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            <b>in</b> the morning<br>
+            <span style="color:var(--muted); font-size:11px">(di pagi hari)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            <b>in</b> the afternoon, <b>in</b> the evening<br>
+            <span style="color:var(--muted); font-size:11px">(di siang/sore hari)</span>
+          </div>
+        </div>
+        <button class="speak-btn mt-2" onclick="speak('in January, in 2024, in the morning.')"><i class="fas fa-volume-up mr-1"></i>Listen</button>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--sun)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--sun)">on</h3>
+        <p class="text-xs font-bold mb-3" style="color:var(--muted)">Use with: days of week and specific dates</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(255,182,39,0.08)">
+            <b>on</b> Monday, <b>on</b> Friday<br>
+            <span style="color:var(--muted); font-size:11px">(pada hari Senin, Jumat)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,182,39,0.08)">
+            <b>on</b> Sunday morning<br>
+            <span style="color:var(--muted); font-size:11px">(pada pagi hari Minggu)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,182,39,0.08)">
+            <b>on</b> July 5th<br>
+            <span style="color:var(--muted); font-size:11px">(pada tanggal 5 Juli)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,182,39,0.08)">
+            <b>on</b> my birthday<br>
+            <span style="color:var(--muted); font-size:11px">(pada ulang tahunku)</span>
+          </div>
+        </div>
+        <button class="speak-btn mt-2" onclick="speak('on Monday, on July 5th, on my birthday.')"><i class="fas fa-volume-up mr-1"></i>Listen</button>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--coral)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--coral)">at</h3>
+        <p class="text-xs font-bold mb-3" style="color:var(--muted)">Use with: specific clock times</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            <b>at</b> 7 o'clock<br>
+            <span style="color:var(--muted); font-size:11px">(pada jam 7)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            <b>at</b> noon, <b>at</b> midnight<br>
+            <span style="color:var(--muted); font-size:11px">(pada siang/malam hari)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            <b>at</b> night<br>
+            <span style="color:var(--muted); font-size:11px">(pada malam hari)</span>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            <b>at</b> breakfast time<br>
+            <span style="color:var(--muted); font-size:11px">(pada waktu sarapan)</span>
+          </div>
+        </div>
+        <button class="speak-btn mt-2" onclick="speak('at 7 o clock, at noon, at night.')"><i class="fas fa-volume-up mr-1"></i>Listen</button>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(20,184,166,0.08), rgba(255,107,107,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">📋 Other Time Prepositions</h3>
+      <div class="grid md:grid-cols-4 gap-3 text-sm font-semibold">
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">before</b> = sebelum<br>
+          <span style="font-size:12px; color:var(--muted)">before sleeping</span>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">after</b> = sesudah<br>
+          <span style="font-size:12px; color:var(--muted)">after breakfast</span>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">during</b> = selama<br>
+          <span style="font-size:12px; color:var(--muted)">during the break</span>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">until</b> = sampai<br>
+          <span style="font-size:12px; color:var(--muted)">until 5 o'clock</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: DIRECTION PREPOSITIONS ============ -->
+<section class="slide" data-slide="5">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-route"></i> Preposition of Direction</span>
+    <h1 class="section-title mt-2 mb-2">Where to? Where from? <span class="bob">🚶</span></h1>
+    <p class="section-sub mb-6">These prepositions show <b>movement</b> — where something is going or coming from.</p>
+
+    <div class="grid md:grid-cols-3 gap-3 mb-6">
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">to</b> = ke<br>
+        I go <b>to</b> school.<br>
+        <span style="color:var(--muted); font-size:12px">(Saya pergi ke sekolah.)</span>
+        <button class="speak-btn" onclick="speak('I go to school.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">into</b> = ke dalam<br>
+        She walks <b>into</b> the room.<br>
+        <span style="color:var(--muted); font-size:12px">(Dia masuk ke ruangan.)</span>
+        <button class="speak-btn" onclick="speak('She walks into the room.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">out of</b> = keluar dari<br>
+        He comes <b>out of</b> the house.<br>
+        <span style="color:var(--muted); font-size:12px">(Dia keluar dari rumah.)</span>
+        <button class="speak-btn" onclick="speak('He comes out of the house.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">through</b> = melalui<br>
+        We go <b>through</b> the tunnel.<br>
+        <span style="color:var(--muted); font-size:12px">(Kita melalui terowongan.)</span>
+        <button class="speak-btn" onclick="speak('We go through the tunnel.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">across</b> = menyeberangi<br>
+        We walk <b>across</b> the street.<br>
+        <span style="color:var(--muted); font-size:12px">(Kita menyeberangi jalan.)</span>
+        <button class="speak-btn" onclick="speak('We walk across the street.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">along</b> = sepanjang<br>
+        They walk <b>along</b> the river.<br>
+        <span style="color:var(--muted); font-size:12px">(Mereka berjalan sepanjang sungai.)</span>
+        <button class="speak-btn" onclick="speak('They walk along the river.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">up</b> = naik ke<br>
+        The cat climbs <b>up</b> the tree.<br>
+        <span style="color:var(--muted); font-size:12px">(Kucing naik ke atas pohon.)</span>
+        <button class="speak-btn" onclick="speak('The cat climbs up the tree.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">down</b> = turun dari<br>
+        He walks <b>down</b> the stairs.<br>
+        <span style="color:var(--muted); font-size:12px">(Dia turun tangga.)</span>
+        <button class="speak-btn" onclick="speak('He walks down the stairs.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example-box" style="border-color: var(--sun)">
+        <b style="color:var(--sun)">from</b> = dari<br>
+        I come <b>from</b> Indonesia.<br>
+        <span style="color:var(--muted); font-size:12px">(Saya berasal dari Indonesia.)</span>
+        <button class="speak-btn" onclick="speak('I come from Indonesia.')"><i class="fas fa-volume-up"></i></button>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,182,39,0.08), rgba(76,201,240,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🔑 Other Common Prepositions</h3>
+      <div class="grid md:grid-cols-4 gap-3 text-sm font-semibold">
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">with</b> = dengan<br>
+          <span style="font-size:12px; color:var(--muted)">I play with my friend.</span>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">for</b> = untuk<br>
+          <span style="font-size:12px; color:var(--muted)">This gift is for you.</span>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">by</b> = dengan (transport)<br>
+          <span style="font-size:12px; color:var(--muted)">I go by bus.</span>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b style="color:var(--grape)">about</b> = tentang<br>
+          <span style="font-size:12px; color:var(--muted)">a book about animals.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: FLASHCARDS ============ -->
+<section class="slide" data-slide="6">
+  <div class="max-w-7xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-images"></i> Vocabulary · 20 Prepositions</span>
+    <h1 class="section-title mt-2 mb-2">Preposition Flashcards! <span class="bob">🃏</span></h1>
+    <p class="section-sub mb-4">Click any card to hear the example sentence!</p>
+    <div id="flashcardsGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: CONVERSATIONS ============ -->
+<section class="slide" data-slide="7">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversations · Ms. Nanda & Cio</span>
+    <h1 class="section-title mt-2 mb-2">Let's Read Together! <span class="bob">💬</span></h1>
+    <p class="section-sub mb-4">5 conversations between Ms. Nanda and Cio about prepositions in daily life!</p>
+    
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button class="tab-btn active" onclick="switchConv(1, this)">Conv 1</button>
+      <button class="tab-btn" onclick="switchConv(2, this)">Conv 2</button>
+      <button class="tab-btn" onclick="switchConv(3, this)">Conv 3</button>
+      <button class="tab-btn" onclick="switchConv(4, this)">Conv 4</button>
+      <button class="tab-btn" onclick="switchConv(5, this)">Conv 5</button>
+    </div>
+    
+    <div id="convContainer"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: TRANSLATION PRACTICE ============ -->
+<section class="slide" data-slide="8">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-language"></i> Translation Practice · Indonesian → English</span>
+    <h1 class="section-title mt-2 mb-2">Translate the Sentence! <span class="bob">🌐</span></h1>
+    <p class="section-sub mb-4">Read the Indonesian sentence and choose the correct English translation!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="transScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="transQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/20</span>
+        </div>
+      </div>
+      
+      <div class="translate-box mb-6">
+        <p class="text-sm font-bold mb-2" style="color:var(--muted)">📝 Kalimat dalam Bahasa Indonesia:</p>
+        <p class="id-text" id="transIndonesian"></p>
+        <div class="arrow">↓</div>
+        <p class="text-sm font-bold" style="color:var(--muted)">Choose the correct English translation:</p>
+      </div>
+      
+      <div id="transOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      <div id="transFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: STORY & QUESTIONS ============ -->
+<section class="slide" data-slide="9">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story Time</span>
+    <h1 class="section-title mt-2 mb-2">Read & Answer <span class="bob">📖</span></h1>
+    <p class="section-sub mb-4">Read the story carefully, then answer 10 questions. Type your answer and check!</p>
+    
+    <div class="flex justify-between items-center mb-3">
+      <p class="text-sm font-bold" style="color:var(--muted)">Cio's Day — Full of Prepositions!</p>
+      <button class="btn-check" onclick="speak(storyText, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div id="storyContainer" class="story-text mb-6"></div>
+    
+    <h3 class="font-display text-xl font-bold mb-4">📋 Answer these questions:</h3>
+    <div id="storyQuestions" class="space-y-4"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: QUICK QUIZ ============ -->
+<section class="slide" data-slide="10">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-bolt"></i> Quick Quiz</span>
+    <h1 class="section-title mt-2 mb-2">Fill in the Blank! <span class="bob">⚡</span></h1>
+    <p class="section-sub mb-4">Choose the correct preposition for each sentence!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="quizScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="quizQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/10</span>
+        </div>
+      </div>
+      <div id="quizContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11: CLOSING ============ -->
+<section class="slide" data-slide="11">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full">
+    <div class="chip mb-4 fade-up">
+      <i class="fas fa-trophy"></i> Congratulations!
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s; font-size: clamp(2.5rem, 6vw, 4.5rem)">
+      Great Job! <span class="bob">🎉</span>
+    </h1>
+    <p class="text-lg md:text-xl mt-4 max-w-2xl fade-up" style="animation-delay: 0.2s; color:var(--muted)">
+      You've completed the Preposition Adventure!
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-4 mt-8 w-full max-w-4xl">
+      <div class="card fade-up" style="animation-delay: 0.3s; border-top:6px solid var(--coral)">
+        <div class="text-3xl mb-2">📍</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--coral)">Place</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          in, on, at, under, behind, between, next to, above, inside, outside
+        </p>
+      </div>
+      <div class="card fade-up" style="animation-delay: 0.4s; border-top:6px solid var(--teal)">
+        <div class="text-3xl mb-2">⏰</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--teal)">Time</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          in (months/years), on (days/dates), at (clock times), before, after, during
+        </p>
+      </div>
+      <div class="card fade-up" style="animation-delay: 0.5s; border-top:6px solid var(--sun)">
+        <div class="text-3xl mb-2">🚶</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--sun)">Direction</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          to, into, out of, through, across, along, up, down, from
+        </p>
+      </div>
+    </div>
+
+    <div class="card mt-6 w-full max-w-3xl fade-up" style="animation-delay: 0.6s; border-top:6px solid var(--grape)">
+      <div class="text-3xl mb-2">💭</div>
+      <h3 class="font-display font-bold text-lg" style="color:var(--grape)">Reflection</h3>
+      <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+        Ask yourself:<br>
+        • Where is your book right now? → "My book is ___ the table."<br>
+        • When do you wake up? → "I wake up ___ six o'clock."<br>
+        • How do you go to school? → "I go ___ school by bicycle."
+      </p>
+    </div>
+
+    <div class="flex gap-6 mt-10 text-5xl fade-up" style="animation-delay: 0.7s">
+      <span class="bob" style="animation-delay:0s">📍</span>
+      <span class="bob" style="animation-delay:0.2s">⏰</span>
+      <span class="bob" style="animation-delay:0.4s">🚶</span>
+      <span class="bob" style="animation-delay:0.6s">🏠</span>
+    </div>
+
+    <h2 class="font-display text-2xl md:text-3xl mt-8 fade-up" style="animation-delay: 0.8s; color: var(--coral)">
+      Thank You for Today! <span class="bob">🌈</span>
+    </h2>
+    <p class="text-sm mt-3 fade-up" style="animation-delay: 0.9s; color:var(--muted)">
+      Keep practicing your English. See you next time!
+    </p>
+    
+    <button class="btn-check mt-6 fade-up" style="animation-delay: 1s" onclick="goToSlide(0)">
+      <i class="fas fa-redo mr-2"></i>Start Again
+    </button>
+  </div>
+</section>
+
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+    <i class="fas fa-arrow-left"></i> Prev
+  </button>
+  <div class="flex items-center gap-4">
+    <span class="text-sm font-bold" style="color:var(--muted)">
+      <span id="slideNum">1</span> / <span id="slideTotal">11</span>
+    </span>
+    <div class="dots" id="dots"></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+    Next <i class="fas fa-arrow-right"></i>
+  </button>
+</nav>
+
+<script>
+// ============ Data: Prepositions for Flashcards ============
+const prepositions = [
+  { prep: 'in', id: 'di dalam', icon: '📦', ex: 'The cat is in the box.' },
+  { prep: 'on', id: 'di atas', icon: '📚', ex: 'The book is on the table.' },
+  { prep: 'at', id: 'di', icon: '📍', ex: 'I am at school.' },
+  { prep: 'under', id: 'di bawah', icon: '🛏️', ex: 'The ball is under the bed.' },
+  { prep: 'over', id: 'di atas (melintasi)', icon: '🌉', ex: 'The bridge is over the river.' },
+  { prep: 'behind', id: 'di belakang', icon: '🚪', ex: 'The cat is behind the door.' },
+  { prep: 'in front of', id: 'di depan', icon: '🏫', ex: 'The car is in front of the school.' },
+  { prep: 'between', id: 'di antara', icon: '📏', ex: 'The pencil is between the books.' },
+  { prep: 'next to', id: 'di sebelah', icon: '🪑', ex: 'I sit next to my friend.' },
+  { prep: 'near', id: 'dekat', icon: '🏪', ex: 'The shop is near my house.' },
+  { prep: 'inside', id: 'di dalam', icon: '🏠', ex: 'We are inside the house.' },
+  { prep: 'outside', id: 'di luar', icon: '🌳', ex: 'The children play outside.' },
+  { prep: 'above', id: 'di atas (tidak menempel)', icon: '💡', ex: 'The lamp is above the desk.' },
+  { prep: 'below', id: 'di bawah', icon: '⬇️', ex: 'The fish is below the surface.' },
+  { prep: 'into', id: 'ke dalam', icon: '📥', ex: 'He walks into the room.' },
+  { prep: 'out of', id: 'keluar dari', icon: '📤', ex: 'She comes out of the house.' },
+  { prep: 'through', id: 'melalui', icon: '🚇', ex: 'We go through the tunnel.' },
+  { prep: 'across', id: 'menyeberangi', icon: '🚶', ex: 'We walk across the street.' },
+  { prep: 'with', id: 'dengan', icon: '🤝', ex: 'I play with my friend.' },
+  { prep: 'for', id: 'untuk', icon: '🎁', ex: 'This gift is for you.' }
+];
+
+// ============ Navigation ============
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+document.getElementById('slideTotal').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  document.getElementById('slideNum').textContent = currentSlide + 1;
+  document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = Math.max(0, Math.min(totalSlides - 1, index));
+  slides[currentSlide].classList.add('active');
+  updateNav();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  window.scrollTo(0, 0);
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ============ Text-to-Speech ============
+let englishVoice = null;
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.startsWith('en') && /female|samantha|google/i.test(v.name)) 
+              || voices.find(v => v.lang.startsWith('en-US'))
+              || voices.find(v => v.lang.startsWith('en'));
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, longText = false) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = longText ? 0.9 : 0.85;
+  utter.pitch = 1.1;
+  if (englishVoice) utter.voice = englishVoice;
+  window.speechSynthesis.speak(utter);
+}
+
+// ============ SLIDE 6: Flashcards ============
+function renderFlashcards() {
+  const grid = document.getElementById('flashcardsGrid');
+  prepositions.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `
+      <div class="icon">${p.icon}</div>
+      <div class="prep">${p.prep}</div>
+      <div class="id">${p.id}</div>
+      <div class="ex">"${p.ex}"</div>
+    `;
+    card.onclick = () => {
+      speak(p.ex);
+      document.querySelectorAll('.flashcard').forEach(c => c.classList.remove('playing'));
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 1500);
+    };
+    grid.appendChild(card);
+  });
+}
+
+// ============ SLIDE 7: Conversations ============
+const conversations = [
+  {
+    title: "Conversation 1 · Where Is It? (Place)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, where is your book?', side: 'left' },
+      { speaker: 'Cio', text: "My book is on the table, Ms. Nanda.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is your bag under the chair?', side: 'left' },
+      { speaker: 'Cio', text: "No, my bag is next to the chair.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Where is your pencil?', side: 'left' },
+      { speaker: 'Cio', text: "My pencil is in my bag.", side: 'right' }
+    ],
+    questions: [
+      { q: "Where is Cio's book?", a: "His book is on the table." },
+      { q: "Is Cio's bag under the chair?", a: "No, his bag is next to the chair." },
+      { q: "Where is Cio's bag?", a: "His bag is next to the chair." },
+      { q: "Where is Cio's pencil?", a: "His pencil is in his bag." },
+      { q: "What is on the table?", a: "Cio's book." }
+    ]
+  },
+  {
+    title: "Conversation 2 · When? (Time)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, when do you wake up?', side: 'left' },
+      { speaker: 'Cio', text: "I wake up at six o'clock in the morning.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Do you go to school on Monday?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I go to school from Monday to Friday.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What do you do on Sunday?', side: 'left' },
+      { speaker: 'Cio', text: "I play football on Sunday morning.", side: 'right' }
+    ],
+    questions: [
+      { q: "When does Cio wake up?", a: "He wakes up at six o'clock in the morning." },
+      { q: "Does Cio go to school on Monday?", a: "Yes, he goes to school from Monday to Friday." },
+      { q: "What does Cio do on Sunday?", a: "He plays football on Sunday morning." },
+      { q: "What days does Cio go to school?", a: "From Monday to Friday." },
+      { q: "When does Cio play football?", a: "On Sunday morning." }
+    ]
+  },
+  {
+    title: "Conversation 3 · Going Places (Direction)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, where are you going?', side: 'left' },
+      { speaker: 'Cio', text: "I am going to the library, Ms. Nanda.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is the library near your house?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, it is near. I walk through the park to get there.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Do you walk across the street?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I walk across the street to the library.", side: 'right' }
+    ],
+    questions: [
+      { q: "Where is Cio going?", a: "He is going to the library." },
+      { q: "Is the library near Cio's house?", a: "Yes, it is near." },
+      { q: "How does Cio get to the library?", a: "He walks through the park and across the street." },
+      { q: "What does Cio walk through?", a: "He walks through the park." },
+      { q: "What does Cio walk across?", a: "He walks across the street." }
+    ]
+  },
+  {
+    title: "Conversation 4 · With Whom? For Whom?",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, who do you play with?', side: 'left' },
+      { speaker: 'Cio', text: "I play with my friend, Budi.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is this gift for your sister?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, this gift is for my sister's birthday.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Who is the cake for?', side: 'left' },
+      { speaker: 'Cio', text: "The cake is for my mother.", side: 'right' }
+    ],
+    questions: [
+      { q: "Who does Cio play with?", a: "He plays with his friend, Budi." },
+      { q: "Who is the gift for?", a: "It is for Cio's sister's birthday." },
+      { q: "Who is the cake for?", a: "The cake is for Cio's mother." },
+      { q: "Why is the gift for Cio's sister?", a: "Because it is her birthday." },
+      { q: "What does Cio do with Budi?", a: "He plays with Budi." }
+    ]
+  },
+  {
+    title: "Conversation 5 · My Day (All Prepositions)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Cio, tell me about your day.', side: 'left' },
+      { speaker: 'Cio', text: "I wake up at six in the morning.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What do you do after breakfast?', side: 'left' },
+      { speaker: 'Cio', text: "After breakfast, I go to school by bicycle.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Where do you sit in class?', side: 'left' },
+      { speaker: 'Cio', text: "I sit between Budi and Sinta in the classroom.", side: 'right' }
+    ],
+    questions: [
+      { q: "What time does Cio wake up?", a: "He wakes up at six in the morning." },
+      { q: "What does Cio do after breakfast?", a: "He goes to school by bicycle." },
+      { q: "How does Cio go to school?", a: "By bicycle." },
+      { q: "Where does Cio sit in class?", a: "He sits between Budi and Sinta." },
+      { q: "Who does Cio sit between?", a: "Budi and Sinta." }
+    ]
+  }
+];
+
+let currentConv = 1;
+function switchConv(num, btn) {
+  currentConv = num;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderConv();
+}
+
+function renderConv() {
+  const c = conversations[currentConv - 1];
+  const container = document.getElementById('convContainer');
+  let html = `<h3 class="font-display text-lg font-bold mb-4" style="color:var(--coral)">${c.title}</h3>`;
+  html += '<div class="flex flex-col mb-6">';
+  c.dialog.forEach(d => {
+    const escapedText = d.text.replace(/'/g, "\\'");
+    html += `<div class="bubble ${d.side}"><div class="speaker">${d.speaker}</div>${d.text} <button class="speak-btn" onclick="speak('${escapedText}')"><i class="fas fa-volume-up"></i></button></div>`;
+  });
+  html += '</div>';
+  html += '<h4 class="font-display text-lg font-bold mb-3">📋 Questions:</h4><div class="space-y-3">';
+  c.questions.forEach((q, i) => {
+    html += `
+      <div class="card" style="padding:1rem">
+        <p class="font-bold mb-2">${i+1}. ${q.q}</p>
+        <button class="btn-check" style="background:var(--teal)" onclick="toggleConvAnswer(${i}, this)"><i class="fas fa-eye mr-2"></i>Show Answer</button>
+        <div class="explanation" id="exp-conv-${i}">${q.a}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function toggleConvAnswer(i, btn) {
+  const exp = document.getElementById(`exp-conv-${i}`);
+  if (exp.classList.contains('show')) {
+    exp.classList.remove('show');
+    btn.innerHTML = '<i class="fas fa-eye mr-2"></i>Show Answer';
+  } else {
+    exp.classList.add('show');
+    btn.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Hide Answer';
+  }
+}
+
+// ============ SLIDE 8: Translation Practice ============
+const translationData = [
+  { id: 'Buku itu di atas meja.', options: ['The book is in the table.', 'The book is on the table.', 'The book is at the table.', 'The book is under the table.'], correct: 1 },
+  { id: 'Kucing itu di bawah kursi.', options: ['The cat is on the chair.', 'The cat is in the chair.', 'The cat is under the chair.', 'The cat is at the chair.'], correct: 2 },
+  { id: 'Saya pergi ke sekolah pada pagi hari.', options: ['I go to school on the morning.', 'I go to school in the morning.', 'I go to school at the morning.', 'I go to school for the morning.'], correct: 1 },
+  { id: 'Dia datang pada hari Senin.', options: ['He comes in Monday.', 'He comes at Monday.', 'He comes on Monday.', 'He comes for Monday.'], correct: 2 },
+  { id: 'Kita belajar pada jam tujuh.', options: ['We study in seven.', 'We study on seven.', 'We study at seven.', 'We study for seven.'], correct: 2 },
+  { id: 'Tasnya di dalam kamar.', options: ['Her bag is on the room.', 'Her bag is in the room.', 'Her bag is at the room.', 'Her bag is under the room.'], correct: 1 },
+  { id: 'Toko itu di depan sekolah.', options: ['The shop is behind the school.', 'The shop is between the school.', 'The shop is in front of the school.', 'The shop is next to the school.'], correct: 2 },
+  { id: 'Anak-anak bermain di luar.', options: ['The children play inside.', 'The children play outside.', 'The children play above.', 'The children play between.'], correct: 1 },
+  { id: 'Pensil itu di antara buku dan penghapus.', options: ['The pencil is between the book and the eraser.', 'The pencil is on the book and the eraser.', 'The pencil is in the book and the eraser.', 'The pencil is at the book and the eraser.'], correct: 0 },
+  { id: 'Saya duduk di sebelah Cio.', options: ['I sit between Cio.', 'I sit next to Cio.', 'I sit behind Cio.', 'I sit in front of Cio.'], correct: 1 },
+  { id: 'Mobil itu keluar dari garasi.', options: ['The car goes into the garage.', 'The car goes out of the garage.', 'The car goes through the garage.', 'The car goes across the garage.'], correct: 1 },
+  { id: 'Kita berjalan sepanjang sungai.', options: ['We walk across the river.', 'We walk through the river.', 'We walk along the river.', 'We walk into the river.'], correct: 2 },
+  { id: 'Dia bermain dengan temannya.', options: ['He plays for his friend.', 'He plays with his friend.', 'He plays about his friend.', 'He plays by his friend.'], correct: 1 },
+  { id: 'Hadiah ini untukmu.', options: ['This gift is with you.', 'This gift is about you.', 'This gift is for you.', 'This gift is by you.'], correct: 2 },
+  { id: 'Sekolah dekat dengan rumahku.', options: ['The school is near my house.', 'The school is in my house.', 'The school is on my house.', 'The school is at my house.'], correct: 0 },
+  { id: 'Dia berdiri di belakang pintu.', options: ['He stands in front of the door.', 'He stands behind the door.', 'He stands between the door.', 'He stands on the door.'], correct: 1 },
+  { id: 'Lampu menggantung di atas meja.', options: ['The lamp hangs under the table.', 'The lamp hangs on the table.', 'The lamp hangs above the table.', 'The lamp hangs in the table.'], correct: 2 },
+  { id: 'Kita pergi melalui terowongan.', options: ['We go across the tunnel.', 'We go into the tunnel.', 'We go through the tunnel.', 'We go along the tunnel.'], correct: 2 },
+  { id: 'Orang berjalan menyeberangi jalan.', options: ['People walk across the street.', 'People walk along the street.', 'People walk through the street.', 'People walk into the street.'], correct: 0 },
+  { id: 'Burung itu terbang ke atas pohon.', options: ['The bird flies down the tree.', 'The bird flies up the tree.', 'The bird flies across the tree.', 'The bird flies through the tree.'], correct: 1 }
+];
+
+let transState = { score: 0, qNum: 0, answered: false };
+
+function loadTranslation() {
+  transState.answered = false;
+  const q = translationData[transState.qNum];
+  document.getElementById('transQNum').textContent = `${transState.qNum + 1}/${translationData.length}`;
+  document.getElementById('transIndonesian').textContent = q.id;
+  document.getElementById('transFeedback').textContent = '';
+  
+  const optsContainer = document.getElementById('transOptions');
+  optsContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerTranslation(i, q.correct, btn, opt);
+    optsContainer.appendChild(btn);
+  });
+  
+  speak(q.options[q.correct]);
+}
+
+function answerTranslation(chosen, correct, btn, optText) {
+  if (transState.answered) return;
+  transState.answered = true;
+  
+  document.querySelectorAll('#transOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('transFeedback');
+  
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    transState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+    speak(optText);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The correct answer is:</span><br><span style="color:var(--leaf)">${translationData[transState.qNum].options[correct]}</span>`;
+    document.querySelectorAll('#transOptions .game-option')[correct].classList.add('correct');
+    playSound(false);
+    speak(translationData[transState.qNum].options[correct]);
+  }
+  
+  document.getElementById('transScore').textContent = transState.score;
+  
+  setTimeout(() => {
+    transState.qNum++;
+    if (transState.qNum >= translationData.length) {
+      endTranslation();
+    } else {
+      loadTranslation();
+    }
+  }, 2500);
+}
+
+function endTranslation() {
+  const container = document.querySelector('.game-area');
+  const percentage = (transState.score / (translationData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect Translator!';
+    message = "You're amazing at translating Indonesian to English!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know your prepositions well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the prepositions and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${transState.score}</span> / ${translationData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartTranslation()">
+        <i class="fas fa-redo mr-2"></i>Try Again
+      </button>
+    </div>
+  `;
+}
+
+function restartTranslation() {
+  transState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('transScore').textContent = '0';
+  loadTranslation();
+}
+
+// ============ SLIDE 9: Story & Questions ============
+const storyText = `Cio wakes up at six o'clock in the morning. He gets out of bed and walks to the bathroom. His toothbrush is on the shelf above the sink. After brushing his teeth, he goes to the kitchen. His mother is cooking in the kitchen. The food is on the table. Cio sits on a chair next to his sister. He eats breakfast with his family. After breakfast, he goes to school by bicycle. The school is near his house. He arrives at school at seven o'clock. In the classroom, he sits between Budi and Sinta. During the break, he plays with his friends outside the classroom. After school, he goes home. He does his homework at his desk. The lamp is above the desk. His books are in his bag. Before sleeping, he reads a book in bed. He sleeps at nine o'clock at night.`;
+
+const storyQuestions = [
+  { q: "What time does Cio wake up?", a: "He wakes up at six o'clock in the morning.", sentence: "Cio wakes up at six o'clock in the morning." },
+  { q: "Where is his toothbrush?", a: "His toothbrush is on the shelf above the sink.", sentence: "His toothbrush is on the shelf above the sink." },
+  { q: "Where is the food?", a: "The food is on the table.", sentence: "The food is on the table." },
+  { q: "Who does Cio sit next to at breakfast?", a: "He sits next to his sister.", sentence: "Cio sits on a chair next to his sister." },
+  { q: "How does Cio go to school?", a: "He goes to school by bicycle.", sentence: "After breakfast, he goes to school by bicycle." },
+  { q: "Where is the school?", a: "The school is near his house.", sentence: "The school is near his house." },
+  { q: "What time does he arrive at school?", a: "He arrives at school at seven o'clock.", sentence: "He arrives at school at seven o'clock." },
+  { q: "Who does he sit between in class?", a: "He sits between Budi and Sinta.", sentence: "In the classroom, he sits between Budi and Sinta." },
+  { q: "Where is the lamp?", a: "The lamp is above the desk.", sentence: "The lamp is above the desk." },
+  { q: "What does he do before sleeping?", a: "He reads a book in bed before sleeping.", sentence: "Before sleeping, he reads a book in bed." }
+];
+
+function renderStory() {
+  const container = document.getElementById('storyContainer');
+  const sentences = storyText.match(/[^.!?]+[.!?]+/g) || [];
+  let html = '';
+  sentences.forEach((s, i) => {
+    html += `<span data-sentence="${i}">${s.trim()} </span>`;
+  });
+  container.innerHTML = html;
+  
+  const qContainer = document.getElementById('storyQuestions');
+  qContainer.innerHTML = '';
+  storyQuestions.forEach((sq, i) => {
+    const sentIndex = sentences.findIndex(s => s.trim() === sq.sentence);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <p class="font-bold mb-2">${i+1}. ${sq.q}</p>
+      <input type="text" class="story-input" placeholder="Type your answer here..." id="storyAns${i}">
+      <button class="btn-check mt-3" onclick="checkStoryAnswer(${i}, ${sentIndex})"><i class="fas fa-check mr-2"></i>Check Answer</button>
+      <div class="explanation" id="exp-story${i}">
+        <b>Answer:</b> ${sq.a}<br>
+        <i>Look at the underlined sentence in the story!</i>
+      </div>
+    `;
+    qContainer.appendChild(card);
+  });
+}
+
+function checkStoryAnswer(qIndex, sentIndex) {
+  const input = document.getElementById(`storyAns${qIndex}`);
+  const exp = document.getElementById(`exp-story${qIndex}`);
+  const userAns = input.value.toLowerCase().trim();
+  
+  if (userAns === '') {
+    input.style.borderColor = 'var(--sun)';
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+  
+  exp.classList.add('show');
+  
+  document.querySelectorAll('.underline-answer').forEach(el => {
+    el.classList.remove('underline-answer');
+  });
+  
+  if (sentIndex >= 0) {
+    const sentSpan = document.querySelector(`[data-sentence="${sentIndex}"]`);
+    if (sentSpan) {
+      sentSpan.classList.add('underline-answer');
+      sentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  const keyWords = storyQuestions[qIndex].a.toLowerCase().split(' ').filter(w => w.length > 3);
+  const matched = keyWords.some(w => userAns.includes(w));
+  
+  if (matched) {
+    input.style.borderColor = 'var(--leaf)';
+    input.style.background = 'rgba(6, 214, 160, 0.1)';
+    playSound(true);
+  } else {
+    input.style.borderColor = 'var(--rose)';
+    input.style.background = 'rgba(244, 63, 94, 0.1)';
+    playSound(false);
+  }
+}
+
+// ============ SLIDE 10: Quick Quiz ============
+const quizData = [
+  { q: "The book is ___ the table.", options: ['in', 'on', 'at', 'under'], correct: 1 },
+  { q: "I wake up ___ six o'clock.", options: ['in', 'on', 'at', 'for'], correct: 2 },
+  { q: "We have English class ___ Monday.", options: ['in', 'on', 'at', 'for'], correct: 1 },
+  { q: "The cat is ___ the chair.", options: ['on', 'in', 'under', 'at'], correct: 2 },
+  { q: "She walks ___ school every day.", options: ['to', 'in', 'on', 'at'], correct: 0 },
+  { q: "The pen is ___ the bag.", options: ['on', 'in', 'at', 'for'], correct: 1 },
+  { q: "He plays ___ his friend.", options: ['for', 'with', 'about', 'by'], correct: 1 },
+  { q: "The shop is ___ my house.", options: ['in', 'on', 'near', 'at'], correct: 2 },
+  { q: "I sit ___ Cio in class.", options: ['between', 'next to', 'behind', 'for'], correct: 1 },
+  { q: "The bird flies ___ the tree.", options: ['up', 'in', 'at', 'for'], correct: 0 }
+];
+
+let quizState = { score: 0, qNum: 0, answered: false };
+
+function loadQuiz() {
+  quizState.answered = false;
+  const q = quizData[quizState.qNum];
+  document.getElementById('quizQNum').textContent = `${quizState.qNum + 1}/${quizData.length}`;
+  
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = `
+    <div class="text-center mb-6">
+      <div class="font-display text-xl md:text-2xl font-bold mb-4" style="line-height:1.5">${q.q}</div>
+    </div>
+    <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    <div id="quizFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  `;
+  
+  const optsContainer = document.getElementById('quizOptions');
+  const shuffled = q.options.map((opt, i) => ({opt, isCorrect: i === q.correct})).sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = item.opt;
+    btn.onclick = () => answerQuiz(item.isCorrect, btn, q);
+    optsContainer.appendChild(btn);
+  });
+  
+  speak(q.q.replace(/___/g, 'blank'));
+}
+
+function answerQuiz(isCorrect, btn, q) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  
+  document.querySelectorAll('#quizOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('quizFeedback');
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The answer is "<b>${q.options[q.correct]}</b>"</span>`;
+    document.querySelectorAll('#quizOptions .game-option').forEach(o => {
+      if (!o.classList.contains('incorrect')) {
+        o.classList.add('correct');
+      }
+    });
+    playSound(false);
+  }
+  
+  document.getElementById('quizScore').textContent = quizState.score;
+  
+  setTimeout(() => {
+    quizState.qNum++;
+    if (quizState.qNum >= quizData.length) {
+      endQuiz();
+    } else {
+      loadQuiz();
+    }
+  }, 1800);
+}
+
+function endQuiz() {
+  const container = document.getElementById('quizContainer');
+  const percentage = (quizState.score / (quizData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect!';
+    message = "You're a Preposition Master!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know prepositions well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${quizState.score}</span> / ${quizData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartQuiz()">
+        <i class="fas fa-redo mr-2"></i>Play Again
+      </button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  quizState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('quizScore').textContent = '0';
+  loadQuiz();
+}
+
+// ============ Sound Effects ============
+let audioCtx = null;
+function playSound(correct) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (correct) {
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ============ Initialize ============
+renderFlashcards();
+renderConv();
+renderStory();
+loadTranslation();
+loadQuiz();
+updateNav();
+</script>
+</body>
+</html>
