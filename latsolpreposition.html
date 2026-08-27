@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal Interaktif — Prepositions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #f6f1e7;
+  --bg-soft: #fbf7ee;
+  --ink: #1a2b2b;
+  --ink-soft: #4a5959;
+  --muted: #8a9393;
+  --primary: #0f5e63;
+  --primary-deep: #083f44;
+  --accent: #d4a574;
+  --accent-deep: #b8843f;
+  --gold: #e8b259;
+  --card: #ffffff;
+  --border: #e3dcc8;
+  --correct: #1e7a3f;
+  --correct-bg: #e8f5ec;
+  --wrong: #b8341a;
+  --wrong-bg: #fde9e3;
+  --shadow: 0 10px 30px -10px rgba(15, 94, 99, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Atmospheric background layers */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(15, 94, 99, 0.10), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(212, 165, 116, 0.15), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(232, 178, 89, 0.06), transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(rgba(15, 94, 99, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+main {
+  position: relative; z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  margin-bottom: 56px;
+  padding: 40px 20px 30px;
+  position: relative;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px;
+  background: rgba(15, 94, 99, 0.1);
+  color: var(--primary);
+  border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(15, 94, 99, 0.15);
+}
+.hero-badge i { font-size: 12px; }
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  color: var(--ink);
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--primary);
+  position: relative;
+}
+.hero h1 em::after {
+  content: '';
+  position: absolute; bottom: 4px; left: 0;
+  width: 100%; height: 8px;
+  background: var(--accent);
+  opacity: 0.4; z-index: -1; border-radius: 4px;
+}
+.hero p {
+  font-size: 17px; color: var(--ink-soft);
+  max-width: 620px; margin: 0 auto;
+}
+
+/* Decorative line */
+.deco-line {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin: 18px auto 0; max-width: 200px;
+  color: var(--accent);
+}
+.deco-line::before, .deco-line::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+.deco-line i { font-size: 14px; }
+
+/* Student info */
+.student-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+  border: 1px solid var(--border);
+}
+.student-card h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: var(--primary);
+  display: flex; align-items: center; gap: 10px;
+}
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label {
+  font-size: 13px; font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.field input {
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: inherit; font-size: 15px;
+  background: var(--bg-soft);
+  transition: all 0.2s;
+}
+.field input:focus {
+  outline: none; border-color: var(--primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(15, 94, 99, 0.1);
+}
+
+/* Section nav */
+.section-nav {
+  display: flex; gap: 8px;
+  margin-bottom: 24px;
+  background: var(--card);
+  padding: 8px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: sticky; top: 16px;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+.nav-btn {
+  flex: 1; padding: 14px 20px;
+  background: transparent; border: none;
+  border-radius: 10px;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  color: var(--ink-soft); cursor: pointer;
+  transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.nav-btn.active {
+  background: var(--primary); color: white;
+  box-shadow: 0 4px 12px rgba(15, 94, 99, 0.25);
+}
+.nav-btn:not(.active):hover { background: var(--bg); }
+.nav-btn .badge {
+  background: rgba(255,255,255,0.2);
+  padding: 2px 10px; border-radius: 100px; font-size: 12px;
+}
+.nav-btn:not(.active) .badge {
+  background: var(--border); color: var(--ink-soft);
+}
+
+/* Section header */
+.section-header {
+  margin-bottom: 30px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 10px 30px -10px rgba(15, 94, 99, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.section-header::before {
+  content: '';
+  position: absolute; top: -50%; right: -10%;
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(232,178,89,0.2), transparent 70%);
+  border-radius: 50%;
+}
+.section-header .tag {
+  display: inline-block;
+  padding: 4px 14px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 1px; margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.section-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 28px; font-weight: 700;
+  margin-bottom: 8px;
+  position: relative; z-index: 1;
+}
+.section-header p {
+  opacity: 0.85; font-size: 15px;
+  position: relative; z-index: 1;
+}
+
+/* Question card */
+.question-card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 14px -6px rgba(15, 94, 99, 0.08);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.question-card:hover {
+  box-shadow: 0 10px 30px -8px rgba(15, 94, 99, 0.15);
+  transform: translateY(-2px);
+}
+.question-card.correct { border-left: 4px solid var(--correct); }
+.question-card.wrong { border-left: 4px solid var(--wrong); }
+
+.question-number {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  background: var(--primary); color: white;
+  border-radius: 10px;
+  font-family: 'Fraunces', serif;
+  font-weight: 700; font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.question-text {
+  font-size: 17px; font-weight: 600;
+  margin-bottom: 18px;
+  color: var(--ink); line-height: 1.5;
+}
+.question-text .blank {
+  display: inline-block;
+  min-width: 80px; padding: 2px 12px;
+  border-bottom: 3px solid var(--accent);
+  margin: 0 4px;
+  background: rgba(212, 165, 116, 0.15);
+  border-radius: 4px 4px 0 0;
+  text-align: center;
+  font-weight: 700; color: var(--primary);
+}
+.question-text.indo {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  background: var(--bg-soft);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+/* Options */
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+}
+.option:hover {
+  background: white;
+  border-color: var(--primary);
+  transform: translateX(4px);
+}
+.option.selected {
+  background: rgba(15, 94, 99, 0.06);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 94, 99, 0.1);
+}
+.option.correct-option {
+  background: var(--correct-bg);
+  border-color: var(--correct);
+  color: var(--correct);
+}
+.option.wrong-option {
+  background: var(--wrong-bg);
+  border-color: var(--wrong);
+  color: var(--wrong);
+}
+.option-letter {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-weight: 700; font-size: 13px;
+  color: var(--ink); flex-shrink: 0;
+  transition: all 0.2s;
+}
+.option.selected .option-letter {
+  background: var(--primary); color: white; border-color: var(--primary);
+}
+.option.correct-option .option-letter {
+  background: var(--correct); color: white; border-color: var(--correct);
+}
+.option.wrong-option .option-letter {
+  background: var(--wrong); color: white; border-color: var(--wrong);
+}
+
+/* Question actions */
+.question-actions {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+}
+.action-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  border-radius: 10px;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.action-btn:hover {
+  background: white;
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+.action-btn i { font-size: 12px; }
+.action-btn.primary {
+  background: var(--primary); color: white; border-color: var(--primary);
+}
+.action-btn.primary:hover {
+  background: var(--primary-deep); color: white;
+}
+.action-btn.translate {
+  background: rgba(212, 165, 116, 0.15);
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+.action-btn.translate:hover {
+  background: var(--accent); color: white; border-color: var(--accent);
+}
+
+/* Feedback */
+.feedback {
+  display: none;
+  margin-top: 16px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 14px; line-height: 1.6;
+  animation: slideIn 0.3s ease;
+}
+.feedback.show { display: block; }
+.feedback.correct {
+  background: var(--correct-bg);
+  color: var(--correct);
+  border: 1px solid var(--correct);
+}
+.feedback.wrong {
+  background: var(--wrong-bg);
+  color: var(--wrong);
+  border: 1px solid var(--wrong);
+}
+.feedback .title {
+  font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px; font-size: 15px;
+}
+
+/* Explanation */
+.explanation {
+  display: none;
+  margin-top: 12px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, var(--bg-soft), white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px; line-height: 1.7;
+  color: var(--ink);
+  animation: slideIn 0.3s ease;
+}
+.explanation.show { display: block; }
+.explanation-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-weight: 700; font-size: 13px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.explanation-header i { font-size: 14px; }
+
+/* Translation */
+.translation {
+  display: none;
+  margin-top: 12px;
+  padding: 16px 20px;
+  background: rgba(212, 165, 116, 0.12);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--ink); line-height: 1.6;
+  animation: slideIn 0.3s ease;
+}
+.translation.show { display: block; }
+.translation strong {
+  color: var(--accent-deep);
+  font-weight: 700;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* Finish section */
+.finish-section {
+  margin-top: 50px;
+  text-align: center;
+  padding: 50px 30px;
+  background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+  border-radius: 24px;
+  color: white;
+  box-shadow: 0 20px 50px -15px rgba(15, 94, 99, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.finish-section::before {
+  content: '';
+  position: absolute; top: -40%; right: -10%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(232,178,89,0.25), transparent 70%);
+  border-radius: 50%;
+}
+.finish-section::after {
+  content: '';
+  position: absolute; bottom: -40%; left: -10%;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(212,165,116,0.15), transparent 70%);
+  border-radius: 50%;
+}
+.finish-section h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.finish-section p {
+  opacity: 0.85;
+  margin-bottom: 24px;
+  position: relative; z-index: 1;
+}
+.finish-btn {
+  display: inline-flex;
+  align-items: center; gap: 12px;
+  padding: 16px 36px;
+  background: var(--accent);
+  color: var(--ink);
+  border: none; border-radius: 12px;
+  font-family: inherit; font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 8px 20px -5px rgba(212, 165, 116, 0.5);
+  position: relative; z-index: 1;
+}
+.finish-btn:hover {
+  background: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -5px rgba(212, 165, 116, 0.6);
+}
+
+/* Results */
+.results-panel {
+  display: none;
+  margin-top: 40px;
+  background: var(--card);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 50px -15px rgba(15, 94, 99, 0.2);
+  border: 1px solid var(--border);
+  animation: slideUp 0.5s ease;
+}
+.results-panel.show { display: block; }
+
+.results-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.results-header .icon {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+  color: white; border-radius: 50%;
+  font-size: 32px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 25px -5px rgba(15, 94, 99, 0.4);
+}
+.results-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 32px; font-weight: 800;
+  margin-bottom: 8px;
+}
+.results-header .student-name-display {
+  color: var(--ink-soft);
+  font-size: 15px; margin-bottom: 6px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.results-header .score-display {
+  font-family: 'Fraunces', serif;
+  font-size: 64px; font-weight: 900;
+  color: var(--primary); line-height: 1;
+  margin-top: 16px;
+}
+.results-header .score-label {
+  color: var(--ink-soft);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 30px 0;
+}
+.stat-card {
+  padding: 24px 20px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1.5px solid var(--border);
+}
+.stat-card.correct { background: var(--correct-bg); border-color: var(--correct); }
+.stat-card.wrong { background: var(--wrong-bg); border-color: var(--wrong); }
+.stat-card.unanswered { background: var(--bg-soft); border-color: var(--border); }
+.stat-card .number {
+  font-family: 'Fraunces', serif;
+  font-size: 44px; font-weight: 800;
+  line-height: 1;
+}
+.stat-card.correct .number { color: var(--correct); }
+.stat-card.wrong .number { color: var(--wrong); }
+.stat-card.unanswered .number { color: var(--muted); }
+.stat-card .label {
+  font-size: 13px; font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin-top: 8px;
+}
+
+.section-breakdown {
+  margin-top: 24px;
+  padding: 24px;
+  background: var(--bg-soft);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.section-breakdown h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+}
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border);
+  gap: 16px;
+}
+.breakdown-item:last-child { border-bottom: none; }
+.breakdown-item .label { font-weight: 600; color: var(--ink-soft); flex: 1; }
+.progress-bar {
+  flex: 1; max-width: 200px;
+  height: 8px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 100px;
+  transition: width 0.8s ease;
+}
+.breakdown-item .value {
+  font-family: 'Fraunces', serif;
+  font-weight: 700; color: var(--primary);
+  font-size: 16px;
+  min-width: 70px;
+  text-align: right;
+}
+
+.results-actions {
+  display: flex; gap: 12px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.results-actions button {
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-family: inherit; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  font-size: 14px;
+}
+.btn-reset { background: var(--primary); color: white; border: none; }
+.btn-reset:hover { background: var(--primary-deep); transform: translateY(-2px); }
+.btn-review {
+  background: white; color: var(--ink-soft);
+  border: 1.5px solid var(--border);
+}
+.btn-review:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Animations */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--ink); color: white;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 14px; font-weight: 500;
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,0.3);
+  opacity: 0; transition: all 0.3s;
+  z-index: 1000;
+  display: flex; align-items: center; gap: 10px;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { background: var(--correct); }
+.toast.warning { background: var(--accent-deep); }
+.toast.error { background: var(--wrong); }
+
+.section-content { display: none; animation: slideUp 0.4s ease; }
+.section-content.active { display: block; }
+
+@media (max-width: 640px) {
+  main { padding: 20px 14px 60px; }
+  .hero { padding: 20px 10px; margin-bottom: 30px; }
+  .question-card { padding: 20px; }
+  .options { grid-template-columns: 1fr; }
+  .section-header { padding: 22px; }
+  .section-header h2 { font-size: 22px; }
+  .results-header .score-display { font-size: 48px; }
+  .section-nav { flex-direction: column; }
+  .breakdown-item { flex-wrap: wrap; }
+  .progress-bar { max-width: none; order: 3; flex-basis: 100%; }
+}
+</style>
+</head>
+<body>
+<main>
+  <!-- Hero -->
+  <header class="hero">
+    <span class="hero-badge"><i class="fas fa-book-open"></i> English Practice Worksheet</span>
+    <h1>Latihan Soal Interaktif <em>Prepositions</em></h1>
+    <p>Asah pemahaman kata depan (preposition of time, place, direction, dan dependent prepositions) melalui dua bagian latihan dengan pembahasan lengkap.</p>
+    <div class="deco-line"><i class="fas fa-feather"></i></div>
+  </header>
+
+  <!-- Student info -->
+  <section class="student-card">
+    <h2><i class="fas fa-user-graduate"></i> Identitas Siswa</h2>
+    <div class="student-grid">
+      <div class="field">
+        <label for="student-name">Nama Siswa</label>
+        <input type="text" id="student-name" placeholder="Masukkan nama lengkap">
+      </div>
+      <div class="field">
+        <label for="student-class">Kelas / No</label>
+        <input type="text" id="student-class" placeholder="Contoh: IX-A / 12">
+      </div>
+      <div class="field">
+        <label for="student-date">Hari / Tanggal</label>
+        <input type="text" id="student-date" placeholder="Contoh: Senin, 10 Juni 2024">
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Navigation -->
+  <nav class="section-nav">
+    <button class="nav-btn active" data-section="sectionA">
+      <i class="fas fa-language"></i> Bagian A: Terjemahan Kalimat
+      <span class="badge">20</span>
+    </button>
+    <button class="nav-btn" data-section="sectionB">
+      <i class="fas fa-pen-fancy"></i> Bagian B: Melengkapi Preposition
+      <span class="badge">20</span>
+    </button>
+  </nav>
+
+  <!-- Section A -->
+  <section class="section-content active" id="sectionA">
+    <div class="section-header">
+      <span class="tag">PAKET 3 • 20 SOAL</span>
+      <h2>Terjemahan Kalimat Sederhana Sehari-hari</h2>
+      <p>Pilihlah terjemahan kalimat bahasa Inggris yang paling tepat (A, B, C, atau D) untuk menguji pemahaman kata depan (preposition)!</p>
+    </div>
+    <div id="questionsA"></div>
+  </section>
+
+  <!-- Section B -->
+  <section class="section-content" id="sectionB">
+    <div class="section-header">
+      <span class="tag">ENGLISH PRACTICE • 20 SOAL</span>
+      <h2>Melengkapi Kalimat dengan Preposition</h2>
+      <p>Pilihlah satu jawaban yang paling tepat (A, B, C, atau D) untuk melengkapi kalimat rumpang di bawah ini dengan kata depan (preposition) yang sesuai. Gunakan tombol <strong>Translate to Indonesia</strong> jika membutuhkan terjemahan kalimatnya.</p>
+    </div>
+    <div id="questionsB"></div>
+  </section>
+
+  <!-- Finish Exam -->
+  <section class="finish-section">
+    <h3>Selesai Mengerjakan?</h3>
+    <p>Klik tombol di bawah untuk melihat hasil pengerjaan dan skor akhir Anda.</p>
+    <button class="finish-btn" id="finishBtn">
+      <i class="fas fa-flag-checkered"></i> Finish Exam
+    </button>
+  </section>
+
+  <!-- Results -->
+  <section class="results-panel" id="resultsPanel"></section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================= DATA SOAL BAGIAN A (Paket 3 - Terjemahan) =================
+const sectionAData = [
+  {
+    q: 'Ayah sedang membaca koran di ruang tamu.',
+    options: {
+      A: 'Father is reading a newspaper in the living room.',
+      B: 'Father is reading a newspaper on the living room.',
+      C: 'Father is reading a newspaper at the living room.',
+      D: 'Father is reading a newspaper into the living room.'
+    },
+    answer: 'A',
+    explanation: 'Ruangan di dalam rumah menggunakan kata depan "in" (di ruang tamu = in the living room).'
+  },
+  {
+    q: 'Ada sebuah apel di atas piring.',
+    options: {
+      A: 'There is an apple in the plate.',
+      B: 'There is an apple under the plate.',
+      C: 'There is an apple on the plate.',
+      D: 'There is an apple between the plate.'
+    },
+    answer: 'C',
+    explanation: 'Benda yang ditaruh menempel di atas permukaan piring menggunakan "on" (di atas piring = on the plate).'
+  },
+  {
+    q: 'Kami makan siang pada pukul 12.00 siang.',
+    options: {
+      A: 'We have lunch at 12:00 PM.',
+      B: 'We have lunch on 12:00 PM.',
+      C: 'We have lunch in 12:00 PM.',
+      D: 'We have lunch by 12:00 PM.'
+    },
+    answer: 'A',
+    explanation: 'Waktu atau jam tertentu selalu memakai "at" (pukul 12.00 siang = at 12:00 PM).'
+  },
+  {
+    q: 'Kami belajar bahasa Inggris pada hari Rabu.',
+    options: {
+      A: 'We study English in Wednesday.',
+      B: 'We study English at Wednesday.',
+      C: 'We study English on Wednesday.',
+      D: 'We study English into Wednesday.'
+    },
+    answer: 'C',
+    explanation: 'Menyebut nama hari selalu menggunakan kata depan "on" (pada hari Rabu = on Wednesday).'
+  },
+  {
+    q: 'Liburan sekolah dimulai pada bulan Juni.',
+    options: {
+      A: 'The school holiday begins in June.',
+      B: 'The school holiday begins on June.',
+      C: 'The school holiday begins at June.',
+      D: 'The school holiday begins to June.'
+    },
+    answer: 'A',
+    explanation: 'Menyebut nama bulan tanpa tanggal menggunakan "in" (pada bulan Juni = in June).'
+  },
+  {
+    q: 'Sandal saya ada di bawah meja.',
+    options: {
+      A: 'My sandals are on the table.',
+      B: 'My sandals are under the table.',
+      C: 'My sandals are above the table.',
+      D: 'My sandals are into the table.'
+    },
+    answer: 'B',
+    explanation: 'Posisi "di bawah" meja menggunakan kata depan "under" (under the table).'
+  },
+  {
+    q: 'Ikan berenang di dalam akuarium.',
+    options: {
+      A: 'The fish swims in the aquarium.',
+      B: 'The fish swims on the aquarium.',
+      C: 'The fish swims under the aquarium.',
+      D: 'The fish swims above the aquarium.'
+    },
+    answer: 'A',
+    explanation: 'Keberadaan objek di dalam wadah bervolume seperti akuarium memakai "in" (in the aquarium).'
+  },
+  {
+    q: 'Dia memasukkan surat ke dalam amplop.',
+    options: {
+      A: 'He puts the letter into the envelope.',
+      B: 'He puts the letter onto the envelope.',
+      C: 'He puts the letter across the envelope.',
+      D: 'He puts the letter along the envelope.'
+    },
+    answer: 'A',
+    explanation: 'Gerakan memasukkan sesuatu dari luar ke dalam wadah tertutup memakai "into" (into the envelope).'
+  },
+  {
+    q: 'Rumah Budi ada di sebelah rumah saya.',
+    options: {
+      A: "Budi's house is next to my house.",
+      B: "Budi's house is between my house.",
+      C: "Budi's house is through my house.",
+      D: "Budi's house is among my house."
+    },
+    answer: 'A',
+    explanation: 'Ungkapan "di sebelah / di samping" menggunakan frasa "next to" atau beside (next to my house).'
+  },
+  {
+    q: 'Toko roti itu terletak di antara bank dan apotek.',
+    options: {
+      A: 'The bakery is among the bank and the pharmacy.',
+      B: 'The bakery is through the bank and the pharmacy.',
+      C: 'The bakery is between the bank and the pharmacy.',
+      D: 'The bakery is along the bank and the pharmacy.'
+    },
+    answer: 'C',
+    explanation: 'Letak "di antara dua tempat" (bank dan apotek) menggunakan "between" (between the bank and the pharmacy).'
+  },
+  {
+    q: 'Ada sebuah pohon besar di depan rumah.',
+    options: {
+      A: 'There is a big tree behind the house.',
+      B: 'There is a big tree in front of the house.',
+      C: 'There is a big tree under the house.',
+      D: 'There is a big tree inside the house.'
+    },
+    answer: 'B',
+    explanation: 'Posisi "di depan" rumah menggunakan frasa "in front of" (in front of the house).'
+  },
+  {
+    q: 'Sepeda itu diparkir di belakang gerbang.',
+    options: {
+      A: 'The bicycle is parked behind the gate.',
+      B: 'The bicycle is parked in the gate.',
+      C: 'The bicycle is parked into the gate.',
+      D: 'The bicycle is parked between the gate.'
+    },
+    answer: 'A',
+    explanation: 'Posisi "di belakang" pintu gerbang menggunakan kata depan "behind" (behind the gate).'
+  },
+  {
+    q: 'Jembatan itu berada di atas sungai.',
+    options: {
+      A: 'The bridge is above the river.',
+      B: 'The bridge is under the river.',
+      C: 'The bridge is in the river.',
+      D: 'The bridge is into the river.'
+    },
+    answer: 'A',
+    explanation: 'Posisi melayang lebih tinggi secara vertikal di atas air sungai menggunakan "above" (above the river).'
+  },
+  {
+    q: 'Mobil itu melewati terowongan yang gelap.',
+    options: {
+      A: 'The car went through the dark tunnel.',
+      B: 'The car went along the dark tunnel.',
+      C: 'The car went across the dark tunnel.',
+      D: 'The car went between the dark tunnel.'
+    },
+    answer: 'A',
+    explanation: 'Gerakan "melewati/menembus" lorong atau terowongan menggunakan "through" (through the dark tunnel).'
+  },
+  {
+    q: 'Kami bersepeda menyusuri jalan raya.',
+    options: {
+      A: 'We ride bicycles into the main street.',
+      B: 'We ride bicycles along the main street.',
+      C: 'We ride bicycles through the main street.',
+      D: 'We ride bicycles under the main street.'
+    },
+    answer: 'B',
+    explanation: 'Gerakan menyusuri sepanjang jalur jalan menggunakan "along" (along the main street).'
+  },
+  {
+    q: 'Budi sangat pandai bermain sepak bola.',
+    options: {
+      A: 'Budi is good in playing football.',
+      B: 'Budi is good on playing football.',
+      C: 'Budi is good with playing football.',
+      D: 'Budi is good at playing football.'
+    },
+    answer: 'D',
+    explanation: 'Pasangan kata sifat baku untuk mahir/pandai dalam suatu aktivitas adalah "good at" (good at playing football).'
+  },
+  {
+    q: 'Anak kecil itu takut pada kegelapan.',
+    options: {
+      A: 'The little kid is afraid of the dark.',
+      B: 'The little kid is afraid with the dark.',
+      C: 'The little kid is afraid to the dark.',
+      D: 'The little kid is afraid from the dark.'
+    },
+    answer: 'A',
+    explanation: 'Ungkapan rasa "takut akan sesuatu" selalu berpasangan dengan preposisi "of" (afraid of the dark).'
+  },
+  {
+    q: 'Guru bangga pada murid-muridnya.',
+    options: {
+      A: 'The teacher is proud with the students.',
+      B: 'The teacher is proud of the students.',
+      C: 'The teacher is proud for the students.',
+      D: 'The teacher is proud to the students.'
+    },
+    answer: 'B',
+    explanation: 'Ungkapan rasa "bangga terhadap seseorang/sesuatu" berpasangan dengan "of" (proud of the students).'
+  },
+  {
+    q: 'Saya sudah menunggu di sini sejak tadi siang.',
+    options: {
+      A: 'I have waited here for this afternoon.',
+      B: 'I have waited here since this afternoon.',
+      C: 'I have waited here until this afternoon.',
+      D: 'I have waited here during this afternoon.'
+    },
+    answer: 'B',
+    explanation: 'Kata "sejak" suatu titik waktu tertentu memakai "since" (since this afternoon).'
+  },
+  {
+    q: 'Kirimkan surat ini paling lambat besok.',
+    options: {
+      A: 'Send this letter on tomorrow.',
+      B: 'Send this letter in tomorrow.',
+      C: 'Send this letter by tomorrow.',
+      D: 'Send this letter at tomorrow.'
+    },
+    answer: 'C',
+    explanation: 'Menunjukkan tenggat waktu atau "paling lambat sebelum/pada" waktu tertentu memakai "by" (paling lambat besok = by tomorrow).'
+  }
+];
+
+// ================= DATA SOAL BAGIAN B (English Practice) =================
+const sectionBData = [
+  {
+    q: 'The annual music festival will take place ______ Saturday evening.',
+    translation: 'Festival musik tahunan akan berlangsung pada hari Sabtu malam.',
+    options: { A: 'in', B: 'on', C: 'at', D: 'to' },
+    answer: 'B',
+    explanation: 'Preposisi "on" digunakan untuk menyebutkan hari atau bagian hari yang spesifik seperti Saturday evening, Monday morning, atau Sunday night.'
+  },
+  {
+    q: 'Maya usually wakes up early ______ 5:30 AM every morning.',
+    translation: 'Maya biasanya bangun pagi pada pukul 5:30 setiap pagi.',
+    options: { A: 'at', B: 'on', C: 'in', D: 'by' },
+    answer: 'A',
+    explanation: 'Preposisi "at" digunakan untuk menyatakan waktu atau jam yang tepat/spesifik (precise time), seperti at 5:30 AM, at 7 o\'clock, at noon.'
+  },
+  {
+    q: 'Indonesia gained its independence ______ August 1945.',
+    translation: 'Indonesia merdeka pada bulan Agustus 1945.',
+    options: { A: 'on', B: 'at', C: 'in', D: 'for' },
+    answer: 'C',
+    explanation: 'Preposisi "in" digunakan untuk periode waktu yang panjang, seperti bulan (in August), tahun (in 1945), musim, atau abad. Jika ada tanggal lengkap (misal 17 August 1945), baru menggunakan on.'
+  },
+  {
+    q: 'She placed her laptop carefully ______ the study desk.',
+    translation: 'Dia meletakkan laptopnya dengan hati-hati di atas meja belajar.',
+    options: { A: 'under', B: 'on', C: 'inside', D: 'into' },
+    answer: 'B',
+    explanation: 'Preposisi "on" menunjukkan posisi suatu benda yang menyentuh dan berada di atas permukaan (surface), dalam hal ini meja belajar (the study desk).'
+  },
+  {
+    q: 'The children are currently playing football ______ the school garden.',
+    translation: 'Anak-anak sedang bermain sepak bola di taman sekolah.',
+    options: { A: 'in', B: 'at', C: 'on', D: 'upon' },
+    answer: 'A',
+    explanation: 'Preposisi "in" digunakan untuk menunjukkan lokasi di dalam area berpagar, tertutup, atau ruang tertentu (enclosed space / defined area) seperti in the garden, in the room, atau in the park.'
+  },
+  {
+    q: 'We agreed to meet our teacher ______ the main entrance of the library.',
+    translation: 'Kami sepakat untuk bertemu guru kami di pintu masuk utama perpustakaan.',
+    options: { A: 'on', B: 'in', C: 'at', D: 'into' },
+    answer: 'C',
+    explanation: 'Preposisi "at" digunakan untuk menunjukkan titik lokasi spesifik (specific point / landmark), seperti at the main entrance, at the bus stop, atau at the door.'
+  },
+  {
+    q: 'The cat jumped ______ the window and landed safely on the sofa.',
+    translation: 'Kucing itu melompat melalui jendela dan mendarat dengan aman di sofa.',
+    options: { A: 'through', B: 'across', C: 'between', D: 'along' },
+    answer: 'A',
+    explanation: 'Preposisi "through" (melalui/menembus) digunakan ketika pergerakan melewati ruang 3 dimensi atau bukaan seperti jendela, pintu, atau lorong (jumped through the window).'
+  },
+  {
+    q: 'The convenient store is located ______ the bank and the post office.',
+    translation: 'Toko swalayan itu terletak di antara bank dan kantor pos.',
+    options: { A: 'among', B: 'between', C: 'through', D: 'beside of' },
+    answer: 'B',
+    explanation: 'Preposisi "between" digunakan untuk menunjukkan posisi di antara dua objek/tempat yang terpisah secara jelas (between the bank and the post office).'
+  },
+  {
+    q: 'The teacher divided the chocolates evenly ______ all the students in the classroom.',
+    translation: 'Guru membagi coklat secara merata di antara semua siswa di kelas.',
+    options: { A: 'between', B: 'into', C: 'among', D: 'during' },
+    answer: 'C',
+    explanation: 'Preposisi "among" digunakan untuk menunjukkan pembagian atau posisi di antara lebih dari dua orang atau benda dalam suatu kelompok (among all the students).'
+  },
+  {
+    q: 'Daniel is really good ______ solving complex mathematical equations.',
+    translation: 'Daniel sangat mahir dalam menyelesaikan persamaan matematika yang kompleks.',
+    options: { A: 'on', B: 'in', C: 'with', D: 'at' },
+    answer: 'D',
+    explanation: 'Frasa sifat baku (dependent preposition) untuk keahlian/keterampilan adalah "good at" (mahir dalam sesuatu), bukan good in atau good on.'
+  },
+  {
+    q: 'My younger sister has always been interested ______ learning foreign languages.',
+    translation: 'Adik perempuan saya selalu tertarik untuk belajar bahasa asing.',
+    options: { A: 'in', B: 'of', C: 'about', D: 'for' },
+    answer: 'A',
+    explanation: 'Kata sifat interested selalu berpasangan dengan preposisi "in" (interested in something/doing something) untuk menyatakan minat atau ketertarikan.'
+  },
+  {
+    q: 'Are you afraid ______ walking alone in the dark?',
+    translation: 'Apakah kamu takut berjalan sendirian dalam kegelapan?',
+    options: { A: 'from', B: 'of', C: 'with', D: 'at' },
+    answer: 'B',
+    explanation: 'Frasa tetap untuk rasa takut adalah "afraid of" (takut akan sesuatu). Contoh: afraid of heights, afraid of spiders, afraid of walking alone.'
+  },
+  {
+    q: 'The final test results depend heavily ______ how consistently you study.',
+    translation: 'Hasil ujian akhir sangat bergantung pada seberapa konsisten kamu belajar.',
+    options: { A: 'in', B: 'with', C: 'on', D: 'to' },
+    answer: 'C',
+    explanation: 'Kata kerja depend selalu diikuti oleh preposisi "on" (atau upon), yang berarti "bergantung/tergantung pada".'
+  },
+  {
+    q: 'The tourists walked slowly ______ the sandy beach while enjoying the sunset.',
+    translation: 'Para turis berjalan perlahan menyusuri pantai berpasir sambil menikmati matahari terbenam.',
+    options: { A: 'along', B: 'into', C: 'through', D: 'over' },
+    answer: 'A',
+    explanation: 'Preposisi "along" digunakan untuk menunjukkan pergerakan mengikuti garis panjang atau tepi suatu tempat (along the beach / along the street / along the river = menyusuri pantai).'
+  },
+  {
+    q: 'He poured hot coffee ______ the ceramic mug.',
+    translation: 'Dia menuangkan kopi panas ke dalam mug keramik.',
+    options: { A: 'into', B: 'on', C: 'onto', D: 'inside of' },
+    answer: 'A',
+    explanation: 'Preposisi "into" menyatakan gerakan perpindahan dari luar masuk ke dalam suatu wadah/ruang 3 dimensi (poured coffee into the mug).'
+  },
+  {
+    q: 'We need to complete this group project ______ next Monday.',
+    translation: 'Kami perlu menyelesaikan proyek kelompok ini paling lambat Senin depan.',
+    options: { A: 'on', B: 'by', C: 'at', D: 'in' },
+    answer: 'B',
+    explanation: 'Preposisi "by" di sini bermakna batas waktu (deadline), yaitu "paling lambat sebelum atau pada" waktu yang ditentukan (by next Monday = paling lambat Senin depan).'
+  },
+  {
+    q: 'The puppy was sleeping peacefully ______ the dining table.',
+    translation: 'Anjing kecil itu sedang tertidur dengan tenang di bawah meja makan.',
+    options: { A: 'under', B: 'between', C: 'during', D: 'among' },
+    answer: 'A',
+    explanation: 'Preposisi "under" berarti "di bawah" permukaan atau benda lain yang menaunginya secara vertikal (sleeping under the table).'
+  },
+  {
+    q: 'They have been best friends ______ they were in kindergarten.',
+    translation: 'Mereka telah menjadi sahabat sejak mereka di taman kanak-kanak.',
+    options: { A: 'for', B: 'since', C: 'during', D: 'until' },
+    answer: 'B',
+    explanation: 'Preposisi "since" digunakan dalam pola Present Perfect Tense untuk menunjukkan titik awal dimulainya suatu kejadian di masa lampau yang masih berlanjut hingga sekarang (since they were in kindergarten = sejak mereka TK).'
+  },
+  {
+    q: 'The airplane was flying high ______ the thick white clouds.',
+    translation: 'Pesawat itu terbang tinggi di atas awan putih tebal.',
+    options: { A: 'above', B: 'under', C: 'on', D: 'through' },
+    answer: 'A',
+    explanation: 'Preposisi "above" menunjukkan posisi yang lebih tinggi secara vertikal tanpa menempel/bersentuhan langsung (flying above the clouds = terbang di atas awan).'
+  },
+  {
+    q: "All the parents were extremely proud ______ their children's achievements.",
+    translation: 'Semua orang tua sangat bangga terhadap pencapaian anak-anak mereka.',
+    options: { A: 'for', B: 'with', C: 'of', D: 'about' },
+    answer: 'C',
+    explanation: 'Frasa sifat baku untuk rasa bangga adalah "proud of" (bangga akan/terhadap). Contoh: proud of their achievements.'
+  }
+];
+
+// State
+const userAnswers = { A: {}, B: {} };
+const checkedQuestions = { A: {}, B: {} };
+
+// Render questions
+function renderSection(section, data, containerId) {
+  const container = document.getElementById(containerId);
+  let html = '';
+  const isTranslationSection = section === 'A';
+
+  data.forEach((item, idx) => {
+    const num = idx + 1;
+    html += `
+      <div class="question-card" id="card-${section}-${num}" data-section="${section}" data-qnum="${num}">
+        <div class="question-number">${num}</div>
+        <div class="question-text ${isTranslationSection ? 'indo' : ''}">${item.q}</div>
+        <div class="options">`;
+    ['A', 'B', 'C', 'D'].forEach(letter => {
+      html += `
+          <div class="option" data-section="${section}" data-qnum="${num}" data-letter="${letter}" onclick="selectOption('${section}', ${num}, '${letter}')">
+            <span class="option-letter">${letter}</span>
+            <span class="option-text">${item.options[letter]}</span>
+          </div>`;
+    });
+    html += `
+        </div>
+        <div class="feedback" id="feedback-${section}-${num}"></div>
+        ${!isTranslationSection ? `
+        <div class="translation" id="translation-${section}-${num}">
+          <strong><i class="fas fa-language"></i> Terjemahan Bahasa Indonesia:</strong><br>${item.translation || ''}
+        </div>` : ''}
+        <div class="explanation" id="explanation-${section}-${num}">
+          <div class="explanation-header"><i class="fas fa-lightbulb"></i> Pembahasan</div>
+          <div>${item.explanation}</div>
+        </div>
+        <div class="question-actions">
+          <button class="action-btn primary" onclick="checkAnswer('${section}', ${num})">
+            <i class="fas fa-check-circle"></i> Cek Jawaban
+          </button>
+          <button class="action-btn" onclick="toggleExplanation('${section}', ${num})">
+            <i class="fas fa-lightbulb"></i> Pembahasan
+          </button>
+          ${!isTranslationSection ? `
+          <button class="action-btn translate" onclick="toggleTranslation('${section}', ${num})">
+            <i class="fas fa-language"></i> Translate to Indonesia
+          </button>` : ''}
+        </div>
+      </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// Select option
+function selectOption(section, qnum, letter) {
+  userAnswers[section][qnum] = letter;
+  document.querySelectorAll(`.option[data-section="${section}"][data-qnum="${qnum}"]`).forEach(opt => {
+    opt.classList.remove('selected');
+  });
+  const selected = document.querySelector(`.option[data-section="${section}"][data-qnum="${qnum}"][data-letter="${letter}"]`);
+  if (selected) selected.classList.add('selected');
+  if (checkedQuestions[section][qnum]) {
+    checkAnswer(section, qnum, true);
+  }
+}
+
+// Check answer
+function checkAnswer(section, qnum, silent = false) {
+  const userAnswer = userAnswers[section][qnum];
+  if (!userAnswer) {
+    if (!silent) showToast('Silakan pilih satu jawaban terlebih dahulu!', 'warning');
+    return;
+  }
+  checkedQuestions[section][qnum] = true;
+  const data = section === 'A' ? sectionAData : sectionBData;
+  const correctAnswer = data[qnum - 1].answer;
+  const isCorrect = userAnswer === correctAnswer;
+
+  const card = document.getElementById(`card-${section}-${qnum}`);
+  card.classList.remove('correct', 'wrong');
+  card.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  document.querySelectorAll(`.option[data-section="${section}"][data-qnum="${qnum}"]`).forEach(opt => {
+    opt.classList.remove('correct-option', 'wrong-option');
+  });
+  const correctOpt = document.querySelector(`.option[data-section="${section}"][data-qnum="${qnum}"][data-letter="${correctAnswer}"]`);
+  if (correctOpt) correctOpt.classList.add('correct-option');
+  if (!isCorrect) {
+    const userOpt = document.querySelector(`.option[data-section="${section}"][data-qnum="${qnum}"][data-letter="${userAnswer}"]`);
+    if (userOpt) userOpt.classList.add('wrong-option');
+  }
+
+  const feedback = document.getElementById(`feedback-${section}-${qnum}`);
+  feedback.className = `feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  feedback.innerHTML = `
+    <div class="title">
+      <i class="fas fa-${isCorrect ? 'check-circle' : 'times-circle'}"></i>
+      ${isCorrect ? 'Jawaban Benar!' : 'Jawaban Kurang Tepat'}
+    </div>
+    <div>
+      ${isCorrect
+        ? `Jawaban Anda: <strong>${userAnswer}</strong> — ${data[qnum - 1].options[userAnswer]}`
+        : `Jawaban Anda: <strong>${userAnswer}</strong> (${data[qnum - 1].options[userAnswer]}). Kunci Jawaban: <strong>${correctAnswer}</strong> — ${data[qnum - 1].options[correctAnswer]}`}
+    </div>`;
+
+  if (!silent) {
+    showToast(isCorrect ? 'Benar! Jawaban tepat.' : 'Belum tepat, lihat pembahasan ya.', isCorrect ? 'success' : 'error');
+  }
+}
+
+// Toggle explanation
+function toggleExplanation(section, qnum) {
+  const el = document.getElementById(`explanation-${section}-${qnum}`);
+  el.classList.toggle('show');
+}
+
+// Toggle translation (Bagian B)
+function toggleTranslation(section, qnum) {
+  const el = document.getElementById(`translation-${section}-${qnum}`);
+  el.classList.toggle('show');
+}
+
+// Toast
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.className = `toast ${type}`;
+  const iconMap = { success: 'check-circle', warning: 'exclamation-circle', error: 'times-circle' };
+  toast.innerHTML = `<i class="fas fa-${iconMap[type] || 'info-circle'}"></i> ${message}`;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// Section navigation
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.section).classList.add('active');
+    window.scrollTo({ top: document.getElementById(btn.dataset.section).offsetTop - 100, behavior: 'smooth' });
+  });
+});
+
+// Finish exam
+document.getElementById('finishBtn').addEventListener('click', () => {
+  const totalQuestions = sectionAData.length + sectionBData.length;
+  let correctCount = 0, wrongCount = 0, unansweredCount = 0;
+  const sectionStats = {
+    A: { correct: 0, wrong: 0, unanswered: 0, total: sectionAData.length },
+    B: { correct: 0, wrong: 0, unanswered: 0, total: sectionBData.length }
+  };
+  ['A', 'B'].forEach(section => {
+    const data = section === 'A' ? sectionAData : sectionBData;
+    data.forEach((item, idx) => {
+      const userAns = userAnswers[section][idx + 1];
+      if (!userAns) { sectionStats[section].unanswered++; unansweredCount++; }
+      else if (userAns === item.answer) { sectionStats[section].correct++; correctCount++; }
+      else { sectionStats[section].wrong++; wrongCount++; }
+    });
+  });
+
+  const score = Math.round((correctCount / totalQuestions) * 100);
+  const studentName = document.getElementById('student-name').value || 'Siswa';
+  const studentClass = document.getElementById('student-class').value || '-';
+  const studentDate = document.getElementById('student-date').value || new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  let performanceText = '', performanceIcon = 'fa-trophy';
+  if (score >= 85) { performanceText = 'Luar biasa! Pemahaman preposition Anda sangat baik.'; performanceIcon = 'fa-trophy'; }
+  else if (score >= 70) { performanceText = 'Bagus! Terus berlatih untuk hasil yang lebih maksimal.'; performanceIcon = 'fa-star'; }
+  else if (score >= 55) { performanceText = 'Cukup baik. Review kembali materi yang masih belum tepat.'; performanceIcon = 'fa-book'; }
+  else { performanceText = 'Tetap semangat! Pelajari kembali pembahasan tiap soal.'; performanceIcon = 'fa-seedling'; }
+
+  const resultsPanel = document.getElementById('resultsPanel');
+  resultsPanel.innerHTML = `
+    <div class="results-header">
+      <div class="icon"><i class="fas ${performanceIcon}"></i></div>
+      <h2>Hasil Pengerjaan</h2>
+      <div class="student-name-display"><i class="fas fa-user"></i> ${studentName} • ${studentClass}</div>
+      <div class="student-name-display"><i class="fas fa-calendar"></i> ${studentDate}</div>
+      <div class="score-display">${score}</div>
+      <div class="score-label">Skor Akhir (dari 100)</div>
+      <p style="margin-top: 16px; color: var(--ink-soft); font-size: 15px;">${performanceText}</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card correct">
+        <div class="number">${correctCount}</div>
+        <div class="label">Jawaban Benar</div>
+      </div>
+      <div class="stat-card wrong">
+        <div class="number">${wrongCount}</div>
+        <div class="label">Jawaban Salah</div>
+      </div>
+      <div class="stat-card unanswered">
+        <div class="number">${unansweredCount}</div>
+        <div class="label">Tidak Terjawab</div>
+      </div>
+      <div class="stat-card" style="background: linear-gradient(135deg, var(--primary), var(--primary-deep)); color: white; border: none;">
+        <div class="number" style="color: white;">${totalQuestions}</div>
+        <div class="label" style="color: rgba(255,255,255,0.85);">Total Soal</div>
+      </div>
+    </div>
+
+    <div class="section-breakdown">
+      <h3><i class="fas fa-list-ul"></i> Rincian per Bagian</h3>
+      <div class="breakdown-item">
+        <div class="label">Bagian A — Terjemahan Kalimat</div>
+        <div class="progress-bar"><div class="progress-fill" style="width: ${(sectionStats.A.correct / sectionStats.A.total) * 100}%"></div></div>
+        <div class="value">${sectionStats.A.correct} / ${sectionStats.A.total}</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="label">Bagian B — Melengkapi Preposition</div>
+        <div class="progress-bar"><div class="progress-fill" style="width: ${(sectionStats.B.correct / sectionStats.B.total) * 100}%"></div></div>
+        <div class="value">${sectionStats.B.correct} / ${sectionStats.B.total}</div>
+      </div>
+    </div>
+
+    <div class="results-actions">
+      <button class="btn-reset" onclick="resetExam()">
+        <i class="fas fa-redo"></i> Ulangi Latihan
+      </button>
+      <button class="btn-review" onclick="closeResults()">
+        <i class="fas fa-eye"></i> Review Jawaban
+      </button>
+      <button class="btn-review" onclick="window.print()">
+        <i class="fas fa-print"></i> Cetak Hasil
+      </button>
+    </div>`;
+
+  resultsPanel.classList.add('show');
+  resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast(`Exam selesai! Skor: ${score}`, 'success');
+});
+
+// Reset exam
+function resetExam() {
+  userAnswers.A = {};
+  userAnswers.B = {};
+  checkedQuestions.A = {};
+  checkedQuestions.B = {};
+  document.querySelectorAll('.question-card').forEach(card => card.classList.remove('correct', 'wrong'));
+  document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected', 'correct-option', 'wrong-option'));
+  document.querySelectorAll('.feedback').forEach(fb => { fb.classList.remove('show'); fb.className = 'feedback'; });
+  document.querySelectorAll('.explanation').forEach(ex => ex.classList.remove('show'));
+  document.querySelectorAll('.translation').forEach(tr => tr.classList.remove('show'));
+  document.getElementById('resultsPanel').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast('Latihan telah direset. Semangat!', 'success');
+}
+
+function closeResults() {
+  document.getElementById('resultsPanel').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Initialize
+renderSection('A', sectionAData, 'questionsA');
+renderSection('B', sectionBData, 'questionsB');
+</script>
+</body>
+</html>
