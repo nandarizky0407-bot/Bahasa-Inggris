@@ -1,0 +1,2414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Exercise Hub - Latihan Bahasa Inggris Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f4ede1;
+    --bg-warm: #ede2cd;
+    --ink: #1a2e2a;
+    --ink-soft: #3d4a47;
+    --paper: #fbf7ee;
+    --teal: #0f6e6a;
+    --teal-dark: #0a4d49;
+    --teal-light: #c7e6e2;
+    --coral: #e8553a;
+    --coral-soft: #f8c4b5;
+    --amber: #e8a13a;
+    --green: #2d7a4f;
+    --green-soft: #c5e4d2;
+    --red: #c2410c;
+    --red-soft: #f5d3c4;
+    --border: #d8cdb5;
+    --shadow: 0 12px 40px -12px rgba(15, 110, 106, 0.25);
+    --shadow-lg: 0 24px 60px -16px rgba(15, 110, 106, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Decorative background blobs */
+  .bg-decor {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: float 18s ease-in-out infinite;
+  }
+  .blob-1 { width: 500px; height: 500px; background: var(--teal); top: -150px; left: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: var(--coral); top: 30%; right: -120px; animation-delay: -6s; }
+  .blob-3 { width: 450px; height: 450px; background: var(--amber); bottom: -150px; left: 20%; animation-delay: -12s; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, -30px) scale(1.05); }
+    66% { transform: translate(-30px, 40px) scale(0.95); }
+  }
+
+  /* Noise overlay */
+  .bg-decor::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+  }
+
+  .app { position: relative; z-index: 1; }
+
+  /* ============================ COVER ============================ */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+  .cover-card {
+    max-width: 1100px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--bg-warm) 100%);
+    border-radius: 32px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    position: relative;
+  }
+
+  .cover-card::before {
+    content: '';
+    position: absolute;
+    top: 24px; left: 24px; right: 24px; bottom: 24px;
+    border: 2px dashed var(--teal);
+    border-radius: 24px;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .cover-left {
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    width: fit-content;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge i { font-size: 11px; }
+
+  .cover-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(48px, 6vw, 84px);
+    line-height: 0.95;
+    color: var(--ink);
+    margin: 24px 0 16px;
+    letter-spacing: -0.03em;
+  }
+  .cover-title .accent {
+    color: var(--coral);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .cover-sub {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 420px;
+    margin-bottom: 32px;
+  }
+
+  .topics-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  .topic-chip {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+  .topic-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--teal);
+  }
+
+  .name-form { margin-top: 8px; }
+
+  .form-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-wrap i {
+    position: absolute;
+    left: 18px;
+    color: var(--teal);
+    font-size: 18px;
+  }
+
+  .name-input {
+    width: 100%;
+    padding: 18px 18px 18px 52px;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--paper);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s;
+  }
+  .name-input:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 4px var(--teal-light);
+  }
+
+  .cover-right {
+    background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 70%, #0d8a85 100%);
+    padding: 60px 50px;
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-right::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(232,85,58,0.4), transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+  .cover-right::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(232,161,58,0.3), transparent 70%);
+    bottom: -80px; left: -80px;
+    border-radius: 50%;
+  }
+
+  .cover-illu {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+  }
+  .stat {
+    flex: 1;
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+    margin-top: 6px;
+  }
+
+  .quote-mark {
+    font-family: 'Fraunces', serif;
+    font-size: 140px;
+    line-height: 0.7;
+    opacity: 0.3;
+    color: var(--coral);
+  }
+  .cover-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.3;
+    margin: 16px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .cover-quote-author {
+    font-size: 13px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .start-btn {
+    margin-top: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 20px 32px;
+    border-radius: 16px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    transition: all 0.3s;
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.4);
+  }
+  .start-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: var(--coral);
+    box-shadow: 0 12px 30px -8px rgba(232,85,58,0.5);
+  }
+  .start-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .start-btn i { transition: transform 0.3s; }
+  .start-btn:hover:not(:disabled) i { transform: translateX(6px); }
+
+  /* ============================ SECTIONS ============================ */
+  .page {
+    display: none;
+    min-height: 100vh;
+    padding: 32px 24px 80px;
+    animation: fadeIn 0.6s ease;
+  }
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .container { max-width: 1180px; margin: 0 auto; }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .back-btn {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--teal-dark);
+    font-size: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .back-btn:hover {
+    background: var(--teal);
+    color: var(--paper);
+    transform: translateX(-3px);
+  }
+
+  .user-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 8px 18px 8px 8px;
+    border-radius: 100px;
+  }
+  .avatar {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--coral), var(--amber));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .user-pill .name { font-weight: 600; font-size: 14px; }
+
+  .page-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .page-title .accent { color: var(--coral); font-style: italic; font-weight: 400; }
+  .page-sub {
+    color: var(--ink-soft);
+    font-size: 17px;
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  /* ============================ MATERIAL CARDS ============================ */
+  .material-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .material-card {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .material-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .material-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color);
+  }
+  .material-card:hover::before { transform: scaleX(1); }
+
+  .material-card.teal { --accent-color: var(--teal); }
+  .material-card.coral { --accent-color: var(--coral); }
+  .material-card.amber { --accent-color: var(--amber); }
+
+  .mat-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: var(--accent-color);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .mat-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .mat-desc {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .mat-content {
+    background: var(--bg-warm);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    border-left: 3px solid var(--accent-color);
+  }
+  .mat-content strong { color: var(--ink); }
+  .mat-content code {
+    background: var(--paper);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: var(--accent-color);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .mat-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.3s;
+  }
+  .mat-action:hover {
+    background: var(--bg-warm);
+  }
+  .mat-action i { transition: transform 0.3s; }
+  .material-card:hover .mat-action i { transform: translateX(4px); }
+
+  /* ============================ TEST HUB ============================ */
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .test-card {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 0;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.4s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .test-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .test-head {
+    background: var(--head-color);
+    color: var(--paper);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .test-head::after {
+    content: '';
+    position: absolute;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    top: -40px; right: -40px;
+  }
+  .test-head.t1 { --head-color: linear-gradient(135deg, #0f6e6a, #0a4d49); }
+  .test-head.t2 { --head-color: linear-gradient(135deg, #e8553a, #c2410c); }
+  .test-head.t3 { --head-color: linear-gradient(135deg, #e8a13a, #b97309); }
+  .test-head.t4 { --head-color: linear-gradient(135deg, #2d7a4f, #1a4d33); }
+
+  .test-num {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    opacity: 0.8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .test-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .test-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    opacity: 0.9;
+  }
+  .test-meta span { display: flex; align-items: center; gap: 6px; }
+
+  .test-body {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .test-body p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .test-progress {
+    margin-bottom: 20px;
+  }
+  .test-progress-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--bg-warm);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--teal);
+    width: 0;
+    transition: width 0.6s ease;
+    border-radius: 100px;
+  }
+
+  .test-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 16px 22px;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s;
+  }
+  .test-btn:hover {
+    background: var(--coral);
+    transform: translateY(-2px);
+  }
+  .test-btn i { transition: transform 0.3s; }
+  .test-btn:hover i { transform: translateX(4px); }
+
+  .test-score {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .test-score .total { color: var(--ink-soft); font-size: 18px; }
+
+  /* ============================ TEST PAGE ============================ */
+  .test-header {
+    background: linear-gradient(135deg, var(--paper), var(--bg-warm));
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .test-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .test-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .test-icon {
+    width: 72px; height: 72px;
+    border-radius: 18px;
+    background: var(--banner-color);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+  }
+  .test-header.t1 .test-icon { background: linear-gradient(135deg, #0f6e6a, #0a4d49); }
+  .test-header.t2 .test-icon { background: linear-gradient(135deg, #e8553a, #c2410c); }
+  .test-header.t3 .test-icon { background: linear-gradient(135deg, #e8a13a, #b97309); }
+  .test-header.t4 .test-icon { background: linear-gradient(135deg, #2d7a4f, #1a4d33); }
+
+  .test-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.1;
+  }
+  .test-info {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .test-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--paper);
+  }
+  .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); }
+  .btn-secondary {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--bg-warm); border-color: var(--teal); }
+  .btn-coral {
+    background: var(--coral);
+    color: var(--paper);
+  }
+  .btn-coral:hover { background: #c2410c; transform: translateY(-2px); }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* Dialogue & Story Section */
+  .dialogue-box, .story-box {
+    background: linear-gradient(135deg, var(--paper), var(--bg-warm));
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin: 24px 0 16px;
+    box-shadow: 0 4px 16px -4px rgba(0,0,0,0.08);
+  }
+  .dialogue-box {
+    border-left: 4px solid var(--amber);
+  }
+  .story-box {
+    border-left: 4px solid var(--green);
+  }
+
+  .dialogue-speaker {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .dialogue-speaker:last-child { margin-bottom: 0; }
+  .speaker-tag {
+    background: var(--teal);
+    color: var(--paper);
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 80px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .speaker-tag.b { background: var(--coral); }
+  .speaker-tag.c { background: var(--amber); }
+  .speaker-tag.d { background: var(--green); }
+  .speaker-text {
+    font-size: 14px;
+    color: var(--ink);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  
+  .story-text {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.7;
+    text-align: justify;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .dialogue-label { color: var(--amber); }
+  .story-label { color: var(--green); }
+
+  /* Question card */
+  .question-card {
+    background: var(--paper);
+    border-radius: 18px;
+    padding: 24px 26px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+    transition: all 0.3s;
+  }
+  .question-card.answered {
+    border-color: var(--teal);
+    background: linear-gradient(135deg, var(--paper), #f0f8f7);
+  }
+  .question-card.correct {
+    border-color: var(--green);
+    background: linear-gradient(135deg, var(--paper), var(--green-soft));
+  }
+  .question-card.wrong {
+    border-color: var(--coral);
+    background: linear-gradient(135deg, var(--paper), var(--red-soft));
+  }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .q-num {
+    background: var(--teal-dark);
+    color: var(--paper);
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .question-card.correct .q-num { background: var(--green); }
+  .question-card.wrong .q-num { background: var(--coral); }
+
+  .q-status {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 700;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  .question-card.correct .q-status { display: flex; color: var(--green); }
+  .question-card.wrong .q-status { display: flex; color: var(--coral); }
+
+  .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .option {
+    background: var(--bg-warm);
+    border: 2px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--ink);
+    text-align: left;
+  }
+  .option:hover {
+    border-color: var(--teal);
+    background: var(--paper);
+    transform: translateX(2px);
+  }
+  .option-letter {
+    width: 28px; height: 28px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--teal-dark);
+    flex-shrink: 0;
+    transition: all 0.25s;
+  }
+  .option.selected {
+    background: var(--teal);
+    border-color: var(--teal-dark);
+    color: var(--paper);
+  }
+  .option.selected .option-letter {
+    background: var(--paper);
+    color: var(--teal-dark);
+  }
+  .option.correct-answer {
+    background: var(--green-soft);
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .option.correct-answer .option-letter {
+    background: var(--green);
+    color: var(--paper);
+  }
+  .option.wrong-answer {
+    background: var(--red-soft);
+    border-color: var(--coral);
+    color: var(--red);
+  }
+  .option.wrong-answer .option-letter {
+    background: var(--coral);
+    color: var(--paper);
+  }
+  .option.disabled { cursor: default; }
+  .option.disabled:hover { transform: none; }
+
+  .explanation {
+    margin-top: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, #fff8e8, #ffefc7);
+    border-left: 4px solid var(--amber);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    display: none;
+  }
+  .explanation.show { display: block; animation: slideDown 0.4s ease; }
+  .explanation strong { color: var(--ink); }
+  .explanation-icon {
+    color: var(--amber);
+    margin-right: 6px;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============================ RESULTS PANEL ============================ */
+  .results-panel {
+    background: linear-gradient(135deg, var(--ink), var(--teal-dark));
+    color: var(--paper);
+    border-radius: 24px;
+    padding: 36px;
+    margin-bottom: 32px;
+    display: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .results-panel.show { display: block; animation: fadeIn 0.6s ease; }
+
+  .results-panel::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(232,85,58,0.3), transparent 70%);
+    top: -100px; right: -50px;
+    border-radius: 50%;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .result-stat {
+    text-align: center;
+  }
+  .result-stat-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 56px;
+    line-height: 1;
+  }
+  .result-stat-num.correct { color: #8fd694; }
+  .result-stat-num.wrong { color: #ff9b85; }
+  .result-stat-num.score { color: var(--amber); }
+
+  .result-stat-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
+    margin-top: 8px;
+  }
+
+  .result-message {
+    text-align: center;
+    margin-top: 24px;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-style: italic;
+    position: relative;
+    z-index: 2;
+  }
+
+  .results-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Scroll progress indicator */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--coral), var(--amber));
+    width: 0;
+    z-index: 1000;
+    transition: width 0.1s;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 24px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.4s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .toast.error { background: var(--coral); }
+  .toast.success { background: var(--green); }
+
+  /* Pagination/filter for questions */
+  .q-nav-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    background: var(--paper);
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+    position: sticky;
+    top: 16px;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .q-nav-item {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--bg-warm);
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .q-nav-item:hover { border-color: var(--teal); color: var(--teal); }
+  .q-nav-item.answered { background: var(--teal); color: var(--paper); }
+  .q-nav-item.correct { background: var(--green); color: var(--paper); }
+  .q-nav-item.wrong { background: var(--coral); color: var(--paper); }
+  .q-nav-item.current { border: 2px solid var(--ink); transform: scale(1.1); }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall 3s linear forwards;
+  }
+  @keyframes confettiFall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .cover-card { grid-template-columns: 1fr; }
+    .cover-right { padding: 40px 30px; }
+    .cover-left { padding: 40px 30px; }
+    .results-grid { grid-template-columns: 1fr; gap: 16px; }
+    .test-header { padding: 20px; }
+    .test-banner-left { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 20px 16px 60px; }
+    .options { grid-template-columns: 1fr; }
+    .question-card { padding: 18px; }
+    .q-nav-bar { display: none; }
+    .test-actions { width: 100%; }
+    .btn { flex: 1; justify-content: center; }
+  }
+
+  /* Print friendly */
+  @media print {
+    .bg-decor, .scroll-progress, .q-nav-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<div class="app">
+
+  <!-- ============================ COVER PAGE ============================ -->
+  <section class="page active" id="cover-page">
+    <div class="cover">
+      <div class="cover-card">
+        <div class="cover-left">
+          <span class="badge"><i class="fas fa-graduation-cap"></i> Interactive English Practice</span>
+          <h1 class="cover-title">English<br>Exercise <span class="accent">Hub</span></h1>
+          <p class="cover-sub">Latihan soal interaktif Bahasa Inggris untuk menguasai Simple Present Tense, Present Continuous Tense, dan Preposition dengan pembahasan lengkap.</p>
+
+          <div class="topics-row">
+            <span class="topic-chip"><i class="fas fa-clock" style="color:var(--teal)"></i> Simple Present</span>
+            <span class="topic-chip"><i class="fas fa-spinner" style="color:var(--coral)"></i> Present Continuous</span>
+            <span class="topic-chip"><i class="fas fa-map-marker-alt" style="color:var(--amber)"></i> Preposition</span>
+          </div>
+
+          <form class="name-form" id="nameForm">
+            <label class="form-label" for="studentName">Nama Siswa</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" id="studentName" class="name-input" placeholder="Tulis nama lengkap kamu di sini..." autocomplete="off" required>
+            </div>
+            <button type="submit" class="start-btn" id="startBtn" disabled>
+              <span>Mulai Belajar Sekarang</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="cover-right">
+          <div class="cover-illu">
+            <div class="quote-mark">"</div>
+            <p class="cover-quote">Practice makes perfect. The more you exercise, the better your English becomes.</p>
+            <p class="cover-quote-author">— English Proverb</p>
+          </div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-num">145</div>
+              <div class="stat-label">Soal Latihan</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">3</div>
+              <div class="stat-label">Topik Materi</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">4</div>
+              <div class="stat-label">Bagian Tes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ MATERIAL PAGE ============================ -->
+  <section class="page" id="material-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('cover-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarMat">A</div>
+            <div class="name" id="userNameMat">Siswa</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="goToPage('test-page')">
+          <i class="fas fa-pencil-alt"></i> Lanjut ke Latihan Soal
+        </button>
+      </div>
+
+      <h2 class="page-title">Materi <span class="accent">Pelajaran</span></h2>
+      <p class="page-sub">Pelajari ketiga topik berikut sebelum mengerjakan latihan soal. Klik kartu untuk membaca penjelasan lengkap.</p>
+
+      <div class="material-grid">
+        
+        <!-- Simple Present Tense Material -->
+        <div class="material-card teal">
+          <div class="mat-icon"><i class="fas fa-clock"></i></div>
+          <h3 class="mat-title">Simple Present Tense</h3>
+          <p class="mat-desc">Digunakan untuk menyatakan kebiasaan, fakta umum, atau rutinitas yang terjadi secara berulang.</p>
+          <div class="mat-content">
+            <strong>Rumus:</strong><br>
+            <code>(+) S + V1(s/es)</code><br>
+            <code>(-) S + do/does + not + V1</code><br>
+            <code>(?) Do/Does + S + V1</code><br><br>
+            <strong>Subjek:</strong> I/You/We/They → V1; He/She/It → V1+s/es<br>
+            <strong>Time signal:</strong> always, usually, every day, often, sometimes
+          </div>
+          <a class="mat-action" href="https://nandarizky0407-bot.github.io/Bahasa-Inggris/myactivity.html" target="_blank" rel="noopener noreferrer">
+            <span>Pelajari Materi</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Present Continuous Tense Material -->
+        <div class="material-card coral">
+          <div class="mat-icon"><i class="fas fa-spinner"></i></div>
+          <h3 class="mat-title">Present Continuous Tense</h3>
+          <p class="mat-desc">Digunakan untuk menyatakan kegiatan yang sedang berlangsung saat ini atau di sekitar waktu sekarang.</p>
+          <div class="mat-content">
+            <strong>Rumus:</strong><br>
+            <code>(+) S + to be + V-ing</code><br>
+            <code>(-) S + to be + not + V-ing</code><br>
+            <code>(?) To be + S + V-ing</code><br><br>
+            <strong>To be:</strong> I → am; He/She/It → is; You/We/They → are<br>
+            <strong>Time signal:</strong> now, right now, at the moment, currently, Look!, Listen!
+          </div>
+          <a class="mat-action" href="https://nandarizky0407-bot.github.io/Bahasa-Inggris/verbing.html" target="_blank" rel="noopener noreferrer">
+            <span>Pelajari Materi</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Preposition Material -->
+        <div class="material-card amber">
+          <div class="mat-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3 class="mat-title">Preposition</h3>
+          <p class="mat-desc">Kata depan yang menunjukkan hubungan waktu, tempat, atau arah antara objek dengan bagian kalimat lain.</p>
+          <div class="mat-content">
+            <strong>Waktu:</strong><br>
+            <code>in</code> → bulan/tahun (in July)<br>
+            <code>on</code> → hari/tanggal (on Monday)<br>
+            <code>at</code> → jam spesifik (at 7 PM)<br><br>
+            <strong>Tempat:</strong><br>
+            <code>in</code> → dalam ruang (in room)<br>
+            <code>on</code> → permukaan (on table)<br>
+            <code>at</code> → titik spesifik (at school)<br>
+            <code>under, behind, between, next to</code>
+          </div>
+          <a class="mat-action" href="https://nandarizky0407-bot.github.io/Bahasa-Inggris/preposition.html" target="_blank" rel="noopener noreferrer">
+            <span>Pelajari Materi</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ TEST HUB PAGE ============================ -->
+  <section class="page" id="test-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('material-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarTest">A</div>
+            <div class="name" id="userNameTest">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="page-title">Pilih <span class="accent">Bagian Tes</span></h2>
+      <p class="page-sub">Kerjakan keempat bagian tes di bawah ini. Setiap bagian akan menampilkan skor beserta pembahasan lengkap setelah kamu selesai.</p>
+
+      <div class="test-grid" id="testGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============================ TEST 1: TRANSLATION ============================ -->
+  <section class="page" id="test1-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('test-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarT1">A</div>
+            <div class="name" id="userNameT1">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-header t1">
+        <div class="test-banner">
+          <div class="test-banner-left">
+            <div class="test-icon"><i class="fas fa-language"></i></div>
+            <div>
+              <div class="test-name">Bagian I: Terjemahan</div>
+              <div class="test-info">20 Soal • Pilihan Ganda • Indonesia → Inggris</div>
+            </div>
+          </div>
+          <div class="test-actions">
+            <button class="btn btn-secondary" onclick="checkAnswers(1)"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+            <button class="btn btn-coral" onclick="toggleExplanations(1)"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+            <button class="btn btn-primary" onclick="resetTest(1)"><i class="fas fa-redo"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-nav-bar" id="nav1"></div>
+
+      <div class="results-panel" id="results1">
+        <div class="results-grid">
+          <div class="result-stat">
+            <div class="result-stat-num correct" id="correctCount1">0</div>
+            <div class="result-stat-label">Jawaban Benar</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num wrong" id="wrongCount1">0</div>
+            <div class="result-stat-label">Jawaban Salah</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num score" id="score1">0</div>
+            <div class="result-stat-label">Skor (0-100)</div>
+          </div>
+        </div>
+        <div class="result-message" id="message1"></div>
+        <div class="results-actions">
+          <button class="btn btn-secondary" onclick="toggleExplanations(1)" id="toggleExp1"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+          <button class="btn btn-primary" onclick="goToPage('test-page')"><i class="fas fa-list"></i> Kembali ke Daftar Tes</button>
+        </div>
+      </div>
+
+      <div id="questions1"></div>
+    </div>
+  </section>
+
+  <!-- ============================ TEST 2: FILL IN THE BLANKS ============================ -->
+  <section class="page" id="test2-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('test-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarT2">A</div>
+            <div class="name" id="userNameT2">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-header t2">
+        <div class="test-banner">
+          <div class="test-banner-left">
+            <div class="test-icon"><i class="fas fa-pen-fancy"></i></div>
+            <div>
+              <div class="test-name">Bagian II: Melengkapi Kalimat</div>
+              <div class="test-info">50 Soal • Pilihan Ganda • Isian Kosong</div>
+            </div>
+          </div>
+          <div class="test-actions">
+            <button class="btn btn-secondary" onclick="checkAnswers(2)"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+            <button class="btn btn-coral" onclick="toggleExplanations(2)"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+            <button class="btn btn-primary" onclick="resetTest(2)"><i class="fas fa-redo"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-nav-bar" id="nav2"></div>
+
+      <div class="results-panel" id="results2">
+        <div class="results-grid">
+          <div class="result-stat">
+            <div class="result-stat-num correct" id="correctCount2">0</div>
+            <div class="result-stat-label">Jawaban Benar</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num wrong" id="wrongCount2">0</div>
+            <div class="result-stat-label">Jawaban Salah</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num score" id="score2">0</div>
+            <div class="result-stat-label">Skor (0-100)</div>
+          </div>
+        </div>
+        <div class="result-message" id="message2"></div>
+        <div class="results-actions">
+          <button class="btn btn-secondary" onclick="toggleExplanations(2)" id="toggleExp2"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+          <button class="btn btn-primary" onclick="goToPage('test-page')"><i class="fas fa-list"></i> Kembali ke Daftar Tes</button>
+        </div>
+      </div>
+
+      <div id="questions2"></div>
+    </div>
+  </section>
+
+  <!-- ============================ TEST 3: DIALOGUE ============================ -->
+  <section class="page" id="test3-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('test-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarT3">A</div>
+            <div class="name" id="userNameT3">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-header t3">
+        <div class="test-banner">
+          <div class="test-banner-left">
+            <div class="test-icon"><i class="fas fa-comments"></i></div>
+            <div>
+              <div class="test-name">Bagian III: Pemahaman Percakapan</div>
+              <div class="test-info">10 Percakapan • 50 Soal • Reading Comprehension</div>
+            </div>
+          </div>
+          <div class="test-actions">
+            <button class="btn btn-secondary" onclick="checkAnswers(3)"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+            <button class="btn btn-coral" onclick="toggleExplanations(3)"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+            <button class="btn btn-primary" onclick="resetTest(3)"><i class="fas fa-redo"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-nav-bar" id="nav3"></div>
+
+      <div class="results-panel" id="results3">
+        <div class="results-grid">
+          <div class="result-stat">
+            <div class="result-stat-num correct" id="correctCount3">0</div>
+            <div class="result-stat-label">Jawaban Benar</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num wrong" id="wrongCount3">0</div>
+            <div class="result-stat-label">Jawaban Salah</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num score" id="score3">0</div>
+            <div class="result-stat-label">Skor (0-100)</div>
+          </div>
+        </div>
+        <div class="result-message" id="message3"></div>
+        <div class="results-actions">
+          <button class="btn btn-secondary" onclick="toggleExplanations(3)" id="toggleExp3"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+          <button class="btn btn-primary" onclick="goToPage('test-page')"><i class="fas fa-list"></i> Kembali ke Daftar Tes</button>
+        </div>
+      </div>
+
+      <div id="questions3"></div>
+    </div>
+  </section>
+
+  <!-- ============================ TEST 4: READING STORY ============================ -->
+  <section class="page" id="test4-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('test-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarT4">A</div>
+            <div class="name" id="userNameT4">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-header t4">
+        <div class="test-banner">
+          <div class="test-banner-left">
+            <div class="test-icon"><i class="fas fa-book-reader"></i></div>
+            <div>
+              <div class="test-name">Bagian IV: Soal Cerita</div>
+              <div class="test-info">5 Cerita Pendek • 25 Soal • Reading Comprehension</div>
+            </div>
+          </div>
+          <div class="test-actions">
+            <button class="btn btn-secondary" onclick="checkAnswers(4)"><i class="fas fa-check-circle"></i> Cek Jawaban</button>
+            <button class="btn btn-coral" onclick="toggleExplanations(4)"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+            <button class="btn btn-primary" onclick="resetTest(4)"><i class="fas fa-redo"></i> Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-nav-bar" id="nav4"></div>
+
+      <div class="results-panel" id="results4">
+        <div class="results-grid">
+          <div class="result-stat">
+            <div class="result-stat-num correct" id="correctCount4">0</div>
+            <div class="result-stat-label">Jawaban Benar</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num wrong" id="wrongCount4">0</div>
+            <div class="result-stat-label">Jawaban Salah</div>
+          </div>
+          <div class="result-stat">
+            <div class="result-stat-num score" id="score4">0</div>
+            <div class="result-stat-label">Skor (0-100)</div>
+          </div>
+        </div>
+        <div class="result-message" id="message4"></div>
+        <div class="results-actions">
+          <button class="btn btn-secondary" onclick="toggleExplanations(4)" id="toggleExp4"><i class="fas fa-eye"></i> Tampilkan Pembahasan</button>
+          <button class="btn btn-primary" onclick="goToPage('test-page')"><i class="fas fa-list"></i> Kembali ke Daftar Tes</button>
+        </div>
+      </div>
+
+      <div id="questions4"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast">
+  <i class="fas fa-info-circle"></i>
+  <span id="toastMsg">Pesan</span>
+</div>
+
+<script>
+/* ============================ DATA SOAL ============================ */
+
+// Bagian I: Terjemahan (20 soal)
+const part1Data = [
+  { q: "Saya selalu belajar bahasa Inggris pada hari Senin.", options: ["I always studies English on Monday.", "I am always study English in Monday.", "I always study English on Monday.", "I always studying English at Monday."], answer: 2, exp: "Subjek 'I' menggunakan verb-1 tanpa s/es (study). Preposisi untuk hari adalah 'on'." },
+  { q: "Dia (perempuan) sedang membaca buku di perpustakaan.", options: ["She is reading a book in the library.", "She reading a book at the library.", "She reads a book on the library.", "She is read a book in the library."], answer: 0, exp: "Kalimat sedang berlangsung menggunakan Present Continuous (is + verb-ing). Preposisi tempat di dalam ruang adalah 'in'." },
+  { q: "Mereka tidak bermain sepak bola setiap sore.", options: ["They isn't play football every afternoon.", "They don't play football every afternoon.", "They doesn't play football every afternoon.", "They not playing football every afternoon."], answer: 1, exp: "Simple Present Tense negatif untuk subjek jamak (They) menggunakan 'do not' atau 'don't'." },
+  { q: "Apakah ibumu memasak nasi goreng setiap pagi?", options: ["Do your mother cook fried rice every morning?", "Is your mother cook fried rice every morning?", "Does your mother cooks fried rice every morning?", "Does your mother cook fried rice every morning?"], answer: 3, exp: "Kata tanya untuk subjek tunggal (your mother) menggunakan 'Does' dan kembali ke verb-1 (cook)." },
+  { q: "Kucing itu tidur di bawah meja.", options: ["The cat sleep on the table.", "The cat sleeps under the table.", "The cat is sleep under the table.", "The cat sleeping under the table."], answer: 1, exp: "Subjek tunggal (The cat) menggunakan verb+s/es (sleeps). Preposisi 'di bawah' adalah 'under'." },
+  { q: "Kami sedang mendengarkan musik sekarang.", options: ["We are listening to music now.", "We listen to music now.", "We is listening to music now.", "We are listen to music now."], answer: 0, exp: "Present Continuous untuk subjek 'We' menggunakan to be 'are' + verb-ing (listening)." },
+  { q: "Ayah saya pergi ke kantor pada jam 7.", options: ["My father go to the office at 7 o'clock.", "My father goes to the office in 7 o'clock.", "My father is go to the office at 7 o'clock.", "My father goes to the office at 7 o'clock."], answer: 3, exp: "Subjek tunggal (My father) menggunakan verb+es (goes). Preposisi untuk waktu/jam adalah 'at'." },
+  { q: "Buku-buku itu ada di atas meja.", options: ["The books are on the desk.", "The books is in the desk.", "The books are at the desk.", "The books is on the desk."], answer: 0, exp: "Subjek jamak (books) menggunakan to be 'are'. Preposisi 'di atas (menempel)' adalah 'on'." },
+  { q: "Apakah kamu tinggal di Jakarta?", options: ["Are you live in Jakarta?", "Do you live in Jakarta?", "Does you live in Jakarta?", "Are you living at Jakarta?"], answer: 1, exp: "Kata tanya Simple Present untuk subjek 'you' menggunakan 'Do'." },
+  { q: "Dia (laki-laki) tidak sedang minum kopi.", options: ["He don't drink coffee.", "He is not drinking coffee.", "He doesn't drinking coffee.", "He not is drinking coffee."], answer: 1, exp: "Bentuk negatif Present Continuous adalah 'is not' + verb-ing." },
+  { q: "Burung-burung terbang di langit.", options: ["The birds flies on the sky.", "The birds fly in the sky.", "The birds flying in the sky.", "The birds are fly in the sky."], answer: 1, exp: "Subjek jamak (birds) menggunakan verb-1 (fly). Preposisi untuk langit (ruang luas) adalah 'in'." },
+  { q: "Saya lahir pada bulan Agustus.", options: ["I was born on August.", "I am born in August.", "I was born in August.", "I was born at August."], answer: 2, exp: "Preposisi untuk bulan (tanpa tanggal) adalah 'in'." },
+  { q: "Kakak perempuanku mencuci baju pada akhir pekan.", options: ["My sister washes clothes on the weekend.", "My sister wash clothes in the weekend.", "My sister is washing clothes on the weekend.", "My sister washing clothes at the weekend."], answer: 0, exp: "Subjek tunggal (My sister) pakai verb+es (washes). Preposisi akhir pekan lazimnya 'on the weekend' (US) atau 'at the weekend' (UK)." },
+  { q: "Gambar itu tergantung di dinding.", options: ["The picture hangs in the wall.", "The picture hanging on the wall.", "The picture is hanging on the wall.", "The picture hangs at the wall."], answer: 2, exp: "Sedang tergantung (is hanging) dan preposisi 'di atas permukaan vertikal' adalah 'on'." },
+  { q: "Apakah mereka sedang menonton TV?", options: ["Do they watch TV?", "Are they watching TV?", "Is they watching TV?", "Does they watch TV?"], answer: 1, exp: "Present Continuous tanya: To be (Are) + subjek (they) + verb-ing (watching)." },
+  { q: "Anjing itu berdiri di belakang pintu.", options: ["The dog stands next to the door.", "The dog is standing in front of the door.", "The dog is standing behind the door.", "The dog stand behind the door."], answer: 2, exp: "Sedang berdiri (is standing), preposisi 'di belakang' adalah 'behind'." },
+  { q: "Saya tidak tahu jawaban itu.", options: ["I am not know the answer.", "I doesn't know the answer.", "I don't know the answer.", "I not knowing the answer."], answer: 2, exp: "Simple present negatif dengan subjek 'I' menggunakan 'don't' + verb-1." },
+  { q: "Mobil diparkir di depan rumah.", options: ["The car is parked in front of the house.", "The car is parked behind the house.", "The car parking in front of the house.", "The car parks at front of the house."], answer: 0, exp: "Preposisi 'di depan' adalah 'in front of'." },
+  { q: "Dia selalu duduk di sebelahku.", options: ["He always sit next to me.", "He is always sitting beside me.", "He always sits next to me.", "He always sit in next to me."], answer: 2, exp: "Subjek tunggal (He) dengan verb+s (sits). Preposisi 'di sebelah' adalah 'next to' atau 'beside'." },
+  { q: "Anak-anak sedang berenang di kolam.", options: ["The children is swimming in the pool.", "The children are swimming in the pool.", "The childs are swim in the pool.", "The children swims in the pool."], answer: 1, exp: "Subjek jamak 'children' menggunakan to be 'are' + verb-ing. Di dalam kolam menggunakan 'in'." }
+];
+
+// Bagian II: Melengkapi Kalimat (50 soal)
+const part2Data = [
+  { q: "_____ you like to eat apples?", options: ["Do","Does","Are","Is"], answer: 0, exp: "'You' dipasangkan dengan auxiliary verb 'Do'." },
+  { q: "She _____ not go to school on Sundays.", options: ["do","does","is","has"], answer: 1, exp: "'She' dipasangkan dengan 'does'." },
+  { q: "_____ he play guitar every night?", options: ["Do","Does","Is","Are"], answer: 1, exp: "Kalimat tanya Simple present dengan subjek 'he' menggunakan 'Does'." },
+  { q: "They _____ playing football in the field right now.", options: ["is","am","are","do"], answer: 2, exp: "Subjek 'They' dalam present continuous menggunakan 'are'." },
+  { q: "I _____ reading a comic book at the moment.", options: ["am","is","are","do"], answer: 0, exp: "Subjek 'I' dipasangkan dengan 'am'." },
+  { q: "Look! The bird _____ flying in the sky.", options: ["am","is","are","does"], answer: 1, exp: "'The bird' tunggal, sehingga menggunakan 'is'." },
+  { q: "We _____ not like spicy food.", options: ["do","does","are","is"], answer: 0, exp: "Subjek 'We' bentuk negatif Simple present menggunakan 'do not' / 'don't'." },
+  { q: "He usually _____ coffee in the morning.", options: ["drink","drinks","drinking","is drinking"], answer: 1, exp: "Subjek 'He', kalimat kebiasaan (usually), verb ditambah 's' (drinks)." },
+  { q: "The train arrives _____ 8:00 AM.", options: ["in","on","at","under"], answer: 2, exp: "Preposisi untuk waktu pasti (jam) adalah 'at'." },
+  { q: "My birthday is _____ October.", options: ["in","on","at","by"], answer: 0, exp: "Preposisi untuk nama bulan tanpa tanggal adalah 'in'." },
+  { q: "We always have a meeting _____ Monday.", options: ["in","on","at","with"], answer: 1, exp: "Preposisi untuk hari adalah 'on'." },
+  { q: "The keys are _____ the table.", options: ["in","on","at","between"], answer: 1, exp: "Kunci ada 'di atas permukaan' meja, jadi pakai 'on'." },
+  { q: "She is hiding _____ the door.", options: ["in","on","under","behind"], answer: 3, exp: "Sembunyi 'di belakang' pintu, pakai 'behind'." },
+  { q: "The cat is sleeping _____ the chair.", options: ["under","at","in","between"], answer: 0, exp: "Kucing tidur 'di bawah' kursi (under)." },
+  { q: "My shoes are _____ the bed.", options: ["in","on","under","at"], answer: 2, exp: "Sepatu biasanya diletakkan di lantai 'di bawah' tempat tidur (under)." },
+  { q: "I live _____ 123 Main Street.", options: ["in","on","at","under"], answer: 2, exp: "Preposisi untuk alamat lengkap (dengan nomor) adalah 'at'." },
+  { q: "She lives _____ London.", options: ["in","on","at","behind"], answer: 0, exp: "Preposisi untuk kota, negara, wilayah besar adalah 'in'." },
+  { q: "There is a picture _____ the wall.", options: ["in","on","at","by"], answer: 1, exp: "Menempel di permukaan dinding menggunakan 'on'." },
+  { q: "_____ they students?", options: ["Do","Does","Are","Is"], answer: 2, exp: "Kalimat nominal tanpa kata kerja, subjek 'they' menggunakan to be 'Are'." },
+  { q: "Andi _____ not want to go to the party.", options: ["do","does","is","are"], answer: 1, exp: "Subjek tunggal (Andi) menggunakan 'does not'." },
+  { q: "What _____ you doing?", options: ["do","does","are","is"], answer: 2, exp: "Kata kerja bentuk -ing (doing) membutuhkan to be. Subjek 'you' → 'are'." },
+  { q: "Where _____ she work?", options: ["do","does","is","are"], answer: 1, exp: "Kata kerja bentuk dasar (work), subjek 'she' → 'does'." },
+  { q: "Why _____ the baby crying?", options: ["do","does","is","are"], answer: 2, exp: "Kata kerja -ing (crying), subjek 'the baby' (tunggal) → 'is'." },
+  { q: "It _____ raining heavily outside.", options: ["do","does","is","are"], answer: 2, exp: "Present continuous, subjek 'It' menggunakan 'is'." },
+  { q: "The dogs _____ barking loudly.", options: ["am","is","are","does"], answer: 2, exp: "Subjek jamak (dogs) menggunakan to be 'are'." },
+  { q: "My mother _____ cooking dinner in the kitchen.", options: ["am","is","are","does"], answer: 1, exp: "Subjek tunggal (My mother) dengan verb-ing (cooking) menggunakan 'is'." },
+  { q: "Listen! Someone _____ singing in the bathroom.", options: ["am","is","are","do"], answer: 1, exp: "Someone dianggap subjek tunggal, jadi menggunakan 'is'." },
+  { q: "I always brush my teeth _____ the morning.", options: ["in","on","at","under"], answer: 0, exp: "Bagian dari hari (morning, afternoon, evening) memakai 'in'." },
+  { q: "We play football _____ the afternoon.", options: ["in","on","at","by"], answer: 0, exp: "Bagian dari hari (afternoon) memakai 'in'." },
+  { q: "I usually watch movies _____ night.", options: ["in","on","at","by"], answer: 2, exp: "Pengecualian untuk 'night' menggunakan preposisi 'at'." },
+  { q: "She goes to the gym _____ the weekend.", options: ["in","on","at","by"], answer: 1, exp: "Preposisi yang sering digunakan untuk akhir pekan adalah 'on' (US) atau 'at' (UK)." },
+  { q: "The meeting is _____ 15th of August.", options: ["in","on","at","with"], answer: 1, exp: "Preposisi untuk tanggal spesifik adalah 'on'." },
+  { q: "He goes to work _____ bus.", options: ["in","on","at","by"], answer: 3, exp: "Preposisi untuk alat transportasi secara umum (oleh/dengan bus) adalah 'by'." },
+  { q: "We are sitting _____ the classroom.", options: ["in","on","at","over"], answer: 0, exp: "Di dalam ruang tertutup (kelas) menggunakan 'in'." },
+  { q: "The lamp is hanging _____ the table.", options: ["in","on","above","at"], answer: 2, exp: "Tergantung di atas benda tanpa menyentuhnya menggunakan 'above'." },
+  { q: "The bank is _____ the post office and the bakery.", options: ["in","between","on","at"], answer: 1, exp: "Ada dua tempat pembanding (post office & bakery), menggunakan 'between' (di antara)." },
+  { q: "Please sit _____ to me.", options: ["next","behind","in","on"], answer: 0, exp: "Pasangan frasa 'di sebelah' adalah 'next to'." },
+  { q: "She is waiting for you _____ the bus stop.", options: ["in","on","at","by"], answer: 2, exp: "Titik lokasi spesifik (bus stop) menggunakan 'at'." },
+  { q: "They _____ English every day.", options: ["study","studies","studying","is studying"], answer: 0, exp: "Subjek jamak (They), kalimat rutinitas, menggunakan verb dasar (study)." },
+  { q: "My brother _____ to music when he studies.", options: ["listen","listens","listening","is listen"], answer: 1, exp: "Subjek tunggal (brother) menggunakan verb+s (listens)." },
+  { q: "The sun _____ in the east.", options: ["rise","rises","rising","is rise"], answer: 1, exp: "Fakta umum (The sun - tunggal) menggunakan verb+s (rises)." },
+  { q: "Water _____ at 100 degrees Celsius.", options: ["boil","boils","boiling","is boil"], answer: 1, exp: "Fakta umum (Water - uncountable/tunggal) menggunakan verb+s (boils)." },
+  { q: "The children _____ playing in the park.", options: ["am","is","are","do"], answer: 2, exp: "Subjek jamak (children) menggunakan to be 'are'." },
+  { q: "I _____ not understand this math problem.", options: ["do","does","am","is"], answer: 0, exp: "Kata kerja (understand), subjek 'I' memakai 'do not' (don't)." },
+  { q: "_____ you watching TV right now?", options: ["Do","Does","Are","Is"], answer: 2, exp: "Ada kata kerja -ing (watching) dan subjek 'you', butuh to be 'Are'." },
+  { q: "She _____ taking a bath right now.", options: ["do","does","is","are"], answer: 2, exp: "Kata kerja -ing (taking) dan subjek 'She', butuh to be 'is'." },
+  { q: "They _____ not like apples.", options: ["do","does","are","is"], answer: 0, exp: "Kata kerja (like), subjek jamak 'They' memakai 'do not' (don't)." },
+  { q: "_____ the cat sleeping?", options: ["Do","Does","Is","Are"], answer: 2, exp: "Kata kerja -ing (sleeping), subjek tunggal 'the cat', butuh to be 'Is'." },
+  { q: "He _____ doing his homework at the moment.", options: ["do","does","is","are"], answer: 2, exp: "Kata kerja -ing (doing), subjek 'He', butuh to be 'is'." },
+  { q: "The book is _____ the desk and the chair.", options: ["between","in","on","at"], answer: 0, exp: "Ada dua objek referensi (desk & chair), maka menggunakan 'between'." }
+];
+
+// Bagian III: Pemahaman Percakapan (50 soal)
+const dialogues = [
+  {
+    title: "Dialogue 1",
+    lines: [
+      {sp:"Sarah", text:"Hi, Tom. What are you doing?"},
+      {sp:"Tom", text:"I am reading a book. It's about history."},
+      {sp:"Sarah", text:"Do you read history books every day?"},
+      {sp:"Tom", text:"Yes, I do. I usually read in the evening."},
+      {sp:"Sarah", text:"Where do you usually read?"},
+      {sp:"Tom", text:"I usually read in my bedroom."}
+    ],
+    questions: [
+      { q: "What is Tom doing right now?", options: ["He is sleeping.","He is reading a book.","He is watching TV.","He is studying math."], answer: 1, exp: "Sesuai dialog: 'I am reading a book.'" },
+      { q: "Does Tom read history books every day?", options: ["Yes, he does.","No, he doesn't.","Yes, he is.","No, he isn't."], answer: 0, exp: "Tom menjawab 'Yes, I do.' ketika ditanya hal yang sama." },
+      { q: "When does Tom usually read?", options: ["In the morning.","In the afternoon.","In the evening.","At night."], answer: 2, exp: "Sesuai dialog: 'I usually read in the evening.'" },
+      { q: "Where does Tom usually read?", options: ["In the library.","In the living room.","In the kitchen.","In his bedroom."], answer: 3, exp: "Sesuai dialog: 'I usually read in my bedroom.'" },
+      { q: "What preposition is used in the phrase 'in the evening'?", options: ["in","on","at","about"], answer: 0, exp: "Preposisi yang digunakan adalah 'in'." }
+    ]
+  },
+  {
+    title: "Dialogue 2",
+    lines: [
+      {sp:"Andi", text:"Where is Budi?"},
+      {sp:"Rina", text:"He is playing football in the field."},
+      {sp:"Andi", text:"Does he play football every Sunday?"},
+      {sp:"Rina", text:"No, he doesn't. He plays football on Saturdays."},
+      {sp:"Andi", text:"What time does he usually play?"},
+      {sp:"Rina", text:"He plays at 4 PM."}
+    ],
+    questions: [
+      { q: "Where is Budi right now?", options: ["In the house.","In the classroom.","In the field.","At the market."], answer: 2, exp: "Sesuai dialog: 'He is playing football in the field.'" },
+      { q: "What is Budi doing?", options: ["He is studying.","He is sleeping.","He is playing football.","He is reading."], answer: 2, exp: "Sesuai dialog: 'He is playing football.'" },
+      { q: "Does Budi play football every Sunday?", options: ["Yes, he does.","No, he doesn't.","Yes, he is.","No, he isn't."], answer: 1, exp: "Rina menjawab 'No, he doesn't.'" },
+      { q: "What day does Budi play football?", options: ["Monday.","Friday.","Saturday.","Sunday."], answer: 2, exp: "Sesuai dialog: 'He plays football on Saturdays.'" },
+      { q: "What time does he play?", options: ["At 3 PM.","At 4 PM.","At 5 PM.","At 6 PM."], answer: 1, exp: "Sesuai dialog: 'He plays at 4 PM.'" }
+    ]
+  },
+  {
+    title: "Dialogue 3",
+    lines: [
+      {sp:"Teacher", text:"Are you listening to me, students?", class:"c"},
+      {sp:"Students", text:"Yes, we are, sir.", class:"d"},
+      {sp:"Teacher", text:"Good. Look at the whiteboard. The map is on the wall.", class:"c"},
+      {sp:"Student A", text:"Where is the globe, sir?"},
+      {sp:"Teacher", text:"The globe is on the desk, next to the computer.", class:"c"}
+    ],
+    questions: [
+      { q: "Who is the teacher talking to?", options: ["Another teacher.","The principal.","The students.","Parents."], answer: 2, exp: "Guru berbicara kepada 'students'." },
+      { q: "Are the students listening to the teacher?", options: ["Yes, they are.","No, they aren't.","Yes, they do.","No, they don't."], answer: 0, exp: "Murid menjawab 'Yes, we are, sir.'" },
+      { q: "Where is the map?", options: ["On the desk.","On the wall.","In the book.","Under the table."], answer: 1, exp: "Sesuai dialog: 'The map is on the wall.'" },
+      { q: "Where is the globe?", options: ["Under the desk.","In the closet.","On the desk.","On the wall."], answer: 2, exp: "Sesuai dialog: 'The globe is on the desk...'" },
+      { q: "What is next to the globe based on the dialogue?", options: ["The map.","The computer.","The book.","The pen."], answer: 1, exp: "Sesuai dialog: '...next to the computer.'" }
+    ]
+  },
+  {
+    title: "Dialogue 4",
+    lines: [
+      {sp:"Mother", text:"What are you doing in the kitchen, Lisa?"},
+      {sp:"Lisa", text:"I am cooking fried rice for dinner, Mom."},
+      {sp:"Mother", text:"Do you need any help?"},
+      {sp:"Lisa", text:"Yes, please. Can you put the plates on the dining table?"},
+      {sp:"Mother", text:"Sure. Are they in the cupboard?"},
+      {sp:"Lisa", text:"Yes, they are."}
+    ],
+    questions: [
+      { q: "Where is Lisa?", options: ["In the living room.","In the bedroom.","In the kitchen.","In the garden."], answer: 2, exp: "Ibu bertanya 'What are you doing in the kitchen, Lisa?'" },
+      { q: "What is Lisa doing?", options: ["She is eating.","She is washing dishes.","She is cooking.","She is sleeping."], answer: 2, exp: "Sesuai dialog: 'I am cooking fried rice...'" },
+      { q: "What does Lisa ask her mother to do?", options: ["Cook rice.","Wash the plates.","Put the plates on the table.","Clean the cupboard."], answer: 2, exp: "Sesuai dialog: 'Can you put the plates on the dining table?'" },
+      { q: "Where are the plates?", options: ["On the table.","In the cupboard.","In the sink.","Under the table."], answer: 1, exp: "Ibu bertanya 'Are they in the cupboard?' dan Lisa menjawab 'Yes, they are.'" },
+      { q: "What preposition is used to describe the location of the plates?", options: ["on","at","in","between"], answer: 2, exp: "Plates are 'in' the cupboard." }
+    ]
+  },
+  {
+    title: "Dialogue 5",
+    lines: [
+      {sp:"David", text:"Does your father work on weekends, John?"},
+      {sp:"John", text:"No, he doesn't. He usually stays at home."},
+      {sp:"David", text:"What is he doing right now?"},
+      {sp:"John", text:"He is washing his car in the garage."},
+      {sp:"David", text:"Oh, my father is sleeping in his room right now."}
+    ],
+    questions: [
+      { q: "Does John's father work on weekends?", options: ["Yes, he does.","No, he doesn't.","Yes, he is.","No, he isn't."], answer: 1, exp: "John menjawab 'No, he doesn't.'" },
+      { q: "Where is John's father right now?", options: ["At work.","In the garage.","In his room.","In the garden."], answer: 1, exp: "Sesuai dialog: 'He is washing his car in the garage.'" },
+      { q: "What is John's father doing?", options: ["He is sleeping.","He is working.","He is washing his car.","He is watching TV."], answer: 2, exp: "Sesuai dialog: 'He is washing his car...'" },
+      { q: "What is David's father doing?", options: ["He is washing a car.","He is working.","He is sleeping.","He is reading."], answer: 2, exp: "Sesuai dialog: '...my father is sleeping...'" },
+      { q: "Where is David's father?", options: ["In the garage.","In the kitchen.","In his room.","In the living room."], answer: 2, exp: "Sesuai dialog: '...sleeping in his room...'" }
+    ]
+  },
+  {
+    title: "Dialogue 6",
+    lines: [
+      {sp:"Anna", text:"I am looking for my glasses. Where are they?"},
+      {sp:"Bob", text:"Are they on the table?"},
+      {sp:"Anna", text:"No, they aren't."},
+      {sp:"Bob", text:"Look! They are under the newspaper on the sofa."},
+      {sp:"Anna", text:"Oh, thank you, Bob. I need them to read this letter."}
+    ],
+    questions: [
+      { q: "What is Anna looking for?", options: ["Her book.","Her bag.","Her glasses.","Her pen."], answer: 2, exp: "Sesuai dialog: 'I am looking for my glasses.'" },
+      { q: "Are the glasses on the table?", options: ["Yes, they are.","No, they aren't.","Yes, they do.","No, they don't."], answer: 1, exp: "Anna menjawab 'No, they aren't.' saat ditanya apakah di atas meja." },
+      { q: "Where are the glasses?", options: ["Under the table.","Under the newspaper on the sofa.","On the TV.","In the bag."], answer: 1, exp: "Sesuai dialog: 'They are under the newspaper on the sofa.'" },
+      { q: "What preposition means 'di bawah' in the dialogue?", options: ["on","under","in","at"], answer: 1, exp: "Preposisi 'under' berarti di bawah." },
+      { q: "Why does Anna need her glasses?", options: ["To watch TV.","To sleep.","To read a letter.","To cook."], answer: 2, exp: "Sesuai dialog: 'I need them to read this letter.'" }
+    ]
+  },
+  {
+    title: "Dialogue 7",
+    lines: [
+      {sp:"Shopkeeper", text:"Hello, can I help you?", class:"c"},
+      {sp:"Customer", text:"Yes, I am looking for a jacket."},
+      {sp:"Shopkeeper", text:"We have jackets here, next to the t-shirts. Do you like this black one?", class:"c"},
+      {sp:"Customer", text:"Yes. How much does it cost?"},
+      {sp:"Shopkeeper", text:"It costs fifty dollars.", class:"c"}
+    ],
+    questions: [
+      { q: "Where does the dialogue take place?", options: ["In a school.","In a hospital.","In a shop.","In a library."], answer: 2, exp: "Percakapan melibatkan 'Shopkeeper' (penjaga toko) dan 'Customer' (pelanggan)." },
+      { q: "What is the customer looking for?", options: ["A t-shirt.","A jacket.","A hat.","Shoes."], answer: 1, exp: "Sesuai dialog: 'I am looking for a jacket.'" },
+      { q: "Where are the jackets located?", options: ["Behind the shopkeeper.","Next to the t-shirts.","Under the table.","Near the door."], answer: 1, exp: "Sesuai dialog: '...next to the t-shirts.'" },
+      { q: "Does the customer like the black jacket?", options: ["Yes, he does.","No, he doesn't.","Yes, he is.","No, he isn't."], answer: 0, exp: "Pelanggan menjawab 'Yes.' saat ditanya 'Do you like this black one?'" },
+      { q: "What does the shopkeeper mean by 'It costs fifty dollars'?", options: ["Harga jaket adalah 15 dolar.","Harga jaket adalah 50 dolar.","Ukuran jaket adalah 50.","Toko tutup jam 50."], answer: 1, exp: "'Fifty dollars' artinya 50 dolar." }
+    ]
+  },
+  {
+    title: "Dialogue 8",
+    lines: [
+      {sp:"Maria", text:"Where do you live, Kevin?"},
+      {sp:"Kevin", text:"I live in Bandung."},
+      {sp:"Maria", text:"Do you live with your parents?"},
+      {sp:"Kevin", text:"No, I don't. I live with my brother. We rent an apartment."},
+      {sp:"Maria", text:"Is the apartment near your office?"},
+      {sp:"Kevin", text:"Yes, it is. It is in front of the train station."}
+    ],
+    questions: [
+      { q: "Where does Kevin live?", options: ["In Jakarta.","In Bandung.","In Surabaya.","In Bali."], answer: 1, exp: "Sesuai dialog: 'I live in Bandung.'" },
+      { q: "Does Kevin live with his parents?", options: ["Yes, he does.","No, he doesn't.","Yes, he is.","No, he isn't."], answer: 1, exp: "Kevin menjawab 'No, I don't.'" },
+      { q: "Who does Kevin live with?", options: ["His parents.","His sister.","His friend.","His brother."], answer: 3, exp: "Sesuai dialog: 'I live with my brother.'" },
+      { q: "Where is Kevin's apartment?", options: ["Behind the train station.","In front of the train station.","Next to the hospital.","Under the bridge."], answer: 1, exp: "Sesuai dialog: 'It is in front of the train station.'" },
+      { q: "What preposition phrase is used to indicate 'di depan'?", options: ["in front of","next to","near","behind"], answer: 0, exp: "Frasa 'in front of' berarti di depan." }
+    ]
+  },
+  {
+    title: "Dialogue 9",
+    lines: [
+      {sp:"Alex", text:"What is your sister doing outside?"},
+      {sp:"Ben", text:"She is planting flowers in the garden."},
+      {sp:"Alex", text:"Does she like gardening?"},
+      {sp:"Ben", text:"Yes, she does. She plants flowers every spring."},
+      {sp:"Alex", text:"Wow, the flowers are beautiful."}
+    ],
+    questions: [
+      { q: "Who is outside?", options: ["Alex.","Ben.","Ben's sister.","Alex's sister."], answer: 2, exp: "Alex bertanya 'What is your sister doing outside?' kepada Ben." },
+      { q: "What is she doing?", options: ["She is playing.","She is planting flowers.","She is running.","She is sleeping."], answer: 1, exp: "Sesuai dialog: 'She is planting flowers.'" },
+      { q: "Where is she planting flowers?", options: ["In the living room.","In the garden.","In the kitchen.","At school."], answer: 1, exp: "Sesuai dialog: '...in the garden.'" },
+      { q: "Does she like gardening?", options: ["Yes, she does.","No, she doesn't.","Yes, she is.","No, she isn't."], answer: 0, exp: "Ben menjawab 'Yes, she does.'" },
+      { q: "When does she plant flowers?", options: ["Every summer.","Every spring.","Every winter.","Every autumn."], answer: 1, exp: "Sesuai dialog: 'She plants flowers every spring.'" }
+    ]
+  },
+  {
+    title: "Dialogue 10",
+    lines: [
+      {sp:"Teacher", text:"Please sit down, everyone.", class:"c"},
+      {sp:"Student", text:"Excuse me, sir. My pen is missing. I can't write."},
+      {sp:"Teacher", text:"Are you sure? Look in your bag.", class:"c"},
+      {sp:"Student", text:"Oh, here it is. It was hiding between my books."},
+      {sp:"Teacher", text:"Good. Now, please open your book on page 10.", class:"c"}
+    ],
+    questions: [
+      { q: "What is missing?", options: ["The student's bag.","The student's book.","The student's pen.","The teacher's pen."], answer: 2, exp: "Murid berkata 'My pen is missing.'" },
+      { q: "Where does the teacher ask the student to look?", options: ["In the drawer.","In the bag.","Under the desk.","On the floor."], answer: 1, exp: "Guru berkata 'Look in your bag.'" },
+      { q: "Where is the pen finally found?", options: ["On the desk.","Between the books.","Under the chair.","In the pocket."], answer: 1, exp: "Sesuai dialog: 'It was hiding between my books.'" },
+      { q: "What preposition describes the pen's location among the books?", options: ["between","in","on","at"], answer: 0, exp: "'Between' berarti di antara (dua atau lebih hal)." },
+      { q: "What does the teacher ask the students to do next?", options: ["Go home.","Write a story.","Open the book on page 10.","Sing a song."], answer: 2, exp: "Sesuai dialog: '...open your book on page 10.'" }
+    ]
+  }
+];
+
+// Bagian IV: Soal Cerita (25 soal)
+const stories = [
+  {
+    title: "Story 1",
+    text: "Rendi is a diligent student. He always wakes up at 5 AM. After taking a bath, he eats breakfast and goes to school by bicycle. His school is near his house. In the afternoon, he is playing football with his friends in the park.",
+    questions: [
+      { q: "What time does Rendi always wake up?", options: ["5 AM", "6 AM", "7 AM", "8 AM"], answer: 0, exp: "Di dalam teks disebutkan 'He always wakes up at 5 AM.' (Simple Present Tense)." },
+      { q: "How does Rendi go to school?", options: ["By bus", "By car", "By bicycle", "On foot"], answer: 2, exp: "Teks menyatakan 'goes to school by bicycle.' Preposisi 'by' digunakan untuk alat transportasi." },
+      { q: "Where is Rendi's school located?", options: ["In the park", "Far from his house", "Behind the park", "Near his house"], answer: 3, exp: "Teks menyatakan 'His school is near his house.' (dekat rumahnya)." },
+      { q: "What is Rendi doing in the afternoon?", options: ["He is studying.", "He is sleeping.", "He is playing football.", "He is eating."], answer: 2, exp: "Teks menyatakan 'In the afternoon, he is playing football...' (Present Continuous Tense)." },
+      { q: "Where does Rendi play football?", options: ["In the school", "In the park", "In the garden", "At home"], answer: 1, exp: "Teks menyebutkan '...with his friends in the park.' Preposisi 'in' digunakan untuk tempat seperti taman." }
+    ]
+  },
+  {
+    title: "Story 2",
+    text: "Today is Sunday. Mia and her family are visiting the zoo. Look! The monkeys are swinging on the branches. A big tiger is sleeping under a tree. Mia's little brother is pointing at the elephants. The elephants are drinking water in the pond. Mia is very happy.",
+    questions: [
+      { q: "What day is it today?", options: ["Monday", "Sunday", "Saturday", "Friday"], answer: 1, exp: "Teks dimulai dengan 'Today is Sunday.'" },
+      { q: "What are the monkeys doing?", options: ["Sleeping under a tree", "Drinking water", "Swinging on the branches", "Eating bananas"], answer: 2, exp: "Teks menyatakan 'The monkeys are swinging on the branches.' (Present Continuous)." },
+      { q: "Where is the tiger sleeping?", options: ["In the pond", "On the branches", "In the cage", "Under a tree"], answer: 3, exp: "Teks menyatakan 'A big tiger is sleeping under a tree.' Preposisi 'under' berarti di bawah." },
+      { q: "What is Mia's brother doing?", options: ["Pointing at the elephants", "Pointing at the monkeys", "Sleeping", "Drinking water"], answer: 0, exp: "Teks menyatakan 'Mia's little brother is pointing at the elephants.'" },
+      { q: "Where are the elephants drinking water?", options: ["In the pond", "On the grass", "Under a tree", "In the river"], answer: 0, exp: "Teks menyatakan 'The elephants are drinking water in the pond.' Preposisi 'in' berarti di dalam." }
+    ]
+  },
+  {
+    title: "Story 3",
+    text: "Dina has a pet cat named Milo. Milo is a cute and lazy cat. He likes to sleep on the sofa in the living room. Dina feeds him fish every morning. Right now, Milo is hiding behind the curtain because he is scared of the vacuum cleaner.",
+    questions: [
+      { q: "What is the name of Dina's cat?", options: ["Miki", "Milo", "Kitty", "Blacky"], answer: 1, exp: "Teks menyebutkan 'Dina has a pet cat named Milo.'" },
+      { q: "Where does Milo like to sleep?", options: ["On the bed", "Under the table", "On the sofa", "In the garden"], answer: 2, exp: "Teks menyatakan 'He likes to sleep on the sofa...' Preposisi 'on' digunakan untuk di atas permukaan." },
+      { q: "What does Dina feed Milo every morning?", options: ["Chicken", "Fish", "Meat", "Milk"], answer: 1, exp: "Teks menyatakan 'Dina feeds him fish every morning.' (Simple Present - rutinitas)." },
+      { q: "What is Milo doing right now?", options: ["Sleeping on the sofa", "Eating fish", "Playing with Dina", "Hiding behind the curtain"], answer: 3, exp: "Teks menyatakan 'Right now, Milo is hiding behind the curtain...' (Present Continuous)." },
+      { q: "Why is Milo hiding?", options: ["Because he is tired", "Because he is hungry", "Because he is scared of the vacuum cleaner", "Because he likes the curtain"], answer: 2, exp: "Teks menjelaskan alasannya: 'because he is scared of the vacuum cleaner.'" }
+    ]
+  },
+  {
+    title: "Story 4",
+    text: "It is a busy Saturday morning. Mother is cooking soup in the kitchen. Father is washing his car in the garage. My sister, Tina, is sweeping the floor in the living room. I am watering the plants in the garden. We always clean the house together on weekends.",
+    questions: [
+      { q: "What is Mother doing?", options: ["Washing the car", "Cooking soup", "Sweeping the floor", "Watering the plants"], answer: 1, exp: "Teks menyatakan 'Mother is cooking soup in the kitchen.'" },
+      { q: "Where is Father washing his car?", options: ["In the garden", "In the kitchen", "In the garage", "In the living room"], answer: 2, exp: "Teks menyatakan 'Father is washing his car in the garage.' Preposisi 'in' menunjukkan di dalam ruangan." },
+      { q: "Who is sweeping the floor?", options: ["Father", "Mother", "Tina", "The writer"], answer: 2, exp: "Teks menyatakan 'My sister, Tina, is sweeping the floor...'" },
+      { q: "Where is the writer watering the plants?", options: ["In the garden", "In the garage", "In the kitchen", "In the living room"], answer: 0, exp: "Teks menyatakan 'I am watering the plants in the garden.'" },
+      { q: "When do they always clean the house together?", options: ["On Mondays", "On Fridays", "On weekends", "Every day"], answer: 2, exp: "Teks menyatakan 'We always clean the house together on weekends.' Preposisi 'on' digunakan untuk 'weekends'." }
+    ]
+  },
+  {
+    title: "Story 5",
+    text: "There is a new library in my town. It is located between the post office and the bank. The library opens at 8 AM and closes at 4 PM. Inside the library, the books are neatly arranged on the shelves. Right now, many students are reading books quietly at the tables.",
+    questions: [
+      { q: "Where is the new library located?", options: ["Next to the school", "Between the post office and the bank", "Behind the bank", "In front of the post office"], answer: 1, exp: "Teks menyatakan 'It is located between the post office and the bank.' Preposisi 'between' berarti di antara dua tempat." },
+      { q: "What time does the library open?", options: ["7 AM", "8 AM", "9 AM", "10 AM"], answer: 1, exp: "Teks menyatakan 'The library opens at 8 AM...'" },
+      { q: "Where are the books arranged?", options: ["On the tables", "Under the tables", "On the shelves", "In the boxes"], answer: 2, exp: "Teks menyatakan '...the books are neatly arranged on the shelves.' Preposisi 'on' digunakan untuk rak." },
+      { q: "What are the students doing right now?", options: ["Borrowing books", "Reading books", "Talking loudly", "Arranging books"], answer: 1, exp: "Teks menyatakan 'Right now, many students are reading books...' (Present Continuous)." },
+      { q: "How do the students read the books?", options: ["Loudly", "Quietly", "Quickly", "Slowly"], answer: 1, exp: "Teks menyatakan '...reading books quietly at the tables.'" }
+    ]
+  }
+];
+
+// State
+let studentName = '';
+let answered = { 1: {}, 2: {}, 3: {}, 4: {} };
+let explanationsShown = { 1: false, 2: false, 3: false, 4: false };
+let checked = { 1: false, 2: false, 3: false, 4: false };
+let scores = { 1: null, 2: null, 3: null, 4: null };
+
+const letters = ['A', 'B', 'C', 'D'];
+
+/* ============================ INIT ============================ */
+function init() {
+  // Build Part 1 questions
+  buildQuestions(1, part1Data, 'questions1');
+  // Build Part 2 questions
+  buildQuestions(2, part2Data, 'questions2');
+  // Build Part 3 questions (with dialogues)
+  buildDialogueQuestions();
+  // Build Part 4 questions (with stories)
+  buildStoryQuestions();
+  // Build navigation bars
+  buildNavBar(1, part1Data.length);
+  buildNavBar(2, part2Data.length);
+  buildNavBar(3, 50);
+  buildNavBar(4, 25);
+  // Build test hub cards
+  buildTestHub();
+
+  // Name input
+  const nameInput = document.getElementById('studentName');
+  const startBtn = document.getElementById('startBtn');
+  nameInput.addEventListener('input', () => {
+    startBtn.disabled = nameInput.value.trim().length < 2;
+  });
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (nameInput.value.trim().length >= 2) {
+        document.getElementById('nameForm').requestSubmit();
+      }
+    }
+  });
+  document.getElementById('nameForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (nameInput.value.trim().length < 2) return;
+    studentName = nameInput.value.trim();
+    setUserName(studentName);
+    goToPage('material-page');
+    showToast(`Selamat datang, ${studentName}! Selamat belajar.`, 'success');
+  });
+
+  // Scroll progress
+  window.addEventListener('scroll', () => {
+    const scroll = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('scrollProgress').style.width = scroll + '%';
+  });
+}
+
+function setUserName(name) {
+  const initial = name.charAt(0).toUpperCase();
+  ['avatarMat', 'avatarTest', 'avatarT1', 'avatarT2', 'avatarT3', 'avatarT4'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = initial;
+  });
+  ['userNameMat', 'userNameTest', 'userNameT1', 'userNameT2', 'userNameT3', 'userNameT4'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = name;
+  });
+}
+
+/* ============================ PAGE NAVIGATION ============================ */
+function goToPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================ BUILD QUESTIONS ============================ */
+function buildQuestions(partNum, data, containerId) {
+  const container = document.getElementById(containerId);
+  let html = '';
+  data.forEach((item, i) => {
+    const qNum = partNum === 1 ? i + 1 : (partNum === 2 ? i + 21 : i + 71);
+    html += `
+      <div class="question-card" id="q-${partNum}-${i}" data-part="${partNum}" data-index="${i}">
+        <div class="q-header">
+          <div class="q-num">${qNum}</div>
+          <div class="q-status"><i class="fas fa-check-circle"></i> Benar</div>
+          <div class="q-status wrong-status"><i class="fas fa-times-circle"></i> Salah</div>
+        </div>
+        <div class="q-text">${item.q}</div>
+        <div class="options">
+          ${item.options.map((opt, j) => `
+            <button class="option" data-part="${partNum}" data-q="${i}" data-opt="${j}" onclick="selectOption(${partNum}, ${i}, ${j})">
+              <span class="option-letter">${letters[j]}</span>
+              <span>${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation" id="exp-${partNum}-${i}">
+          <i class="fas fa-lightbulb explanation-icon"></i>
+          <strong>Pembahasan:</strong> ${item.exp}
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function buildDialogueQuestions() {
+  const container = document.getElementById('questions3');
+  let html = '';
+  let qIdx = 0;
+  dialogues.forEach((dialogue, dIdx) => {
+    // Add dialogue label
+    html += `<div class="section-label dialogue-label">${dialogue.title}</div>`;
+    // Add dialogue box
+    html += `<div class="dialogue-box">`;
+    dialogue.lines.forEach((line, idx) => {
+      let cls = '';
+      if (line.class) {
+        cls = ` ${line.class}`;
+      } else {
+        // Alternate color if no class specified
+        cls = idx % 2 === 0 ? '' : ' b';
+      }
+      html += `
+        <div class="dialogue-speaker">
+          <span class="speaker-tag${cls}">${line.sp}</span>
+          <span class="speaker-text">"${line.text}"</span>
+        </div>
+      `;
+    });
+    html += `</div>`;
+    // Add questions
+    dialogue.questions.forEach((q, qi) => {
+      const globalIdx = qIdx;
+      html += `
+        <div class="question-card" id="q-3-${globalIdx}" data-part="3" data-index="${globalIdx}">
+          <div class="q-header">
+            <div class="q-num">${71 + globalIdx}</div>
+            <div class="q-status"><i class="fas fa-check-circle"></i> Benar</div>
+            <div class="q-status wrong-status"><i class="fas fa-times-circle"></i> Salah</div>
+          </div>
+          <div class="q-text">${q.q}</div>
+          <div class="options">
+            ${q.options.map((opt, j) => `
+              <button class="option" data-part="3" data-q="${globalIdx}" data-opt="${j}" onclick="selectOption(3, ${globalIdx}, ${j})">
+                <span class="option-letter">${letters[j]}</span>
+                <span>${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="exp-3-${globalIdx}">
+            <i class="fas fa-lightbulb explanation-icon"></i>
+            <strong>Pembahasan:</strong> ${q.exp}
+          </div>
+        </div>
+      `;
+      qIdx++;
+    });
+  });
+  container.innerHTML = html;
+}
+
+function buildStoryQuestions() {
+  const container = document.getElementById('questions4');
+  let html = '';
+  let qIdx = 0;
+  stories.forEach((story, sIdx) => {
+    // Add story label
+    html += `<div class="section-label story-label">${story.title}</div>`;
+    // Add story box
+    html += `<div class="story-box"><p class="story-text">${story.text}</p></div>`;
+    
+    // Add questions
+    story.questions.forEach((q, qi) => {
+      const globalIdx = qIdx;
+      html += `
+        <div class="question-card" id="q-4-${globalIdx}" data-part="4" data-index="${globalIdx}">
+          <div class="q-header">
+            <div class="q-num">${globalIdx + 1}</div>
+            <div class="q-status"><i class="fas fa-check-circle"></i> Benar</div>
+            <div class="q-status wrong-status"><i class="fas fa-times-circle"></i> Salah</div>
+          </div>
+          <div class="q-text">${q.q}</div>
+          <div class="options">
+            ${q.options.map((opt, j) => `
+              <button class="option" data-part="4" data-q="${globalIdx}" data-opt="${j}" onclick="selectOption(4, ${globalIdx}, ${j})">
+                <span class="option-letter">${letters[j]}</span>
+                <span>${opt}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div class="explanation" id="exp-4-${globalIdx}">
+            <i class="fas fa-lightbulb explanation-icon"></i>
+            <strong>Pembahasan:</strong> ${q.exp}
+          </div>
+        </div>
+      `;
+      qIdx++;
+    });
+  });
+  container.innerHTML = html;
+}
+
+/* ============================ DATA GETTERS ============================ */
+function getPart3Data() {
+  let combined = [];
+  dialogues.forEach(d => {
+    d.questions.forEach(q => combined.push(q));
+  });
+  return combined;
+}
+
+function getPart4Data() {
+  let combined = [];
+  stories.forEach(s => {
+    s.questions.forEach(q => combined.push(q));
+  });
+  return combined;
+}
+
+/* ============================ NAV BAR ============================ */
+function buildNavBar(partNum, count) {
+  const nav = document.getElementById(`nav${partNum}`);
+  let html = '';
+  for (let i = 0; i < count; i++) {
+    let qNum;
+    if (partNum === 1) qNum = i + 1;
+    else if (partNum === 2) qNum = i + 21;
+    else if (partNum === 3) qNum = i + 71;
+    else if (partNum === 4) qNum = i + 1; // Story questions numbered 1-25
+    
+    html += `<div class="q-nav-item" id="nav-${partNum}-${i}" onclick="scrollToQuestion(${partNum}, ${i})">${qNum}</div>`;
+  }
+  nav.innerHTML = html;
+}
+
+function scrollToQuestion(partNum, idx) {
+  const el = document.getElementById(`q-${partNum}-${idx}`);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.style.transition = 'transform 0.3s';
+    el.style.transform = 'scale(1.02)';
+    setTimeout(() => el.style.transform = '', 400);
+  }
+}
+
+/* ============================ SELECT OPTION ============================ */
+function selectOption(partNum, qIdx, optIdx) {
+  if (checked[partNum]) return; // Locked after checking
+  answered[partNum][qIdx] = optIdx;
+  // Update UI
+  const card = document.getElementById(`q-${partNum}-${qIdx}`);
+  const options = card.querySelectorAll('.option');
+  options.forEach((opt, i) => {
+    opt.classList.toggle('selected', i === optIdx);
+  });
+  card.classList.add('answered');
+  // Update nav
+  const navItem = document.getElementById(`nav-${partNum}-${qIdx}`);
+  if (navItem) navItem.classList.add('answered');
+  // Update test hub progress
+  updateTestHubProgress();
+}
+
+/* ============================ CHECK ANSWERS ============================ */
+function checkAnswers(partNum) {
+  const data = partNum === 1 ? part1Data : (partNum === 2 ? part2Data : (partNum === 3 ? getPart3Data() : getPart4Data()));
+  let correct = 0;
+  let wrong = 0;
+  let unanswered = 0;
+
+  data.forEach((item, i) => {
+    const card = document.getElementById(`q-${partNum}-${i}`);
+    const options = card.querySelectorAll('.option');
+    const userAns = answered[partNum][i];
+    
+    // Remove previous states
+    card.classList.remove('answered', 'correct', 'wrong');
+    options.forEach(o => o.classList.remove('selected', 'correct-answer', 'wrong-answer'));
+    options.forEach(o => o.classList.add('disabled'));
+    
+    if (userAns === undefined) {
+      unanswered++;
+      // Highlight correct answer
+      options[item.answer].classList.add('correct-answer');
+      card.classList.add('wrong');
+      wrong++;
+    } else if (userAns === item.answer) {
+      options[userAns].classList.add('correct-answer');
+      card.classList.add('correct');
+      correct++;
+    } else {
+      options[userAns].classList.add('wrong-answer');
+      options[item.answer].classList.add('correct-answer');
+      card.classList.add('wrong');
+      wrong++;
+    }
+    
+    // Update nav
+    const navItem = document.getElementById(`nav-${partNum}-${i}`);
+    if (navItem) {
+      navItem.classList.remove('answered');
+      if (userAns === item.answer) {
+        navItem.classList.add('correct');
+      } else {
+        navItem.classList.add('wrong');
+      }
+    }
+  });
+
+  checked[partNum] = true;
+  const total = data.length;
+  const score = Math.round((correct / total) * 100);
+  scores[partNum] = { correct, wrong, score, total };
+
+  // Show results
+  document.getElementById(`correctCount${partNum}`).textContent = correct;
+  document.getElementById(`wrongCount${partNum}`).textContent = wrong;
+  document.getElementById(`score${partNum}`).textContent = score;
+  
+  // Message
+  let msg = '';
+  if (score === 100) msg = `Luar biasa, ${studentName}! Skor sempurna! 🎉`;
+  else if (score >= 80) msg = `Kerja bagus, ${studentName}! Pemahamanmu sudah sangat baik.`;
+  else if (score >= 60) msg = `Cukup baik, ${studentName}! Teruslah berlatih untuk hasil lebih baik.`;
+  else if (score >= 40) msg = `Tetap semangat, ${studentName}! Pelajari kembali materinya ya.`;
+  else msg = `Jangan menyerah, ${studentName}! Ayo pelajari materi dan coba lagi.`;
+  document.getElementById(`message${partNum}`).textContent = msg;
+
+  document.getElementById(`results${partNum}`).classList.add('show');
+  
+  // Scroll to results
+  setTimeout(() => {
+    document.getElementById(`results${partNum}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+
+  // Confetti for high scores
+  if (score >= 80) {
+    launchConfetti();
+  }
+
+  // Update test hub
+  updateTestHubProgress();
+  showToast(`Tes selesai! Skor kamu: ${score}`, score >= 60 ? 'success' : 'error');
+}
+
+/* ============================ TOGGLE EXPLANATIONS ============================ */
+function toggleExplanations(partNum) {
+  explanationsShown[partNum] = !explanationsShown[partNum];
+  const show = explanationsShown[partNum];
+  const data = partNum === 1 ? part1Data : (partNum === 2 ? part2Data : (partNum === 3 ? getPart3Data() : getPart4Data()));
+  data.forEach((item, i) => {
+    const exp = document.getElementById(`exp-${partNum}-${i}`);
+    if (exp) exp.classList.toggle('show', show);
+  });
+  // Update buttons
+  const btnText = show ? 'Sembunyikan Pembahasan' : 'Tampilkan Pembahasan';
+  document.querySelectorAll(`[onclick="toggleExplanations(${partNum})"]`).forEach(btn => {
+    btn.innerHTML = `<i class="fas fa-${show ? 'eye-slash' : 'eye'}"></i> ${btnText}`;
+  });
+  showToast(show ? 'Pembahasan ditampilkan' : 'Pembahasan disembunyikan');
+}
+
+/* ============================ RESET TEST ============================ */
+function resetTest(partNum) {
+  if (!confirm('Yakin ingin mengulang tes ini? Semua jawaban akan dihapus.')) return;
+  answered[partNum] = {};
+  checked[partNum] = false;
+  explanationsShown[partNum] = false;
+  scores[partNum] = null;
+  
+  const data = partNum === 1 ? part1Data : (partNum === 2 ? part2Data : (partNum === 3 ? getPart3Data() : getPart4Data()));
+  data.forEach((item, i) => {
+    const card = document.getElementById(`q-${partNum}-${i}`);
+    card.classList.remove('answered', 'correct', 'wrong');
+    const options = card.querySelectorAll('.option');
+    options.forEach(o => {
+      o.classList.remove('selected', 'correct-answer', 'wrong-answer', 'disabled');
+    });
+    const exp = document.getElementById(`exp-${partNum}-${i}`);
+    if (exp) exp.classList.remove('show');
+    const navItem = document.getElementById(`nav-${partNum}-${i}`);
+    if (navItem) navItem.classList.remove('answered', 'correct', 'wrong');
+  });
+  
+  document.getElementById(`results${partNum}`).classList.remove('show');
+  document.querySelectorAll(`[onclick="toggleExplanations(${partNum})"]`).forEach(btn => {
+    btn.innerHTML = `<i class="fas fa-eye"></i> Tampilkan Pembahasan`;
+  });
+  
+  updateTestHubProgress();
+  showToast('Tes telah direset. Kamu bisa mulai lagi dari awal.');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================ TEST HUB ============================ */
+function buildTestHub() {
+  const grid = document.getElementById('testGrid');
+  const tests = [
+    { num: 1, icon: 'language', title: 'Terjemahan', desc: 'Terjemahkan kalimat Bahasa Indonesia ke Bahasa Inggris dengan benar.', count: 20, color: 't1' },
+    { num: 2, icon: 'pen-fancy', title: 'Melengkapi Kalimat', desc: 'Pilih kata yang tepat untuk melengkapi kalimat rumpang.', count: 50, color: 't2' },
+    { num: 3, icon: 'comments', title: 'Pemahaman Percakapan', desc: 'Baca 10 dialog singkat lalu jawab 5 pertanyaan untuk tiap dialog.', count: 50, color: 't3' },
+    { num: 4, icon: 'book-reader', title: 'Soal Cerita', desc: 'Baca 5 cerita pendek lalu jawab 5 pertanyaan pemahaman untuk tiap cerita.', count: 25, color: 't4' }
+  ];
+  
+  let html = '';
+  tests.forEach(t => {
+    html += `
+      <div class="test-card">
+        <div class="test-head ${t.color}">
+          <div class="test-num">Bagian ${t.num === 1 ? 'I' : t.num === 2 ? 'II' : t.num === 3 ? 'III' : 'IV'}</div>
+          <div class="test-title">${t.title}</div>
+          <div class="test-meta">
+            <span><i class="fas fa-list-ol"></i> ${t.count} Soal</span>
+            <span><i class="fas fa-clock"></i> ~${Math.ceil(t.count * 0.5)} menit</span>
+          </div>
+        </div>
+        <div class="test-body">
+          <p>${t.desc}</p>
+          <div class="test-progress">
+            <div class="test-progress-label">
+              <span>Progress</span>
+              <span id="progress-text-${t.num}">0 / ${t.count}</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progress-fill-${t.num}"></div>
+            </div>
+          </div>
+          <div id="test-result-${t.num}" style="display:none;">
+            <div class="test-score"><span id="test-score-num-${t.num}">0</span><span class="total"> / 100</span></div>
+          </div>
+          <button class="test-btn" onclick="goToPage('test${t.num}-page')">
+            <span>Mulai Tes ${t.num === 1 ? 'I' : t.num === 2 ? 'II' : t.num === 3 ? 'III' : 'IV'}</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+  grid.innerHTML = html;
+}
+
+function updateTestHubProgress() {
+  [1, 2, 3, 4].forEach(partNum => {
+    const data = partNum === 1 ? part1Data : (partNum === 2 ? part2Data : (partNum === 3 ? getPart3Data() : getPart4Data()));
+    const total = data.length;
+    const done = Object.keys(answered[partNum]).length;
+    const fill = document.getElementById(`progress-fill-${partNum}`);
+    const text = document.getElementById(`progress-text-${partNum}`);
+    if (fill) fill.style.width = (done / total * 100) + '%';
+    if (text) text.textContent = `${done} / ${total}`;
+    
+    // Show score if checked
+    const resultEl = document.getElementById(`test-result-${partNum}`);
+    if (resultEl && scores[partNum]) {
+      resultEl.style.display = 'block';
+      document.getElementById(`test-score-num-${partNum}`).textContent = scores[partNum].score;
+    } else if (resultEl) {
+      resultEl.style.display = 'none';
+    }
+  });
+}
+
+/* ============================ TOAST ============================ */
+let toastTimer;
+function showToast(msg, type = '') {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.className = 'toast ' + type;
+  }, 3000);
+}
+
+/* ============================ CONFETTI ============================ */
+function launchConfetti() {
+  const colors = ['#0f6e6a', '#e8553a', '#e8a13a', '#2d7a4f', '#c2410c'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.top = '-20px';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      c.style.width = (Math.random() * 8 + 6) + 'px';
+      c.style.height = (Math.random() * 8 + 6) + 'px';
+      c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+// Initialize on load
+init();
+</script>
+
+</body>
+</html>
