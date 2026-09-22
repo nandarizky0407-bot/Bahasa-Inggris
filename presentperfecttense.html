@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Perfect vs Simple Past - English Fun Class</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8EC;
+  --paper: #FFFFFF;
+  --ink: #1F2A4A;
+  --muted: #6B7280;
+  --coral: #FF6B6B;
+  --teal: #14B8A6;
+  --sun: #FFB627;
+  --grape: #9B5DE5;
+  --leaf: #06D6A0;
+  --sky: #4CC9F0;
+  --rose: #F43F5E;
+  --border: rgba(31, 42, 74, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--teal); bottom: -80px; right: -80px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: var(--sun); top: 40%; left: 60%; animation-delay: -10s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.deck { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 1.5rem 2.5rem 5.5rem;
+  overflow-y: auto;
+}
+.slide.active { display: flex; animation: slideIn 0.5s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(31,42,74,0.2); border-radius: 4px; }
+
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 50;
+}
+.nav-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 10px 22px; border-radius: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; font-family: 'Nunito', sans-serif;
+}
+.nav-btn:hover:not(:disabled) { background: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.dots { display: flex; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(31,42,74,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--coral); width: 28px; border-radius: 4px; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--coral), var(--sun), var(--teal)); z-index: 60; transition: width 0.4s ease; }
+
+.flashcard {
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 120px;
+}
+.flashcard:hover { transform: translateY(-4px) scale(1.03); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255, 182, 39, 0.25); }
+.flashcard:active { transform: scale(0.95); }
+.flashcard .icon { font-size: 2rem; margin-bottom: 4px; }
+.flashcard .v1 { font-weight: 600; color: var(--muted); font-size: 0.8rem; }
+.flashcard .v2 { font-weight: 800; color: var(--ink); font-size: 1.1rem; }
+.flashcard .id { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.flashcard.playing { border-color: var(--teal); background: rgba(20, 184, 166, 0.1); animation: pulse 0.6s; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+.card { background: var(--paper); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); border: 1px solid var(--border); transition: all 0.3s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(31, 42, 74, 0.12); }
+
+.bubble { max-width: 78%; padding: 12px 18px; border-radius: 20px; margin: 6px 0; position: relative; font-weight: 600; line-height: 1.6; }
+.bubble.left { background: var(--paper); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.bubble.right { background: linear-gradient(135deg, var(--coral), #FF8787); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+.bubble .speaker { font-size: 11px; opacity: 0.7; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.05em; }
+.bubble.right .speaker { opacity: 0.85; }
+
+.story-text { font-size: 1rem; line-height: 1.85; background: var(--paper); padding: 1.25rem 1.75rem; border-radius: 20px; border-left: 6px solid var(--sun); box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.story-text .underline-answer { background: rgba(255, 182, 39, 0.3); border-bottom: 3px solid var(--sun); padding: 2px 4px; border-radius: 4px; font-weight: 800; }
+
+.speak-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; border: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-left: 8px; vertical-align: middle; }
+.speak-btn:hover { background: #0F9488; transform: scale(1.05); }
+
+.section-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; }
+.section-sub { color: var(--muted); font-weight: 600; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: rgba(20, 184, 166, 0.1); color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.cover-title { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.bob { animation: bob 3s infinite ease-in-out; display: inline-block; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.fade-up { animation: fadeUp 0.6s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-btn { padding: 8px 18px; border-radius: 20px; font-weight: 800; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Fredoka', sans-serif; font-size: 0.9rem; }
+.tab-btn.active { background: var(--coral); color: white; }
+.tab-btn:not(.active) { background: white; color: var(--coral); border: 2px solid var(--coral); }
+
+.story-input { border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; font-weight: 600; font-family: 'Nunito', sans-serif; width: 100%; margin-top: 4px; font-size: 0.95rem; }
+.story-input:focus { outline: none; border-color: var(--teal); }
+
+.btn-check { background: var(--coral); color: white; border: none; padding: 8px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.9rem; position: relative; z-index: 10; }
+.btn-check:hover { background: #E55555; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+
+.explanation { margin-top: 10px; padding: 10px 14px; background: rgba(20, 184, 166, 0.08); border-left: 4px solid var(--teal); border-radius: 8px; font-size: 13px; display: none; }
+.explanation.show { display: block; animation: slideIn 0.3s; }
+
+.game-area { background: linear-gradient(135deg, rgba(155, 93, 229, 0.12), rgba(76, 201, 240, 0.12)); border-radius: 24px; padding: 1.5rem; }
+.game-option { background: var(--paper); border: 3px solid var(--border); border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 700; font-size: 1.05rem; text-align: center; }
+.game-option:hover:not(.disabled) { transform: scale(1.02); border-color: var(--grape); box-shadow: 0 6px 16px rgba(155, 93, 229, 0.25); }
+.game-option.correct { background: var(--leaf); color: white; border-color: var(--leaf); animation: bounce 0.5s; }
+.game-option.incorrect { background: var(--rose); color: white; border-color: var(--rose); animation: shake 0.5s; }
+.game-option.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+.translate-box { background: linear-gradient(135deg, rgba(255,182,39,0.15), rgba(255,107,107,0.1)); border-radius: 16px; padding: 1.25rem; text-align: center; border: 2px dashed var(--sun); }
+.translate-box .id-text { font-size: 1.25rem; font-weight: 800; color: var(--ink); font-family: 'Fredoka', sans-serif; }
+.translate-box .arrow { font-size: 1.5rem; color: var(--coral); margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width: 10%"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide active" data-slide="1">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-6xl mx-auto w-full">
+    <div class="chip mb-6 fade-up">
+      <i class="fas fa-star"></i> English Fun Class · Grade 5
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s">
+      <span style="color: var(--coral)">Present Perfect</span> <br>
+      <span style="color: var(--teal)">vs Simple Past</span>
+    </h1>
+    <h2 class="font-display text-2xl md:text-4xl mt-3 fade-up" style="animation-delay: 0.2s; color: var(--ink)">
+      Time Travel & Possessions <span class="bob">⏳</span>
+    </h2>
+    <p class="text-base md:text-xl mt-6 max-w-2xl fade-up" style="animation-delay: 0.3s; color: var(--muted)">
+      Let's learn the difference between actions that <b>finished in the past</b> and actions that <b>connect to the present</b>!
+    </p>
+    <div class="flex gap-4 md:gap-8 mt-10 text-4xl md:text-5xl fade-up" style="animation-delay: 0.4s">
+      <span class="bob" style="animation-delay: 0s">⏰</span>
+      <span class="bob" style="animation-delay: 0.2s">📜</span>
+      <span class="bob" style="animation-delay: 0.4s">🎒</span>
+      <span class="bob" style="animation-delay: 0.6s">✨</span>
+      <span class="bob" style="animation-delay: 0.8s">🏃</span>
+    </div>
+    <button class="btn-check mt-10 text-lg fade-up" style="animation-delay: 0.5s; padding: 12px 32px;" onclick="goToSlide(1)">
+      <i class="fas fa-play mr-2"></i> Start Adventure
+    </button>
+    <p class="text-xs mt-4 fade-up" style="animation-delay: 0.6s; color: var(--muted)">
+      <i class="fas fa-keyboard mr-1"></i> Use ← → arrow keys to navigate
+    </p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: FLASHCARDS (V3 VERBS) ============ -->
+<section class="slide" data-slide="2">
+  <div class="max-w-7xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-history"></i> Vocabulary · Past Participle (V3)</span>
+    <h1 class="section-title mt-2 mb-2">Irregular V3 Flashcards <span class="bob">🃏</span></h1>
+    <p class="section-sub mb-4">Present Perfect uses V3 (Past Participle). Click any card to hear it!</p>
+    <div id="flashcardsGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: PRESENT PERFECT TENSE ============ -->
+<section class="slide" data-slide="3">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Grammar Lesson 1</span>
+    <h1 class="section-title mt-2 mb-2">Present Perfect Tense <span class="bob">✨</span></h1>
+    <p class="section-sub mb-6">We use Present Perfect for actions that happened in the past but <b>connect to the present</b> (the result is important now).</p>
+
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--leaf)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--leaf)">✅ Positive (+)</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Subject + have/has + V3</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            I <b>have eaten</b> breakfast.<br>
+            <span style="color:var(--muted); font-size:11px">(Saya sudah makan sarapan.)</span>
+            <button class="speak-btn" onclick="speak('I have eaten breakfast.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            She <b>has finished</b> her homework.<br>
+            <span style="color:var(--muted); font-size:11px">(Dia sudah menyelesaikan PR-nya.)</span>
+            <button class="speak-btn" onclick="speak('She has finished her homework.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--rose)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--rose)">❌ Negative (-)</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Subject + haven't/hasn't + V3</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(244, 63, 94, 0.08)">
+            I <b>haven't eaten</b> breakfast.<br>
+            <span style="color:var(--muted); font-size:11px">(Saya belum makan sarapan.)</span>
+            <button class="speak-btn" onclick="speak('I have not eaten breakfast.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(244, 63, 94, 0.08)">
+            She <b>hasn't finished</b> her homework.<br>
+            <span style="color:var(--muted); font-size:11px">(Dia belum menyelesaikan PR-nya.)</span>
+            <button class="speak-btn" onclick="speak('She has not finished her homework.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--sun)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--sun)">❓ Question (?)</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Have/Has + Subject + V3?</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(255, 182, 39, 0.08)">
+            <b>Have</b> you eaten breakfast?<br>
+            <span style="color:var(--muted); font-size:11px">(Apakah kamu sudah makan sarapan?)</span>
+            <button class="speak-btn" onclick="speak('Have you eaten breakfast?')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255, 182, 39, 0.08)">
+            <b>Has</b> she finished her homework?<br>
+            <span style="color:var(--muted); font-size:11px">(Apakah dia sudah menyelesaikan PR-nya?)</span>
+            <button class="speak-btn" onclick="speak('Has she finished her homework?')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 Time Signals for Present Perfect</h3>
+      <div class="flex gap-2 flex-wrap">
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">already (sudah)</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">yet (belum/sudah)</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">just (baru saja)</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">ever (pernah)</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">never (tidak pernah)</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">since (sejak)</span>
+        <span class="chip" style="background: rgba(255,107,107,0.15); color: var(--coral)">for (selama)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: PRESENT PERFECT VS SIMPLE PAST ============ -->
+<section class="slide" data-slide="4">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-balance-scale"></i> Grammar Lesson 2</span>
+    <h1 class="section-title mt-2 mb-2">Present Perfect vs Simple Past <span class="bob">⚖️</span></h1>
+    <p class="section-sub mb-6">What is the difference? Let's compare them side by side!</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--grape)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--grape)">Simple Past Tense</h3>
+        <p class="text-sm font-semibold mb-4">Action that <b>finished</b> in the past. The time is <b>specific/known</b>.</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-3 rounded-lg" style="background: rgba(155,93,229,0.08)">
+            I <b>ate</b> breakfast <span style="color:var(--grape)">at 7 AM</span>.<br>
+            <span style="color:var(--muted); font-size:11px">(Waktunya spesifik: jam 7 pagi)</span>
+            <button class="speak-btn" onclick="speak('I ate breakfast at 7 AM.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(155,93,229,0.08)">
+            She <b>went</b> to Bali <span style="color:var(--grape)">last year</span>.<br>
+            <span style="color:var(--muted); font-size:11px">(Waktunya spesifik: tahun lalu)</span>
+            <button class="speak-btn" onclick="speak('She went to Bali last year.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--sky)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--sky)">Present Perfect Tense</h3>
+        <p class="text-sm font-semibold mb-4">Action that happened in the past but <b>connects to now</b>. Time is <b>not specific</b> or unfinished.</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-3 rounded-lg" style="background: rgba(76,201,240,0.08)">
+            I <b>have eaten</b> breakfast <span style="color:var(--sky)">already</span>.<br>
+            <span style="color:var(--muted); font-size:11px">(Waktu tidak spesifik, yang penting sekarang sudah kenyang)</span>
+            <button class="speak-btn" onclick="speak('I have eaten breakfast already.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(76,201,240,0.08)">
+            She <b>has been</b> to Bali <span style="color:var(--sky)">twice</span>.<br>
+            <span style="color:var(--muted); font-size:11px">(Pengalaman, waktu tidak disebutkan)</span>
+            <button class="speak-btn" onclick="speak('She has been to Bali twice.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(155,93,229,0.08), rgba(76,201,240,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 The Golden Rule</h3>
+      <p class="text-sm font-semibold" style="line-height: 1.7">
+        If you mention a <b>specific past time</b> (yesterday, last week, in 2010, two days ago), you <b>MUST</b> use Simple Past.<br>
+        ❌ "I have eaten breakfast yesterday." <br>
+        ✅ "I <b>ate</b> breakfast yesterday." <br><br>
+        If you focus on the <b>result/experience</b> without specific time, use Present Perfect.<br>
+        ✅ "I <b>have eaten</b> breakfast."
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: HAS/HAVE POSSESSION VS AUXILIARY ============ -->
+<section class="slide" data-slide="5">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-suitcase"></i> Grammar Lesson 3</span>
+    <h1 class="section-title mt-2 mb-2">Has/Have: Possession vs Auxiliary <span class="bob">🎒</span></h1>
+    <p class="section-sub mb-6">"Have/Has" can mean <b>possession</b> (kepemilikan) OR act as a <b>helper verb</b> (auxiliary) in Present Perfect.</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--coral)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--coral)">1. Possession (Kepemilikan)</h3>
+        <p class="text-sm font-semibold mb-4">Meaning: <b>Mempunyai</b>. Followed by a <b>Noun</b> (kata benda).</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-3 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            I <b>have</b> a new book.<br>
+            <span style="color:var(--muted); font-size:11px">(Saya memiliki buku baru.)</span>
+            <button class="speak-btn" onclick="speak('I have a new book.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            She <b>has</b> a red car.<br>
+            <span style="color:var(--muted); font-size:11px">(Dia memiliki mobil merah.)</span>
+            <button class="speak-btn" onclick="speak('She has a red car.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--teal)">
+        <h3 class="font-display text-2xl font-bold mb-3" style="color: var(--teal)">2. Auxiliary (Present Perfect)</h3>
+        <p class="text-sm font-semibold mb-4">Meaning: <b>Sudah/Belum</b>. Followed by <b>V3</b> (Past Participle).</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-3 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            I <b>have</b> read the book.<br>
+            <span style="color:var(--muted); font-size:11px">(Saya sudah membaca bukunya.)</span>
+            <button class="speak-btn" onclick="speak('I have read the book.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-3 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            She <b>has</b> bought a car.<br>
+            <span style="color:var(--muted); font-size:11px">(Dia sudah membeli mobil.)</span>
+            <button class="speak-btn" onclick="speak('She has bought a car.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(20,184,166,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">⏳ Past Form: HAD</h3>
+      <div class="grid md:grid-cols-2 gap-4 text-sm font-semibold">
+        <div class="p-3 rounded-lg" style="background: var(--paper)">
+          <b>Past Possession:</b> <br>
+          I <b>had</b> a toy. (Saya punya mainan.) <br>
+          She <b>had</b> a toy. (Dia punya mainan.)
+          <button class="speak-btn" onclick="speak('I had a toy. She had a toy.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-3 rounded-lg" style="background: var(--paper)">
+          <b>Past Perfect Action:</b> <br>
+          I <b>had eaten</b> before you came. (Saya sudah makan sebelum kamu datang.)
+          <button class="speak-btn" onclick="speak('I had eaten before you came.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+      <div class="mt-4 p-3 rounded-lg" style="background: var(--paper); border-left: 4px solid var(--coral)">
+        <b>⚠️ Summary:</b> <br>
+        Have/Has + <b>Noun</b> = Kepemilikan (Now) <br>
+        Have/Has + <b>V3</b> = Present Perfect (Sudah dilakukan) <br>
+        Had + <b>Noun</b> = Kepemilikan di masa lalu
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: CONVERSATIONS ============ -->
+<section class="slide" data-slide="6">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversations · Ms. Nanda & Cio</span>
+    <h1 class="section-title mt-2 mb-2">Let's Read Together! <span class="bob">💬</span></h1>
+    <p class="section-sub mb-4">5 conversations mixing Past, Present Perfect, and Possession!</p>
+    
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button class="tab-btn active" onclick="switchConv(1, this)">Conv 1</button>
+      <button class="tab-btn" onclick="switchConv(2, this)">Conv 2</button>
+      <button class="tab-btn" onclick="switchConv(3, this)">Conv 3</button>
+      <button class="tab-btn" onclick="switchConv(4, this)">Conv 4</button>
+      <button class="tab-btn" onclick="switchConv(5, this)">Conv 5</button>
+    </div>
+    
+    <div id="convContainer"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: TRANSLATION PRACTICE ============ -->
+<section class="slide" data-slide="7">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-language"></i> Translation Practice · Indonesian → English</span>
+    <h1 class="section-title mt-2 mb-2">Translate the Sentence! <span class="bob">🌐</span></h1>
+    <p class="section-sub mb-4">Choose the correct English translation. Pay attention to the time signals!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="transScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="transQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/20</span>
+        </div>
+      </div>
+      
+      <div class="translate-box mb-6">
+        <p class="text-sm font-bold mb-2" style="color:var(--muted)">📝 Kalimat dalam Bahasa Indonesia:</p>
+        <p class="id-text" id="transIndonesian"></p>
+        <div class="arrow">↓</div>
+        <p class="text-sm font-bold" style="color:var(--muted)">Choose the correct English translation:</p>
+      </div>
+      
+      <div id="transOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      <div id="transFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: STORY & QUESTIONS ============ -->
+<section class="slide" data-slide="8">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story Time</span>
+    <h1 class="section-title mt-2 mb-2">Read & Answer <span class="bob">📖</span></h1>
+    <p class="section-sub mb-4">Read the story carefully, then answer 10 questions. Type your answer and check!</p>
+    
+    <div class="flex justify-between items-center mb-3">
+      <p class="text-sm font-bold" style="color:var(--muted)">Cio's Day — Past & Present Perfect</p>
+      <button class="btn-check" onclick="speak(storyText, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div id="storyContainer" class="story-text mb-6"></div>
+    
+    <h3 class="font-display text-xl font-bold mb-4">📋 Answer these questions:</h3>
+    <div id="storyQuestions" class="space-y-4"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: QUICK QUIZ ============ -->
+<section class="slide" data-slide="9">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-bolt"></i> Quick Quiz</span>
+    <h1 class="section-title mt-2 mb-2">Fill in the Blank! <span class="bob">⚡</span></h1>
+    <p class="section-sub mb-4">Choose the correct word for each sentence!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="quizScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="quizQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/10</span>
+        </div>
+      </div>
+      <div id="quizContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: CLOSING ============ -->
+<section class="slide" data-slide="10">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full">
+    <div class="chip mb-4 fade-up">
+      <i class="fas fa-trophy"></i> Congratulations!
+    </div>
+    <h1 class="cover-title font-display fade-up" style="animation-delay: 0.1s; font-size: clamp(2.5rem, 6vw, 4.5rem)">
+      Great Job! <span class="bob">🎉</span>
+    </h1>
+    <p class="text-lg md:text-xl mt-4 max-w-2xl fade-up" style="animation-delay: 0.2s; color:var(--muted)">
+      You've mastered the difference between Simple Past and Present Perfect!
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-4 mt-8 w-full max-w-4xl">
+      <div class="card fade-up" style="animation-delay: 0.3s; border-top:6px solid var(--coral)">
+        <div class="text-3xl mb-2">⏰</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--coral)">Simple Past vs Present Perfect</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          Simple Past: Specific time (yesterday). <br>
+          Present Perfect: Unfinished/No specific time (already, just, ever).
+        </p>
+      </div>
+      <div class="card fade-up" style="animation-delay: 0.4s; border-top:6px solid var(--teal)">
+        <div class="text-3xl mb-2">🎒</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--teal)">Has / Have</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          + Noun = Possession (mempunyai) <br>
+          + V3 = Present Perfect (sudah melakukan)
+        </p>
+      </div>
+    </div>
+
+    <div class="card mt-6 w-full max-w-3xl fade-up" style="animation-delay: 0.5s; border-top:6px solid var(--grape)">
+      <div class="text-3xl mb-2">💭</div>
+      <h3 class="font-display font-bold text-lg" style="color:var(--grape)">Reflection</h3>
+      <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+        Ask yourself:<br>
+        • What did you do yesterday? → "I ___ed."<br>
+        • What have you done today? → "I have ___ed."<br>
+        • What do you have in your pocket? → "I have ___."<br>
+      </p>
+    </div>
+
+    <div class="flex gap-6 mt-10 text-5xl fade-up" style="animation-delay: 0.6s">
+      <span class="bob" style="animation-delay:0s">⏰</span>
+      <span class="bob" style="animation-delay:0.2s">✨</span>
+      <span class="bob" style="animation-delay:0.4s">🎒</span>
+      <span class="bob" style="animation-delay:0.6s">🏆</span>
+    </div>
+
+    <h2 class="font-display text-2xl md:text-3xl mt-8 fade-up" style="animation-delay: 0.7s; color: var(--coral)">
+      Thank You for Today! <span class="bob">🌈</span>
+    </h2>
+    <p class="text-sm mt-3 fade-up" style="animation-delay: 0.8s; color:var(--muted)">
+      Keep practicing your English. See you next time!
+    </p>
+    
+    <button class="btn-check mt-6 fade-up" style="animation-delay: 0.9s" onclick="goToSlide(0)">
+      <i class="fas fa-redo mr-2"></i>Start Again
+    </button>
+  </div>
+</section>
+
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+    <i class="fas fa-arrow-left"></i> Prev
+  </button>
+  <div class="flex items-center gap-4">
+    <span class="text-sm font-bold" style="color:var(--muted)">
+      <span id="slideNum">1</span> / <span id="slideTotal">10</span>
+    </span>
+    <div class="dots" id="dots"></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+    Next <i class="fas fa-arrow-right"></i>
+  </button>
+</nav>
+
+<script>
+// ============ Data: Flashcards (V1 to V3) ============
+const verbs = [
+  { v1: 'play', v3: 'played', id: 'bermain', icon: '⚽' },
+  { v1: 'watch', v3: 'watched', id: 'menonton', icon: '📺' },
+  { v1: 'cook', v3: 'cooked', id: 'memasak', icon: '🍳' },
+  { v1: 'clean', v3: 'cleaned', id: 'membersihkan', icon: '🧹' },
+  { v1: 'go', v3: 'gone', id: 'pergi', icon: '🚶' },
+  { v1: 'eat', v3: 'eaten', id: 'makan', icon: '🍽️' },
+  { v1: 'drink', v3: 'drunk', id: 'minum', icon: '🥤' },
+  { v1: 'see', v3: 'seen', id: 'melihat', icon: '👀' },
+  { v1: 'buy', v3: 'bought', id: 'membeli', icon: '🛒' },
+  { v1: 'take', v3: 'taken', id: 'mengambil', icon: '📸' },
+  { v1: 'make', v3: 'made', id: 'membuat', icon: '🛠️' },
+  { v1: 'sleep', v3: 'slept', id: 'tidur', icon: '🛏️' },
+  { v1: 'wake', v3: 'woken', id: 'bangun', icon: '⏰' },
+  { v1: 'write', v3: 'written', id: 'menulis', icon: '✏️' },
+  { v1: 'read', v3: 'read', id: 'membaca', icon: '📖' },
+  { v1: 'do', v3: 'done', id: 'mengerjakan', icon: '📝' },
+  { v1: 'run', v3: 'run', id: 'berlari', icon: '🏃' },
+  { v1: 'swim', v3: 'swum', id: 'berenang', icon: '🏊' },
+  { v1: 'sing', v3: 'sung', id: 'menyanyi', icon: '🎤' },
+  { v1: 'draw', v3: 'drawn', id: 'menggambar', icon: '🎨' }
+];
+
+// ============ Navigation ============
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+document.getElementById('slideTotal').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  document.getElementById('slideNum').textContent = currentSlide + 1;
+  document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = Math.max(0, Math.min(totalSlides - 1, index));
+  slides[currentSlide].classList.add('active');
+  updateNav();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  document.querySelector('.slide.active').scrollTop = 0;
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ============ Text-to-Speech ============
+let englishVoice = null;
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.startsWith('en') && /female|samantha|google/i.test(v.name)) 
+              || voices.find(v => v.lang.startsWith('en-US'))
+              || voices.find(v => v.lang.startsWith('en'));
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, longText = false) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = longText ? 0.9 : 0.85;
+  utter.pitch = 1.1;
+  if (englishVoice) utter.voice = englishVoice;
+  window.speechSynthesis.speak(utter);
+}
+
+// ============ SLIDE 2: Flashcards ============
+function renderFlashcards() {
+  const grid = document.getElementById('flashcardsGrid');
+  verbs.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `
+      <div class="icon">${v.icon}</div>
+      <div class="v1">${v.v1} <i class="fas fa-arrow-right" style="font-size:10px"></i></div>
+      <div class="v2">${v.v3}</div>
+      <div class="id">${v.id}</div>
+    `;
+    card.onclick = () => {
+      speak(v.v3);
+      document.querySelectorAll('.flashcard').forEach(c => c.classList.remove('playing'));
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 1000);
+    };
+    grid.appendChild(card);
+  });
+}
+
+// ============ SLIDE 6: Conversations ============
+const conversations = [
+  {
+    title: "Conversation 1 · Experiences (Present Perfect)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Have you ever been to Bali, Cio?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I have been to Bali twice.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'What did you do there?', side: 'left' },
+      { speaker: 'Cio', text: "I visited the temple and ate delicious food.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Did you surf in the ocean?', side: 'left' },
+      { speaker: 'Cio', text: "No, I didn't surf. I haven't learned how to surf yet.", side: 'right' }
+    ],
+    questions: [
+      { q: "Has Cio ever been to Bali?", a: "Yes, he has been to Bali twice." },
+      { q: "What did he do in Bali?", a: "He visited the temple and ate delicious food." },
+      { q: "Did he surf in the ocean?", a: "No, he didn't surf." },
+      { q: "Why didn't he surf?", a: "Because he hasn't learned how to surf yet." },
+      { q: "How many times has Cio been to Bali?", a: "Twice." }
+    ]
+  },
+  {
+    title: "Conversation 2 · What Have You Done?",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: "Cio, have you finished your homework?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, I have just finished it.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "When did you finish it?", side: 'left' },
+      { speaker: 'Cio', text: "I finished it an hour ago.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Have you eaten dinner?", side: 'left' },
+      { speaker: 'Cio', text: "Not yet, I will eat soon.", side: 'right' }
+    ],
+    questions: [
+      { q: "Has Cio finished his homework?", a: "Yes, he has just finished it." },
+      { q: "When did he finish it?", a: "He finished it an hour ago." },
+      { q: "Has Cio eaten dinner?", a: "Not yet." },
+      { q: "What did Cio do an hour ago?", a: "He finished his homework." },
+      { q: "What will Cio do soon?", a: "He will eat dinner soon." }
+    ]
+  },
+  {
+    title: "Conversation 3 · Possessions & Actions",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: "Cio, what do you have in your pocket?", side: 'left' },
+      { speaker: 'Cio', text: "I have a coin, Ms. Nanda.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Have you bought anything today?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, I have bought a book.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Where did you buy it?", side: 'left' },
+      { speaker: 'Cio', text: "I bought it at the bookstore yesterday.", side: 'right' }
+    ],
+    questions: [
+      { q: "What does Cio have in his pocket?", a: "He has a coin." },
+      { q: "Has Cio bought anything today?", a: "Yes, he has bought a book." },
+      { q: "Where did he buy the book?", a: "He bought it at the bookstore yesterday." },
+      { q: "When did Cio buy the book?", a: "Yesterday." },
+      { q: "What did Cio buy at the bookstore?", a: "A book." }
+    ]
+  },
+  {
+    title: "Conversation 4 · Just & Yesterday",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: "Cio, have you cleaned your room?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, I have just cleaned it.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Wow, it looks very neat! Did your sister clean hers?", side: 'left' },
+      { speaker: 'Cio', text: "No, she didn't clean her room yesterday.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Has she cleaned it today?", side: 'left' },
+      { speaker: 'Cio', text: "No, she hasn't cleaned it yet.", side: 'right' }
+    ],
+    questions: [
+      { q: "Has Cio cleaned his room?", a: "Yes, he has just cleaned it." },
+      { q: "Did his sister clean her room yesterday?", a: "No, she didn't clean her room yesterday." },
+      { q: "Has his sister cleaned her room today?", a: "No, she hasn't cleaned it yet." },
+      { q: "How does Cio's room look now?", a: "It looks very neat." },
+      { q: "Who hasn't cleaned their room yet?", a: "Cio's sister." }
+    ]
+  },
+  {
+    title: "Conversation 5 · My Life Experience",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: "Cio, have you ever seen a lion?", side: 'left' },
+      { speaker: 'Cio', text: "Yes, I have seen a lion at the zoo.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "When did you go to the zoo?", side: 'left' },
+      { speaker: 'Cio', text: "I went to the zoo last month with my father.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: "Have you ever fed a lion?", side: 'left' },
+      { speaker: 'Cio', text: "No, I have never fed a lion! It's dangerous.", side: 'right' }
+    ],
+    questions: [
+      { q: "Has Cio ever seen a lion?", a: "Yes, he has seen a lion at the zoo." },
+      { q: "When did he go to the zoo?", a: "He went to the zoo last month with his father." },
+      { q: "Who did Cio go to the zoo with?", a: "His father." },
+      { q: "Has Cio ever fed a lion?", a: "No, he has never fed a lion." },
+      { q: "Why hasn't Cio fed a lion?", a: "Because it is dangerous." }
+    ]
+  }
+];
+
+let currentConv = 1;
+function switchConv(num, btn) {
+  currentConv = num;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderConv();
+}
+
+function renderConv() {
+  const c = conversations[currentConv - 1];
+  const container = document.getElementById('convContainer');
+  let html = `<h3 class="font-display text-lg font-bold mb-4" style="color:var(--coral)">${c.title}</h3>`;
+  html += '<div class="flex flex-col mb-6">';
+  c.dialog.forEach(d => {
+    const escapedText = d.text.replace(/'/g, "\\'");
+    html += `<div class="bubble ${d.side}"><div class="speaker">${d.speaker}</div>${d.text} <button class="speak-btn" onclick="speak('${escapedText}')"><i class="fas fa-volume-up"></i></button></div>`;
+  });
+  html += '</div>';
+  html += '<h4 class="font-display text-lg font-bold mb-3">📋 Questions:</h4><div class="space-y-3">';
+  c.questions.forEach((q, i) => {
+    html += `
+      <div class="card" style="padding:1rem">
+        <p class="font-bold mb-2">${i+1}. ${q.q}</p>
+        <button class="btn-check" style="background:var(--teal)" onclick="toggleConvAnswer(${i}, this)"><i class="fas fa-eye mr-2"></i>Show Answer</button>
+        <div class="explanation" id="exp-conv-${i}">${q.a}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function toggleConvAnswer(i, btn) {
+  const exp = document.getElementById(`exp-conv-${i}`);
+  if (exp.classList.contains('show')) {
+    exp.classList.remove('show');
+    btn.innerHTML = '<i class="fas fa-eye mr-2"></i>Show Answer';
+  } else {
+    exp.classList.add('show');
+    btn.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Hide Answer';
+  }
+}
+
+// ============ SLIDE 7: Translation Practice ============
+const translationData = [
+  { id: 'Saya sudah makan sarapan.', options: ['I have eaten breakfast.', 'I ate breakfast yesterday.', 'I has eaten breakfast.', 'I eating breakfast.'], correct: 0 },
+  { id: 'Dia pergi ke sekolah kemarin.', options: ['She has gone to school.', 'She goes to school.', 'She went to school yesterday.', 'She has went to school.'], correct: 2 },
+  { id: 'Saya memiliki buku baru.', options: ['I has a new book.', 'I have a new book.', 'I have had a new book.', 'I having a new book.'], correct: 1 },
+  { id: 'Dia belum menyelesaikan PR-nya.', options: ["She didn't finish her homework.", "She hasn't finished her homework.", "She hasn't finish her homework.", "She doesn't finish her homework."], correct: 1 },
+  { id: 'Apakah kamu pernah ke Jakarta?', options: ['Did you go to Jakarta?', 'Have you ever went to Jakarta?', 'Have you ever been to Jakarta?', 'Do you ever go to Jakarta?'], correct: 2 },
+  { id: 'Mereka bermain bola tadi sore.', options: ['They have played football.', 'They play football.', 'They played football this afternoon.', 'They has played football.'], correct: 2 },
+  { id: 'Kucing itu memiliki bulu lembut.', options: ['The cat have soft fur.', 'The cat has soft fur.', 'The cat has had soft fur.', 'The cat having soft fur.'], correct: 1 },
+  { id: 'Saya sudah melihat film itu.', options: ['I saw that movie.', 'I see that movie.', 'I have saw that movie.', 'I have seen that movie.'], correct: 3 },
+  { id: 'Ibu saya memasak sup kemarin.', options: ['My mother has cooked soup.', 'My mother cooks soup.', 'My mother cooked soup yesterday.', 'My mother cooking soup.'], correct: 2 },
+  { id: 'Kami belum mengerjakan tugas itu.', options: ["We didn't do the assignment.", "We haven't did the assignment.", "We haven't done the assignment.", "We don't do the assignment."], correct: 2 },
+  { id: 'Ayah saya memiliki mobil merah.', options: ['My father have a red car.', 'My father has a red car.', 'My father has had a red car.', 'My father having a red car.'], correct: 1 },
+  { id: 'Dia tidak menonton TV tadi malam.', options: ["He didn't watch TV last night.", "He hasn't watched TV last night.", "He doesn't watch TV last night.", "He didn't watched TV last night."], correct: 0 },
+  { id: 'Apakah kamu sudah membersihkan kamarmu?', options: ['Did you clean your room?', 'Have you cleaned your room?', 'Has you cleaned your room?', 'Do you clean your room?'], correct: 1 },
+  { id: 'Saya membeli sepatu baru kemarin.', options: ['I have bought new shoes.', 'I buy new shoes.', 'I bought new shoes yesterday.', 'I buying new shoes.'], correct: 2 },
+  { id: 'Dia sudah pergi ke pasar.', options: ['She went to the market.', 'She has gone to the market.', 'She has went to the market.', 'She goes to the market.'], correct: 1 },
+  { id: 'Kemarin saya memiliki ide bagus.', options: ['Yesterday I have a great idea.', 'Yesterday I has a great idea.', 'Yesterday I had a great idea.', 'Yesterday I having a great idea.'], correct: 2 },
+  { id: 'Mereka memiliki dua kucing.', options: ['They has two cats.', 'They have two cats.', 'They has had two cats.', 'They having two cats.'], correct: 1 },
+  { id: 'Kami sudah belajar bahasa Inggris sejak 2018.', options: ['We studied English since 2018.', 'We study English since 2018.', 'We have studied English since 2018.', 'We has studied English since 2018.'], correct: 2 },
+  { id: 'Dia menulis surat tadi pagi.', options: ['He has written a letter this morning.', 'He writes a letter.', 'He wrote a letter this morning.', 'He writing a letter.'], correct: 2 },
+  { id: 'Saya belum pernah makan sushi.', options: ["I didn't eat sushi.", "I have never eaten sushi.", "I don't eat sushi.", "I has never eaten sushi."], correct: 1 }
+];
+
+let transState = { score: 0, qNum: 0, answered: false };
+
+function loadTranslation() {
+  transState.answered = false;
+  const q = translationData[transState.qNum];
+  document.getElementById('transQNum').textContent = `${transState.qNum + 1}/${translationData.length}`;
+  document.getElementById('transIndonesian').textContent = q.id;
+  document.getElementById('transFeedback').textContent = '';
+  
+  const optsContainer = document.getElementById('transOptions');
+  optsContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerTranslation(i, q.correct, btn, opt);
+    optsContainer.appendChild(btn);
+  });
+}
+
+function answerTranslation(chosen, correct, btn, optText) {
+  if (transState.answered) return;
+  transState.answered = true;
+  
+  document.querySelectorAll('#transOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('transFeedback');
+  
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    transState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+    speak(optText);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The correct answer is:</span><br><span style="color:var(--leaf)">${translationData[transState.qNum].options[correct]}</span>`;
+    document.querySelectorAll('#transOptions .game-option')[correct].classList.add('correct');
+    playSound(false);
+    speak(translationData[transState.qNum].options[correct]);
+  }
+  
+  document.getElementById('transScore').textContent = transState.score;
+  
+  setTimeout(() => {
+    transState.qNum++;
+    if (transState.qNum >= translationData.length) {
+      endTranslation();
+    } else {
+      loadTranslation();
+    }
+  }, 2500);
+}
+
+function endTranslation() {
+  const container = document.querySelector('.game-area');
+  const percentage = (transState.score / (translationData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect Translator!';
+    message = "You're amazing at translating Indonesian to English!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know your tenses well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${transState.score}</span> / ${translationData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartTranslation()">
+        <i class="fas fa-redo mr-2"></i>Try Again
+      </button>
+    </div>
+  `;
+}
+
+function restartTranslation() {
+  transState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('transScore').textContent = '0';
+  loadTranslation();
+}
+
+// ============ SLIDE 8: Story & Questions ============
+const storyText = `Cio has had a busy weekend. On Saturday morning, he played football with his friends. He has just finished his homework. His sister has bought a new book. She read it yesterday afternoon. Cio has a dog. He has fed the dog already. Last night, they watched a movie together. Cio didn't like the movie, but he liked the popcorn. Today, Cio has cleaned his room. He hasn't eaten lunch yet. His father has gone to the office. He left early this morning.`;
+
+const storyQuestions = [
+  { q: "What has Cio had?", a: "He has had a busy weekend.", sentence: "Cio has had a busy weekend." },
+  { q: "What did he do on Saturday morning?", a: "He played football with his friends.", sentence: "On Saturday morning, he played football with his friends." },
+  { q: "What has he just finished?", a: "He has just finished his homework.", sentence: "He has just finished his homework." },
+  { q: "What has his sister bought?", a: "She has bought a new book.", sentence: "His sister has bought a new book." },
+  { q: "When did she read it?", a: "She read it yesterday afternoon.", sentence: "She read it yesterday afternoon." },
+  { q: "What does Cio have?", a: "He has a dog.", sentence: "Cio has a dog." },
+  { q: "What has Cio done to the dog?", a: "He has fed the dog already.", sentence: "He has fed the dog already." },
+  { q: "What did they do last night?", a: "They watched a movie together.", sentence: "Last night, they watched a movie together." },
+  { q: "Has Cio eaten lunch yet?", a: "No, he hasn't eaten lunch yet.", sentence: "He hasn't eaten lunch yet." },
+  { q: "Where has his father gone?", a: "His father has gone to the office.", sentence: "His father has gone to the office." }
+];
+
+function renderStory() {
+  const container = document.getElementById('storyContainer');
+  const sentences = storyText.match(/[^.!?]+[.!?]+/g) || [];
+  let html = '';
+  sentences.forEach((s, i) => {
+    html += `<span data-sentence="${i}">${s.trim()} </span>`;
+  });
+  container.innerHTML = html;
+  
+  const qContainer = document.getElementById('storyQuestions');
+  qContainer.innerHTML = '';
+  storyQuestions.forEach((sq, i) => {
+    const sentIndex = sentences.findIndex(s => s.trim() === sq.sentence);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <p class="font-bold mb-2">${i+1}. ${sq.q}</p>
+      <input type="text" class="story-input" placeholder="Type your answer here..." id="storyAns${i}">
+      <button class="btn-check mt-3" onclick="checkStoryAnswer(${i}, ${sentIndex})"><i class="fas fa-check mr-2"></i>Check Answer</button>
+      <div class="explanation" id="exp-story${i}">
+        <b>Answer:</b> ${sq.a}<br>
+        <i>Look at the underlined sentence in the story!</i>
+      </div>
+    `;
+    qContainer.appendChild(card);
+  });
+}
+
+function checkStoryAnswer(qIndex, sentIndex) {
+  const input = document.getElementById(`storyAns${qIndex}`);
+  const exp = document.getElementById(`exp-story${qIndex}`);
+  const userAns = input.value.toLowerCase().trim();
+  
+  if (userAns === '') {
+    input.style.borderColor = 'var(--sun)';
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+  
+  exp.classList.add('show');
+  
+  document.querySelectorAll('.underline-answer').forEach(el => {
+    el.classList.remove('underline-answer');
+  });
+  
+  if (sentIndex >= 0) {
+    const sentSpan = document.querySelector(`[data-sentence="${sentIndex}"]`);
+    if (sentSpan) {
+      sentSpan.classList.add('underline-answer');
+      sentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  const keyWords = storyQuestions[qIndex].a.toLowerCase().split(' ').filter(w => w.length > 3);
+  const matched = keyWords.some(w => userAns.includes(w));
+  
+  if (matched) {
+    input.style.borderColor = 'var(--leaf)';
+    input.style.background = 'rgba(6, 214, 160, 0.1)';
+    playSound(true);
+  } else {
+    input.style.borderColor = 'var(--rose)';
+    input.style.background = 'rgba(244, 63, 94, 0.1)';
+    playSound(false);
+  }
+}
+
+// ============ SLIDE 9: Quick Quiz ============
+const quizData = [
+  { q: "I ___ my homework. (just)", options: ['have just finished', 'has just finished', 'just finished', 'finishing'], correct: 0 },
+  { q: "She ___ to the zoo yesterday.", options: ['has gone', 'have gone', 'went', 'goes'], correct: 2 },
+  { q: "They ___ a new car.", options: ['have', 'has', 'had have', 'having'], correct: 0 },
+  { q: "He ___ his room. (already)", options: ['has cleaned', 'have cleaned', 'cleans', 'has clean'], correct: 0 },
+  { q: "We ___ football last week.", options: ['have played', 'has played', 'played', 'plays'], correct: 2 },
+  { q: "___ you ever ___ a snake?", options: ['Have, seen', 'Has, seen', 'Did, saw', 'Do, see'], correct: 0 },
+  { q: "My cat ___ long tail.", options: ['have', 'has', 'had have', 'having'], correct: 1 },
+  { q: "I ___ a strange dream last night.", options: ['have had', 'has', 'had', 'having'], correct: 2 },
+  { q: "She ___ already ___ the book.", options: ['has, read', 'has, readed', 'have, read', 'did, read'], correct: 0 },
+  { q: "He didn't ___ to the market yesterday.", options: ['went', 'go', 'gone', 'going'], correct: 1 }
+];
+
+let quizState = { score: 0, qNum: 0, answered: false };
+
+function loadQuiz() {
+  quizState.answered = false;
+  const q = quizData[quizState.qNum];
+  document.getElementById('quizQNum').textContent = `${quizState.qNum + 1}/${quizData.length}`;
+  
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = `
+    <div class="text-center mb-6">
+      <div class="font-display text-xl md:text-2xl font-bold mb-4" style="line-height:1.5">${q.q}</div>
+    </div>
+    <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    <div id="quizFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  `;
+  
+  const optsContainer = document.getElementById('quizOptions');
+  const shuffled = q.options.map((opt, i) => ({opt, isCorrect: i === q.correct})).sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = item.opt;
+    btn.onclick = () => answerQuiz(item.isCorrect, btn, q);
+    optsContainer.appendChild(btn);
+  });
+}
+
+function answerQuiz(isCorrect, btn, q) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  
+  document.querySelectorAll('#quizOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('quizFeedback');
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The answer is "<b>${q.options[q.correct]}</b>"</span>`;
+    document.querySelectorAll('#quizOptions .game-option').forEach(o => {
+      if (!o.classList.contains('incorrect')) {
+        o.classList.add('correct');
+      }
+    });
+    playSound(false);
+  }
+  
+  document.getElementById('quizScore').textContent = quizState.score;
+  
+  setTimeout(() => {
+    quizState.qNum++;
+    if (quizState.qNum >= quizData.length) {
+      endQuiz();
+    } else {
+      loadQuiz();
+    }
+  }, 1800);
+}
+
+function endQuiz() {
+  const container = document.getElementById('quizContainer');
+  const percentage = (quizState.score / (quizData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect!';
+    message = "You're a Tense Master!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know the material well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${quizState.score}</span> / ${quizData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartQuiz()">
+        <i class="fas fa-redo mr-2"></i>Play Again
+      </button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  quizState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('quizScore').textContent = '0';
+  loadQuiz();
+}
+
+// ============ Sound Effects ============
+let audioCtx = null;
+function playSound(correct) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (correct) {
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ============ Initialize ============
+renderFlashcards();
+renderConv();
+renderStory();
+loadTranslation();
+loadQuiz();
+updateNav();
+</script>
+</body>
+</html>
