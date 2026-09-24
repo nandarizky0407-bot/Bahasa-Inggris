@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Sentence Builder - Interactive Exercise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f4ede1;
+    --bg-warm: #ede2cd;
+    --ink: #1a2e2a;
+    --ink-soft: #3d4a47;
+    --paper: #fbf7ee;
+    --teal: #0f6e6a;
+    --teal-dark: #0a4d49;
+    --teal-light: #c7e6e2;
+    --coral: #e8553a;
+    --coral-soft: #f8c4b5;
+    --amber: #e8a13a;
+    --green: #2d7a4f;
+    --green-soft: #c5e4d2;
+    --red: #c2410c;
+    --red-soft: #f5d3c4;
+    --border: #d8cdb5;
+    --shadow: 0 12px 40px -12px rgba(15, 110, 106, 0.25);
+    --shadow-lg: 0 24px 60px -16px rgba(15, 110, 106, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Decorative background */
+  .bg-decor { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 18s ease-in-out infinite; }
+  .blob-1 { width: 500px; height: 500px; background: var(--teal); top: -150px; left: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: var(--coral); top: 30%; right: -120px; animation-delay: -6s; }
+  .blob-3 { width: 450px; height: 450px; background: var(--amber); bottom: -150px; left: 20%; animation-delay: -12s; }
+  @keyframes float { 0%, 100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-30px) scale(1.05); } 66% { transform: translate(-30px,40px) scale(0.95); } }
+
+  .app { position: relative; z-index: 1; }
+
+  /* COVER */
+  .page { display: none; min-height: 100vh; padding: 32px 24px 80px; animation: fadeIn 0.6s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .cover { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+  .cover-card { max-width: 1100px; width: 100%; background: linear-gradient(135deg, var(--paper) 0%, var(--bg-warm) 100%); border-radius: 32px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; position: relative; }
+  .cover-left { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-light); color: var(--teal-dark); padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; width: fit-content; letter-spacing: 0.5px; text-transform: uppercase; }
+  .cover-title { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6vw, 84px); line-height: 0.95; color: var(--ink); margin: 24px 0 16px; letter-spacing: -0.03em; }
+  .cover-title .accent { color: var(--coral); font-style: italic; font-weight: 400; }
+  .cover-sub { font-size: 17px; color: var(--ink-soft); max-width: 420px; margin-bottom: 32px; }
+  .name-form { margin-top: 8px; }
+  .form-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; display: block; }
+  .input-wrap { position: relative; display: flex; align-items: center; }
+  .input-wrap i { position: absolute; left: 18px; color: var(--teal); font-size: 18px; }
+  .name-input { width: 100%; padding: 18px 18px 18px 52px; font-family: inherit; font-size: 17px; font-weight: 500; color: var(--ink); background: var(--paper); border: 2px solid var(--border); border-radius: 16px; transition: all 0.3s; }
+  .name-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px var(--teal-light); }
+  .start-btn { margin-top: 28px; background: var(--ink); color: var(--paper); border: none; padding: 20px 32px; border-radius: 16px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%; transition: all 0.3s; }
+  .start-btn:hover:not(:disabled) { transform: translateY(-2px); background: var(--coral); }
+  .start-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  
+  .cover-right { background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 70%, #0d8a85 100%); padding: 60px 50px; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .cover-right::before { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(232,85,58,0.4), transparent 70%); top: -100px; right: -100px; border-radius: 50%; }
+  .cover-right::after { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(232,161,58,0.3), transparent 70%); bottom: -80px; left: -80px; border-radius: 50%; }
+  .cover-illu { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .quote-mark { font-family: 'Fraunces', serif; font-size: 140px; line-height: 0.7; opacity: 0.3; color: var(--coral); }
+  .cover-quote { font-family: 'Fraunces', serif; font-style: italic; font-size: 26px; line-height: 1.3; margin: 16px 0; position: relative; z-index: 2; }
+  .cover-quote-author { font-size: 13px; opacity: 0.7; text-transform: uppercase; letter-spacing: 2px; margin-top: 16px; position: relative; z-index: 2; }
+  .stat-row { display: flex; gap: 24px; margin-bottom: 40px; position: relative; z-index: 2; }
+  .stat { flex: 1; }
+  .stat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 44px; line-height: 1; color: var(--paper); }
+  .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; margin-top: 6px; }
+
+  /* GENERAL UI */
+  .container { max-width: 1180px; margin: 0 auto; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; position: sticky; top: 0; background: var(--bg); padding: 16px 0; z-index: 50; }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .back-btn { background: var(--paper); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 12px; cursor: pointer; color: var(--teal-dark); font-size: 16px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+  .back-btn:hover { background: var(--teal); color: var(--paper); transform: translateX(-3px); }
+  .user-pill { display: flex; align-items: center; gap: 12px; background: var(--paper); border: 1px solid var(--border); padding: 8px 18px 8px 8px; border-radius: 100px; }
+  .avatar { width: 32px; height: 32px; background: linear-gradient(135deg, var(--coral), var(--amber)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--paper); font-weight: 700; font-size: 14px; }
+  .user-pill .name { font-weight: 600; font-size: 14px; }
+  
+  .page-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(38px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .page-title .accent { color: var(--coral); font-style: italic; font-weight: 400; }
+  .page-sub { color: var(--ink-soft); font-size: 17px; max-width: 640px; margin-bottom: 40px; }
+
+  /* MATERIALS */
+  .material-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px; }
+  .material-card { background: var(--paper); border-radius: 24px; padding: 32px; border: 1px solid var(--border); transition: all 0.4s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .material-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent-color); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+  .material-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--accent-color); }
+  .material-card:hover::before { transform: scaleX(1); }
+  .material-card.teal { --accent-color: var(--teal); }
+  .material-card.coral { --accent-color: var(--coral); }
+  .material-card.amber { --accent-color: var(--amber); }
+  .material-card.green { --accent-color: var(--green); }
+  .material-card.red { --accent-color: var(--red); }
+  .mat-icon { width: 64px; height: 64px; border-radius: 18px; background: var(--accent-color); color: var(--paper); display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+  .mat-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: 24px; margin-bottom: 16px; }
+  .form-row { display: flex; flex-direction: column; gap: 4px; padding: 12px; background: var(--bg-warm); border-radius: 12px; margin-bottom: 8px; border-left: 3px solid var(--accent-color); }
+  .form-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-soft); font-weight: 700; }
+  .form-text { font-size: 14px; color: var(--ink); font-weight: 600; }
+  .form-text code { background: var(--paper); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: var(--accent-color); font-size: 12px; }
+
+  /* EXERCISE HUB */
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .word-btn { background: var(--paper); border: 1px solid var(--border); padding: 16px; border-radius: 16px; cursor: pointer; font-family: inherit; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .word-btn:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .word-btn.active { background: var(--teal); color: var(--paper); border-color: var(--teal-dark); }
+  .word-btn.active .word-btn-type { color: var(--teal-light); }
+  .word-btn-num { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; font-weight: 700; }
+  .word-btn-text { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 800; }
+  .word-btn-type { font-size: 11px; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+
+  /* QUESTIONS */
+  .q-nav-bar { display: flex; gap: 6px; flex-wrap: wrap; background: var(--paper); padding: 16px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px; position: sticky; top: 80px; z-index: 40; box-shadow: var(--shadow); }
+  .q-nav-item { width: 36px; height: 36px; border-radius: 8px; background: var(--bg-warm); color: var(--ink-soft); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+  .q-nav-item:hover { border-color: var(--teal); color: var(--teal); }
+  .q-nav-item.correct { background: var(--green); color: var(--paper); }
+  .q-nav-item.wrong { background: var(--coral); color: var(--paper); }
+
+  .question-block { background: var(--paper); border-radius: 18px; padding: 24px; border: 1px solid var(--border); margin-bottom: 16px; transition: all 0.3s; }
+  .question-block.correct { border-color: var(--green); background: linear-gradient(135deg, var(--paper), var(--green-soft)); }
+  .question-block.wrong { border-color: var(--coral); background: linear-gradient(135deg, var(--paper), var(--red-soft)); }
+  
+  .q-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .q-num { background: var(--teal-dark); color: var(--paper); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .question-block.correct .q-num { background: var(--green); }
+  .question-block.wrong .q-num { background: var(--coral); }
+  .q-text { font-size: 16px; font-weight: 500; color: var(--ink); flex: 1; }
+  .q-status { font-size: 13px; font-weight: 700; display: none; align-items: center; gap: 6px; }
+  .question-block.correct .q-status { display: flex; color: var(--green); }
+  .question-block.wrong .q-status { display: flex; color: var(--coral); }
+
+  .answer-area { min-height: 60px; background: #fff; border: 2px dashed var(--border); border-radius: 12px; padding: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; transition: all 0.3s; }
+  .question-block.correct .answer-area { border-color: var(--green); background: #f0fff5; }
+  .question-block.wrong .answer-area { border-color: var(--coral); background: #fff5f2; }
+  .placeholder { color: var(--ink-soft); opacity: 0.5; font-size: 14px; font-style: italic; padding: 0 8px; }
+  
+  .word-tile { padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; font-family: inherit; color: var(--paper); }
+  .answer-tile { background: var(--teal); color: var(--paper); }
+  .answer-tile:hover { background: var(--teal-dark); transform: scale(0.95); }
+  .question-block.correct .answer-tile { background: var(--green); }
+  .question-block.wrong .answer-tile { background: var(--coral); }
+
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: var(--bg-warm); border-radius: 12px; margin-bottom: 16px; }
+  .bank-tile { background: var(--paper); color: var(--teal-dark); border: 1px solid var(--teal); }
+  .bank-tile:hover:not(.used) { background: var(--teal-light); transform: translateY(-1px); }
+  .bank-tile.used { opacity: 0.3; cursor: not-allowed; background: var(--border); color: var(--ink-soft); border-color: var(--border); }
+
+  .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { padding: 10px 16px; border-radius: 10px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s; }
+  .btn-primary { background: var(--teal); color: var(--paper); }
+  .btn-primary:hover { background: var(--teal-dark); }
+  .btn-secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-ghost { background: transparent; color: var(--ink-soft); }
+  .btn-ghost:hover { color: var(--coral); }
+  .btn-coral { background: var(--coral); color: var(--paper); }
+  .btn-coral:hover { background: #c2410c; }
+
+  .explanation-box { margin-top: 16px; padding: 14px; background: linear-gradient(135deg, #fff8e8, #ffefc7); border-left: 4px solid var(--amber); border-radius: 10px; font-size: 13px; color: var(--ink-soft); line-height: 1.7; display: none; }
+  .explanation-box.show { display: block; animation: slideDown 0.4s ease; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* FINISH BAR */
+  .finish-bar { position: fixed; bottom: 24px; right: 24px; z-index: 100; display: flex; gap: 12px; align-items: center; background: var(--ink); padding: 12px 20px; border-radius: 100px; box-shadow: var(--shadow-lg); }
+  .progress-stat { color: var(--paper); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .progress-bar { width: 100px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 100px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--amber); width: 0; transition: width 0.4s; border-radius: 100px; }
+
+  /* RESULT PAGE */
+  .result-container { max-width: 800px; margin: 40px auto; text-align: center; background: var(--paper); padding: 50px; border-radius: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
+  .result-container::before { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(232,85,58,0.2), transparent 70%); top: -100px; right: -50px; border-radius: 50%; }
+  .result-trophy { font-size: 64px; color: var(--amber); margin-bottom: 16px; }
+  .result-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: 40px; margin-bottom: 8px; }
+  .thank-you { font-size: 18px; color: var(--ink-soft); margin-bottom: 32px; }
+  .score-circle { width: 160px; height: 160px; border: 8px solid var(--bg-warm); border-radius: 50%; margin: 0 auto 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--paper); position: relative; }
+  .score-circle::before { content: ''; position: absolute; inset: -8px; border: 8px solid var(--teal); border-radius: 50%; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  .score-num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 56px; line-height: 1; color: var(--teal); }
+  .score-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink-soft); }
+  .stats-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; }
+  .stat-box { background: var(--bg-warm); padding: 16px 24px; border-radius: 16px; min-width: 120px; }
+  .stat-box .stat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 32px; color: var(--ink); }
+  .stat-box .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-soft); }
+  .reflection-box { background: var(--bg-warm); padding: 24px; border-radius: 16px; text-align: left; margin-bottom: 32px; border-left: 4px solid var(--amber); }
+  .reflection-box h3 { font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 900px) {
+    .cover-card { grid-template-columns: 1fr; }
+    .cover-right { padding: 40px 30px; }
+    .cover-left { padding: 40px 30px; }
+    .topbar { position: relative; top: 0; }
+  }
+  @media (max-width: 600px) {
+    .page { padding: 20px 16px 60px; }
+    .q-nav-bar { display: none; }
+    .finish-bar { left: 16px; right: 16px; bottom: 16px; justify-content: center; }
+    .result-container { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="app">
+
+  <!-- COVER PAGE -->
+  <section class="page active" id="cover-page">
+    <div class="cover">
+      <div class="cover-card">
+        <div class="cover-left">
+          <span class="badge"><i class="fas fa-language"></i> Sentence Builder Interactive</span>
+          <h1 class="cover-title">English<br>Sentence <span class="accent">Builder</span></h1>
+          <p class="cover-sub">Susun kalimat Bahasa Inggris dari kata-kata yang tersedia. Latihan lengkap mencakup Simple Present, Present Continuous, Simple Past, Present Perfect, dan Have/Has (Kepemilikan) dengan variasi subjek yang beragam.</p>
+          <form class="name-form" id="nameForm">
+            <label class="form-label" for="studentName">Nama Siswa</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" id="studentName" class="name-input" placeholder="Tulis nama lengkap kamu di sini..." autocomplete="off" required>
+            </div>
+            <button type="submit" class="start-btn" id="startBtn" disabled>
+              <span>Mulai Belajar Sekarang</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+        <div class="cover-right">
+          <div class="cover-illu">
+            <div class="quote-mark">"</div>
+            <p class="cover-quote">Grammar is the painting of language. Practice makes your sentences perfect.</p>
+            <p class="cover-quote-author">— English Proverb</p>
+          </div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-num">20</div>
+              <div class="stat-label">Kata Kerja/Benda</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">200</div>
+              <div class="stat-label">Total Soal</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">5</div>
+              <div class="stat-label">Topik Tenses</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIAL PAGE -->
+  <section class="page" id="material-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('cover-page')"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarMat">A</div>
+            <div class="name" id="userNameMat">Siswa</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="goToPage('exercise-page')">
+          <i class="fas fa-pencil-ruler"></i> Lanjut ke Latihan
+        </button>
+      </div>
+
+      <h2 class="page-title">Materi <span class="accent">Tenses</span> & Kepemilikan</h2>
+      <p class="page-sub">Pelajari rumus kalimat Positif, Negatif, dan Tanya untuk masing-masing tense sebelum mengerjakan latihan.</p>
+
+      <div class="material-grid">
+        <div class="material-card teal">
+          <div class="mat-icon"><i class="fas fa-clock"></i></div>
+          <h3 class="mat-title">Simple Present Tense</h3>
+          <div class="form-row">
+            <span class="form-label">Positif (+)</span>
+            <span class="form-text"><code>S + V1(s/es) + O</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Negatif (-)</span>
+            <span class="form-text"><code>S + do/does + not + V1</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Tanya (?)</span>
+            <span class="form-text"><code>Do/Does + S + V1?</code></span>
+          </div>
+        </div>
+
+        <div class="material-card coral">
+          <div class="mat-icon"><i class="fas fa-spinner"></i></div>
+          <h3 class="mat-title">Present Continuous</h3>
+          <div class="form-row">
+            <span class="form-label">Positif (+)</span>
+            <span class="form-text"><code>S + to be + V-ing + O</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Negatif (-)</span>
+            <span class="form-text"><code>S + to be + not + V-ing</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Tanya (?)</span>
+            <span class="form-text"><code>To be + S + V-ing?</code></span>
+          </div>
+        </div>
+
+        <div class="material-card amber">
+          <div class="mat-icon"><i class="fas fa-history"></i></div>
+          <h3 class="mat-title">Simple Past Tense</h3>
+          <div class="form-row">
+            <span class="form-label">Positif (+)</span>
+            <span class="form-text"><code>S + V2 + O</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Negatif (-)</span>
+            <span class="form-text"><code>S + did not + V1</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Tanya (?)</span>
+            <span class="form-text"><code>Did + S + V1?</code></span>
+          </div>
+        </div>
+
+        <div class="material-card green">
+          <div class="mat-icon"><i class="fas fa-check-circle"></i></div>
+          <h3 class="mat-title">Present Perfect</h3>
+          <div class="form-row">
+            <span class="form-label">Positif (+)</span>
+            <span class="form-text"><code>S + have/has + V3 + O</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Negatif (-)</span>
+            <span class="form-text"><code>S + have/has + not + V3</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Tanya (?)</span>
+            <span class="form-text"><code>Have/Has + S + V3?</code></span>
+          </div>
+        </div>
+
+        <div class="material-card red">
+          <div class="mat-icon"><i class="fas fa-book"></i></div>
+          <h3 class="mat-title">Have/Has (Kepemilikan)</h3>
+          <div class="form-row">
+            <span class="form-label">Positif (+)</span>
+            <span class="form-text"><code>S + have/has + Object</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Negatif (-)</span>
+            <span class="form-text"><code>S + do/does + not + have</code></span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Possessive Adj</span>
+            <span class="form-text"><code>This is my/your/our/their/his/her + Noun</code></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXERCISE PAGE -->
+  <section class="page" id="exercise-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('material-page')"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarEx">A</div>
+            <div class="name" id="userNameEx">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="page-title">Pilih <span class="accent">Kata Kerja</span> / Kata Benda</h2>
+      <p class="page-sub">Pilih salah satu kata di bawah ini. Setiap kata memiliki 10 soal dengan subjek yang bervariasi yang harus disusun menjadi kalimat Bahasa Inggris yang benar.</p>
+
+      <div class="word-grid" id="wordGrid"></div>
+
+      <div class="q-nav-bar" id="navBar" style="display: none;"></div>
+      
+      <div id="questionsContainer"></div>
+
+    </div>
+
+    <div class="finish-bar">
+      <div class="progress-stat">
+        <i class="fas fa-check-circle" style="color:var(--green)"></i>
+        <span id="progCorrect">0</span> / 200
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progBar"></div></div>
+      <button class="btn btn-coral" onclick="finishExam()"><i class="fas fa-flag-checkered"></i> Finish Exam</button>
+    </div>
+  </section>
+
+  <!-- RESULT PAGE -->
+  <section class="page" id="result-page">
+    <div class="container">
+      <div class="result-container">
+        <i class="fas fa-trophy result-trophy"></i>
+        <h2 class="result-title">Exam Finished!</h2>
+        <p class="thank-you">Thank you for today, <span id="finalName">Student</span>!</p>
+        
+        <div class="score-circle">
+          <div class="score-num" id="finalScore">0</div>
+          <div class="score-label">Skor Akhir</div>
+        </div>
+        
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num" id="finalCorrect">0</div>
+            <div class="stat-label">Jawaban Benar</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" id="finalAnswered">0</div>
+            <div class="stat-label">Soal Dijawab</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">200</div>
+            <div class="stat-label">Total Soal</div>
+          </div>
+        </div>
+        
+        <div class="reflection-box">
+          <h3><i class="fas fa-lightbulb" style="color:var(--amber)"></i> Kesimpulan & Refleksi</h3>
+          <p id="finalReflection"></p>
+        </div>
+        
+        <button class="btn btn-primary" onclick="goToPage('cover-page')"><i class="fas fa-redo"></i> Kembali ke Awal</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================ DATA & GENERATOR ============================ */
+const subjects = [
+  { ind: 'Saya', en: 'I', toBe: 'am', toBe_en: 'Am', aux: 'do', aux_en: 'Do', has: 'have', poss: 'my', poss_text: 'ku' },
+  { ind: 'Kamu', en: 'You', toBe: 'are', toBe_en: 'Are', aux: 'do', aux_en: 'Do', has: 'have', poss: 'your', poss_text: 'mu' },
+  { ind: 'Dia (laki-laki)', en: 'He', toBe: 'is', toBe_en: 'Is', aux: 'does', aux_en: 'Does', has: 'has', poss: 'his', poss_text: 'nya' },
+  { ind: 'Dia (perempuan)', en: 'She', toBe: 'is', toBe_en: 'Is', aux: 'does', aux_en: 'Does', has: 'has', poss: 'her', poss_text: 'nya' },
+  { ind: 'Kita', en: 'We', toBe: 'are', toBe_en: 'Are', aux: 'do', aux_en: 'Do', has: 'have', poss: 'our', poss_text: 'kita' },
+  { ind: 'Mereka', en: 'They', toBe: 'are', toBe_en: 'Are', aux: 'do', aux_en: 'Do', has: 'have', poss: 'their', poss_text: 'mereka' }
+];
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function getRandomSubject(excludeEn = []) {
+  let pool = subjects.filter(s => !excludeEn.includes(s.en));
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function getSubjectDistractors(correctSub, count = 2) {
+  let pool = subjects.filter(s => s.en !== correctSub.en);
+  pool = shuffleArray(pool);
+  return pool.slice(0, count);
+}
+
+const verbs = [
+  { id: 1, ind: 'makan', base: 'eat', s: 'eats', ing: 'eating', past: 'ate', past_part: 'eaten' },
+  { id: 2, ind: 'minum', base: 'drink', s: 'drinks', ing: 'drinking', past: 'drank', past_part: 'drunk' },
+  { id: 3, ind: 'tidur', base: 'sleep', s: 'sleeps', ing: 'sleeping', past: 'slept', past_part: 'slept' },
+  { id: 4, ind: 'tulis', base: 'write', s: 'writes', ing: 'writing', past: 'wrote', past_part: 'written' },
+  { id: 5, ind: 'pergi', base: 'go', s: 'goes', ing: 'going', past: 'went', past_part: 'gone' },
+  { id: 6, ind: 'beli', base: 'buy', s: 'buys', ing: 'buying', past: 'bought', past_part: 'bought' },
+  { id: 7, ind: 'main', base: 'play', s: 'plays', ing: 'playing', past: 'played', past_part: 'played' },
+  { id: 8, ind: 'masak', base: 'cook', s: 'cooks', ing: 'cooking', past: 'cooked', past_part: 'cooked' },
+  { id: 9, ind: 'lihat', base: 'see', s: 'sees', ing: 'seeing', past: 'saw', past_part: 'seen' },
+  { id: 10, ind: 'bantu', base: 'help', s: 'helps', ing: 'helping', past: 'helped', past_part: 'helped' }
+];
+
+const nouns = [
+  { id: 11, ind: 'buku', sing: 'book', plur: 'books' },
+  { id: 12, ind: 'mobil', sing: 'car', plur: 'cars' },
+  { id: 13, ind: 'tas', sing: 'bag', plur: 'bags' },
+  { id: 14, ind: 'pensil', sing: 'pencil', plur: 'pencils' },
+  { id: 15, ind: 'bola', sing: 'ball', plur: 'balls' },
+  { id: 16, ind: 'topi', sing: 'hat', plur: 'hats' },
+  { id: 17, ind: 'sepatu', sing: 'shoe', plur: 'shoes' },
+  { id: 18, ind: 'kucing', sing: 'cat', plur: 'cats' },
+  { id: 19, ind: 'anjing', sing: 'dog', plur: 'dogs' },
+  { id: 20, ind: 'pulpen', sing: 'pen', plur: 'pens' }
+];
+
+function generateVerbQuestions(ind, v) {
+  let subs = [];
+  for(let i=0; i<10; i++) {
+    subs.push(i === 5 ? getRandomSubject(['I']) : getRandomSubject()); // Q6 avoid "Am I eating?"
+  }
+  let d = subs.map(s => getSubjectDistractors(s, 2));
+
+  return [
+    {
+      text: `${subs[0].ind} ${ind} setiap hari.`,
+      answer: [subs[0].en, (subs[0].en === 'He' || subs[0].en === 'She' ? v.s : v.base), 'every', 'day'],
+      exp: `Simple Present Tense positif. Subjek '${subs[0].en}' menggunakan ${subs[0].en === 'He' || subs[0].en === 'She' ? `V1+s/es (${v.s})` : `V1 (${v.base})`}.`,
+      bank: [subs[0].en, d[0][0].en, d[0][1].en, v.base, v.s, 'every', 'day', 'is', 'are', 'am', v.ing, v.past]
+    },
+    {
+      text: `${subs[1].ind} tidak ${ind} setiap hari.`,
+      answer: [subs[1].en, subs[1].aux, 'not', v.base, 'every', 'day'],
+      exp: `Simple Present Tense negatif. Subjek '${subs[1].en}' menggunakan '${subs[1].aux} not' + V1 (${v.base}).`,
+      bank: [subs[1].en, d[1][0].en, d[1][1].en, 'do', 'does', 'not', v.base, v.s, 'every', 'day', 'is', 'are', v.ing]
+    },
+    {
+      text: `Apakah ${subs[2].ind} ${ind} setiap hari?`,
+      answer: [subs[2].aux_en, subs[2].en, v.base, 'every', 'day', '?'],
+      exp: `Simple Present Tense tanya. Subjek '${subs[2].en}' menggunakan '${subs[2].aux_en}' + V1 (${v.base}).`,
+      bank: ['Do', 'Does', subs[2].en, d[2][0].en, d[2][1].en, v.base, v.s, 'every', 'day', '?', 'Is', 'Are', v.ing]
+    },
+    {
+      text: `${subs[3].ind} sedang ${ind} sekarang.`,
+      answer: [subs[3].en, subs[3].toBe, v.ing, 'now'],
+      exp: `Present Continuous Tense positif. Subjek '${subs[3].en}' menggunakan '${subs[3].toBe}' + V-ing (${v.ing}).`,
+      bank: [subs[3].en, d[3][0].en, d[3][1].en, 'am', 'is', 'are', v.ing, 'now', v.base, v.s, v.past]
+    },
+    {
+      text: `${subs[4].ind} tidak sedang ${ind} sekarang.`,
+      answer: [subs[4].en, subs[4].toBe, 'not', v.ing, 'now'],
+      exp: `Present Continuous Tense negatif. Subjek '${subs[4].en}' menggunakan '${subs[4].toBe} not' + V-ing (${v.ing}).`,
+      bank: [subs[4].en, d[4][0].en, d[4][1].en, 'am', 'is', 'are', 'not', v.ing, 'now', v.base, v.s]
+    },
+    {
+      text: `Apakah ${subs[5].ind} sedang ${ind} sekarang?`,
+      answer: [subs[5].toBe_en, subs[5].en, v.ing, 'now', '?'],
+      exp: `Present Continuous Tense tanya. Subjek '${subs[5].en}' menggunakan '${subs[5].toBe_en}' + V-ing (${v.ing}).`,
+      bank: ['Am', 'Is', 'Are', subs[5].en, d[5][0].en, d[5][1].en, v.ing, 'now', '?', v.base, v.s]
+    },
+    {
+      text: `${subs[6].ind} ${ind} kemarin.`,
+      answer: [subs[6].en, v.past, 'yesterday'],
+      exp: `Simple Past Tense positif. Subjek '${subs[6].en}' menggunakan V2 (${v.past}).`,
+      bank: [subs[6].en, d[6][0].en, d[6][1].en, v.past, 'yesterday', v.base, v.s, 'was', 'were', v.ing, v.past_part]
+    },
+    {
+      text: `${subs[7].ind} tidak ${ind} kemarin.`,
+      answer: [subs[7].en, 'did', 'not', v.base, 'yesterday'],
+      exp: `Simple Past Tense negatif. Menggunakan 'did not' + V1 (${v.base}) untuk semua subjek.`,
+      bank: [subs[7].en, d[7][0].en, d[7][1].en, 'did', 'not', v.base, 'yesterday', 'do', 'does', v.past, v.s]
+    },
+    {
+      text: `Apakah ${subs[8].ind} ${ind} kemarin?`,
+      answer: ['Did', subs[8].en, v.base, 'yesterday', '?'],
+      exp: `Simple Past Tense tanya. Menggunakan 'Did' + S + V1 (${v.base})?`,
+      bank: ['Did', subs[8].en, d[8][0].en, d[8][1].en, v.base, 'yesterday', '?', 'Do', 'Does', v.past, v.s]
+    },
+    {
+      text: `${subs[9].ind} telah ${ind}.`,
+      answer: [subs[9].en, subs[9].has, v.past_part],
+      exp: `Present Perfect Tense positif. Subjek '${subs[9].en}' menggunakan '${subs[9].has}' + V3 (${v.past_part}).`,
+      bank: [subs[9].en, d[9][0].en, d[9][1].en, 'have', 'has', v.past_part, 'am', 'is', 'are', v.base, v.past, v.ing]
+    }
+  ];
+}
+
+function generateNounQuestions(ind, n) {
+  let subs = [];
+  for(let i=0; i<10; i++) subs.push(getRandomSubject());
+  let d = subs.map(s => getSubjectDistractors(s, 2));
+  
+  let genders = subs.map(s => s.ind.includes('laki') ? ' (laki-laki)' : s.ind.includes('perempuan') ? ' (perempuan)' : '');
+  let spaces = subs.map(s => s.poss_text.length > 3 ? ' ' : '');
+
+  return [
+    {
+      text: `${subs[0].ind} memiliki sebuah ${ind}.`,
+      answer: [subs[0].en, subs[0].has, 'a', n.sing],
+      exp: `Have/has kepemilikan. Subjek '${subs[0].en}' menggunakan '${subs[0].has}'.`,
+      bank: [subs[0].en, d[0][0].en, d[0][1].en, 'have', 'has', 'a', n.sing, 'am', 'is', 'are', n.plur]
+    },
+    {
+      text: `${subs[1].ind} tidak memiliki sebuah ${ind}.`,
+      answer: [subs[1].en, subs[1].aux, 'not', 'have', 'a', n.sing],
+      exp: `Have/has kepemilikan negatif. Subjek '${subs[1].en}' menggunakan '${subs[1].aux} not have'.`,
+      bank: [subs[1].en, d[1][0].en, d[1][1].en, 'do', 'does', 'not', 'have', 'a', n.sing, 'has', 'is', n.plur]
+    },
+    {
+      text: `Apakah ${subs[2].ind} memiliki sebuah ${ind}?`,
+      answer: [subs[2].aux_en, subs[2].en, 'have', 'a', n.sing, '?'],
+      exp: `Have/has kepemilikan tanya. Subjek '${subs[2].en}' menggunakan '${subs[2].aux_en} ... have'.`,
+      bank: ['Do', 'Does', subs[2].en, d[2][0].en, d[2][1].en, 'have', 'a', n.sing, '?', 'has', n.plur]
+    },
+    {
+      text: `Ini adalah ${ind}${spaces[3]}${subs[3].poss_text}${genders[3]}.`,
+      answer: ['This', 'is', subs[3].poss, n.sing],
+      exp: `Possessive adjective. Subjek 'This' menggunakan 'is' + '${subs[3].poss}' + kata benda.`,
+      bank: ['This', 'is', 'am', 'are', subs[3].poss, d[3][0].poss, d[3][1].poss, n.sing, n.plur, 'I', 'mine']
+    },
+    {
+      text: `Ini bukan ${ind}${spaces[4]}${subs[4].poss_text}${genders[4]}.`,
+      answer: ['This', 'is', 'not', subs[4].poss, n.sing],
+      exp: `Possessive adjective negatif. 'This is not' + '${subs[4].poss}' + kata benda.`,
+      bank: ['This', 'is', 'am', 'are', 'not', subs[4].poss, d[4][0].poss, d[4][1].poss, n.sing, n.plur, 'no']
+    },
+    {
+      text: `Apakah ini ${ind}${spaces[5]}${subs[5].poss_text}${genders[5]}?`,
+      answer: ['Is', 'this', subs[5].poss, n.sing, '?'],
+      exp: `Possessive adjective tanya. 'Is this' + '${subs[5].poss}' + kata benda.`,
+      bank: ['Is', 'Am', 'Are', 'this', 'that', subs[5].poss, d[5][0].poss, d[5][1].poss, n.sing, n.plur, '?', 'is']
+    },
+    {
+      text: `${subs[6].ind} memiliki ${ind} (jamak).`,
+      answer: [subs[6].en, subs[6].has, n.plur],
+      exp: `Have/has kepemilikan. Subjek '${subs[6].en}' menggunakan '${subs[6].has}' + kata benda jamak.`,
+      bank: [subs[6].en, d[6][0].en, d[6][1].en, 'have', 'has', 'are', 'a', n.sing, n.plur]
+    },
+    {
+      text: `${subs[7].ind} tidak memiliki ${ind} (jamak).`,
+      answer: [subs[7].en, subs[7].aux, 'not', 'have', n.plur],
+      exp: `Have/has kepemilikan negatif. Subjek '${subs[7].en}' menggunakan '${subs[7].aux} not have' + jamak.`,
+      bank: [subs[7].en, d[7][0].en, d[7][1].en, 'do', 'does', 'not', 'have', 'has', 'a', n.sing, n.plur]
+    },
+    {
+      text: `Apakah ${subs[8].ind} memiliki ${ind} (jamak)?`,
+      answer: [subs[8].aux_en, subs[8].en, 'have', n.plur, '?'],
+      exp: `Have/has kepemilikan tanya. Subjek '${subs[8].en}' menggunakan '${subs[8].aux_en} ... have' + jamak.`,
+      bank: ['Do', 'Does', subs[8].en, d[8][0].en, d[8][1].en, 'have', 'has', n.plur, '?', 'a', n.sing]
+    },
+    {
+      text: `Itu adalah ${ind}${spaces[9]}${subs[9].poss_text}${genders[9]}.`,
+      answer: ['That', 'is', subs[9].poss, n.sing],
+      exp: `Possessive adjective. Subjek 'That' menggunakan 'is' + '${subs[9].poss}' + kata benda.`,
+      bank: ['That', 'is', 'am', 'are', 'This', subs[9].poss, d[9][0].poss, d[9][1].poss, n.sing, n.plur, 'I']
+    }
+  ];
+}
+
+const allData = [];
+verbs.forEach(v => {
+  allData.push({ id: v.id, ind: v.ind, type: 'Kata Kerja', questions: generateVerbQuestions(v.ind, v) });
+});
+nouns.forEach(n => {
+  allData.push({ id: n.id, ind: n.ind, type: 'Kata Benda', questions: generateNounQuestions(n.ind, n) });
+});
+
+/* ============================ STATE & LOGIC ============================ */
+let studentName = '';
+let currentWordId = null;
+let userState = {};
+
+function init() {
+  buildWordGrid();
+  
+  const nameInput = document.getElementById('studentName');
+  const startBtn = document.getElementById('startBtn');
+  nameInput.addEventListener('input', () => {
+    startBtn.disabled = nameInput.value.trim().length < 2;
+  });
+  document.getElementById('nameForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (nameInput.value.trim().length < 2) return;
+    studentName = nameInput.value.trim();
+    setUserName(studentName);
+    goToPage('material-page');
+  });
+}
+
+function setUserName(name) {
+  const initial = name.charAt(0).toUpperCase();
+  ['avatarMat', 'avatarEx'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = initial;
+  });
+  ['userNameMat', 'userNameEx'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = name;
+  });
+}
+
+function goToPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildWordGrid() {
+  const grid = document.getElementById('wordGrid');
+  let html = '';
+  allData.forEach(word => {
+    html += `
+      <button class="word-btn" id="word-${word.id}" onclick="selectWord(${word.id})">
+        <span class="word-btn-num">${word.id}</span>
+        <span class="word-btn-text">${word.ind}</span>
+        <span class="word-btn-type">${word.type}</span>
+      </button>
+    `;
+  });
+  grid.innerHTML = html;
+}
+
+function selectWord(wordId) {
+  currentWordId = wordId;
+  document.querySelectorAll('.word-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(`word-${wordId}`).classList.add('active');
+  
+  if (!userState[wordId]) {
+    userState[wordId] = {};
+    for (let i = 1; i <= 10; i++) {
+      userState[wordId][i] = { userAnswers: [], checked: false, isCorrect: false };
+    }
+  }
+  
+  renderNavBar();
+  renderQuestions();
+}
+
+function renderNavBar() {
+  const nav = document.getElementById('navBar');
+  let html = '';
+  for (let i = 1; i <= 10; i++) {
+    const state = userState[currentWordId][i];
+    let cls = 'q-nav-item';
+    if (state.checked) cls += state.isCorrect ? ' correct' : ' wrong';
+    html += `<div class="${cls}" onclick="document.getElementById('q-${currentWordId}-${i}').scrollIntoView({behavior:'smooth', block:'center'})">${i}</div>`;
+  }
+  nav.innerHTML = html;
+  nav.style.display = 'flex';
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  const wordData = allData.find(w => w.id === currentWordId);
+  let html = '';
+  
+  wordData.questions.forEach((q, i) => {
+    const qId = i + 1;
+    const state = userState[currentWordId][qId];
+    let blockCls = 'question-block';
+    if (state.checked) blockCls += state.isCorrect ? ' correct' : ' wrong';
+    
+    let statusHtml = state.checked ? (state.isCorrect ? '<i class="fas fa-check-circle"></i> Benar' : '<i class="fas fa-times-circle"></i> Salah') : '';
+    
+    html += `
+      <div class="${blockCls}" id="q-${currentWordId}-${qId}">
+        <div class="q-header">
+          <div class="q-num">${qId}</div>
+          <div class="q-text">${q.text}</div>
+          <div class="q-status">${statusHtml}</div>
+        </div>
+        <div class="answer-area" id="answer-area-${currentWordId}-${qId}"></div>
+        <div class="word-bank" id="word-bank-${currentWordId}-${qId}"></div>
+        <div class="q-actions">
+          <button class="btn btn-primary" onclick="checkAnswer(${currentWordId}, ${qId})"><i class="fas fa-check"></i> Cek Jawaban</button>
+          <button class="btn btn-secondary" onclick="toggleExplanation(${currentWordId}, ${qId})"><i class="fas fa-eye"></i> Pembahasan</button>
+          <button class="btn btn-ghost" onclick="resetQuestion(${currentWordId}, ${qId})"><i class="fas fa-redo"></i> Reset</button>
+        </div>
+        <div class="explanation-box" id="exp-${currentWordId}-${qId}">
+          <i class="fas fa-lightbulb"></i> <strong>Pembahasan:</strong> ${q.exp}
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+  
+  for (let i = 1; i <= 10; i++) {
+    renderAnswerArea(currentWordId, i);
+    renderWordBank(currentWordId, i);
+  }
+}
+
+function renderAnswerArea(wordId, qId) {
+  const area = document.getElementById(`answer-area-${wordId}-${qId}`);
+  if (!area) return;
+  const state = userState[wordId][qId];
+  if (state.userAnswers.length === 0) {
+    area.innerHTML = '<span class="placeholder">Klik kata-kata di bawah untuk menyusun kalimat...</span>';
+  } else {
+    area.innerHTML = state.userAnswers.map((ans, idx) => 
+      `<button class="word-tile answer-tile" onclick="removeWord(${wordId}, ${qId}, ${idx})" ${state.checked ? 'disabled' : ''}>${ans.text}</button>`
+    ).join('');
+  }
+}
+
+function renderWordBank(wordId, qId) {
+  const bank = document.getElementById(`word-bank-${wordId}-${qId}`);
+  if (!bank) return;
+  const state = userState[wordId][qId];
+  
+  if (!state.bankTiles) {
+    const question = getQuestion(wordId, qId);
+    state.bankTiles = shuffleArray(question.bank.map((text, idx) => ({ id: idx, text })));
+  }
+  
+  bank.innerHTML = state.bankTiles.map(tile => {
+    const isUsed = state.userAnswers.some(ans => ans.id === tile.id);
+    return `<button class="word-tile bank-tile ${isUsed ? 'used' : ''}" onclick="addWord(${wordId}, ${qId}, ${tile.id})" ${isUsed || state.checked ? 'disabled' : ''}>${tile.text}</button>`;
+  }).join('');
+}
+
+function getQuestion(wordId, qId) {
+  const word = allData.find(w => w.id === wordId);
+  return word.questions[qId - 1];
+}
+
+function addWord(wordId, qId, tileId) {
+  const state = userState[wordId][qId];
+  if (state.checked) return;
+  const tile = state.bankTiles.find(t => t.id === tileId);
+  state.userAnswers.push({ ...tile });
+  renderAnswerArea(wordId, qId);
+  renderWordBank(wordId, qId);
+}
+
+function removeWord(wordId, qId, ansIndex) {
+  const state = userState[wordId][qId];
+  if (state.checked) return;
+  state.userAnswers.splice(ansIndex, 1);
+  renderAnswerArea(wordId, qId);
+  renderWordBank(wordId, qId);
+}
+
+function checkAnswer(wordId, qId) {
+  const state = userState[wordId][qId];
+  state.checked = true;
+  
+  const question = getQuestion(wordId, qId);
+  const userText = state.userAnswers.map(a => a.text).join(' ');
+  const correctText = question.answer.join(' ');
+  
+  state.isCorrect = (userText === correctText);
+  
+  renderQuestion(wordId, qId);
+  renderNavBar();
+  updateProgress();
+}
+
+function toggleExplanation(wordId, qId) {
+  const exp = document.getElementById(`exp-${wordId}-${qId}`);
+  exp.classList.toggle('show');
+}
+
+function resetQuestion(wordId, qId) {
+  userState[wordId][qId] = { userAnswers: [], checked: false, isCorrect: false, bankTiles: userState[wordId][qId].bankTiles };
+  renderQuestion(wordId, qId);
+  renderNavBar();
+  updateProgress();
+}
+
+function renderQuestion(wordId, qId) {
+  const state = userState[wordId][qId];
+  const block = document.getElementById(`q-${wordId}-${qId}`);
+  
+  block.classList.remove('correct', 'wrong');
+  const statusEl = block.querySelector('.q-status');
+  statusEl.innerHTML = '';
+  
+  if (state.checked) {
+    if (state.isCorrect) {
+      block.classList.add('correct');
+      statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Benar';
+    } else {
+      block.classList.add('wrong');
+      statusEl.innerHTML = '<i class="fas fa-times-circle"></i> Salah';
+    }
+  }
+  
+  renderAnswerArea(wordId, qId);
+  renderWordBank(wordId, qId);
+}
+
+function updateProgress() {
+  let correct = 0;
+  let answered = 0;
+  for (const wordId in userState) {
+    for (const qId in userState[wordId]) {
+      if (userState[wordId][qId].checked) {
+        answered++;
+        if (userState[wordId][qId].isCorrect) correct++;
+      }
+    }
+  }
+  document.getElementById('progCorrect').textContent = correct;
+  document.getElementById('progBar').style.width = (answered / 200 * 100) + '%';
+}
+
+function finishExam() {
+  let correct = 0;
+  let answered = 0;
+  for (const wordId in userState) {
+    for (const qId in userState[wordId]) {
+      if (userState[wordId][qId].checked) {
+        answered++;
+        if (userState[wordId][qId].isCorrect) correct++;
+      }
+    }
+  }
+  const total = 200;
+  const score = Math.round((correct / total) * 100);
+  
+  document.getElementById('finalName').textContent = studentName;
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('finalCorrect').textContent = correct;
+  document.getElementById('finalAnswered').textContent = answered;
+  
+  let reflection = '';
+  if (score >= 90) reflection = `Luar biasa, ${studentName}! Kamu telah menguasai pola kalimat Bahasa Inggris dengan sangat baik. Teruslah berlatih untuk mempertahankan kehebatanmu!`;
+  else if (score >= 70) reflection = `Kerja bagus, ${studentName}! Pemahamanmu tentang tenses dan kepemilikan sudah cukup baik. Pelajari lagi soal-soal yang belum benar untuk mencapai kesempurnaan.`;
+  else if (score >= 50) reflection = `Cukup baik, ${studentName}. Kamu sudah memahami dasar-dasarnya, namun masih ada beberapa kesalahan. Pelajari kembali materi Simple Present, Past, dan Have/Has.`;
+  else reflection = `Jangan menyerah, ${studentName}! Bahasa Inggris membutuhkan latihan rutin. Ayo pelajari kembali materi dari awal dan coba kerjakan latihan ini lagi dengan lebih teliti.`;
+  
+  document.getElementById('finalReflection').textContent = reflection;
+  
+  goToPage('result-page');
+}
+
+init();
+</script>
+
+</body>
+</html>
