@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adjectives (Kata Sifat) - English Fun Class</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg: #FFF8EC;
+  --paper: #FFFFFF;
+  --ink: #1F2A4A;
+  --muted: #6B7280;
+  --coral: #FF6B6B;
+  --teal: #14B8A6;
+  --sun: #FFB627;
+  --grape: #9B5DE5;
+  --leaf: #06D6A0;
+  --sky: #4CC9F0;
+  --rose: #F43F5E;
+  --border: rgba(31, 42, 74, 0.12);
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  overflow: hidden;
+  height: 100vh;
+}
+.font-display { font-family: 'Fredoka', sans-serif; }
+
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob-1 { width: 400px; height: 400px; background: var(--coral); top: -100px; left: -100px; }
+.blob-2 { width: 350px; height: 350px; background: var(--teal); bottom: -80px; right: -80px; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; background: var(--sun); top: 40%; left: 60%; animation-delay: -10s; }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+.deck { position: relative; height: 100vh; width: 100vw; z-index: 1; }
+.slide {
+  position: absolute; inset: 0;
+  display: none; flex-direction: column;
+  padding: 1.5rem 2.5rem 5.5rem;
+  overflow-y: auto;
+}
+.slide.active { display: flex; animation: slideIn 0.5s ease; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.slide::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb { background: rgba(31,42,74,0.2); border-radius: 4px; }
+
+.nav-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 60px;
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; z-index: 50;
+}
+.nav-btn {
+  background: var(--ink); color: white; border: none;
+  padding: 10px 22px; border-radius: 30px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s; font-family: 'Nunito', sans-serif;
+}
+.nav-btn:hover:not(:disabled) { background: var(--coral); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.dots { display: flex; gap: 6px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(31,42,74,0.2); cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--coral); width: 28px; border-radius: 4px; }
+
+.progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--coral), var(--sun), var(--teal)); z-index: 60; transition: width 0.4s ease; }
+
+.flashcard {
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 120px;
+}
+.flashcard:hover { transform: translateY(-4px) scale(1.03); border-color: var(--sun); box-shadow: 0 6px 16px rgba(255, 182, 39, 0.25); }
+.flashcard:active { transform: scale(0.95); }
+.flashcard .icon { font-size: 2rem; margin-bottom: 4px; }
+.flashcard .v1 { font-weight: 800; color: var(--ink); font-size: 1.1rem; }
+.flashcard .id { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.flashcard.playing { border-color: var(--teal); background: rgba(20, 184, 166, 0.1); animation: pulse 0.6s; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+.card { background: var(--paper); border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); border: 1px solid var(--border); transition: all 0.3s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(31, 42, 74, 0.12); }
+
+.bubble { max-width: 78%; padding: 12px 18px; border-radius: 20px; margin: 6px 0; position: relative; font-weight: 600; line-height: 1.6; }
+.bubble.left { background: var(--paper); border: 2px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+.bubble.right { background: linear-gradient(135deg, var(--coral), #FF8787); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+.bubble .speaker { font-size: 11px; opacity: 0.7; font-weight: 800; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.05em; }
+.bubble.right .speaker { opacity: 0.85; }
+
+.story-text { font-size: 1rem; line-height: 1.85; background: var(--paper); padding: 1.25rem 1.75rem; border-radius: 20px; border-left: 6px solid var(--sun); box-shadow: 0 4px 20px rgba(31, 42, 74, 0.08); }
+.story-text .underline-answer { background: rgba(255, 182, 39, 0.3); border-bottom: 3px solid var(--sun); padding: 2px 4px; border-radius: 4px; font-weight: 800; }
+
+.speak-btn { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; border: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-left: 8px; vertical-align: middle; }
+.speak-btn:hover { background: #0F9488; transform: scale(1.05); }
+
+.section-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; }
+.section-sub { color: var(--muted); font-weight: 600; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; background: rgba(20, 184, 166, 0.1); color: var(--teal); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.cover-title { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.bob { animation: bob 3s infinite ease-in-out; display: inline-block; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+.fade-up { animation: fadeUp 0.6s ease forwards; pointer-events: none; }
+.fade-up.show { pointer-events: auto; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.tab-btn { padding: 8px 18px; border-radius: 20px; font-weight: 800; border: none; cursor: pointer; transition: all 0.2s; font-family: 'Fredoka', sans-serif; font-size: 0.9rem; }
+.tab-btn.active { background: var(--coral); color: white; }
+.tab-btn:not(.active) { background: white; color: var(--coral); border: 2px solid var(--coral); }
+
+.story-input { border: 2px solid var(--border); border-radius: 8px; padding: 8px 12px; font-weight: 600; font-family: 'Nunito', sans-serif; width: 100%; margin-top: 4px; font-size: 0.95rem; }
+.story-input:focus { outline: none; border-color: var(--teal); }
+
+.btn-check { background: var(--coral); color: white; border: none; padding: 8px 22px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Nunito', sans-serif; font-size: 0.9rem; position: relative; z-index: 10; pointer-events: auto; }
+.btn-check:hover { background: #E55555; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4); }
+
+.explanation { margin-top: 10px; padding: 10px 14px; background: rgba(20, 184, 166, 0.08); border-left: 4px solid var(--teal); border-radius: 8px; font-size: 13px; display: none; }
+.explanation.show { display: block; animation: slideIn 0.3s; }
+
+.game-area { background: linear-gradient(135deg, rgba(155, 93, 229, 0.12), rgba(76, 201, 240, 0.12)); border-radius: 24px; padding: 1.5rem; }
+.game-option { background: var(--paper); border: 3px solid var(--border); border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.2s; font-weight: 700; font-size: 1.05rem; text-align: center; }
+.game-option:hover:not(.disabled) { transform: scale(1.02); border-color: var(--grape); box-shadow: 0 6px 16px rgba(155, 93, 229, 0.25); }
+.game-option.correct { background: var(--leaf); color: white; border-color: var(--leaf); animation: bounce 0.5s; }
+.game-option.incorrect { background: var(--rose); color: white; border-color: var(--rose); animation: shake 0.5s; }
+.game-option.disabled { pointer-events: none; opacity: 0.6; }
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+.translate-box { background: linear-gradient(135deg, rgba(255,182,39,0.15), rgba(255,107,107,0.1)); border-radius: 16px; padding: 1.25rem; text-align: center; border: 2px dashed var(--sun); }
+.translate-box .id-text { font-size: 1.25rem; font-weight: 800; color: var(--ink); font-family: 'Fredoka', sans-serif; }
+.translate-box .arrow { font-size: 1.5rem; color: var(--coral); margin: 8px 0; }
+.use-banner { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 30px; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width: 10%"></div>
+
+<div class="deck" id="deck">
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide active" data-slide="1">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-6xl mx-auto w-full">
+    <div class="chip mb-6 fade-up show">
+      <i class="fas fa-star"></i> English Fun Class · Grade 5
+    </div>
+    <h1 class="cover-title font-display fade-up show" style="animation-delay: 0.1s">
+      <span style="color: var(--coral)">Adjectives</span> <br>
+      <span style="color: var(--teal)">(Kata Sifat)</span>
+    </h1>
+    <h2 class="font-display text-2xl md:text-4xl mt-3 fade-up show" style="animation-delay: 0.2s; color: var(--ink)">
+      The Magic of Describing Words <span class="bob">✨</span>
+    </h2>
+    <p class="text-base md:text-xl mt-6 max-w-2xl fade-up show" style="animation-delay: 0.3s; color: var(--muted)">
+      Let's learn how to describe people, animals, places, and things using <b>Adjectives</b> in various tenses!
+    </p>
+    <div class="flex gap-4 md:gap-8 mt-10 text-4xl md:text-5xl fade-up show" style="animation-delay: 0.4s">
+      <span class="bob" style="animation-delay: 0s">🐘</span>
+      <span class="bob" style="animation-delay: 0.2s">🏁</span>
+      <span class="bob" style="animation-delay: 0.4s">🧠</span>
+      <span class="bob" style="animation-delay: 0.6s">😊</span>
+      <span class="bob" style="animation-delay: 0.8s">🍕</span>
+    </div>
+    <button class="btn-check mt-10 text-lg fade-up show" style="animation-delay: 0.5s; padding: 12px 32px;" onclick="goToSlide(1)">
+      <i class="fas fa-play mr-2"></i> Start Adventure
+    </button>
+    <p class="text-xs mt-4 fade-up show" style="animation-delay: 0.6s; color: var(--muted)">
+      <i class="fas fa-keyboard mr-1"></i> Use ← → arrow keys to navigate
+    </p>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: FLASHCARDS ============ -->
+<section class="slide" data-slide="2">
+  <div class="max-w-7xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-images"></i> Vocabulary · 20 Adjectives</span>
+    <h1 class="section-title mt-2 mb-2">Adjective Flashcards <span class="bob">🃏</span></h1>
+    <p class="section-sub mb-4">Click any card to hear the pronunciation!</p>
+    <div id="flashcardsGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: WHAT IS AN ADJECTIVE ============ -->
+<section class="slide" data-slide="3">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book"></i> Grammar Lesson 1</span>
+    <h1 class="section-title mt-2 mb-2">What is an Adjective? <span class="bob">🧐</span></h1>
+    <p class="section-sub mb-6">An <b>adjective</b> is a word that describes a noun or pronoun. It tells us <b>what kind</b>, <b>how many</b>, or <b>which one</b>.</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--coral)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--coral)">1. Before a Noun</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Adjective + Noun</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            It is a <b>beautiful</b> flower.<br>
+            <span style="color:var(--muted); font-size:11px">(Ini adalah bunga yang indah.)</span>
+            <button class="speak-btn" onclick="speak('It is a beautiful flower.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255,107,107,0.08)">
+            He is a <b>smart</b> boy.<br>
+            <span style="color:var(--muted); font-size:11px">(Dia anak laki-laki yang pintar.)</span>
+            <button class="speak-btn" onclick="speak('He is a smart boy.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--teal)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--teal)">2. After "To Be"</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Subject + am/is/are/was/were/will be + Adjective</p>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            The flower is <b>beautiful</b>.<br>
+            <span style="color:var(--muted); font-size:11px">(Bunga itu indah.)</span>
+            <button class="speak-btn" onclick="speak('The flower is beautiful.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(20,184,166,0.08)">
+            The boy is <b>smart</b>.<br>
+            <span style="color:var(--muted); font-size:11px">(Anak laki-laki itu pintar.)</span>
+            <button class="speak-btn" onclick="speak('The boy is smart.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">🧠 Common Expressions with Adjectives</h3>
+      <div class="grid md:grid-cols-3 gap-3 text-sm font-semibold">
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b>Be careful!</b> (Hati-hati!)
+          <button class="speak-btn" onclick="speak('Be careful!')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b>Don't be sad.</b> (Jangan sedih.)
+          <button class="speak-btn" onclick="speak('Do not be sad.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-2 rounded-lg" style="background: var(--paper)">
+          <b>I am happy.</b> (Saya senang.)
+          <button class="speak-btn" onclick="speak('I am happy.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: ADJECTIVES IN 5 TENSES ============ -->
+<section class="slide" data-slide="4">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-clock"></i> Grammar Lesson 2</span>
+    <h1 class="section-title mt-2 mb-2">Adjectives in 5 Tenses <span class="bob">⏰</span></h1>
+    <p class="section-sub mb-6">Adjectives can be used in any tense. Let's see how!</p>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--leaf)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--leaf)">1. Simple Present</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Fact or habit</p>
+        <div class="p-3 rounded-lg" style="background: rgba(6, 214, 160, 0.08); line-height: 1.7">
+          The <b>big</b> dog barks every night.<br>
+          <span style="color:var(--muted); font-size:11px">(Anjing besar itu menggonggong setiap malam.)</span>
+          <button class="speak-btn" onclick="speak('The big dog barks every night.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--sky)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--sky)">2. Present Continuous</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Happening now</p>
+        <div class="p-3 rounded-lg" style="background: rgba(76,201,240,0.08); line-height: 1.7">
+          The <b>smart</b> boy is reading a book.<br>
+          <span style="color:var(--muted); font-size:11px">(Anak pintar itu sedang membaca buku.)</span>
+          <button class="speak-btn" onclick="speak('The smart boy is reading a book.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--grape)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--grape)">3. Simple Past</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Finished in the past</p>
+        <div class="p-3 rounded-lg" style="background: rgba(155,93,229,0.08); line-height: 1.7">
+          The <b>old</b> house was dirty yesterday.<br>
+          <span style="color:var(--muted); font-size:11px">(Rumah tua itu kotor kemarin.)</span>
+          <button class="speak-btn" onclick="speak('The old house was dirty yesterday.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--sun)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--sun)">4. Present Perfect</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Connects past to now</p>
+        <div class="p-3 rounded-lg" style="background: rgba(255,182,39,0.08); line-height: 1.7">
+          She has been <b>happy</b> today.<br>
+          <span style="color:var(--muted); font-size:11px">(Dia sudah bahagia hari ini.)</span>
+          <button class="speak-btn" onclick="speak('She has been happy today.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+      <div class="card md:col-span-2" style="border-top: 6px solid var(--coral)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--coral)">5. Simple Future</h3>
+        <p class="text-xs font-semibold mb-3" style="color:var(--muted)">Will happen</p>
+        <div class="p-3 rounded-lg" style="background: rgba(255,107,107,0.08); line-height: 1.7">
+          Tomorrow will be a <b>hot</b> day.<br>
+          <span style="color:var(--muted); font-size:11px">(Besok akan menjadi hari yang panas.)</span>
+          <button class="speak-btn" onclick="speak('Tomorrow will be a hot day.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5: ASKING ABOUT FEELINGS & CONDITIONS ============ -->
+<section class="slide" data-slide="5">
+  <div class="max-w-6xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Grammar Lesson 3</span>
+    <h1 class="section-title mt-2 mb-2">Asking About Feelings <span class="bob">💭</span></h1>
+    <p class="section-sub mb-6">We can use adjectives to ask about someone's condition or feelings. Let's learn the formula!</p>
+
+    <div class="card mb-6" style="border-top: 6px solid var(--grape); background: linear-gradient(135deg, rgba(155,93,229,0.05), rgba(76,201,240,0.05))">
+      <div class="use-banner mb-4" style="background: rgba(155,93,229,0.15); color: var(--grape)">
+        <i class="fas fa-bolt"></i> The Formula: To Be + Subject + Adjective + ?
+      </div>
+      <p class="text-sm font-semibold mb-3" style="color: var(--muted)">
+        To ask a question, put the <b>"To Be"</b> verb at the beginning of the sentence!
+      </p>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="p-3 rounded-lg" style="background: var(--paper); border-left: 4px solid var(--coral)">
+          <b>Are</b> you <b>happy</b>?<br>
+          <span style="color:var(--muted); font-size:11px">(Apakah kamu bahagia?)</span>
+          <button class="speak-btn" onclick="speak('Are you happy?')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="p-3 rounded-lg" style="background: var(--paper); border-left: 4px solid var(--coral)">
+          <b>Is</b> he <b>tired</b>?<br>
+          <span style="color:var(--muted); font-size:11px">(Apakah dia lelah?)</span>
+          <button class="speak-btn" onclick="speak('Is he tired?')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4 mb-6">
+      <div class="card" style="border-top: 6px solid var(--leaf)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--leaf)">Short Answers</h3>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            Are you happy? → Yes, I am. / No, I am not.<br>
+            <button class="speak-btn" onclick="speak('Are you happy? Yes, I am. No, I am not.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(6, 214, 160, 0.08)">
+            Is she sick? → Yes, she is. / No, she isn't.<br>
+            <button class="speak-btn" onclick="speak('Is she sick? Yes, she is. No, she is not.')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top: 6px solid var(--sun)">
+        <h3 class="font-display text-xl font-bold mb-3" style="color: var(--sun)">Using "Why" and "How"</h3>
+        <div class="space-y-2 text-sm font-semibold" style="line-height: 1.7">
+          <div class="p-2 rounded-lg" style="background: rgba(255, 182, 39, 0.08)">
+            <b>Why are</b> you <b>angry</b>?<br>
+            <span style="color:var(--muted); font-size:11px">(Kenapa kamu marah?)</span>
+            <button class="speak-btn" onclick="speak('Why are you angry?')"><i class="fas fa-volume-up"></i></button>
+          </div>
+          <div class="p-2 rounded-lg" style="background: rgba(255, 182, 39, 0.08)">
+            <b>How are</b> you today?<br>
+            <span style="color:var(--muted); font-size:11px">(Apa kabarmu hari ini?)</span>
+            <button class="speak-btn" onclick="speak('How are you today?')"><i class="fas fa-volume-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,182,39,0.08))">
+      <h3 class="font-display text-lg font-bold mb-3">⏰ Asking in 5 Tenses</h3>
+      <div class="grid md:grid-cols-1 gap-2 text-sm font-semibold">
+        <div>1️⃣ <b style="color:var(--leaf)">Simple Present:</b> <b>Are</b> you happy? (Apakah kamu bahagia?) <button class="speak-btn" onclick="speak('Are you happy?')"><i class="fas fa-volume-up"></i></button></div>
+        <div>2️⃣ <b style="color:var(--sky)">Present Continuous:</b> <b>Are</b> you <b>feeling</b> happy? (Apakah kamu sedang merasa bahagia?) <button class="speak-btn" onclick="speak('Are you feeling happy?')"><i class="fas fa-volume-up"></i></button></div>
+        <div>3️⃣ <b style="color:var(--grape)">Simple Past:</b> <b>Were</b> you sad yesterday? (Apakah kamu sedih kemarin?) <button class="speak-btn" onclick="speak('Were you sad yesterday?')"><i class="fas fa-volume-up"></i></button></div>
+        <div>4️⃣ <b style="color:var(--sun)">Present Perfect:</b> <b>Have</b> you been busy? (Apakah kamu sudah sibuk?) <button class="speak-btn" onclick="speak('Have you been busy?')"><i class="fas fa-volume-up"></i></button></div>
+        <div>5️⃣ <b style="color:var(--coral)">Simple Future:</b> <b>Will</b> you be angry? (Apakah kamu akan marah?) <button class="speak-btn" onclick="speak('Will you be angry?')"><i class="fas fa-volume-up"></i></button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6: CONVERSATIONS ============ -->
+<section class="slide" data-slide="6">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-comments"></i> Conversations · Ms. Nanda & Cio</span>
+    <h1 class="section-title mt-2 mb-2">Let's Read Together! <span class="bob">💬</span></h1>
+    <p class="section-sub mb-4">5 conversations using adjectives in 5 different tenses!</p>
+    
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button class="tab-btn active" onclick="switchConv(1, this)">Conv 1</button>
+      <button class="tab-btn" onclick="switchConv(2, this)">Conv 2</button>
+      <button class="tab-btn" onclick="switchConv(3, this)">Conv 3</button>
+      <button class="tab-btn" onclick="switchConv(4, this)">Conv 4</button>
+      <button class="tab-btn" onclick="switchConv(5, this)">Conv 5</button>
+    </div>
+    
+    <div id="convContainer"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7: TRANSLATION PRACTICE ============ -->
+<section class="slide" data-slide="7">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-language"></i> Translation Practice · Indonesian → English</span>
+    <h1 class="section-title mt-2 mb-2">Translate the Sentence! <span class="bob">🌐</span></h1>
+    <p class="section-sub mb-4">Choose the correct English translation. Pay attention to the adjectives and tenses!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="transScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="transQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/20</span>
+        </div>
+      </div>
+      
+      <div class="translate-box mb-6">
+        <p class="text-sm font-bold mb-2" style="color:var(--muted)">📝 Kalimat dalam Bahasa Indonesia:</p>
+        <p class="id-text" id="transIndonesian"></p>
+        <div class="arrow">↓</div>
+        <p class="text-sm font-bold" style="color:var(--muted)">Choose the correct English translation:</p>
+      </div>
+      
+      <div id="transOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+      <div id="transFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8: STORY & QUESTIONS ============ -->
+<section class="slide" data-slide="8">
+  <div class="max-w-5xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-book-open"></i> Story Time</span>
+    <h1 class="section-title mt-2 mb-2">Read & Answer <span class="bob">📖</span></h1>
+    <p class="section-sub mb-4">Read the story carefully, then answer 10 questions. Type your answer and check!</p>
+    
+    <div class="flex justify-between items-center mb-3">
+      <p class="text-sm font-bold" style="color:var(--muted)">Cio's Busy Days</p>
+      <button class="btn-check" onclick="speak(storyText, true)"><i class="fas fa-play mr-2"></i>Play Full Story</button>
+    </div>
+
+    <div id="storyContainer" class="story-text mb-6"></div>
+    
+    <h3 class="font-display text-xl font-bold mb-4">📋 Answer these questions:</h3>
+    <div id="storyQuestions" class="space-y-4"></div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9: QUICK QUIZ ============ -->
+<section class="slide" data-slide="9">
+  <div class="max-w-4xl mx-auto w-full">
+    <span class="chip"><i class="fas fa-bolt"></i> Quick Quiz</span>
+    <h1 class="section-title mt-2 mb-2">Fill in the Blank! <span class="bob">⚡</span></h1>
+    <p class="section-sub mb-4">Choose the correct adjective or verb for each sentence!</p>
+    
+    <div class="game-area mb-6">
+      <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Score:</span> 
+          <span id="quizScore" style="color:var(--coral); font-size:1.5rem; font-weight:700">0</span>
+        </div>
+        <div class="font-display text-lg">
+          <span style="color:var(--muted)">Question:</span> 
+          <span id="quizQNum" style="color:var(--teal); font-size:1.5rem; font-weight:700">1/10</span>
+        </div>
+      </div>
+      <div id="quizContainer"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10: CLOSING ============ -->
+<section class="slide" data-slide="10">
+  <div class="flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto w-full">
+    <div class="chip mb-4 fade-up show">
+      <i class="fas fa-trophy"></i> Congratulations!
+    </div>
+    <h1 class="cover-title font-display fade-up show" style="animation-delay: 0.1s; font-size: clamp(2.5rem, 6vw, 4.5rem)">
+      Great Job! <span class="bob">🎉</span>
+    </h1>
+    <p class="text-lg md:text-xl mt-4 max-w-2xl fade-up show" style="animation-delay: 0.2s; color:var(--muted)">
+      You've mastered Adjectives and used them in 5 tenses!
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-4 mt-8 w-full max-w-4xl">
+      <div class="card fade-up show" style="animation-delay: 0.3s; border-top:6px solid var(--coral)">
+        <div class="text-3xl mb-2">📝</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--coral)">Adjective</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          Describes nouns. <br> Can be before noun or after "to be".
+        </p>
+      </div>
+      <div class="card fade-up show" style="animation-delay: 0.4s; border-top:6px solid var(--teal)">
+        <div class="text-3xl mb-2">⏰</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--teal)">5 Tenses</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          Present, Continuous, Past, Perfect, Future.
+        </p>
+      </div>
+      <div class="card fade-up show" style="animation-delay: 0.5s; border-top:6px solid var(--grape)">
+        <div class="text-3xl mb-2">💬</div>
+        <h3 class="font-display font-bold text-lg" style="color:var(--grape)">Expressions</h3>
+        <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+          Be careful! Don't be sad. I am happy.
+        </p>
+      </div>
+    </div>
+
+    <div class="card mt-6 w-full max-w-3xl fade-up show" style="animation-delay: 0.6s; border-top:6px solid var(--sun)">
+      <div class="text-3xl mb-2">💭</div>
+      <h3 class="font-display font-bold text-lg" style="color:var(--sun)">Reflection</h3>
+      <p class="text-sm font-semibold mt-2" style="color:var(--muted); line-height:1.7">
+        Ask yourself:<br>
+        • How are you feeling today? → "I am ___."<br>
+        • What were you like as a child? → "I was ___."<br>
+        • What will you be tomorrow? → "I will be ___."
+      </p>
+    </div>
+
+    <div class="flex gap-6 mt-10 text-5xl fade-up show" style="animation-delay: 0.7s">
+      <span class="bob" style="animation-delay:0s">✨</span>
+      <span class="bob" style="animation-delay:0.2s">📝</span>
+      <span class="bob" style="animation-delay:0.4s">⏰</span>
+      <span class="bob" style="animation-delay:0.6s">🏆</span>
+    </div>
+
+    <h2 class="font-display text-2xl md:text-3xl mt-8 fade-up show" style="animation-delay: 0.8s; color: var(--coral)">
+      Thank You for Today! <span class="bob">🌈</span>
+    </h2>
+    <p class="text-sm mt-3 fade-up show" style="animation-delay: 0.9s; color:var(--muted)">
+      Keep practicing your English. See you next time!
+    </p>
+    
+    <button class="btn-check mt-6 fade-up show" style="animation-delay: 1s" onclick="goToSlide(0)">
+      <i class="fas fa-redo mr-2"></i>Start Again
+    </button>
+  </div>
+</section>
+
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="prevSlide()" disabled>
+    <i class="fas fa-arrow-left"></i> Prev
+  </button>
+  <div class="flex items-center gap-4">
+    <span class="text-sm font-bold" style="color:var(--muted)">
+      <span id="slideNum">1</span> / <span id="slideTotal">10</span>
+    </span>
+    <div class="dots" id="dots"></div>
+  </div>
+  <button class="nav-btn" id="nextBtn" onclick="nextSlide()">
+    Next <i class="fas fa-arrow-right"></i>
+  </button>
+</nav>
+
+<script>
+// ============ Data: Flashcards (20 Adjectives) ============
+const adjectives = [
+  { en: 'big', id: 'besar', icon: '🐘' },
+  { en: 'small', id: 'kecil', icon: '🐜' },
+  { en: 'tall', id: 'tinggi', icon: '🦒' },
+  { en: 'short', id: 'pendek', icon: '🧒' },
+  { en: 'beautiful', id: 'cantik', icon: '🌸' },
+  { en: 'handsome', id: 'tampan', icon: '🤵' },
+  { en: 'smart', id: 'pintar', icon: '🧠' },
+  { en: 'fast', id: 'cepat', icon: '🏁' },
+  { en: 'slow', id: 'lambat', icon: '🐢' },
+  { en: 'happy', id: 'senang', icon: '😊' },
+  { en: 'sad', id: 'sedih', icon: '😢' },
+  { en: 'strong', id: 'kuat', icon: '💪' },
+  { en: 'weak', id: 'lemah', icon: '🥀' },
+  { en: 'clean', id: 'bersih', icon: '✨' },
+  { en: 'dirty', id: 'kotor', icon: '🗑️' },
+  { en: 'hot', id: 'panas', icon: '🔥' },
+  { en: 'cold', id: 'dingin', icon: '❄️' },
+  { en: 'old', id: 'tua', icon: '👴' },
+  { en: 'young', id: 'muda', icon: '👶' },
+  { en: 'delicious', id: 'lezat', icon: '🍕' }
+];
+
+// ============ Navigation ============
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+let currentSlide = 0;
+document.getElementById('slideTotal').textContent = totalSlides;
+
+const dotsContainer = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+});
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+  document.getElementById('slideNum').textContent = currentSlide + 1;
+  document.getElementById('progressBar').style.width = ((currentSlide + 1) / totalSlides * 100) + '%';
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+}
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = Math.max(0, Math.min(totalSlides - 1, index));
+  slides[currentSlide].classList.add('active');
+  updateNav();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  document.querySelector('.slide.active').scrollTop = 0;
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+});
+
+// ============ Text-to-Speech ============
+let englishVoice = null;
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.startsWith('en') && /female|samantha|google/i.test(v.name)) 
+              || voices.find(v => v.lang.startsWith('en-US'))
+              || voices.find(v => v.lang.startsWith('en'));
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, longText = false) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = longText ? 0.9 : 0.85;
+  utter.pitch = 1.1;
+  if (englishVoice) utter.voice = englishVoice;
+  window.speechSynthesis.speak(utter);
+}
+
+// ============ SLIDE 2: Flashcards ============
+function renderFlashcards() {
+  const grid = document.getElementById('flashcardsGrid');
+  adjectives.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'flashcard';
+    card.innerHTML = `
+      <div class="icon">${a.icon}</div>
+      <div class="v1">${a.en}</div>
+      <div class="id">${a.id}</div>
+    `;
+    card.onclick = () => {
+      speak(a.en);
+      document.querySelectorAll('.flashcard').forEach(c => c.classList.remove('playing'));
+      card.classList.add('playing');
+      setTimeout(() => card.classList.remove('playing'), 1000);
+    };
+    grid.appendChild(card);
+  });
+}
+
+// ============ SLIDE 6: Conversations ============
+const conversations = [
+  {
+    title: "Conversation 1 · A New Friend (Simple Present)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Tell me about your new friend, Cio.', side: 'left' },
+      { speaker: 'Cio', text: "His name is Budi. He is a smart and tall boy.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Is he kind too?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, he is very kind. He helps me every day.", side: 'right' }
+    ],
+    questions: [
+      { q: "What is Budi like?", a: "He is smart, tall, and kind." },
+      { q: "Is Budi short?", a: "No, he is tall." },
+      { q: "What does Budi do every day?", a: "He helps Cio every day." }
+    ]
+  },
+  {
+    title: "Conversation 2 · Watching a Movie (Present Continuous)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'What are you watching, Cio?', side: 'left' },
+      { speaker: 'Cio', text: "I am watching a funny movie, Ms. Nanda.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Are the actors good?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, they are very good. I am laughing so much.", side: 'right' }
+    ],
+    questions: [
+      { q: "What kind of movie is Cio watching?", a: "He is watching a funny movie." },
+      { q: "Are the actors good?", a: "Yes, they are very good." },
+      { q: "Why is Cio laughing?", a: "Because the movie is funny and the actors are good." }
+    ]
+  },
+  {
+    title: "Conversation 3 · Trip to the Beach (Simple Past)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'How was your trip to the beach yesterday?', side: 'left' },
+      { speaker: 'Cio', text: "It was amazing! The weather was sunny and hot.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Was the water cold?', side: 'left' },
+      { speaker: 'Cio', text: "No, the water was warm. We built a big sandcastle.", side: 'right' }
+    ],
+    questions: [
+      { q: "How was the trip to the beach?", a: "It was amazing." },
+      { q: "What was the weather like?", a: "It was sunny and hot." },
+      { q: "Was the water cold or warm?", a: "The water was warm." }
+    ]
+  },
+  {
+    title: "Conversation 4 · A New Bike (Present Perfect)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Have you seen my new bike?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, I have. It looks very fast and shiny!", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Yes, it is red and fast. I have ridden it to school.', side: 'left' },
+      { speaker: 'Cio', text: "That is wonderful. I want a fast bike too.", side: 'right' }
+    ],
+    questions: [
+      { q: "Has Cio seen the new bike?", a: "Yes, he has seen it." },
+      { q: "What does the bike look like?", a: "It looks fast, shiny, and red." },
+      { q: "Where has Ms. Nanda ridden it?", a: "She has ridden it to school." }
+    ]
+  },
+  {
+    title: "Conversation 5 · Tomorrow's Party (Simple Future)",
+    dialog: [
+      { speaker: 'Ms. Nanda', text: 'Will the party be fun tomorrow?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, it will be a great party! There will be delicious food.", side: 'right' },
+      { speaker: 'Ms. Nanda', text: 'Will the decorations be beautiful?', side: 'left' },
+      { speaker: 'Cio', text: "Yes, my mother will make beautiful balloons. It will be crowded.", side: 'right' }
+    ],
+    questions: [
+      { q: "Will the party be fun tomorrow?", a: "Yes, it will be a great party." },
+      { q: "What kind of food will there be?", a: "There will be delicious food." },
+      { q: "What will the decorations be like?", a: "They will be beautiful." }
+    ]
+  }
+];
+
+let currentConv = 1;
+function switchConv(num, btn) {
+  currentConv = num;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderConv();
+}
+
+function renderConv() {
+  const c = conversations[currentConv - 1];
+  const container = document.getElementById('convContainer');
+  let html = `<h3 class="font-display text-lg font-bold mb-4" style="color:var(--coral)">${c.title}</h3>`;
+  html += '<div class="flex flex-col mb-6">';
+  c.dialog.forEach(d => {
+    const escapedText = d.text.replace(/'/g, "\\'");
+    html += `<div class="bubble ${d.side}"><div class="speaker">${d.speaker}</div>${d.text} <button class="speak-btn" onclick="speak('${escapedText}')"><i class="fas fa-volume-up"></i></button></div>`;
+  });
+  html += '</div>';
+  html += '<h4 class="font-display text-lg font-bold mb-3">📋 Questions:</h4><div class="space-y-3">';
+  c.questions.forEach((q, i) => {
+    html += `
+      <div class="card" style="padding:1rem">
+        <p class="font-bold mb-2">${i+1}. ${q.q}</p>
+        <button class="btn-check" style="background:var(--teal)" onclick="toggleConvAnswer(${i}, this)"><i class="fas fa-eye mr-2"></i>Show Answer</button>
+        <div class="explanation" id="exp-conv-${i}">${q.a}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function toggleConvAnswer(i, btn) {
+  const exp = document.getElementById(`exp-conv-${i}`);
+  if (exp.classList.contains('show')) {
+    exp.classList.remove('show');
+    btn.innerHTML = '<i class="fas fa-eye mr-2"></i>Show Answer';
+  } else {
+    exp.classList.add('show');
+    btn.innerHTML = '<i class="fas fa-eye-slash mr-2"></i>Hide Answer';
+  }
+}
+
+// ============ SLIDE 7: Translation Practice ============
+const translationData = [
+  { id: 'Anjing besar itu menggonggong setiap malam.', options: ['The big dog barks every night.', 'The big dog is barking every night.', 'The big dog barked every night.', 'The big dog will bark every night.'], correct: 0 },
+  { id: 'Anak pintar itu sedang membaca buku.', options: ['The smart boy reads a book.', 'The smart boy is reading a book.', 'The smart boy has read a book.', 'The smart boy will read a book.'], correct: 1 },
+  { id: 'Rumah tua itu kotor kemarin.', options: ['The old house is dirty.', 'The old house was dirty yesterday.', 'The old house has been dirty.', 'The old house will be dirty.'], correct: 1 },
+  { id: 'Dia sudah bahagia hari ini.', options: ['She is happy today.', 'She was happy today.', 'She has been happy today.', 'She will be happy today.'], correct: 2 },
+  { id: 'Besok akan menjadi hari yang panas.', options: ['Tomorrow is a hot day.', 'Tomorrow was a hot day.', 'Tomorrow has been a hot day.', 'Tomorrow will be a hot day.'], correct: 3 },
+  { id: 'Dia adalah seorang anak yang tinggi.', options: ['He is a tall boy.', 'He is a boy tall.', 'He tall is a boy.', 'He a tall boy is.'], correct: 0 },
+  { id: 'Makanan tadi malam sangat lezat.', options: ['The food is very delicious.', 'The food was very delicious last night.', 'The food has been very delicious.', 'The food will be very delicious.'], correct: 1 },
+  { id: 'Mereka sedang bermain di taman yang luas.', options: ['They play in the spacious park.', 'They are playing in the spacious park.', 'They played in the spacious park.', 'They have played in the spacious park.'], correct: 1 },
+  { id: 'Saya telah membaca buku tebal itu.', options: ['I read that thick book.', 'I am reading that thick book.', 'I have read that thick book.', 'I will read that thick book.'], correct: 2 },
+  { id: 'Kami akan membeli mobil yang cepat.', options: ['We buy a fast car.', 'We bought a fast car.', 'We are buying a fast car.', 'We will buy a fast car.'], correct: 3 },
+  { id: 'Bunga ini sangat indah.', options: ['This flower is very beautiful.', 'This flower was very beautiful.', 'This flower has been very beautiful.', 'This flower will be very beautiful.'], correct: 0 },
+  { id: 'Cuaca kemarin sangat dingin.', options: ['The weather is very cold yesterday.', 'The weather was very cold yesterday.', 'The weather is being very cold yesterday.', 'The weather has been very cold yesterday.'], correct: 1 },
+  { id: 'Kucing hitam itu sedang tidur.', options: ['The black cat sleeps.', 'The black cat is sleeping.', 'The black cat slept.', 'The black cat has slept.'], correct: 1 },
+  { id: 'Dia telah menjadi siswa yang rajin.', options: ['He is a diligent student.', 'He was a diligent student.', 'He has been a diligent student.', 'He will be a diligent student.'], correct: 2 },
+  { id: 'Mereka akan bermain di taman yang indah.', options: ['They play in the beautiful park.', 'They are playing in the beautiful park.', 'They played in the beautiful park.', 'They will play in the beautiful park.'], correct: 3 },
+  { id: 'Guru kami sangat baik.', options: ['Our teacher is very kind.', 'Our teacher was very kind.', 'Our teacher has been very kind.', 'Our teacher will be very kind.'], correct: 0 },
+  { id: 'Ibu memasak sup yang panas kemarin.', options: ['My mother cooks hot soup.', 'My mother is cooking hot soup.', 'My mother cooked hot soup yesterday.', 'My mother has cooked hot soup.'], correct: 2 },
+  { id: 'Kamu telah menjadi teman yang hebat.', options: ['You are a great friend.', 'You were a great friend.', 'You have been a great friend.', 'You will be a great friend.'], correct: 2 },
+  { id: 'Aku akan menjadi orang yang kuat.', options: ['I am a strong person.', 'I was a strong person.', 'I have been a strong person.', 'I will be a strong person.'], correct: 3 },
+  { id: 'Anak-anak sedang menyanyikan lagu yang lucu.', options: ['The children sing a funny song.', 'The children are singing a funny song.', 'The children sang a funny song.', 'The children will sing a funny song.'], correct: 1 }
+];
+
+let transState = { score: 0, qNum: 0, answered: false };
+
+function loadTranslation() {
+  transState.answered = false;
+  const q = translationData[transState.qNum];
+  document.getElementById('transQNum').textContent = `${transState.qNum + 1}/${translationData.length}`;
+  document.getElementById('transIndonesian').textContent = q.id;
+  document.getElementById('transFeedback').textContent = '';
+  
+  const optsContainer = document.getElementById('transOptions');
+  optsContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerTranslation(i, q.correct, btn, opt);
+    optsContainer.appendChild(btn);
+  });
+}
+
+function answerTranslation(chosen, correct, btn, optText) {
+  if (transState.answered) return;
+  transState.answered = true;
+  
+  document.querySelectorAll('#transOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('transFeedback');
+  
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    transState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+    speak(optText);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The correct answer is:</span><br><span style="color:var(--leaf)">${translationData[transState.qNum].options[correct]}</span>`;
+    document.querySelectorAll('#transOptions .game-option')[correct].classList.add('correct');
+    playSound(false);
+    speak(translationData[transState.qNum].options[correct]);
+  }
+  
+  document.getElementById('transScore').textContent = transState.score;
+  
+  setTimeout(() => {
+    transState.qNum++;
+    if (transState.qNum >= translationData.length) {
+      endTranslation();
+    } else {
+      loadTranslation();
+    }
+  }, 2500);
+}
+
+function endTranslation() {
+  const container = document.querySelector('.game-area');
+  const percentage = (transState.score / (translationData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect Translator!';
+    message = "You're amazing at translating Indonesian to English!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know your adjectives and tenses well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${transState.score}</span> / ${translationData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartTranslation()">
+        <i class="fas fa-redo mr-2"></i>Try Again
+      </button>
+    </div>
+  `;
+}
+
+function restartTranslation() {
+  transState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('transScore').textContent = '0';
+  loadTranslation();
+}
+
+// ============ SLIDE 8: Story & Questions ============
+const storyText = `Cio has a new red bicycle. It is a very fast bicycle. He bought it yesterday because his old bicycle was broken. Right now, he is riding his fast bicycle in the big park. He is very happy. Tomorrow, he will join a long race. He knows it will be an exciting day. He has practiced hard for a week. Cio is a smart and strong boy.`;
+
+const storyQuestions = [
+  { q: "What kind of bicycle does Cio have now?", a: "He has a new red bicycle.", sentence: "Cio has a new red bicycle." },
+  { q: "Is the bicycle slow or fast?", a: "It is a very fast bicycle.", sentence: "It is a very fast bicycle." },
+  { q: "Why did he buy a new bicycle yesterday?", a: "Because his old bicycle was broken.", sentence: "He bought it yesterday because his old bicycle was broken." },
+  { q: "What is he doing right now?", a: "He is riding his fast bicycle in the big park.", sentence: "Right now, he is riding his fast bicycle in the big park." },
+  { q: "How does Cio feel now?", a: "He is very happy.", sentence: "He is very happy." },
+  { q: "What will he join tomorrow?", a: "He will join a long race tomorrow.", sentence: "Tomorrow, he will join a long race." },
+  { q: "What kind of day will it be?", a: "It will be an exciting day.", sentence: "He knows it will be an exciting day." },
+  { q: "What has he done for a week?", a: "He has practiced hard for a week.", sentence: "He has practiced hard for a week." },
+  { q: "What is Cio like?", a: "He is a smart and strong boy.", sentence: "Cio is a smart and strong boy." },
+  { q: "Where is Cio riding his bicycle?", a: "In the big park.", sentence: "Right now, he is riding his fast bicycle in the big park." }
+];
+
+function renderStory() {
+  const container = document.getElementById('storyContainer');
+  const sentences = storyText.match(/[^.!?]+[.!?]+/g) || [];
+  let html = '';
+  sentences.forEach((s, i) => {
+    html += `<span data-sentence="${i}">${s.trim()} </span>`;
+  });
+  container.innerHTML = html;
+  
+  const qContainer = document.getElementById('storyQuestions');
+  qContainer.innerHTML = '';
+  storyQuestions.forEach((sq, i) => {
+    const sentIndex = sentences.findIndex(s => s.trim() === sq.sentence);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <p class="font-bold mb-2">${i+1}. ${sq.q}</p>
+      <input type="text" class="story-input" placeholder="Type your answer here..." id="storyAns${i}">
+      <button class="btn-check mt-3" onclick="checkStoryAnswer(${i}, ${sentIndex})"><i class="fas fa-check mr-2"></i>Check Answer</button>
+      <div class="explanation" id="exp-story${i}">
+        <b>Answer:</b> ${sq.a}<br>
+        <i>Look at the underlined sentence in the story!</i>
+      </div>
+    `;
+    qContainer.appendChild(card);
+  });
+}
+
+function checkStoryAnswer(qIndex, sentIndex) {
+  const input = document.getElementById(`storyAns${qIndex}`);
+  const exp = document.getElementById(`exp-story${qIndex}`);
+  const userAns = input.value.toLowerCase().trim();
+  
+  if (userAns === '') {
+    input.style.borderColor = 'var(--sun)';
+    setTimeout(() => input.style.borderColor = '', 1500);
+    return;
+  }
+  
+  exp.classList.add('show');
+  
+  document.querySelectorAll('.underline-answer').forEach(el => {
+    el.classList.remove('underline-answer');
+  });
+  
+  if (sentIndex >= 0) {
+    const sentSpan = document.querySelector(`[data-sentence="${sentIndex}"]`);
+    if (sentSpan) {
+      sentSpan.classList.add('underline-answer');
+      sentSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  const keyWords = storyQuestions[qIndex].a.toLowerCase().split(' ').filter(w => w.length > 3);
+  const matched = keyWords.some(w => userAns.includes(w));
+  
+  if (matched) {
+    input.style.borderColor = 'var(--leaf)';
+    input.style.background = 'rgba(6, 214, 160, 0.1)';
+    playSound(true);
+  } else {
+    input.style.borderColor = 'var(--rose)';
+    input.style.background = 'rgba(244, 63, 94, 0.1)';
+    playSound(false);
+  }
+}
+
+// ============ SLIDE 9: Quick Quiz ============
+const quizData = [
+  { q: "The ___ dog barks every night. (Simple Present)", options: ['big', 'tall', 'delicious', 'beautiful'], correct: 0 },
+  { q: "The smart boy ___ a book now. (Present Continuous)", options: ['reads', 'is reading', 'read', 'has read'], correct: 1 },
+  { q: "The old house was ___ yesterday. (Simple Past)", options: ['dirty', 'dirtying', 'dirties', 'dirtied'], correct: 0 },
+  { q: "She has been ___ today. (Present Perfect)", options: ['sad', 'sads', 'sadding', 'sadded'], correct: 0 },
+  { q: "Tomorrow will be a ___ day. (Simple Future)", options: ['hot', 'hots', 'hotting', 'hotted'], correct: 0 },
+  { q: "He is a ___ boy. (Before noun)", options: ['handsome', 'handsomely', 'handsomeness', 'handsoming'], correct: 0 },
+  { q: "The food was very ___. (After to be)", options: ['delicious', 'deliciously', 'deliciousness', 'deliciousing'], correct: 0 },
+  { q: "They ___ playing in the spacious park now.", options: ['are', 'is', 'was', 'will'], correct: 0 },
+  { q: "I ___ read that thick book.", options: ['have', 'has', 'am', 'will'], correct: 0 },
+  { q: "We will buy a ___ car.", options: ['fast', 'fastly', 'fastness', 'fasting'], correct: 0 }
+];
+
+let quizState = { score: 0, qNum: 0, answered: false };
+
+function loadQuiz() {
+  quizState.answered = false;
+  const q = quizData[quizState.qNum];
+  document.getElementById('quizQNum').textContent = `${quizState.qNum + 1}/${quizData.length}`;
+  
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = `
+    <div class="text-center mb-6">
+      <div class="font-display text-xl md:text-2xl font-bold mb-4" style="line-height:1.5">${q.q}</div>
+    </div>
+    <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    <div id="quizFeedback" class="mt-4 text-center font-bold text-lg" style="min-height: 28px"></div>
+  `;
+  
+  const optsContainer = document.getElementById('quizOptions');
+  const shuffled = q.options.map((opt, i) => ({opt, isCorrect: i === q.correct})).sort(() => Math.random() - 0.5);
+  shuffled.forEach(item => {
+    const btn = document.createElement('div');
+    btn.className = 'game-option';
+    btn.textContent = item.opt;
+    btn.onclick = () => answerQuiz(item.isCorrect, btn, q);
+    optsContainer.appendChild(btn);
+  });
+}
+
+function answerQuiz(isCorrect, btn, q) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  
+  document.querySelectorAll('#quizOptions .game-option').forEach(o => o.classList.add('disabled'));
+  const feedback = document.getElementById('quizFeedback');
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizState.score += 10;
+    feedback.innerHTML = '<span style="color:var(--leaf)">✓ Correct! +10 points</span>';
+    playSound(true);
+  } else {
+    btn.classList.add('incorrect');
+    feedback.innerHTML = `<span style="color:var(--rose)">✗ Wrong! The answer is "<b>${q.options[q.correct]}</b>"</span>`;
+    // Bug fix: Only mark the correct option!
+    document.querySelectorAll('#quizOptions .game-option').forEach(o => {
+      if (o.textContent === q.options[q.correct]) {
+        o.classList.add('correct');
+      }
+    });
+    playSound(false);
+  }
+  
+  document.getElementById('quizScore').textContent = quizState.score;
+  
+  setTimeout(() => {
+    quizState.qNum++;
+    if (quizState.qNum >= quizData.length) {
+      endQuiz();
+    } else {
+      loadQuiz();
+    }
+  }, 1800);
+}
+
+function endQuiz() {
+  const container = document.getElementById('quizContainer');
+  const percentage = (quizState.score / (quizData.length * 10)) * 100;
+  let icon, title, message;
+  
+  if (percentage >= 80) {
+    icon = '🏆'; title = 'Perfect!';
+    message = "You're an Adjective Master!";
+  } else if (percentage >= 60) {
+    icon = '🌟'; title = 'Great Job!';
+    message = 'You know the material well!';
+  } else {
+    icon = '💪'; title = 'Keep Practicing!';
+    message = 'Review the material and try again!';
+  }
+  
+  container.innerHTML = `
+    <div class="text-center py-8">
+      <div class="text-7xl mb-4">${icon}</div>
+      <h3 class="font-display text-3xl font-bold mb-2">${title}</h3>
+      <p class="text-lg font-semibold mb-2">Your Score: <span style="color:var(--coral); font-weight:800">${quizState.score}</span> / ${quizData.length * 10}</p>
+      <p class="text-sm font-semibold mb-6" style="color:var(--muted)">${message}</p>
+      <button class="btn-check text-lg" style="padding:12px 32px" onclick="restartQuiz()">
+        <i class="fas fa-redo mr-2"></i>Play Again
+      </button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  quizState = { score: 0, qNum: 0, answered: false };
+  document.getElementById('quizScore').textContent = '0';
+  loadQuiz();
+}
+
+// ============ Sound Effects ============
+let audioCtx = null;
+function playSound(correct) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    if (correct) {
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+    } else {
+      osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+      osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.15);
+    }
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 0.4);
+  } catch(e) {}
+}
+
+// ============ Initialize ============
+renderFlashcards();
+renderConv();
+renderStory();
+loadTranslation();
+loadQuiz();
+updateNav();
+</script>
+</body>
+</html>
