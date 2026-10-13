@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fable Time — Reading & Listening Practice</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%81%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#2d6a4f;--green2:#40916c;--deep:#1b4332;
+  --amber:#f6a623;--coral:#e76f51;--sun:#ffd166;
+  --cream:#fdf7ec;--paper:#fff;--ink:#33302a;--muted:#7a7264;
+  --line:#eadfc8;--shadow:0 10px 30px rgba(60,50,20,.12);--r:18px;
+}
+html,body{height:100%}
+body{
+  font-family:'Nunito',sans-serif;color:var(--ink);overflow:hidden;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, #ffe9c2 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #d8f1e3 0%, transparent 55%),
+    var(--cream);
+}
+/* ====== TOPBAR & PROGRESS ====== */
+.topbar{position:fixed;top:0;left:0;right:0;height:58px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(255,252,244,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{font-family:'Baloo 2';font-weight:800;color:var(--green);font-size:1.15rem;display:flex;gap:8px;align-items:center}
+.meta{display:flex;gap:8px;align-items:center}
+.counter{font-weight:800;color:var(--muted);background:#fff;border:1px solid var(--line);padding:4px 12px;border-radius:999px;font-size:.85rem}
+.iconbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1rem;transition:.2s}
+.iconbtn:hover{background:#e7f3ec}
+.progress{position:fixed;top:58px;left:0;right:0;height:5px;background:#f0e6cf;z-index:49}
+#progressBar{height:100%;width:0;border-radius:0 4px 4px 0;background:linear-gradient(90deg,var(--green),var(--amber));transition:width .4s}
+/* ====== SLIDES ====== */
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;overflow-y:auto;opacity:0;visibility:hidden;transform:translateX(60px) scale(.98);transition:all .55s cubic-bezier(.22,.9,.32,1)}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.inner{max-width:1060px;margin:0 auto;padding:88px 26px 116px;min-height:100%;position:relative}
+.slide.active .inner{animation:rise .6s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.center{display:flex;flex-direction:column;align-items:center;text-align:center}
+/* ====== TYPOGRAPHY ====== */
+.kicker{display:inline-flex;align-items:center;gap:8px;background:#e7f3ec;color:var(--green);font-weight:800;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px}
+h2.title{font-family:'Baloo 2';font-size:clamp(1.6rem,3.4vw,2.4rem);color:var(--deep);margin:12px 0 4px}
+p.sub{color:var(--muted);font-size:1.02rem;max-width:760px}
+.divider{height:4px;width:70px;background:linear-gradient(90deg,var(--amber),var(--coral));border-radius:99px;margin:14px 0 20px}
+/* ====== CARDS & GRIDS ====== */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:22px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.chip{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:800;margin:4px;color:var(--deep)}
+.chip.small{padding:3px 10px;font-size:.8rem}
+.chip.bad{background:#fdeaea;border-color:#e05252;color:#a33a3a}
+.chip.todo{background:#fff4d6;border-color:var(--amber);color:#8a6100}
+.tipbox{background:#fff6e0;border:1px dashed var(--amber);border-radius:14px;padding:12px 16px;margin-top:16px;font-weight:600;color:#7c5a00}
+/* ====== BUTTONS ====== */
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;border-radius:999px;padding:12px 22px;font-size:1rem;transition:.2s;text-decoration:none}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 6px 16px rgba(45,106,79,.35)}
+.btn-primary:hover{background:var(--deep);transform:translateY(-2px)}
+.btn-amber{background:var(--amber);color:#4a3000}
+.btn-amber:hover{filter:brightness(1.05);transform:translateY(-2px)}
+.btn-ghost{background:#fff;border:2px solid var(--line);color:var(--green)}
+.btn-ghost:hover{border-color:var(--green2)}
+.btn.big{padding:16px 34px;font-size:1.1rem}
+/* ====== COVER ====== */
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:100%}
+.cover-badge{background:#e7f3ec;color:var(--green);font-weight:800;padding:8px 18px;border-radius:999px;letter-spacing:.06em}
+.cover-title{font-family:'Baloo 2';font-size:clamp(3rem,9vw,5.4rem);line-height:1.05;color:var(--deep);margin:18px 0 6px}
+.cover-title span{background:linear-gradient(90deg,var(--coral),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover-sub{font-size:1.2rem;font-weight:800;color:var(--green2)}
+.cover-desc{max-width:620px;color:var(--muted);margin:14px 0 20px}
+.floaty{position:absolute;font-size:2.1rem;opacity:.45;animation:floaty 7s ease-in-out infinite;pointer-events:none}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-22px) rotate(6deg)}}
+/* ====== VOCABULARY ====== */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px;margin-top:18px}
+.vcard{height:118px;perspective:900px;cursor:pointer}
+.vc-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .5s}
+.vcard.flip .vc-in{transform:rotateY(180deg)}
+.vface{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;text-align:center}
+.vfront{background:#fff;border:2px solid var(--line)}
+.vback{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;transform:rotateY(180deg)}
+.vword{font-family:'Baloo 2';font-weight:700;font-size:1.02rem;color:var(--deep)}
+.vback .vword{color:#fff}
+.emoji{font-size:1.7rem}
+.speak{position:absolute;top:6px;right:6px;background:#e7f3ec;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:.8rem}
+.speak:hover{background:var(--sun)}
+/* ====== READING ====== */
+.story-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.story-emoji{font-size:2.4rem}
+.storybox{background:#fffdf6;border:1px solid var(--line);border-left:6px solid var(--amber);border-radius:14px;padding:20px 24px;margin:16px 0}
+.storybox p{line-height:1.85;margin:10px 0;font-size:1.03rem}
+.gq{margin:14px 0}
+.gq label{font-weight:800;color:var(--deep);display:block;margin-bottom:6px}
+.gq label i{color:var(--muted);font-weight:600}
+textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-family:'Nunito',sans-serif;font-size:.97rem;min-height:62px;resize:vertical;background:#fffdf6}
+textarea:focus{outline:none;border-color:var(--green2)}
+.sample{display:none;background:#e9f6ee;border:1px dashed var(--green2);border-radius:14px;padding:16px;margin-top:14px;line-height:1.7}
+.sample.show{display:block;animation:pop .4s ease}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* ====== LISTENING / VIDEO ====== */
+.vid{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.vid-emoji{font-size:3rem}
+.vid h3{font-family:'Baloo 2';color:var(--deep);font-size:1.3rem}
+/* ====== QUIZ ====== */
+.qcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:14px 0;box-shadow:0 4px 14px rgba(60,50,20,.06)}
+.qtext{font-weight:800;color:var(--ink);font-size:1.02rem;line-height:1.5}
+.qnum{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;border-radius:10px;background:var(--green);color:#fff;font-weight:800;margin-right:8px}
+.opts{display:grid;gap:8px;margin:12px 0}
+.opt{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fffdf6;transition:.15s;font-size:.97rem;line-height:1.5}
+.opt:hover{border-color:var(--green2)}
+.opt input{margin-top:4px;accent-color:var(--green)}
+.opt.right{background:#e9f8ee;border-color:#37b26c}
+.opt.wrong{background:#fdeaea;border-color:#e05252}
+.qrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.qhint{color:var(--muted);font-size:.85rem}
+.feedback{display:none;margin-top:12px;border-radius:12px;padding:12px 14px;font-size:.95rem;line-height:1.65}
+.feedback.show{display:block;animation:pop .35s ease}
+.feedback.good{background:#e9f8ee;border:1px solid #37b26c}
+.feedback.bad{background:#fdeaea;border:1px solid #e05252}
+.feedback.warn{background:#fff8e1;border:1px solid var(--amber)}
+.exp{margin-top:8px;background:#f4f9f6;border-radius:10px;padding:10px 12px}
+.sumline{font-weight:800;color:var(--green)}
+/* ====== RESULTS ====== */
+.scorebig{font-family:'Baloo 2';font-size:3.4rem;color:var(--green);line-height:1}
+.barwrap{margin:12px 0;text-align:left}
+.barlabel{font-weight:800;font-size:.92rem;margin-bottom:5px}
+.bar{height:14px;background:#f0e9d8;border-radius:99px;overflow:hidden}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--green2),var(--amber));transition:width .9s;border-radius:99px}
+.mini{margin-top:10px;font-weight:700;color:var(--muted);font-size:.9rem}
+/* ====== NAV ====== */
+.nav{position:fixed;bottom:18px;right:18px;display:flex;gap:10px;z-index:60}
+.navbtn{width:52px;height:52px;border-radius:50%;border:none;background:var(--green);color:#fff;font-size:1.4rem;cursor:pointer;box-shadow:var(--shadow);transition:.2s;line-height:1}
+.navbtn:hover:not(:disabled){transform:translateY(-3px);background:var(--deep)}
+.navbtn:disabled{opacity:.3;cursor:not-allowed}
+@media (max-width:640px){
+  .inner{padding:76px 14px 112px}
+  .topbar{padding:0 10px}
+  .brand .txt{display:none}
+  .navbtn{width:46px;height:46px}
+  .vgrid{grid-template-columns:repeat(auto-fill,minmax(106px,1fr))}
+  .vcard{height:104px}
+  .story-emoji{font-size:1.9rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">🦁 <span class="txt">Fable Time — English Practice</span></div>
+  <div class="meta">
+    <span class="counter" id="counter">1 / 15</span>
+    <button class="iconbtn" onclick="go(0)" title="Kembali ke Cover">⌂</button>
+    <button class="iconbtn" onclick="fs()" title="Layar Penuh">⛶</button>
+  </div>
+</div>
+<div class="progress"><div id="progressBar"></div></div>
+
+<main class="deck" id="deck">
+
+  <!-- 0. COVER -->
+  <section class="slide active">
+    <div class="inner cover">
+      <span class="floaty" style="top:12%;left:8%;animation-delay:.2s">🦁</span>
+      <span class="floaty" style="top:20%;right:10%;animation-delay:1.1s">🐭</span>
+      <span class="floaty" style="bottom:18%;left:12%;animation-delay:1.8s">🐊</span>
+      <span class="floaty" style="bottom:24%;right:8%;animation-delay:.7s">🐵</span>
+      <span class="floaty" style="top:52%;left:4%;animation-delay:2.4s">📖</span>
+      <div class="cover-badge">📚 MEDIA PEMBELAJARAN INTERAKTIF</div>
+      <h1 class="cover-title">Fable <span>Time!</span></h1>
+      <p class="cover-sub">Reading &amp; Listening Practice — Bahasa Inggris</p>
+      <p class="cover-desc">Belajar kosakata fabel, membaca cerita pendek, menonton video, dan mengerjakan kuis — semuanya dalam satu petualangan seru! 🦁🐭🐊🐵</p>
+      <div>
+        <span class="chip">📖 30 Kosakata Fabel</span>
+        <span class="chip">✍️ 5 Cerita Reading</span>
+        <span class="chip">🎧 2 Video Listening</span>
+        <span class="chip">✅ 20 Soal Kuis</span>
+      </div>
+      <br>
+      <button class="btn btn-primary big" onclick="go(1)">🚀 Mulai Petualangan</button>
+    </div>
+  </section>
+
+  <!-- 1. PETUNJUK -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">🗺️ Peta Petualangan</span>
+      <h2 class="title">Petunjuk Penggunaan</h2>
+      <div class="divider"></div>
+      <div class="grid2">
+        <div class="card"><h3 style="font-family:'Baloo 2';color:var(--deep)">1️⃣ Kosakata</h3><p style="margin-top:6px">Pelajari <b>30 kosakata</b> yang sering muncul di fabel. Klik kartu untuk melihat artinya, dan tekan 🔊 untuk mendengar pelafalannya.</p></div>
+        <div class="card"><h3 style="font-family:'Baloo 2';color:var(--deep)">2️⃣ Reading</h3><p style="margin-top:6px">Baca <b>5 cerita pendek</b> (3 paragraf). Jawab pertanyaan menuntun, tulis kesimpulanmu, lalu bandingkan dengan contoh kesimpulan.</p></div>
+        <div class="card"><h3 style="font-family:'Baloo 2';color:var(--deep)">3️⃣ Listening</h3><p style="margin-top:6px">Tonton <b>2 video fabel</b> di YouTube dengan saksama: <i>The Lion and The Mouse</i> dan <i>Clever Monkey and The Foolish Crocodile</i>.</p></div>
+        <div class="card"><h3 style="font-family:'Baloo 2';color:var(--deep)">4️⃣ Kuis</h3><p style="margin-top:6px">Jawab <b>20 soal</b> pilihan ganda. Tekan <b>“Cek Jawaban”</b> di setiap soal untuk melihat benar/salah beserta pembahasannya.</p></div>
+      </div>
+      <div class="tipbox">💡 <b>Navigasi:</b> gunakan tombol ➜ ⬅️ di kanan bawah, panah keyboard (← →), atau geser layar (swipe) untuk berpindah slide.</div>
+      <br>
+      <button class="btn btn-primary" onclick="go(2)">Mulai dari Kosakata ➜</button>
+    </div>
+  </section>
+
+  <!-- 2. KOSAKATA -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">📚 Vocabulary Builder</span>
+      <h2 class="title">30 Kosakata yang Sering Digunakan dalam Fabel</h2>
+      <p class="sub">Klik kartu untuk melihat artinya. Tekan tombol 🔊 untuk mendengar cara membacanya, lalu ucapkan dengan keras! Kosakata ini akan sering muncul di cerita dan video.</p>
+      <div class="vgrid" id="vgrid"></div>
+      <br>
+      <button class="btn btn-primary" onclick="go(3)">Lanjut ke Reading ➜</button>
+    </div>
+  </section>
+
+  <!-- 3. READING INTRO -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">✍️ Reading Practice</span>
+      <h2 class="title">Baca &amp; Simpulkan Ceritanya!</h2>
+      <div class="divider"></div>
+      <p class="sub">Kamu akan membaca <b>5 cerita fabel pendek</b> (masing-masing 3 paragraf). Setelah membaca:</p>
+      <div class="grid2" style="margin-top:16px">
+        <div class="card">🧭 <b>Jawab pertanyaan menuntun</b> untuk membantumu memahami isi cerita.</div>
+        <div class="card">✍️ <b>Tulis kesimpulanmu sendiri</b>: tentang apa cerita itu dan apa pesan moralnya.</div>
+        <div class="card">💡 <b>Buka contoh kesimpulan</b> untuk membandingkan dengan jawabanmu.</div>
+        <div class="card">🔁 <b>Baca ulang</b> jika perlu — tidak perlu terburu-buru!</div>
+      </div>
+      <div style="margin-top:18px">
+        <span class="chip">🐜 The Ant and the Dove</span>
+        <span class="chip">🐢 The Rabbit and the Turtle</span>
+        <span class="chip">🐦 The Thirsty Crow</span>
+        <span class="chip">🦊 The Fox and the Grapes</span>
+        <span class="chip">👦 The Boy Who Cried Wolf</span>
+      </div>
+      <br><br>
+      <button class="btn btn-primary" onclick="go(4)">Mulai Membaca: Cerita 1 ➜</button>
+    </div>
+  </section>
+
+  <!-- 4. STORY 1 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">📖 Reading Practice • Cerita 1 dari 5</span>
+      <div class="story-head"><span class="story-emoji">🐜🕊️</span><h2 class="title">The Ant and the Dove</h2></div>
+      <div class="divider"></div>
+      <div class="storybox">
+        <p>One hot morning, a little ant was very thirsty. She walked to the river to drink. The river was near her home in the forest.</p>
+        <p>Oh no! The water pulled her, and the little ant fell into the river. A dove sat on a tree near the river. He saw the ant. Quickly, he picked a big leaf and dropped it into the water. The ant climbed onto the leaf. She was safe!</p>
+        <p>A few days later, a hunter came to the forest. He pointed his net at the dove. The ant saw it. She bit the hunter's foot. "Ouch!" cried the hunter, and he ran away. The dove was safe too.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-family:'Baloo 2';color:var(--deep)">🧭 Pertanyaan Menuntun</h3>
+        <div class="gq"><label>1. Who are the characters in the story? <i>(Siapa saja tokoh dalam cerita ini?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>2. How did the dove help the ant? How did the ant help the dove? <i>(Bagaimana burung merpati menolong semut? Bagaimana semut menolong burung merpati?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>3. What can we learn from this story? <i>(Apa yang bisa kita pelajari dari cerita ini?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>✍️ Now write your conclusion: What is the story about? <i>(Sekarang tulis kesimpulanmu: cerita ini tentang apa?)</i></label><textarea placeholder="The story is about..." style="min-height:90px"></textarea></div>
+        <button class="btn btn-amber" onclick="toggleSample('s1')">💡 Lihat Contoh Kesimpulan</button>
+        <div class="sample" id="s1">
+          <b>Moral:</b> One good turn deserves another.<br><br>
+          <b>Contoh kesimpulan:</b> The story is about a little ant and a dove. The dove helped the ant by dropping a leaf into the river so the ant could climb on it. Later, the ant helped the dove by biting the hunter's foot. <i>We learn that kindness comes back to us — when we help others, they will help us too.</i>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(5)">Cerita Berikutnya ➜</button>
+    </div>
+  </section>
+
+  <!-- 5. STORY 2 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">📖 Reading Practice • Cerita 2 dari 5</span>
+      <div class="story-head"><span class="story-emoji">🐰🐢</span><h2 class="title">The Rabbit and the Turtle</h2></div>
+      <div class="divider"></div>
+      <div class="storybox">
+        <p>A rabbit had strong legs. He could run very fast. A turtle walked very, very slowly. The rabbit always laughed at the turtle. "You are so slow!" he said.</p>
+        <p>One day, the turtle said, "Let us have a race!" The rabbit laughed, but he agreed. "Ready... go!" The rabbit ran very fast. The turtle walked slowly, step by step.</p>
+        <p>The rabbit was far ahead, so he stopped and slept under a tree. The turtle did not stop. He walked and walked. When the rabbit woke up, he ran as fast as he could — but it was too late. The turtle was already at the finish line!</p>
+      </div>
+      <div class="card">
+        <h3 style="font-family:'Baloo 2';color:var(--deep)">🧭 Pertanyaan Menuntun</h3>
+        <div class="gq"><label>1. Who won the race? Why could he win? <i>(Siapa pemenang lomba? Mengapa ia bisa menang?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>2. What did the rabbit do that made him lose? <i>(Apa yang dilakukan kelinci sehingga ia kalah?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>3. What is the moral of the story? <i>(Apa pesan moral cerita ini?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>✍️ Now write your conclusion: What is the story about? <i>(Sekarang tulis kesimpulanmu.)</i></label><textarea placeholder="The story is about..." style="min-height:90px"></textarea></div>
+        <button class="btn btn-amber" onclick="toggleSample('s2')">💡 Lihat Contoh Kesimpulan</button>
+        <div class="sample" id="s2">
+          <b>Moral:</b> Slow but steady wins the race.<br><br>
+          <b>Contoh kesimpulan:</b> The story is about a race between a fast rabbit and a slow turtle. The rabbit was lazy and over-confident, so he slept in the middle of the race. The turtle kept walking and never gave up, so he won. <i>We learn that hard work and consistency are more important than speed — never be lazy or look down on others.</i>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(6)">Cerita Berikutnya ➜</button>
+    </div>
+  </section>
+
+  <!-- 6. STORY 3 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">📖 Reading Practice • Cerita 3 dari 5</span>
+      <div class="story-head"><span class="story-emoji">🐦🫙</span><h2 class="title">The Thirsty Crow</h2></div>
+      <div class="divider"></div>
+      <div class="storybox">
+        <p>One hot day, a crow was very thirsty. He flew here and there, but he could not find any water. He almost gave up.</p>
+        <p>Then he saw a jar under a tree! There was a little water inside. He put his beak into the jar, but the water was too low. He could not reach it.</p>
+        <p>The clever crow looked around. He saw many small stones. He picked them up, one by one, and dropped them into the jar. Slowly, the water came up higher and higher. At last, the crow drank the water happily and flew home.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-family:'Baloo 2';color:var(--deep)">🧭 Pertanyaan Menuntun</h3>
+        <div class="gq"><label>1. What was the crow's problem? <i>(Apa masalah yang dialami gagak itu?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>2. How did the crow solve his problem? <i>(Bagaimana gagak itu menyelesaikan masalahnya?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>3. What is the moral of the story? <i>(Apa pesan moral cerita ini?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>✍️ Now write your conclusion: What is the story about? <i>(Sekarang tulis kesimpulanmu.)</i></label><textarea placeholder="The story is about..." style="min-height:90px"></textarea></div>
+        <button class="btn btn-amber" onclick="toggleSample('s3')">💡 Lihat Contoh Kesimpulan</button>
+        <div class="sample" id="s3">
+          <b>Moral:</b> Where there is a will, there is a way.<br><br>
+          <b>Contoh kesimpulan:</b> The story is about a thirsty crow. The water in the jar was too low, but the clever crow did not give up. He dropped small stones into the jar until the water came up, and then he drank it. <i>We learn that when we face a problem, we should think cleverly and keep trying — there is always a way.</i>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(7)">Cerita Berikutnya ➜</button>
+    </div>
+  </section>
+
+  <!-- 7. STORY 4 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">📖 Reading Practice • Cerita 4 dari 5</span>
+      <div class="story-head"><span class="story-emoji">🦊🍇</span><h2 class="title">The Fox and the Grapes</h2></div>
+      <div class="divider"></div>
+      <div class="storybox">
+        <p>A fox was walking in the forest. He was very hungry. Then he saw a tree full of sweet grapes. The grapes were high, high up on the tree.</p>
+        <p>"Mmm, those grapes look delicious!" said the fox. He jumped and jumped, but the grapes were too high. He jumped ten times, but he still could not reach them.</p>
+        <p>The fox was tired and angry. He walked away and said, "Huh! Those grapes are sour. I don't want them!" But deep in his heart, he really wanted those sweet grapes.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-family:'Baloo 2';color:var(--deep)">🧭 Pertanyaan Menuntun</h3>
+        <div class="gq"><label>1. Why could the fox not eat the grapes? <i>(Mengapa rubah tidak bisa memakan anggur itu?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>2. What did the fox say when he gave up? Was it true? <i>(Apa kata rubah saat menyerah? Apakah itu benar?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>3. What is the moral of the story? <i>(Apa pesan moral cerita ini?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>✍️ Now write your conclusion: What is the story about? <i>(Sekarang tulis kesimpulanmu.)</i></label><textarea placeholder="The story is about..." style="min-height:90px"></textarea></div>
+        <button class="btn btn-amber" onclick="toggleSample('s4')">💡 Lihat Contoh Kesimpulan</button>
+        <div class="sample" id="s4">
+          <b>Moral:</b> It is easy to hate what you cannot get.<br><br>
+          <b>Contoh kesimpulan:</b> The story is about a hungry fox who wanted some grapes. The grapes were too high, so he could not reach them. When he gave up, he lied and said the grapes were sour. <i>We learn that we should not say bad things about something just because we cannot get it — do not lie to yourself.</i>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(8)">Cerita Berikutnya ➜</button>
+    </div>
+  </section>
+
+  <!-- 8. STORY 5 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">📖 Reading Practice • Cerita 5 dari 5</span>
+      <div class="story-head"><span class="story-emoji">👦🐺</span><h2 class="title">The Boy Who Cried Wolf</h2></div>
+      <div class="divider"></div>
+      <div class="storybox">
+        <p>A shepherd boy sat near the village and watched his sheep. Every day was the same. He felt bored.</p>
+        <p>"I know!" he said. He ran to the village and shouted, "Wolf! Wolf! A wolf is chasing my sheep!" All the people ran to help him — but there was no wolf. The boy laughed loudly. He did it again the next day, and the people were very angry.</p>
+        <p>One day, a real wolf came! The boy shouted, "Wolf! Wolf! Please help me!" But nobody came. "He is lying again," they said. The wolf chased away many sheep. The boy cried, but it was too late.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-family:'Baloo 2';color:var(--deep)">🧭 Pertanyaan Menuntun</h3>
+        <div class="gq"><label>1. What did the boy do when he felt bored? <i>(Apa yang dilakukan anak itu saat merasa bosan?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>2. Why did nobody help him when the real wolf came? <i>(Mengapa tidak ada yang menolongnya saat serigala sungguhan datang?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>3. What is the moral of the story? <i>(Apa pesan moral cerita ini?)</i></label><textarea placeholder="Tulis jawabanmu di sini..."></textarea></div>
+        <div class="gq"><label>✍️ Now write your conclusion: What is the story about? <i>(Sekarang tulis kesimpulanmu.)</i></label><textarea placeholder="The story is about..." style="min-height:90px"></textarea></div>
+        <button class="btn btn-amber" onclick="toggleSample('s5')">💡 Lihat Contoh Kesimpulan</button>
+        <div class="sample" id="s5">
+          <b>Moral:</b> Liars will not be believed, even when they tell the truth.<br><br>
+          <b>Contoh kesimpulan:</b> The story is about a shepherd boy who lied two times. He shouted "Wolf!" when there was no wolf, just to have fun. When a real wolf came, nobody believed him anymore, so he lost his sheep. <i>We learn that we must always be honest — people will not trust a liar, even when he tells the truth.</i>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(9)">Lanjut ke Listening ➜</button>
+    </div>
+  </section>
+
+  <!-- 9. LISTENING INTRO -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">🎧 Listening Practice</span>
+      <h2 class="title">Tonton &amp; Dengarkan Dua Fabel</h2>
+      <div class="divider"></div>
+      <p class="sub">Tekan tombol di bawah untuk menonton video di YouTube (akan terbuka di tab baru). Dengarkan dengan saksama — kamu boleh menonton lebih dari sekali! Setelah itu, kerjakan kuis di slide berikutnya.</p>
+      <div class="grid2" style="margin-top:18px">
+        <div class="card vid">
+          <div class="vid-emoji">🦁</div>
+          <h3>Part 1 — The Lion and The Mouse</h3>
+          <p style="color:var(--muted)">Seekor singa besar dan seekor tikus kecil... siapa yang menyelamatkan siapa?</p>
+          <a class="btn btn-primary" href="https://youtu.be/z46K8WqBFnw?si=cwjwAac9D8h3et2N" target="_blank" rel="noopener">▶ Tonton Video</a>
+        </div>
+        <div class="card vid">
+          <div class="vid-emoji">🐊</div>
+          <h3>Part 2 — Clever Monkey and The Foolish Crocodile</h3>
+          <p style="color:var(--muted)">Seekor monyet pintar dan seekor buaya bodoh... akal apa yang digunakan monyet untuk lolos?</p>
+          <a class="btn btn-primary" href="https://youtu.be/JFE2b1oEUFo?si=tO7cTn8bYzvYTRIq" target="_blank" rel="noopener">▶ Tonton Video</a>
+        </div>
+      </div>
+      <div class="tipbox">💡 <b>Tip:</b> Catat kata-kata penting yang kamu dengar, seperti <i>trap, rope, berries, heart</i> — kata-kata itu akan muncul di soal kuis!</div>
+      <br><br>
+      <button class="btn btn-amber" onclick="go(10)">Kuis Video 1 (Lion &amp; Mouse) ➜</button>
+      <button class="btn btn-amber" onclick="go(12)">Kuis Video 2 (Monkey &amp; Crocodile) ➜</button>
+    </div>
+  </section>
+
+  <!-- 10. QUIZ LM 1-5 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">🎧 Listening Quiz • Part 1 • Soal 1–5</span>
+      <h2 class="title">🦁 The Lion and The Mouse</h2>
+      <p class="sub">Pilih jawaban yang menurutmu benar, lalu tekan <b>“Cek Jawaban”</b> pada setiap soal untuk melihat hasil dan pembahasannya.</p>
+      <p style="margin-top:8px"><a href="https://youtu.be/z46K8WqBFnw?si=cwjwAac9D8h3et2N" target="_blank" rel="noopener" style="color:var(--green);font-weight:800">▶ Tonton ulang video</a></p>
+      <div id="quizLM1"></div>
+      <div class="qrow">
+        <button class="btn btn-ghost" onclick="checkAll('quizLM1')">🧐 Cek Semua Jawaban</button>
+        <span class="sumline" id="sum-quizLM1"></span>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(11)">Soal 6–10 ➜</button>
+    </div>
+  </section>
+
+  <!-- 11. QUIZ LM 6-10 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">🎧 Listening Quiz • Part 1 • Soal 6–10</span>
+      <h2 class="title">🦁 The Lion and The Mouse</h2>
+      <div class="divider"></div>
+      <div id="quizLM2"></div>
+      <div class="qrow">
+        <button class="btn btn-ghost" onclick="checkAll('quizLM2')">🧐 Cek Semua Jawaban</button>
+        <span class="sumline" id="sum-quizLM2"></span>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(12)">Kuis Video 2 ➜</button>
+    </div>
+  </section>
+
+  <!-- 12. QUIZ CM 1-5 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">🎧 Listening Quiz • Part 2 • Soal 1–5</span>
+      <h2 class="title">🐊 Clever Monkey and The Foolish Crocodile</h2>
+      <p class="sub">Pilih jawaban yang menurutmu benar, lalu tekan <b>“Cek Jawaban”</b> pada setiap soal untuk melihat hasil dan pembahasannya.</p>
+      <p style="margin-top:8px"><a href="https://youtu.be/JFE2b1oEUFo?si=tO7cTn8bYzvYTRIq" target="_blank" rel="noopener" style="color:var(--green);font-weight:800">▶ Tonton ulang video</a></p>
+      <div id="quizCM1"></div>
+      <div class="qrow">
+        <button class="btn btn-ghost" onclick="checkAll('quizCM1')">🧐 Cek Semua Jawaban</button>
+        <span class="sumline" id="sum-quizCM1"></span>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(13)">Soal 6–10 ➜</button>
+    </div>
+  </section>
+
+  <!-- 13. QUIZ CM 6-10 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="kicker">🎧 Listening Quiz • Part 2 • Soal 6–10</span>
+      <h2 class="title">🐊 Clever Monkey and The Foolish Crocodile</h2>
+      <div class="divider"></div>
+      <div id="quizCM2"></div>
+      <div class="qrow">
+        <button class="btn btn-ghost" onclick="checkAll('quizCM2')">🧐 Cek Semua Jawaban</button>
+        <span class="sumline" id="sum-quizCM2"></span>
+      </div>
+      <br>
+      <button class="btn btn-primary" onclick="go(14)">Lihat Hasil Saya 🏆</button>
+    </div>
+  </section>
+
+  <!-- 14. HASIL / PENUTUP -->
+  <section class="slide">
+    <div class="inner center">
+      <span class="kicker">🏆 Hasil Belajar</span>
+      <h2 class="title">Hebat, kamu sampai di garis akhir!</h2>
+      <p class="sub" style="text-align:center">Tekan tombol di bawah untuk menghitung skor kuis listening-mu (20 soal). Skor reading bersifat latihan mandiri — bandingkan kesimpulanmu dengan contoh.</p>
+      <br>
+      <button class="btn btn-primary big" onclick="computeResult()">📊 Hitung Hasil Saya</button>
+      <div id="resultBox" style="width:100%;max-width:640px"></div>
+      <div class="card" style="margin-top:22px;width:100%;max-width:640px;text-align:left">
+        <h3 style="font-family:'Baloo 2';color:var(--deep);margin-bottom:8px">🌟 Two Morals to Remember</h3>
+        <p style="line-height:1.8">🦁 <i>“Even someone small or weak can turn out to be a great help.”</i> — Orang kecil pun bisa memberi pertolongan besar.<br>🐊 <i>“Never trick your friends who help you, or you'll lose the good people who care about you.”</i> — Jangan pernah mengkhianati teman yang menolongmu.</p>
+      </div>
+      <br>
+      <button class="btn btn-amber" onclick="resetQuiz()">🔁 Kerjakan Ulang Kuis</button>
+      <button class="btn btn-ghost" onclick="location.reload()">🔄 Mulai dari Awal</button>
+    </div>
+  </section>
+
+</main>
+
+<nav class="nav">
+  <button class="navbtn" id="prevBtn" onclick="go(cur-1)" title="Slide sebelumnya">‹</button>
+  <button class="navbtn" id="nextBtn" onclick="go(cur+1)" title="Slide berikutnya">›</button>
+</nav>
+
+<script>
+/* ================= DATA KOSAKATA ================= */
+const VOCAB=[
+ ["lion","singa","🦁"],["mouse","tikus","🐭"],["monkey","monyet","🐵"],["crocodile","buaya","🐊"],
+ ["forest","hutan","🌳"],["river","sungai","🏞️"],["tree","pohon","🌲"],["trap","perangkap","🕳️"],
+ ["rope","tali","🪢"],["berry","buah beri","🍇"],["heart","jantung","❤️"],["friend","teman","🤝"],
+ ["promise","berjanji","🤞"],["help","membantu","🙋"],["save","menyelamatkan","🆘"],["catch","menangkap","✋"],
+ ["escape","melarikan diri","🏃"],["clever","pintar / cerdik","🧠"],["foolish","bodoh","🙃"],["brave","berani","🛡️"],
+ ["kind","baik hati","😊"],["strong","kuat","💪"],["weak","lemah","🥀"],["greedy","rakus","🤑"],
+ ["laugh","tertawa","😂"],["cry","menangis","😢"],["sleep","tidur","😴"],["hunt","berburu","🏹"],
+ ["moral","pesan moral","📖"],["grateful","bersyukur","🙏"]
+];
+
+/* ================= DATA KUIS (dari dokumen Reading Comprehension Test) ================= */
+const QUIZ={
+ lm:{qs:[
+  {q:`What was the lion doing when the little mouse first woke him up?`,
+   o:[`Running around the forest`,`Sleeping under a tree`,`Hunting for food`,`Caught in a trap`],a:1,
+   e:`The text states, "a lion was sleeping under a tree" when the mouse was playing around him.`},
+  {q:`How did the lion initially react when he caught the mouse?`,
+   o:[`He smiled and played with it`,`He opened his mouth to eat it`,`He asked the mouse to tell a story`,`He ignored the mouse completely`],a:1,
+   e:`The lion said, "who woke me up i will eat you" and opened his mouth.`},
+  {q:`What did the mouse promise the lion if he let him go?`,
+   o:[`To bring him delicious berries`,`To help him one day`,`To find him a new home`,`To share his food`],a:1,
+   e:`The mouse pleaded, "if you let me go i will help you one day."`},
+  {q:`Why did the lion laugh after catching the mouse?`,
+   o:[`Because the mouse told a funny joke`,`Because he thought a tiny mouse could not possibly help a mighty lion`,`Because the mouse looked very funny`,`Because he was happy`],a:1,
+   e:`The lion said, "i'm a lion and you're a mouse what can you do" and laughed.`},
+  {q:`What happened to the lion the next day?`,
+   o:[`He got caught in a trap`,`He fell into the mighty river`,`He got sick from eating bad food`,`He lost his way in the dark forest`],a:0,
+   e:`The transcript mentions, "the next day the lion got caught in a trap."`},
+  {q:`How did the mouse save the lion from the trap?`,
+   o:[`By calling other animals for help`,`By biting and chewing through the rope`,`By breaking the cage with its sharp claws`,`By tricking the hunter`],a:1,
+   e:`The text notes that the mouse ran to the lion and "began to chew the rope."`},
+  {q:`What was the lion's reaction after being freed?`,
+   o:[`He ran away quickly`,`He thanked the mouse and acknowledged it saved his life`,`He scolded the mouse for being late`,`He asked for more help`],a:1,
+   e:`The lion said, "thank you you saved my life."`},
+  {q:`What ultimate relationship developed between the lion and the mouse after this incident?`,
+   o:[`They became fierce rivals`,`They ignored each other`,`They became best friends`,`The mouse became the lion's servant`],a:2,
+   e:`The text explicitly concludes, "from that day the lion and mouse became best friends."`},
+  {q:`What sound did the little mouse make while playing around the lion?`,
+   o:[`Roar roar`,`Squeak squeak`,`Chirp chirp`,`Meow meow`],a:1,
+   e:`The text writes, "a little mouse was playing around the lion [Music] squeak squeak."`},
+  {q:`What is the main moral lesson of this story?`,
+   o:[`Size and strength determine true value; small beings are useless.`,`Even someone small or weak can turn out to be a great help.`,`Never trust anyone you meet in the forest.`,`Wild animals should never interact with one another.`],a:1,
+   e:`The story demonstrates that despite the lion mocking the mouse's small size, the mouse ultimately saved the lion's life.`}
+ ]},
+ cm:{qs:[
+  {q:`Why was the old crocodile struggling to hunt?`,
+   o:[`He had grown too weak and tired`,`The river had no fish left in it`,`The monkeys scared away his prey`,`He lost his teeth in a fight`],a:0,
+   e:`The text explains that "he had grown too weak and tired to hunt like he used to."`},
+  {q:`What was the monkey doing when the crocodile first saw him?`,
+   o:[`Sleeping under a tree`,`Sitting on a branch happily eating berries`,`Swimming across the river`,`Gathering bananas for his family`],a:1,
+   e:`The segment states, "a monkey was sitting on a branch happily eating berries."`},
+  {q:`How did the crocodile feel after tasting the berries given by the monkey?`,
+   o:[`He thought they were sour and terrible`,`He was grateful and found them really sweet`,`He wanted to steal the whole tree`,`He didn't care about them`],a:1,
+   e:`The crocodile said, "oh yes they are really sweet thank you very much... you are extremely kind."`},
+  {q:`What activities did the monkey and crocodile share to build their friendship?`,
+   o:[`They played on land and rode around the river on the crocodile's back`,`They fought over territory daily`,`They built a house together by the riverbank`,`They hunted fish together in the deep forest`],a:0,
+   e:`The text notes the crocodile would play on land and the monkey would ride on the crocodile's back around the river.`},
+  {q:`What did the crocodile's wife want after eating the berries?`,
+   o:[`She wanted more banana bread`,`She wanted to eat the monkey's heart`,`She wanted to move to another tree`,`She wanted to meet the monkey in person`],a:1,
+   e:`The wife said, "could you get me his heart?" after imagining how sweet the monkey must be.`},
+  {q:`How did the crocodile initially feel about his wife's demand?`,
+   o:[`Excited and eager to fulfill it`,`Shocked, trapped, and confused`,`Indifferent and relaxed`,`Angry at his wife for being selfish`],a:1,
+   e:`The text states, "the crocodile was shocked... The poor crocodile felt trapped and confused."`},
+  {q:`What lie did the crocodile tell the monkey to lure him to his house?`,
+   o:[`His wife wanted him to come over for dinner`,`There was a massive feast of bananas waiting on land`,`They needed to rescue another animal`,`His wife wanted to give him a special gift`],a:0,
+   e:`The crocodile invited him saying, "...my wife is so delighted with the berries that she's invited you to our house for dinner."`},
+  {q:`Why did the crocodile confess his wife's evil plan midway through the journey?`,
+   o:[`Because he wanted to trick the monkey twice`,`Because he saw the monkey's joy and began to feel guilty`,`Because his wife forced him to confess`,`Because he forgot his way home`],a:1,
+   e:`The transcript states, "seeing his friend's joy the crocodile began to feel guilty and decided to confess."`},
+  {q:`How did the clever monkey escape from the crocodile's trap?`,
+   o:[`He fought the crocodile off with a heavy branch`,`He lied that monkeys keep their hearts safely in the trees and needed to go back`,`He jumped into the deep water and swam away`,`He called for help from other forest animals`],a:1,
+   e:`The monkey said, "we monkeys keep our hearts safely in the trees we'll need to go back to the tree to get mine."`},
+  {q:`What is the moral of the second story?`,
+   o:[`Never trust a crocodile under any circumstance.`,`Never trick your friends who help you or you'll lose the good people who care about you.`,`Sharing food makes you weak and vulnerable.`,`Always keep your heart hidden in high places.`],a:1,
+   e:`The transcript explicitly lists the moral at the end: "never trick your friends who help you or you'll lose the good people who care about you."`}
+ ]}
+};
+
+const QMAP={}, SCORE={};
+
+/* ================= RENDER KOSAKATA ================= */
+(function(){
+ const vg=document.getElementById('vgrid');
+ VOCAB.forEach(([en,id,em])=>{
+  const c=document.createElement('div');
+  c.className='vcard';
+  c.innerHTML=`<div class="vc-in">
+    <div class="vface vfront">
+      <button class="speak" title="Dengarkan pelafalan" onclick="speak('${en}');event.stopPropagation()">🔊</button>
+      <div class="emoji">${em}</div><div class="vword">${en}</div>
+    </div>
+    <div class="vface vback"><div class="emoji">${em}</div><div class="vword">${id}</div></div>
+  </div>`;
+  c.addEventListener('click',()=>c.classList.toggle('flip'));
+  vg.appendChild(c);
+ });
+})();
+
+/* ================= RENDER KUIS ================= */
+function renderQuiz(containerId,key,from,to){
+ const box=document.getElementById(containerId);
+ let html='';
+ for(let i=from;i<=to;i++){
+  const q=QUIZ[key].qs[i], qid=key+i;
+  QMAP[qid]=q;
+  html+=`<div class="qcard" id="qc-${qid}" data-qid="${qid}" data-ans="${q.a}">
+    <div class="qtext"><span class="qnum">${i+1}</span>${q.q}</div>
+    <div class="opts">${q.o.map((op,j)=>`<label class="opt"><input type="radio" name="${qid}" value="${j}"><span>${String.fromCharCode(97+j)}. ${op}</span></label>`).join('')}</div>
+    <div class="qrow"><button class="btn btn-primary" onclick="checkQ('${qid}')">✅ Cek Jawaban</button><span class="qhint">Pilih satu jawaban, lalu tekan tombol ini.</span></div>
+    <div class="feedback" id="fb-${qid}"></div>
+  </div>`;
+ }
+ box.innerHTML=html;
+}
+renderQuiz('quizLM1','lm',0,4);
+renderQuiz('quizLM2','lm',5,9);
+renderQuiz('quizCM1','cm',0,4);
+renderQuiz('quizCM2','cm',5,9);
+
+/* ================= CEK JAWABAN ================= */
+function checkQ(qid){
+ const card=document.getElementById('qc-'+qid);
+ const fb=document.getElementById('fb-'+qid);
+ const q=QMAP[qid], ans=q.a;
+ const picked=card.querySelector('input:checked');
+ if(!picked){fb.className='feedback warn show';fb.innerHTML='⚠️ <b>Pilih salah satu jawaban dulu, ya!</b>';return;}
+ const p=+picked.value, ok=p===ans;
+ const opts=card.querySelectorAll('.opt');
+ opts.forEach((o,j)=>{o.classList.remove('right','wrong');if(j===ans)o.classList.add('right');if(j===p&&!ok)o.classList.add('wrong');});
+ SCORE[qid]=ok?1:0;
+ const ansText=q.o[ans];
+ fb.className='feedback '+(ok?'good':'bad')+' show';
+ fb.innerHTML=(ok?'🎉 <b>Benar! Jawabanmu tepat.</b>':'❌ <b>Belum tepat.</b> Jawaban yang benar: <b>'+ansText+'</b>')
+   +`<div class="exp">💡 <b>Pembahasan:</b> ${q.e}</div>`;
+}
+function checkAll(containerId){
+ let total=0,correct=0;
+ document.querySelectorAll('#'+containerId+' .qcard').forEach(c=>{
+  checkQ(c.dataset.qid);total++;
+  if(SCORE[c.dataset.qid]===1)correct++;
+ });
+ const sum=document.getElementById('sum-'+containerId);
+ if(sum)sum.innerHTML=`📊 Sementara: ${correct} benar dari ${total} soal di bagian ini.`;
+}
+
+/* ================= HASIL ================= */
+function computeResult(){
+ let answered=0,correct=0;
+ const per={lm:{c:0,wrong:[],blank:[]},cm:{c:0,wrong:[],blank:[]}};
+ Object.keys(QMAP).forEach(k=>{
+  const st=k.slice(0,2), n=parseInt(k.slice(2))+1, s=SCORE[k];
+  if(s===undefined){per[st].blank.push(n);}
+  else{answered++;if(s===1){correct++;per[st].c++;}else per[st].wrong.push(n);}
+ });
+ const total=20, pct=Math.round(correct/total*100);
+ let msg;
+ if(pct>=90)msg='🏆 Luar biasa! Kamu benar-benar Fable Master!';
+ else if(pct>=75)msg='🌟 Bagus sekali! Sedikit lagi menuju sempurna!';
+ else if(pct>=60)msg='👍 Cukup baik! Ulangi bagian yang masih salah, ya!';
+ else msg='💪 Jangan menyerah! Tonton lagi videonya, lalu coba sekali lagi!';
+ const chips=(arr,cls)=>arr.length?arr.map(n=>`<span class="chip small ${cls}">Soal ${n}</span>`).join(' '):'<i>tidak ada</i>';
+ document.getElementById('resultBox').innerHTML=`
+ <div class="card" style="margin-top:20px;text-align:center">
+  <div class="scorebig">${correct}<span style="font-size:1.6rem;color:var(--muted)">/${total}</span></div>
+  <div style="font-weight:800;margin:6px 0 2px">${msg}</div>
+  <div style="color:var(--muted);font-size:.9rem;margin-bottom:14px">${answered} soal terjawab dari ${total} • Skor akhir: ${pct}</div>
+  <div class="barwrap"><div class="barlabel">🦁 The Lion and The Mouse — ${per.lm.c}/10</div><div class="bar"><div style="width:${per.lm.c*10}%"></div></div></div>
+  <div class="barwrap"><div class="barlabel">🐊 Clever Monkey and The Foolish Crocodile — ${per.cm.c}/10</div><div class="bar"><div style="width:${per.cm.c*10}%"></div></div></div>
+  ${answered===0?'<div class="mini">⚠️ Kamu belum menjawab soal apa pun. Buka slide kuis terlebih dahulu, ya!</div>':''}
+  <div class="mini">❌ Salah: ${chips(per.lm.wrong,'bad')} ${chips(per.cm.wrong,'bad')}</div>
+  <div class="mini">⏳ Belum dijawab: ${chips(per.lm.blank,'todo')} ${chips(per.cm.blank,'todo')}</div>
+ </div>`;
+}
+
+/* ================= UTIL ================= */
+function toggleSample(id){document.getElementById(id).classList.toggle('show');}
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function fs(){if(!document.fullscreenElement)document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();else document.exitFullscreen();}
+function resetQuiz(){
+ Object.keys(QMAP).forEach(k=>delete SCORE[k]);
+ document.querySelectorAll('.qcard').forEach(c=>{
+  c.querySelectorAll('input').forEach(i=>i.checked=false);
+  c.querySelectorAll('.opt').forEach(o=>o.classList.remove('right','wrong'));
+ });
+ document.querySelectorAll('.feedback').forEach(f=>{f.className='feedback';f.innerHTML='';});
+ document.querySelectorAll('.sumline').forEach(s=>s.innerHTML='');
+ document.getElementById('resultBox').innerHTML='';
+ go(10);
+}
+
+/* ================= NAVIGASI SLIDE ================= */
+const slides=[...document.querySelectorAll('.slide')];
+let cur=0;
+function go(n){
+ cur=Math.max(0,Math.min(slides.length-1,n));
+ slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+ document.getElementById('progressBar').style.width=((cur+1)/slides.length*100)+'%';
+ document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+ document.getElementById('prevBtn').disabled=cur===0;
+ document.getElementById('nextBtn').disabled=cur===slides.length-1;
+ slides[cur].scrollTop=0;
+}
+document.getElementById('prevBtn').disabled=true;
+document.addEventListener('keydown',e=>{
+ if(e.target.closest('textarea,input'))return;
+ if(e.key==='ArrowRight'||e.key==='PageDown')go(cur+1);
+ if(e.key==='ArrowLeft'||e.key==='PageUp')go(cur-1);
+});
+let sx=0;
+document.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+ const dx=e.changedTouches[0].clientX-sx;
+ if(Math.abs(dx)>60)dx<0?go(cur+1):go(cur-1);
+},{passive:true});
+</script>
+</body>
+</html>
