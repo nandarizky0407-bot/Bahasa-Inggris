@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This, That, These, Those &amp; Friends! — English Fun untuk SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--ink:#2b3a55;--card:#fff;
+--blue:#2563eb;--blue-l:#dbeafe;
+--purple:#7c3aed;--purple-l:#ede9fe;
+--orange:#ea580c;--orange-l:#ffedd5;
+--green:#059669;--green-l:#d1fae5;
+--red:#dc2626;--red-l:#fee2e2;
+--yellow-l:#fef9c3;--pink-l:#fce7f3;
+--sky:#0ea5e9;
+--shadow:0 10px 30px rgba(43,58,85,.14);--radius:18px}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito','Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#bae6fd 0%,#e0e7ff 45%,#fbcfe8 100%);background-attachment:fixed;color:var(--ink);min-height:100vh}
+h1,h2,h3,h4{font-family:'Baloo 2','Nunito',cursive;line-height:1.25}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:50;box-shadow:0 2px 12px rgba(43,58,85,.08)}
+.topbar .brand{font-weight:800;font-family:'Baloo 2';font-size:1.02rem;color:var(--blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .tools{display:flex;gap:8px;flex-shrink:0}
+.chip-btn{border:none;background:var(--blue-l);color:var(--blue);font-weight:800;padding:7px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:.83rem;transition:.15s}
+.chip-btn:hover{filter:brightness(.94);transform:translateY(-1px)}
+.progress{position:fixed;top:56px;left:0;right:0;height:5px;background:rgba(255,255,255,.55);z-index:50}
+#progressFill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .3s}
+.slide{display:none;max-width:1080px;margin:0 auto;padding:84px 20px 110px;min-height:100vh}
+.slide.active{display:block;animation:pop .45s ease}
+@keyframes pop{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.badge{display:inline-block;background:#fff;color:var(--purple);font-weight:800;font-size:.76rem;letter-spacing:.6px;padding:5px 14px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:12px;text-transform:uppercase}
+.slide h2{font-size:2rem;margin-bottom:6px}
+.sub{color:#5b6b8c;margin-bottom:20px;font-weight:600}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* cover */
+.cover{text-align:center;padding:56px 26px;background:linear-gradient(160deg,#ffffff,#f0f9ff)}
+.cover h1{font-size:2.5rem}
+.float-emoji{font-size:2.4rem;letter-spacing:8px;margin:12px 0}
+.word-chips{margin:18px 0 24px}
+.chip{display:inline-block;background:var(--purple-l);color:var(--purple);padding:6px 14px;border-radius:999px;font-weight:800;margin:4px;font-family:'Baloo 2'}
+.hint{color:#64748b;font-size:.9rem;margin-top:16px;font-weight:600}
+/* tujuan */
+.goal{display:flex;flex-direction:column}
+.goal p{font-size:.92rem;color:#475569;font-weight:600;margin-top:6px;line-height:1.55}
+.gemoji{font-size:2.2rem}
+.tipcard{background:var(--yellow-l)}
+/* kartu kosakata */
+.gtitle{margin:20px 0 10px;font-size:1.3rem}
+.t-a{color:var(--blue)}.t-b{color:var(--orange)}.t-c{color:var(--purple)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:14px}
+.vcard{border-radius:16px;padding:16px;cursor:pointer;transition:.2s;user-select:none}
+.vcard:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow)}
+.vword{font-family:'Baloo 2';font-size:1.45rem;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.vphon{font-size:.82rem;color:#64748b;font-weight:700;font-family:'Nunito'}
+.vmean{font-weight:800;font-size:.93rem;margin:6px 0}
+.vex{font-size:.86rem;color:#475569;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.g-a{background:var(--blue-l)}.g-a .vword{color:var(--blue)}
+.g-b{background:var(--orange-l)}.g-b .vword{color:var(--orange)}
+.g-c{background:var(--purple-l)}.g-c .vword{color:var(--purple)}
+.mini{border:none;background:rgba(255,255,255,.9);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.14);flex-shrink:0;transition:.15s;display:inline-flex;align-items:center;justify-content:center}
+.mini:hover{transform:scale(1.15)}
+/* kata tunjuk */
+.tw{background:linear-gradient(transparent 55%,#fde68a 55%);padding:0 3px;border-radius:4px;cursor:pointer;font-weight:800;color:#92400e}
+.mtable{width:100%;border-collapse:separate;border-spacing:10px}
+.mtable th{font-family:'Baloo 2';font-size:1rem;color:#334155;padding:6px}
+.mtable .rowlab{background:#fff;border-radius:14px;box-shadow:var(--shadow);width:132px}
+.mtable td{border-radius:16px;padding:16px 12px;box-shadow:var(--shadow);vertical-align:top;text-align:center}
+.mtable .big{font-family:'Baloo 2';font-size:1.7rem;display:block}
+.c-a{background:var(--blue-l)}.c-a .big{color:var(--blue)}
+.c-b{background:var(--purple-l)}.c-b .big{color:var(--purple)}
+.cex{font-size:.92rem;font-weight:800;margin:8px 0 6px;display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.mtable small{color:#64748b;font-weight:700}
+.warnbox{background:var(--yellow-l);border:2px dashed #f59e0b;border-radius:14px;padding:12px 16px;font-weight:700;margin-top:16px;line-height:1.6}
+/* both either neither */
+.two-things{display:flex;justify-content:center;gap:18px;font-size:3.2rem;margin:4px 0 16px}
+.wcard{border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.wcard>p{font-weight:700;color:#475569;font-size:.92rem;margin-top:4px}
+.w-green{background:var(--green-l)}.w-green h3{color:var(--green)}
+.w-blue{background:var(--blue-l)}.w-blue h3{color:var(--blue)}
+.w-red{background:var(--red-l)}.w-red h3{color:var(--red)}
+.wex{background:rgba(255,255,255,.78);border-radius:10px;padding:8px 10px;font-weight:800;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+/* choosing */
+.choserow{display:flex;gap:16px;align-items:center;margin-bottom:12px}
+.dots{display:flex;gap:8px;align-items:center;min-width:150px;justify-content:center;background:#f8fafc;padding:12px;border-radius:14px;box-shadow:var(--shadow)}
+.d{width:26px;height:26px;border-radius:50%;background:#cbd5e1;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0}
+.d.pick{background:#f43f5e;box-shadow:0 0 0 4px #fecdd3;transform:scale(1.12)}
+.d.no::after{content:'✕';color:#64748b;font-size:.9rem}
+.d.new{background:#10b981;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.45}}
+.chtxt{flex:1;font-weight:700}
+.chtxt .ex{display:flex;align-items:center;gap:8px;color:#475569;font-size:.92rem;margin-top:5px}
+/* contoh kalimat */
+.exlist{display:flex;flex-direction:column;gap:10px}
+.exrow{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:14px;padding:13px 16px;box-shadow:var(--shadow)}
+.exrow .en{font-weight:800;font-size:1.03rem}
+.exrow .id{color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
+/* percakapan */
+.dialogue{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.line{display:flex;gap:10px;align-items:flex-start}
+.line.right{flex-direction:row-reverse}
+.who{font-size:1.55rem;line-height:1.2}
+.bubble{background:#fff;border-radius:16px;padding:10px 15px;box-shadow:var(--shadow);max-width:78%;font-weight:600;line-height:1.5}
+.line.right .bubble{text-align:left}
+.bubble .name{display:block;font-size:.7rem;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.b-b{background:var(--blue-l)}
+.b-p{background:var(--purple-l)}
+.b-o{background:var(--orange-l)}
+/* soal */
+.q-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;border-left:6px solid var(--sky)}
+.q-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.q-num{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';flex-shrink:0}
+.q-type{background:var(--yellow-l);color:#a16207;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px}
+.q-text{font-weight:800;margin-bottom:12px;font-size:1.02rem;line-height:1.55}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{text-align:left;border:2px solid #e2e8f0;background:#f8fafc;border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s;display:flex;gap:8px;font-size:.94rem}
+.opt:hover{border-color:var(--sky)}
+.opt .letter{font-weight:800;color:#94a3b8;flex-shrink:0}
+.opt.selected{border-color:var(--blue);background:var(--blue-l)}
+.opt.correct{border-color:var(--green);background:var(--green-l)}
+.opt.wrong{border-color:var(--red);background:var(--red-l)}
+.opt:disabled{cursor:default}
+.btn{border:none;font-family:inherit;font-weight:800;border-radius:999px;padding:11px 22px;cursor:pointer;transition:.15s;font-size:.95rem}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 6px 16px rgba(99,102,241,.4)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.primary:disabled{background:#cbd5e1;box-shadow:none;cursor:not-allowed;transform:none}
+.btn.ghost{background:var(--purple-l);color:var(--purple)}
+.btn.check{background:var(--yellow-l);color:#a16207;margin-top:10px}
+.pembahasan{margin-top:12px;background:var(--yellow-l);border-radius:12px;padding:12px 14px;font-size:.92rem;font-weight:600;border:2px dashed #f59e0b;line-height:1.6}
+.q-result{margin-left:auto;font-weight:800;font-size:.9rem}
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabbtn{border:none;background:rgba(255,255,255,.85);padding:9px 16px;border-radius:999px;font-family:inherit;font-weight:800;cursor:pointer;color:#64748b;box-shadow:0 3px 10px rgba(0,0,0,.06);font-size:.87rem;transition:.15s}
+.tabbtn:hover{transform:translateY(-2px)}
+.tabbtn.active{background:var(--purple);color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:pop .35s ease}
+/* latihan bicara */
+.sit-card h3{font-size:1.3rem;margin-bottom:6px}
+.ctx{background:var(--pink-l);border-radius:12px;padding:10px 14px;font-weight:700;margin-bottom:12px;line-height:1.55}
+.tutor-line{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.tav{font-size:1.5rem}
+label.turn{font-weight:800;color:var(--purple);font-size:.92rem;display:block;margin-top:8px}
+label.turn small{color:#64748b;font-weight:700}
+.st-input{width:100%;border:2px solid #e2e8f0;border-radius:12px;padding:11px 14px;font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);margin:6px 0 10px;background:#f8fafc}
+.st-input:focus{outline:none;border-color:var(--purple);background:#fff}
+.sample{background:var(--green-l);border-radius:12px;padding:12px 16px;margin-top:10px;font-weight:700;display:flex;flex-direction:column;gap:8px}
+.sample>div{display:flex;justify-content:space-between;align-items:center;gap:10px;line-height:1.55}
+.starmsg{color:#b45309;font-weight:800}
+/* kuis */
+.scorebox{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-weight:800}
+.finalbanner{display:none;margin-top:6px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:16px;padding:18px;text-align:center;font-family:'Baloo 2';font-size:1.3rem;box-shadow:var(--shadow)}
+.finalbanner .fscore{font-size:1.1rem;font-weight:800;margin-top:4px;font-family:'Nunito'}
+/* fabel */
+.para{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+.para p{font-weight:600;line-height:1.7;flex:1}
+.moral{background:linear-gradient(135deg,var(--green-l),var(--blue-l));border-radius:16px;padding:16px 20px;font-weight:800;font-size:1.05rem;text-align:center;box-shadow:var(--shadow)}
+.moral small{display:block;font-family:'Nunito';color:#475569;font-weight:700;margin-top:4px}
+/* refleksi */
+.refl-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 16px}
+.refl{background:#fff;border:none;border-radius:18px;box-shadow:var(--shadow);padding:20px;cursor:pointer;font-family:inherit;font-weight:800;font-size:1rem;color:var(--ink);transition:.2s;display:flex;flex-direction:column;gap:8px;align-items:center}
+.refl:hover{transform:translateY(-4px)}
+.refl .em{font-size:2.6rem}
+.refl-msg{background:var(--green-l);border-radius:14px;padding:14px 18px;font-weight:800;text-align:center;margin-bottom:16px}
+/* kesimpulan */
+.sumcard ul{margin-top:8px;padding-left:20px;font-weight:600;line-height:1.95}
+.bigbanner{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:18px;padding:18px 22px;font-weight:800;text-align:center;font-size:1.02rem;box-shadow:var(--shadow);line-height:1.8;margin-top:16px}
+/* thanks */
+.thanks{text-align:center;padding:64px 24px;background:linear-gradient(160deg,#fff,#fef9c3)}
+.thanks h1{font-size:2.8rem}
+/* navbar & overlay */
+.navbar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);z-index:50}
+.navbtn{border:none;width:46px;height:46px;border-radius:50%;background:var(--blue-l);font-size:1.1rem;cursor:pointer;font-weight:800;color:var(--blue);transition:.15s}
+.navbtn:hover:not(:disabled){background:var(--blue);color:#fff}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+#counter{font-weight:800;min-width:64px;text-align:center;color:#475569}
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:80;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.menu-box{background:#fff;border-radius:20px;padding:24px;max-width:520px;width:92%;max-height:80vh;overflow:auto;box-shadow:var(--shadow)}
+.menu-item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:none;background:#f8fafc;border-radius:12px;padding:10px 14px;margin:5px 0;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s}
+.menu-item:hover{background:var(--purple-l)}
+.menu-item .n{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0}
+/* confetti */
+.confetti{position:fixed;top:-20px;z-index:99;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(108vh) rotate(720deg)}}
+@media(max-width:720px){
+.grid2,.grid3,.opts{grid-template-columns:1fr}
+.refl-row{grid-template-columns:1fr}
+.slide{padding:74px 12px 104px}
+.slide h2{font-size:1.45rem}
+.cover h1{font-size:1.75rem}
+.mtable{border-spacing:5px}
+.mtable td{padding:10px 6px}
+.mtable .big{font-size:1.2rem}
+.mtable .rowlab{width:76px;font-size:.78rem}
+.choserow{flex-direction:column}
+.two-things{font-size:2.4rem}
+.brand{font-size:.82rem}
+.bubble{max-width:94%}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">📚 English Fun • This, That, These, Those &amp; Friends</span>
+  <div class="tools">
+    <button class="chip-btn" id="muteBtn">🔈 Suara ON</button>
+    <button class="chip-btn" onclick="openMenu()">☰ Daftar Slide</button>
+  </div>
+</header>
+<div class="progress"><div id="progressFill"></div></div>
+<main id="deck">
+
+<section class="slide active" data-title="Cover">
+  <div class="card cover">
+    <div class="badge">English Class • Sekolah Dasar</div>
+    <div class="float-emoji">👉 👆 🤏 🖐 ✌️</div>
+    <h1>This, That, These, Those<br>&amp; Friends! ✨</h1>
+    <p class="sub">Belajar Kata Tunjuk &amp; Kata Memilih dalam Bahasa Inggris<br>Bersama Cio dan Miss Nanda yang ceria!</p>
+    <div class="word-chips">
+      <span class="chip">this</span><span class="chip">that</span><span class="chip">these</span><span class="chip">those</span><span class="chip">both</span><span class="chip">either</span><span class="chip">neither</span><span class="chip">this one</span><span class="chip">the other one</span><span class="chip">the others</span><span class="chip">another one</span>
+    </div>
+    <button class="btn primary" onclick="goTo(1)">Mulai Belajar 🚀</button>
+    <p class="hint">🔊 Nyalakan volume, ya! Klik kartu dan tombol 🔊 untuk mendengar bahasa Inggris.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Tujuan Pembelajaran">
+  <span class="badge">Tujuan</span>
+  <h2>Apa yang Akan Kita Pelajari Hari Ini? 🎯</h2>
+  <p class="sub">Ada 5 hal seru yang menantimu. Siap? Ayo mulai!</p>
+  <div class="grid3">
+    <div class="card goal"><span class="gemoji">🗣️</span><h4>1. Melafalkan</h4><p>Ucapkan 11 kata dan ungkapan penting dengan benar. Klik kartu kosakata untuk mendengarkan suaranya, lalu ulangi!</p></div>
+    <div class="card goal"><span class="gemoji">👋</span><h4>2. Menunjuk</h4><p>Gunakan <b>this, that, these, those</b> untuk menunjuk benda yang dekat dengan kita dan benda yang jauh dari kita.</p></div>
+    <div class="card goal"><span class="gemoji">✌️</span><h4>3. Dua Benda</h4><p>Pahami <b>both</b> (keduanya), <b>either</b> (salah satu), dan <b>neither</b> (tidak keduanya) saat membicarakan dua benda.</p></div>
+    <div class="card goal"><span class="gemoji">🛒</span><h4>4. Memilih Benda</h4><p>Pakai <b>this one, the other one, the others, another one</b> saat memilih di toko, di rumah, atau di kelas.</p></div>
+    <div class="card goal"><span class="gemoji">🏆</span><h4>5. Berlatih &amp; Bermain</h4><p>Baca percakapan, isi latihan berbicara, kerjakan kuis 10 soal, dan baca fabel seru tentang dua tupai kecil!</p></div>
+    <div class="card goal tipcard"><span class="gemoji">💡</span><h4>Tips Penting</h4><p>Klik tombol 🔊 di mana saja untuk mendengar pelafalan bahasa Inggris. Dengarkan dengan saksama, lalu ulangi dengan suara keras, ya!</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kartu Kosakata">
+  <span class="badge">Kosakata</span>
+  <h2>Kata-kata Ajaib Hari Ini ✨</h2>
+  <p class="sub">👆 Klik setiap kartu untuk mendengar pelafalannya dalam bahasa Inggris! Dengarkan, lalu ulangi.</p>
+
+  <h3 class="gtitle t-a">🔵 Kata Tunjuk (Demonstratives)</h3>
+  <div class="vgrid">
+    <div class="vcard g-a" data-say="this" title="Klik untuk mendengar!">
+      <div class="vword">this<span class="vphon">/ðɪs/</span></div>
+      <div class="vmean">ini • dekat, 1 benda</div>
+      <div class="vex">“This is a cat.” 🐱<button class="mini" data-say="This is a cat.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="that" title="Klik untuk mendengar!">
+      <div class="vword">that<span class="vphon">/ðæt/</span></div>
+      <div class="vmean">itu • jauh, 1 benda</div>
+      <div class="vex">“That is a bird.” 🐦<button class="mini" data-say="That is a bird.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="these" title="Klik untuk mendengar!">
+      <div class="vword">these<span class="vphon">/ðiːz/</span></div>
+      <div class="vmean">ini • dekat, banyak</div>
+      <div class="vex">“These are cats.” 🐱🐱<button class="mini" data-say="These are cats.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="those" title="Klik untuk mendengar!">
+      <div class="vword">those<span class="vphon">/ðoʊz/</span></div>
+      <div class="vmean">itu • jauh, banyak</div>
+      <div class="vex">“Those are birds.” 🐦🐦<button class="mini" data-say="Those are birds.">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-b">🟠 Untuk DUA Benda</h3>
+  <div class="vgrid">
+    <div class="vcard g-b" data-say="both" title="Klik untuk mendengar!">
+      <div class="vword">both<span class="vphon">/boʊθ/</span></div>
+      <div class="vmean">keduanya</div>
+      <div class="vex">“I like both!” ✌️<button class="mini" data-say="I like both!">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="either" title="Klik untuk mendengar!">
+      <div class="vword">either<span class="vphon">/ˈiːðər/</span></div>
+      <div class="vmean">salah satu</div>
+      <div class="vex">“Either is fine.” 🤷<button class="mini" data-say="Either is fine.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="neither" title="Klik untuk mendengar!">
+      <div class="vword">neither<span class="vphon">/ˈniːðər/</span></div>
+      <div class="vmean">tidak keduanya</div>
+      <div class="vex">“Neither is good.” 🙅<button class="mini" data-say="Neither is good.">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-c">🟣 Saat Memilih Benda</h3>
+  <div class="vgrid">
+    <div class="vcard g-c" data-say="this one" title="Klik untuk mendengar!">
+      <div class="vword">this one<span class="vphon">/ðɪs wʌn/</span></div>
+      <div class="vmean">yang ini</div>
+      <div class="vex">“I want this one!” 👈<button class="mini" data-say="I want this one!">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="the other one" title="Klik untuk mendengar!">
+      <div class="vword">the other one<span class="vphon">/ði ˈʌðər wʌn/</span></div>
+      <div class="vmean">yang satunya lagi</div>
+      <div class="vex">“The other one, please!” 🔄<button class="mini" data-say="The other one, please!">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="the others" title="Klik untuk mendengar!">
+      <div class="vword">the others<span class="vphon">/ði ˈʌðərz/</span></div>
+      <div class="vmean">yang lainnya</div>
+      <div class="vex">“The others are red.” 🧸<button class="mini" data-say="The others are red.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="another one" title="Klik untuk mendengar!">
+      <div class="vword">another one<span class="vphon">/əˈnʌðər wʌn/</span></div>
+      <div class="vmean">satu lagi</div>
+      <div class="vex">“Can I have another one?” ➕<button class="mini" data-say="Can I have another one?">🔊</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="This, That, These, Those">
+  <span class="badge">Materi 1</span>
+  <h2>Kata Tunjuk: Dekat atau Jauh? 🤔</h2>
+  <p class="sub">Gunakan tabel ajaib ini untuk memilih kata yang tepat!</p>
+  <div class="card">
+    <table class="mtable">
+      <tr><th></th><th>🍎 1 Benda <small>(singular)</small></th><th>🍎🍎 Banyak <small>(plural)</small></th></tr>
+      <tr>
+        <th class="rowlab">👋 Dekat<br><small>near me</small></th>
+        <td class="c-a"><span class="big">THIS</span><div class="cex">“This is my book.” 📖<button class="mini" data-say="This is my book.">🔊</button></div><small>bukunya dekat dengan aku</small></td>
+        <td class="c-a"><span class="big">THESE</span><div class="cex">“These are my books.” 📚<button class="mini" data-say="These are my books.">🔊</button></div><small>bukunya dekat, banyak</small></td>
+      </tr>
+      <tr>
+        <th class="rowlab">🙌 Jauh<br><small>over there</small></th>
+        <td class="c-b"><span class="big">THAT</span><div class="cex">“That is your bag.” 🎒<button class="mini" data-say="That is your bag.">🔊</button></div><small>tasmu jauh di sana</small></td>
+        <td class="c-b"><span class="big">THOSE</span><div class="cex">“Those are your bags.” 🎒🎒<button class="mini" data-say="Those are your bags.">🔊</button></div><small>tasmu jauh, banyak</small></td>
+      </tr>
+    </table>
+  </div>
+  <div class="warnbox">💡 <b>Jurus hafal cepat:</b> kata yang berakhiran <b>-SE / -OSE</b> (th<b>ese</b>, th<b>ose</b>) dipakai untuk <b>BANYAK</b> benda. Dekat pakai <b>this / these</b> 👋, jauh pakai <b>that / those</b> 🙌!</div>
+</section>
+
+<section class="slide" data-title="Both, Either, Neither">
+  <span class="badge">Materi 2</span>
+  <h2>Both, Either, Neither ✌️</h2>
+  <p class="sub">Tiga kata ini dipakai saat kita membicarakan <b>DUA</b> benda. Lihat dua es krim ini! 🍦🍦</p>
+  <div class="two-things"><span>🍦</span><span>🍦</span></div>
+  <div class="grid3">
+    <div class="wcard w-green">
+      <h3>BOTH = keduanya 😊</h3>
+      <p>Memilih dua-duanya sekaligus, bukan satu.</p>
+      <div class="wex">“I like both ice creams!” 🍦🍦<button class="mini" data-say="I like both ice creams!">🔊</button></div>
+    </div>
+    <div class="wcard w-blue">
+      <h3>EITHER = salah satu 🤷</h3>
+      <p>Memilih satu saja, mana saja boleh.</p>
+      <div class="wex">“You can pick either ice cream.”<button class="mini" data-say="You can pick either ice cream.">🔊</button></div>
+    </div>
+    <div class="wcard w-red">
+      <h3>NEITHER = tidak keduanya 🙅</h3>
+      <p>Tidak mau yang ini, tidak mau yang itu.</p>
+      <div class="wex">“Neither ice cream has chocolate.” 😢<button class="mini" data-say="Neither ice cream has chocolate.">🔊</button></div>
+    </div>
+  </div>
+  <div class="warnbox">⚠️ <b>Hati-hati!</b> Setelah <b>neither</b> dan <b>either</b>, benda biasanya <b>tunggal</b>: <i>Neither ice cream <b>is</b> cold</i> (bukan <i>are</i>), dan <i>Either answer <b>is</b> correct</i>.</div>
+</section>
+
+<section class="slide" data-title="This One &amp; Friends">
+  <span class="badge">Materi 3</span>
+  <h2>Saat Kita Memilih 🛒</h2>
+  <p class="sub">Empat ungkapan ini sering dipakai saat berbelanja atau memilih mainan. Titik merah = benda yang dipilih!</p>
+  <div class="choserow card">
+    <div class="dots"><span class="d pick"></span><span class="d"></span><span class="d"></span></div>
+    <div class="chtxt"><b class="tw" data-say="this one">this one</b> — <b>yang ini</b>: kamu memilih benda yang kamu tunjuk.
+      <span class="ex">“I want this one, please!” 👈<button class="mini" data-say="I want this one, please!">🔊</button></span></div>
+  </div>
+  <div class="choserow card">
+    <div class="dots"><span class="d no"></span><span class="d pick"></span></div>
+    <div class="chtxt"><b class="tw" data-say="the other one">the other one</b> — <b>yang satunya lagi</b>: dipakai kalau pilihannya hanya DUA.
+      <span class="ex">“Not this one — the other one!” 🔄<button class="mini" data-say="Not this one — the other one!">🔊</button></span></div>
+  </div>
+  <div class="choserow card">
+    <div class="dots"><span class="d pick"></span><span class="d"></span><span class="d"></span><span class="d"></span></div>
+    <div class="chtxt"><b class="tw" data-say="the others">the others</b> — <b>yang lainnya</b>: semua sisanya dari banyak benda.
+      <span class="ex">“One crayon is red; the others are blue.” 🖍️<button class="mini" data-say="One crayon is red; the others are blue.">🔊</button></span></div>
+  </div>
+  <div class="choserow card">
+    <div class="dots"><span class="d"></span><span class="d"></span><span class="d new"></span></div>
+    <div class="chtxt"><b class="tw" data-say="another one">another one</b> — <b>satu lagi</b>: mau menambah satu dari banyak yang tersisa.
+      <span class="ex">“Yummy! Can I have another one?” 🍪<button class="mini" data-say="Yummy! Can I have another one?">🔊</button></span></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 1">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>This, That, These, Those dalam Kalimat 📖</h2>
+  <p class="sub">Klik tombol 🔊 untuk mendengar setiap kalimat, lalu ulangi dengan keras!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="This is my pencil.">🔊</button><div><div class="en">This is my pencil.</div><div class="id">Ini pensil saya.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="That is a big tree over there.">🔊</button><div><div class="en">That is a big tree over there.</div><div class="id">Itu pohon besar di sana.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="These are my favorite books.">🔊</button><div><div class="en">These are my favorite books.</div><div class="id">Ini buku-buku favoritku.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Those are birds in the sky.">🔊</button><div><div class="en">Those are birds in the sky.</div><div class="id">Itu burung-burung di langit.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Is this your eraser?">🔊</button><div><div class="en">Is this your eraser?</div><div class="id">Apakah ini penghapusanmu?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Are those your shoes?">🔊</button><div><div class="en">Are those your shoes?</div><div class="id">Apakah itu sepatumu?</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 2">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Both, Either, Neither dalam Kalimat 📖</h2>
+  <p class="sub">Semua kalimat ini membicarakan DUA benda. Coba perhatikan baik-baik!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="Both of my hands are clean.">🔊</button><div><div class="en">Both of my hands are clean.</div><div class="id">Kedua tanganku bersih.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="I like both colors!">🔊</button><div><div class="en">I like both colors!</div><div class="id">Aku suka kedua warna itu!</div></div></div>
+    <div class="exrow"><button class="mini" data-say="You can choose either shirt.">🔊</button><div><div class="en">You can choose either shirt.</div><div class="id">Kamu boleh memilih salah satu baju.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Either answer is correct.">🔊</button><div><div class="en">Either answer is correct.</div><div class="id">Salah satu jawaban itu benar.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Neither door is open.">🔊</button><div><div class="en">Neither door is open.</div><div class="id">Tidak satu pun pintu yang terbuka.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="I like neither of them.">🔊</button><div><div class="en">I like neither of them.</div><div class="id">Aku tidak suka keduanya.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 3">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Kata Memilih dalam Kalimat 📖</h2>
+  <p class="sub">Ungkapan ini sangat berguna saat berbelanja dan memilih benda!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="I want this one, please.">🔊</button><div><div class="en">I want <b class="tw" data-say="this one">this one</b>, please.</div><div class="id">Saya mau yang ini.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Not this one — the other one!">🔊</button><div><div class="en">Not this one — <b class="tw" data-say="the other one">the other one</b>!</div><div class="id">Bukan yang ini — yang satunya!</div></div></div>
+    <div class="exrow"><button class="mini" data-say="One apple is green; the others are red.">🔊</button><div><div class="en">One apple is green; <b class="tw" data-say="the others">the others</b> are red.</div><div class="id">Satu apel hijau; yang lainnya merah.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="These candies are sweet. Can I have another one?">🔊</button><div><div class="en">These candies are sweet. Can I have <b class="tw" data-say="another one">another one</b>?</div><div class="id">Permen ini manis. Boleh saya ambil satu lagi?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="This one is cheap, but the other one is better.">🔊</button><div><div class="en"><b class="tw" data-say="this one">This one</b> is cheap, but <b class="tw" data-say="the other one">the other one</b> is better.</div><div class="id">Yang ini murah, tapi yang satunya lebih bagus.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Two students are here; the others are in the library.">🔊</button><div><div class="en">Two students are here; <b class="tw" data-say="the others">the others</b> are in the library.</div><div class="id">Dua siswa di sini; yang lainnya di perpustakaan.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Percakapan: Cio &amp; Miss Nanda">
+  <span class="badge">Percakapan</span>
+  <h2>Di Toko Hadiah 🎁</h2>
+  <p class="sub">Cio 🧒 ingin membeli hadiah. Ia bertemu Miss Nanda 👩‍🏫 di tokonya. Kata-kata hari ini ditandai <span class="tw">kuning</span> — coba klik katanya!</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Percakapan</button>
+    <div class="dialogue" id="mainDialog"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Percakapan">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Percakapan Tadi 🧠</h2>
+  <p class="sub">Jawab 5 soal tentang percakapan Cio &amp; Miss Nanda. Pilih jawaban, lalu klik <b>Cek Jawaban</b> untuk melihat pembahasannya!</p>
+  <div id="convQs"></div>
+</section>
+
+<section class="slide" data-title="5 Percakapan Seru">
+  <span class="badge">Percakapan</span>
+  <h2>5 Percakapan, 5 Tempat Berbeda! 🌍</h2>
+  <p class="sub">Klik tombol untuk ganti percakapan. Klik 🔊 untuk mendengar satu kalimat, atau ▶ untuk mendengar semuanya.</p>
+  <div class="tab-wrap" id="dlgTabs">
+    <div class="tabs" id="dlgTabBtns"></div>
+    <div id="dlgPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Latihan Berbicara">
+  <span class="badge">Praktik</span>
+  <h2>Latihan Berbicara 🎤</h2>
+  <p class="sub">Dengarkan tutor, tulis kalimatmu sendiri di kotak jawaban, lalu bandingkan dengan contoh. Beranilah berbicara!</p>
+  <div class="tab-wrap" id="sitTabs">
+    <div class="tabs" id="sitTabBtns"></div>
+    <div id="sitPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kuis 10 Soal">
+  <span class="badge">Kuis</span>
+  <h2>Kuis Besar: 10 Soal 🏆</h2>
+  <p class="sub">Pilih jawaban yang paling tepat, lalu klik Cek Jawaban. Kumpulkan skor tertinggi!</p>
+  <div class="scorebox"><span>⭐ Skor: <b id="quizScore">0</b>/10</span><span id="quizDone">Terjawab: 0/10</span></div>
+  <div id="quizQs"></div>
+  <div class="finalbanner" id="finalBanner"></div>
+</section>
+
+<section class="slide" data-title="Fabel: Kiki &amp; Lulu">
+  <span class="badge">Story Time</span>
+  <h2>Kiki and Lulu 🐿️</h2>
+  <p class="sub">Sebuah fabel tentang dua tupai kecil. Kata berwarna <span class="tw">kuning</span> bisa diklik! Klik ▶ untuk mendengarkan ceritanya.</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Cerita</button>
+    <div class="para">
+      <p><span class="line-en">Kiki and Lulu are two little squirrels. They live in a big green tree near the river. One sunny morning, they find two shiny acorns under <b class="tw" data-say="this">this</b> tree. “<b class="tw" data-say="these">These</b> acorns look delicious!” says Kiki. “But look at <b class="tw" data-say="those">those</b> acorns on <b class="tw" data-say="that">that</b> tree across the river. They look much bigger!”</span></p>
+      <button class="mini saybtn" data-say="Kiki and Lulu are two little squirrels. They live in a big green tree near the river. One sunny morning, they find two shiny acorns under this tree. These acorns look delicious! says Kiki. But look at those acorns on that tree across the river. They look much bigger!">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">Kiki says, “Let's share. You take <b class="tw" data-say="this one">this one</b>, and I will take <b class="tw" data-say="the other one">the other one</b>.” But Lulu shakes his head. “No! I want <b class="tw" data-say="both">both</b> of them!” He grabs both acorns and eats them quickly. Then he says, “Hmm, I want <b class="tw" data-say="another one">another one</b>.” So he runs to that tree across the river, but the acorns there are small and old. “<b class="tw" data-say="Neither">Neither</b> of these acorns is good,” he sighs sadly.</span></p>
+      <button class="mini saybtn" data-say="Kiki says, Let's share. You take this one, and I will take the other one. But Lulu shakes his head. No! I want both of them! He grabs both acorns and eats them quickly. Then he says, Hmm, I want another one. So he runs to that tree across the river, but the acorns there are small and old. Neither of these acorns is good, he sighs sadly.">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">Lulu comes back with nothing in his hands. He feels very sad and hungry. Kiki smiles and opens her little paws. “Don't worry, Lulu. Here, <b class="tw" data-say="this one">this one</b> is for you.” She shares her acorn with him. Lulu smiles happily. “Thank you, Kiki! From now on, we will always share <b class="tw" data-say="both">both</b> of everything!” From that day on, the two little squirrels are best friends again. 🐿️🐿️</span></p>
+      <button class="mini saybtn" data-say="Lulu comes back with nothing in his hands. He feels very sad and hungry. Kiki smiles and opens her little paws. Don't worry, Lulu. Here, this one is for you. She shares her acorn with him. Lulu smiles happily. Thank you, Kiki! From now on, we will always share both of everything! From that day on, the two little squirrels are best friends again.">🔊</button>
+    </div>
+    <div class="moral">🌱 Moral of the story: <b>Sharing makes everyone happy!</b><small>Berbagi membuat semua orang bahagia.</small></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Fabel">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Cerita Kiki &amp; Lulu 🐿️</h2>
+  <p class="sub">Jawab 5 soal berikut berdasarkan fabel yang baru saja kamu baca atau dengar!</p>
+  <div id="fableQs"></div>
+  <button class="btn ghost" onclick="show(14)">📖 Baca Ulang Cerita</button>
+</section>
+
+<section class="slide" data-title="Kesimpulan">
+  <span class="badge">Kesimpulan</span>
+  <h2>Ingat 3 Kelompok Kata Ini! 📌</h2>
+  <p class="sub">Ini rangkuman materi hari ini. Simpan baik-baik di kepalamu, ya!</p>
+  <div class="grid3">
+    <div class="card sumcard" style="background:var(--blue-l)">
+      <h3 style="color:var(--blue)">👋 Kata Tunjuk</h3>
+      <ul>
+        <li><b>this</b> = ini (dekat, 1)</li>
+        <li><b>that</b> = itu (jauh, 1)</li>
+        <li><b>these</b> = ini (dekat, banyak)</li>
+        <li><b>those</b> = itu (jauh, banyak)</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--orange-l)">
+      <h3 style="color:var(--orange)">✌️ Dua Benda</h3>
+      <ul>
+        <li><b>both</b> = keduanya</li>
+        <li><b>either</b> = salah satu</li>
+        <li><b>neither</b> = tidak keduanya</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--purple-l)">
+      <h3 style="color:var(--purple)">🛒 Saat Memilih</h3>
+      <ul>
+        <li><b>this one</b> = yang ini</li>
+        <li><b>the other one</b> = yang satunya (dari 2)</li>
+        <li><b>the others</b> = yang lainnya</li>
+        <li><b>another one</b> = satu lagi</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bigbanner">🎯 Dekat → <b>this / these</b> &nbsp;•&nbsp; Jauh → <b>that / those</b> &nbsp;•&nbsp; Dua benda → <b>both / either / neither</b> &nbsp;•&nbsp; Memilih → <b>this one, the other one, the others, another one</b></div>
+</section>
+
+<section class="slide" data-title="Refleksi">
+  <span class="badge">Refleksi</span>
+  <h2>Bagaimana Perasaanmu Hari Ini? 🪞</h2>
+  <p class="sub">Klik emoji yang paling sesuai dengan perasaanmu setelah belajar!</p>
+  <div class="refl-row">
+    <button class="refl" data-msg="Kerja bagus! Kamu sudah jago kata tunjuk! 🌟"><span class="em">😊</span><span>Paham sekali!</span></button>
+    <button class="refl" data-msg="Tidak apa-apa! Coba baca lagi contoh kalimatnya, ya. 💪"><span class="em">😐</span><span>Cukup paham</span></button>
+    <button class="refl" data-msg="Santai! Minta gurumu mengulang materinya. Kita belajar bersama-sama! 🤗"><span class="em">😕</span><span>Masih bingung</span></button>
+  </div>
+  <div id="reflMsg" class="refl-msg" style="display:none"></div>
+  <div class="card">
+    <h3>Coba jawab di buatumu ✏️</h3>
+    <ul style="margin-top:10px;padding-left:22px;font-weight:600;line-height:2">
+      <li>Kata tunjuk mana yang paling mudah menurutmu? Kenapa?</li>
+      <li>Kata mana yang masih membuatmu bingung: <i>either</i> atau <i>neither</i>?</li>
+      <li>Buat satu kalimat dengan kata <b>the others</b>!</li>
+      <li>Kata tunjuk apa yang kamu pakai untuk menunjuk bintang di langit? 🌟</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-title="Thank You!">
+  <div class="card thanks">
+    <div style="font-size:3.6rem">🌟🎉🌟</div>
+    <h1>Thank You for Today!</h1>
+    <p class="sub" style="margin-top:10px">Kamu sudah belajar 11 kata dan ungkapan baru hari ini. Hebat sekali!</p>
+    <p style="font-weight:800;color:#475569">Great job, everyone! See you in the next lesson. 👋</p>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn primary" onclick="confetti();speak('Great job, everyone! Thank you for today! See you next time!')">🎉 Celebrate!</button>
+      <button class="btn ghost" onclick="show(0)">🔁 Kembali ke Awal</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="navbtn" id="prevBtn" title="Sebelumnya">◀</button>
+  <span id="counter">1 / 19</span>
+  <button class="navbtn" id="nextBtn" title="Berikutnya">▶</button>
+</nav>
+
+<div class="overlay" id="menuOverlay">
+  <div class="menu-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>📚 Daftar Slide</h3>
+      <button class="chip-btn" onclick="closeMenu()">✕ Tutup</button>
+    </div>
+    <div id="menuList"></div>
+  </div>
+</div>
+<script>
+/* ================= DATA PERCAKAPAN ================= */
+const MAIN = {
+  who: ["Miss Nanda", "Cio"], av: ["👩‍🏫", "🧒"],
+  lines: [
+    {s:0, text:"Good morning, Cio! What are you looking at? 👀"},
+    {s:1, text:"Good morning, Miss Nanda! I want to buy a present for my mom, but I can't choose. 🎁"},
+    {s:0, text:"Let me help you! *This one* is a scarf, and *that one* is a hat. Which one do you like?"},
+    {s:1, text:"Hmm... I don't like *either* of them. Do you have a bag?"},
+    {s:0, text:"Of course! Look at *these* bags near me, and *those* bags over there."},
+    {s:1, text:"Wow! I like *both* bags — the red one and the blue one!"},
+    {s:0, text:"Great choice! So, which one do you want to buy?"},
+    {s:1, text:"I'll take *this one*, the red bag, for my mom. And *the other one*, the blue bag, is for my sister."},
+    {s:0, text:"Perfect! Your mom and your sister will be happy. 😊"},
+    {s:1, text:"Thank you, Miss Nanda! Oh, wait... the blue bag is so cute. Can I have *another one* for my doll? 😄"},
+    {s:0, text:"Haha, sure, Cio! One more little bag for your doll! 🧸"}
+  ]
+};
+
+const DIALOGUES = [
+  {emoji:"🍎", title:"Di Kios Buah", who:["Nina","Pak Tani"], av:["👧","🧑‍🌾"], lines:[
+    {s:1, text:"Good morning, Nina! Do you want some apples?"},
+    {s:0, text:"Yes, please. *This one* looks big and sweet!"},
+    {s:1, text:"Careful! *These* apples near you are fresh, and *those* ones over there are cheaper."},
+    {s:0, text:"Hmm... how much are *the others*?"},
+    {s:1, text:"*The others* are ten thousand rupiah for five apples."},
+    {s:0, text:"Okay! I'll take *this one*, and *another one* for my little brother, please!"}
+  ]},
+  {emoji:"🍦", title:"Waktu Es Krim", who:["Ben","Waiter"], av:["🧒","🧑‍🍳"], lines:[
+    {s:1, text:"Welcome! We have two flavors today: chocolate and strawberry."},
+    {s:0, text:"Can I taste them first?"},
+    {s:1, text:"Sure! *This one* is chocolate, and *the other one* is strawberry."},
+    {s:0, text:"Mmm... I like *both*!"},
+    {s:1, text:"(laughs) You can only choose one, Ben!"},
+    {s:0, text:"Umm... *neither* of them is easy to choose! Okay, I'll take the chocolate one, please."}
+  ]},
+  {emoji:"✏️", title:"Di Kelas", who:["Dita","Teacher"], av:["👧","👩‍🏫"], lines:[
+    {s:0, text:"Miss, *these* are my pencils... but one is missing! 😢"},
+    {s:1, text:"Look under your chair. Is *that* your pencil?"},
+    {s:0, text:"No, Miss... *that* one is Rian's."},
+    {s:1, text:"Then look at *those* pencils on my table. Do you see yours?"},
+    {s:0, text:"Oh yes! *That one* is mine! Thank you, Miss!"},
+    {s:1, text:"You're welcome. Now put it with *the others* in your pencil case."}
+  ]},
+  {emoji:"👟", title:"Di Toko Sepatu", who:["Rio","Shopkeeper"], av:["🧒","🧑‍💼"], lines:[
+    {s:1, text:"Do you like *these* blue shoes, Rio?"},
+    {s:0, text:"Hmm, can I see *the other one*? The black pair, please."},
+    {s:1, text:"Of course. Here they are!"},
+    {s:0, text:"Oh no... now I like *both*! Which one is cheaper?"},
+    {s:1, text:"The blue ones are cheaper than the black ones."},
+    {s:0, text:"Then I'll take *this one*, the blue pair! Maybe I'll buy *another one* for my dad next time!"}
+  ]},
+  {emoji:"🧸", title:"Memilih Mainan", who:["Sasa","Mom"], av:["👧","👩"], lines:[
+    {s:1, text:"You may choose one toy, Sasa."},
+    {s:0, text:"Yay! I want *this one* — the teddy bear!"},
+    {s:1, text:"*That one*? The robot over there looks cooler."},
+    {s:0, text:"Umm... *neither* is bad, but I really love this teddy bear!"},
+    {s:1, text:"(laughs) Okay! Oh look — buy one toy, get *another one* free!"},
+    {s:0, text:"Really?! Then the robot can be *another one* for my little brother! 🎉"}
+  ]}
+];
+
+const SITUATIONS = [
+  {emoji:"🍎", title:"Di Pasar Buah", tav:"👩",
+   ctx:"Kamu dan Ibu sedang berbelanja buah. Ibu bertanya apel mana yang kamu mau.",
+   t1:"Which apple do you want, dear? This one or that one?",
+   hint1:"coba pakai “this one”",
+   t2:"Hmm, those apples over there look sweeter. Are you sure?",
+   hint2:"coba pakai “those”",
+   s1:"I want this one, Mom!",
+   s2:"Okay, Mom! Then I want those apples, please!"},
+  {emoji:"🎒", title:"Memilih Tas Sekolah", tav:"👧",
+   ctx:"Kamu memilih tas di toko. Ada dua tas yang kamu suka, dan kakakmu bertanya.",
+   t1:"There are two bags you like. Which one do you want?",
+   hint1:"coba pakai “either”",
+   t2:"Oh no, wait! One bag is broken. What do you say now?",
+   hint2:"coba pakai “the other one”",
+   s1:"Either bag is okay for me!",
+   s2:"Then I will take the other one, please!"},
+  {emoji:"🍪", title:"Kue di Meja", tav:"👨",
+   ctx:"Ada dua kue di piring, tapi tidak ada yang bercokelat. Kamu agak kecewa.",
+   t1:"Look at the cakes on the table. Do you want one?",
+   hint1:"coba pakai “neither”",
+   t2:"Wait! Grandma brings more cakes from her house!",
+   hint2:"coba pakai “another one” atau “these”",
+   s1:"Neither cake has chocolate, Dad... 😢",
+   s2:"Wow! Can I have another one, please?"},
+  {emoji:"🧦", title:"Kaus Kaki Hilang", tav:"👩",
+   ctx:"Kamu membantu Ibu melipat kaus kaki, tapi satu kaus kaki merah hilang.",
+   t1:"I see one red sock here. Where is the other one?",
+   hint1:"coba pakai “those”",
+   t2:"Ah, you found it! Now please count all the socks.",
+   hint2:"coba pakai “these” dan “the others”",
+   s1:"Look at those socks under the chair, Mom!",
+   s2:"Okay, Mom! These are your socks, and the others are mine."},
+  {emoji:"🖍️", title:"Pensil Warna", tav:"🧒",
+   ctx:"Temanmu meminjam dua pensil warnamu, lalu mengembalikan satu saja.",
+   t1:"Here is your green crayon. Thank you!",
+   hint1:"coba pakai “the other one”",
+   t2:"Oh no... I think I left it at home. I am sorry!",
+   hint2:"coba pakai “another one”",
+   s1:"Thanks! But where is the other one — the yellow crayon?",
+   s2:"It is okay! Luckily I have another one in my bag."}
+];
+
+/* ================= DATA SOAL ================= */
+const CONV_QS = [
+  {type:"Percakapan 📖", q:"Why does Cio go to the shop?",
+   opts:["He wants to buy a hat.","He wants to buy a present for his mom.","He wants to say hello to Miss Nanda.","He wants to buy shoes for school."],
+   a:1,
+   exp:"Cio berkata, “I want to buy a present for my mom, but I can't choose.” Jadi, Cio ingin membeli hadiah untuk ibunya."},
+  {type:"Percakapan 📖", q:"What are the FIRST two things Miss Nanda shows to Cio?",
+   opts:["A scarf and a hat","A red bag and a blue bag","A scarf and a bag","A hat and a bag"],
+   a:0,
+   exp:"Miss Nanda berkata, “This one is a scarf, and that one is a hat.” Jadi dua benda pertama adalah syal dan topi. Kata “this one” dan “that one” dipakai karena sedang memilih dari beberapa benda."},
+  {type:"Percakapan 📖", q:"Why doesn't Cio take the scarf or the hat?",
+   opts:["They are too expensive.","They are too small.","He doesn't like either of them.","His mom already has them."],
+   a:2,
+   exp:"“I don't like either of them” artinya Cio tidak menyukai salah satu pun dari dua benda itu (syal dan topi). Either of them = salah satu dari keduanya."},
+  {type:"Percakapan 📖", q:"What does Cio mean when he says “I like both bags”?",
+   opts:["He likes one bag only.","He likes the red bag AND the blue bag.","He doesn't like the bags at all.","He likes all the bags in the shop."],
+   a:1,
+   exp:"Both = keduanya. Cio menyukai dua tas sekaligus: tas merah dan tas biru."},
+  {type:"Percakapan 📖", q:"Who gets “the other one”, the blue bag?",
+   opts:["His mom","His sister","His doll","Miss Nanda"],
+   a:1,
+   exp:"Cio berkata, “The other one, the blue bag, is for my sister.” The other one = yang satunya lagi, yaitu tas biru untuk kakak/adik perempuannya. (Untuk bonekanya, Cio membeli satu lagi: another one.)"}
+];
+
+const QUIZ = [
+  {type:"Lengkapi Kata 📝", q:"______ is my pencil. I am holding it now.",
+   opts:["That","This","Those","These"], a:1,
+   exp:"Pensil ada di tangan = DEKAT dan hanya SATU benda → This is my pencil."},
+  {type:"Lengkapi Kata 📝", q:"Look at ______ birds in the sky! They are far away.",
+   opts:["this","those","these","that"], a:1,
+   exp:"Burung di langit = JAUH dan BANYAK → those birds."},
+  {type:"Lengkapi Kata 📝", q:"______ cookies on this plate are for you.",
+   opts:["That","Those","This","These"], a:3,
+   exp:"Cookies = banyak, dan piringnya dekat → These cookies."},
+  {type:"Pilih Kalimat ✅", q:"Which sentence is correct?",
+   opts:["Both of my hands is clean.","Both of my hands are clean.","Both of my hand are clean.","Both of my hand is clean."], a:1,
+   exp:"Both artinya keduanya (dua benda) → gunakan kata benda jamak (hands) dan to be “are”."},
+  {type:"Lengkapi Kata 📝", q:"There are two ice cream flavors. You can choose ______ one.",
+   opts:["neither","the others","either","another"], a:2,
+   exp:"Ada dua rasa es krim dan bebas pilih salah satu → either one."},
+  {type:"Lengkapi Kata 📝", q:"I have two pens, but ______ of them can write. They are both broken!",
+   opts:["both","either","all","neither"], a:3,
+   exp:"Kedua pulpen rusak = tidak satu pun bisa menulis → neither of them."},
+  {type:"Eja Kata 🔤", q:"Which is the correct spelling of /ðiːz/ (ini, untuk banyak benda)?",
+   opts:["theze","thies","these","thes"], a:2,
+   exp:"Pelafalan /ðiːz/ ditulis dengan huruf t-h-e-s-e → these."},
+  {type:"Eja Kata 🔤", q:"Which is the correct spelling of the word that means “keduanya”?",
+   opts:["boht","both","bothe","boto"], a:1,
+   exp:"“Keduanya” dalam bahasa Inggris adalah b-o-t-h → both."},
+  {type:"Lengkapi Kata 📝", q:"This sticker is not nice. Can I have ______ one?",
+   opts:["other","either","the others","another"], a:3,
+   exp:"Mau tambah satu lagi dari banyak pilihan → another one."},
+  {type:"Pilih Kalimat ✅", q:"You have two brothers. One lives in Jakarta. Which sentence is correct for the second brother?",
+   opts:["And another one lives in Bali.","And the others live in Bali.","And the other one lives in Bali.","And neither lives in Bali."], a:2,
+   exp:"Dari DUA orang: satu di Jakarta, yang satunya lagi di Bali → the other one lives in Bali. The others dipakai kalau sisanya BANYAK."}
+];
+
+const FABLE_QS = [
+  {type:"Cerita 🐿️", q:"Where do Kiki and Lulu live?",
+   opts:["In a big green tree near the river","In a small wooden house","In a cave on the mountain","Across the river"], a:0,
+   exp:"Paragraf 1: “They live in a big green tree near the river.”"},
+  {type:"Cerita 🐿️", q:"What does Kiki suggest at first?",
+   opts:["To eat both acorns quickly","To look for a bigger tree","To share: “You take this one, and I will take the other one.”","To give the acorns to Lulu"], a:2,
+   exp:"Kiki berkata, “Let's share. You take this one, and I will take the other one.” Artinya Kiki mengusulkan untuk berbagi."},
+  {type:"Cerita 🐿️", q:"What does Lulu find on the tree across the river?",
+   opts:["Big and sweet acorns","Small and old acorns","A new friend","Nothing at all"], a:1,
+   exp:"Paragraf 2: “…the acorns there are small and old.”"},
+  {type:"Cerita 🐿️", q:"What does “Neither of these acorns is good” mean?",
+   opts:["One of the acorns is good.","Both acorns are good.","Both acorns are not good.","Lulu likes both acorns."], a:2,
+   exp:"Neither = tidak keduanya → tidak satu pun biji ek di sana yang bagus. Kedua biji ek itu jelek."},
+  {type:"Cerita 🐿️", q:"What can we learn from the story?",
+   opts:["Eat all the food before your friend comes","Sharing makes everyone happy","Big acorns are the best","Never play with your friends"], a:1,
+   exp:"Lulu makan sendirian dan tetap tidak bahagia; saat Kiki mau berbagi, mereka kembali bahagia. Pesan cerita: berbagi membuat semua orang senang! 🤝"}
+];
+
+/* ================= SUARA (TEXT TO SPEECH) ================= */
+let voices = [];
+let muted = false;
+function loadVoices(){
+  if(!('speechSynthesis' in window)) return;
+  voices = speechSynthesis.getVoices().filter(function(v){ return /^en/i.test(v.lang); });
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+let readToken = 0, playBtn = null;
+function resetReader(){
+  if(playBtn){
+    playBtn.textContent = playBtn.dataset.orig;
+    playBtn.classList.remove('playing');
+    playBtn = null;
+  }
+}
+function speak(text){
+  if(muted || !('speechSynthesis' in window)) return;
+  readToken++; resetReader();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+  if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+  speechSynthesis.speak(u);
+}
+function readSeq(btn){
+  readToken++;
+  const myId = readToken;
+  if(playBtn === btn){ speechSynthesis.cancel(); resetReader(); return; }
+  speechSynthesis.cancel(); resetReader();
+  const cont = btn.closest('.read-container');
+  if(!cont) return;
+  const texts = Array.from(cont.querySelectorAll('.saybtn[data-say]')).map(function(b){ return b.dataset.say; });
+  if(!texts.length) return;
+  playBtn = btn; btn.classList.add('playing'); btn.textContent = '⏹ Berhenti';
+  let i = 0;
+  (function next(){
+    if(myId !== readToken) return;
+    if(i >= texts.length){ readToken++; resetReader(); return; }
+    const u = new SpeechSynthesisUtterance(texts[i++]);
+    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+    if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+    u.onend = next;
+    u.onerror = function(){ if(myId === readToken){ readToken++; resetReader(); } };
+    speechSynthesis.speak(u);
+  })();
+}
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-say]');
+  if(el) speak(el.dataset.say);
+});
+
+/* ================= NAVIGASI SLIDE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+let cur = 0;
+function show(i){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, k){ s.classList.toggle('active', k === cur); });
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('progressFill').style.width = ((cur + 1) / slides.length * 100) + '%';
+  document.getElementById('prevBtn').disabled = (cur === 0);
+  document.getElementById('nextBtn').disabled = (cur === slides.length - 1);
+  window.scrollTo({top:0, behavior:'smooth'});
+  closeMenu();
+}
+function goTo(i){ show(i); }
+function nextSlide(){ show(cur + 1); }
+function prevSlide(){ show(cur - 1); }
+document.addEventListener('keydown', function(e){
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
+  if(e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+});
+
+/* ================= MENU SLIDE ================= */
+function openMenu(){ document.getElementById('menuOverlay').classList.add('open'); }
+function closeMenu(){ document.getElementById('menuOverlay').classList.remove('open'); }
+const menuList = document.getElementById('menuList');
+slides.forEach(function(s, i){
+  const b = document.createElement('button');
+  b.className = 'menu-item';
+  b.innerHTML = '<span class="n">' + (i + 1) + '</span> ' + (s.dataset.title || ('Slide ' + (i + 1)));
+  b.onclick = function(){ show(i); };
+  menuList.appendChild(b);
+});
+document.getElementById('menuOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeMenu();
+});
+
+/* ================= TOMBOL SUARA ================= */
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', function(){
+  muted = !muted;
+  muteBtn.textContent = muted ? '🔇 Suara OFF' : '🔈 Suara ON';
+  if(muted){ speechSynthesis.cancel(); readToken++; resetReader(); }
+});
+
+/* ================= RENDER PERCAKAPAN ================= */
+function fmt(t){
+  return t.replace(/\*(.+?)\*/g, function(m, w){
+    return '<b class="tw" data-say="' + w + '">' + w + '</b>';
+  });
+}
+function plain(t){ return t.replace(/\*/g, ''); }
+function linesHtml(d){
+  return d.lines.map(function(l){
+    const side = l.s === 0 ? '' : ' right';
+    const bub = l.s === 0 ? 'b-b' : 'b-p';
+    return '<div class="line' + side + '"><span class="who">' + d.av[l.s] + '</span>' +
+      '<div class="bubble ' + bub + '"><span class="name">' + d.who[l.s] + '</span>' +
+      '<span class="line-en">' + fmt(l.text) + '</span></div>' +
+      '<button class="mini saybtn" data-say="' + plain(l.text) + '">🔊</button></div>';
+  }).join('');
+}
+function renderDialogueTabs(){
+  const panels = document.getElementById('dlgPanels');
+  const btns = document.getElementById('dlgTabBtns');
+  DIALOGUES.forEach(function(d, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#dp' + i;
+    pb.textContent = d.emoji + ' ' + d.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'dp' + i;
+    panel.innerHTML = '<div class="read-container"><button class="btn primary readall" style="margin-bottom:12px">▶ Baca Percakapan</button><div class="dialogue">' + linesHtml(d) + '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function renderSituations(){
+  const panels = document.getElementById('sitPanels');
+  const btns = document.getElementById('sitTabBtns');
+  SITUATIONS.forEach(function(s, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#sp' + i;
+    pb.textContent = s.emoji + ' ' + (i + 1) + '. ' + s.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'sp' + i;
+    panel.innerHTML =
+      '<div class="card sit-card">' +
+      '<h3>' + s.emoji + ' Situasi ' + (i + 1) + ': ' + s.title + '</h3>' +
+      '<p class="ctx">🎬 ' + s.ctx + '</p>' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t1 + '”</div><button class="mini saybtn" data-say="' + s.t1 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 1 <small>(' + s.hint1 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'a" placeholder="Tulis kalimatmu di sini..." autocomplete="off">' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t2 + '”</div><button class="mini saybtn" data-say="' + s.t2 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 2 <small>(' + s.hint2 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'b" placeholder="Tulis balasanmu di sini..." autocomplete="off">' +
+      '<button class="btn ghost" onclick="revealSit(' + i + ')">💡 Lihat Contoh Jawaban</button>' +
+      '<div class="sample" id="sample' + i + '" style="display:none">' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t1 + '” → Kamu: <b>“' + s.s1 + '”</b></span><button class="mini saybtn" data-say="' + s.s1 + '">🔊</button></div>' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t2 + '” → Kamu: <b>“' + s.s2 + '”</b></span><button class="mini saybtn" data-say="' + s.s2 + '">🔊</button></div>' +
+      '<div class="starmsg" id="star' + i + '"></div>' +
+      '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function revealSit(i){
+  document.getElementById('sample' + i).style.display = 'flex';
+  const a = document.getElementById('s' + i + 'a').value.trim();
+  const b = document.getElementById('s' + i + 'b').value.trim();
+  const st = document.getElementById('star' + i);
+  st.textContent = (a && b) ? '⭐ Hebat! Kamu sudah berani berbicara bahasa Inggris!' : '💪 Ayo isi jawabanmu dulu, lalu bandingkan dengan contoh!';
+}
+
+/* ================= RENDER SOAL PILIHAN GANDA ================= */
+function renderMC(mountId, list, opt){
+  opt = opt || {};
+  const mount = document.getElementById(mountId);
+  let answered = 0, correct = 0;
+  list.forEach(function(item, idx){
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    const optsHtml = item.opts.map(function(o, i){
+      return '<button class="opt" data-i="' + i + '"><span class="letter">' + 'ABCD'[i] + '.</span><span>' + o + '</span></button>';
+    }).join('');
+    card.innerHTML =
+      '<div class="q-head"><span class="q-num">' + (idx + 1) + '</span>' +
+      (item.type ? '<span class="q-type">' + item.type + '</span>' : '') +
+      '<span class="q-result"></span></div>' +
+      '<div class="q-text">' + item.q + '</div>' +
+      '<div class="opts">' + optsHtml + '</div>' +
+      '<button class="btn check" disabled>Cek Jawaban ✅</button>' +
+      '<div class="pembahasan" style="display:none"><b>💡 Pembahasan:</b> ' + item.exp + '</div>';
+    let picked = null, done = false;
+    card.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(done) return;
+        card.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        picked = parseInt(btn.dataset.i, 10);
+        card.querySelector('.check').disabled = false;
+      });
+    });
+    card.querySelector('.check').addEventListener('click', function(){
+      if(picked === null || done) return;
+      done = true; answered++;
+      const right = item.a;
+      card.querySelectorAll('.opt').forEach(function(b){
+        b.disabled = true;
+        if(parseInt(b.dataset.i, 10) === right) b.classList.add('correct');
+        else if(parseInt(b.dataset.i, 10) === picked) b.classList.add('wrong');
+      });
+      const ok = (picked === right);
+      if(ok) correct++;
+      const res = card.querySelector('.q-result');
+      res.textContent = ok ? 'Benar! 🎉' : 'Belum tepat 😅';
+      res.style.color = ok ? 'var(--green)' : 'var(--red)';
+      card.querySelector('.pembahasan').style.display = 'block';
+      card.querySelector('.check').disabled = true;
+      if(opt.onAnswer) opt.onAnswer(answered, correct, list.length, ok);
+    });
+    mount.appendChild(card);
+  });
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tabs').forEach(function(tg){
+  tg.addEventListener('click', function(e){
+    const btn = e.target.closest('.tabbtn');
+    if(!btn) return;
+    const wrap = tg.closest('.tab-wrap');
+    wrap.querySelectorAll('.tabbtn').forEach(function(b){ b.classList.remove('active'); });
+    wrap.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    wrap.querySelector(btn.dataset.target).classList.add('active');
+  });
+});
+
+/* ================= REFLEKSI ================= */
+document.querySelectorAll('.refl').forEach(function(b){
+  b.addEventListener('click', function(){
+    const m = document.getElementById('reflMsg');
+    m.textContent = b.dataset.msg;
+    m.style.display = 'block';
+  });
+});
+
+/* ================= CONFETTI ================= */
+function confetti(n){
+  n = n || 90;
+  const colors = ['#f43f5e','#f59e0b','#10b981','#3b82f6','#8b5cf6','#ec4899'];
+  for(let k = 0; k < n; k++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (Math.random() * 100) + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (2.2 + Math.random() * 1.8) + 's';
+    c.style.animationDelay = (Math.random() * 0.6) + 's';
+    const size = (7 + Math.random() * 8) + 'px';
+    c.style.width = size; c.style.height = size;
+    if(Math.random() < 0.5) c.style.borderRadius = '50%';
+    document.body.appendChild(c);
+    setTimeout(function(){ c.remove(); }, 5400);
+  }
+}
+
+/* ================= INISIALISASI ================= */
+document.getElementById('mainDialog').innerHTML = linesHtml(MAIN);
+renderDialogueTabs();
+renderSituations();
+renderMC('convQs', CONV_QS);
+renderMC('quizQs', QUIZ, {
+  onAnswer: function(ans, corr, total){
+    document.getElementById('quizScore').textContent = corr;
+    document.getElementById('quizDone').textContent = 'Terjawab: ' + ans + '/' + total;
+    if(ans === total){
+      const fb = document.getElementById('finalBanner');
+      let msg;
+      if(corr === total) msg = '🏆 SEMPURNA! Kamu jenius kata tunjuk!';
+      else if(corr >= 8) msg = '🌟 HEBAT! Sedikit lagi sempurna!';
+      else if(corr >= 6) msg = '👍 BAGUS! Terus berlatih ya!';
+      else msg = '💪 Jangan menyerah! Ayo pelajari lagi materinya!';
+      fb.innerHTML = '<div>' + msg + '</div><div class="fscore">Skor akhir: ' + corr + '/' + total + '</div>';
+      fb.style.display = 'block';
+      confetti();
+    }
+  }
+});
+renderMC('fableQs', FABLE_QS);
+document.querySelectorAll('.readall').forEach(function(b){
+  b.dataset.orig = b.textContent;
+  b.addEventListener('click', function(){ readSeq(b); });
+});
+document.getElementById('prevBtn').addEventListener('click', prevSlide);
+document.getElementById('nextBtn').addEventListener('click', nextSlide);
+show(0);
+</script>
+</body>
+</html>
