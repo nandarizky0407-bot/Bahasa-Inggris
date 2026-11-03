@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bigger, Better, The Best! — Comparative &amp; Superlative untuk SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--ink:#2b3a55;--card:#fff;
+--blue:#2563eb;--blue-l:#dbeafe;
+--purple:#7c3aed;--purple-l:#ede9fe;
+--orange:#ea580c;--orange-l:#ffedd5;
+--green:#059669;--green-l:#d1fae5;
+--red:#dc2626;--red-l:#fee2e2;
+--yellow-l:#fef9c3;--pink-l:#fce7f3;
+--sky:#0ea5e9;
+--shadow:0 10px 30px rgba(43,58,85,.14);--radius:18px}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito','Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#bae6fd 0%,#e0e7ff 45%,#fbcfe8 100%);background-attachment:fixed;color:var(--ink);min-height:100vh}
+h1,h2,h3,h4{font-family:'Baloo 2','Nunito',cursive;line-height:1.25}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:50;box-shadow:0 2px 12px rgba(43,58,85,.08)}
+.topbar .brand{font-weight:800;font-family:'Baloo 2';font-size:1.02rem;color:var(--blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .tools{display:flex;gap:8px;flex-shrink:0}
+.chip-btn{border:none;background:var(--blue-l);color:var(--blue);font-weight:800;padding:7px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:.83rem;transition:.15s}
+.chip-btn:hover{filter:brightness(.94);transform:translateY(-1px)}
+.progress{position:fixed;top:56px;left:0;right:0;height:5px;background:rgba(255,255,255,.55);z-index:50}
+#progressFill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .3s}
+.slide{display:none;max-width:1080px;margin:0 auto;padding:84px 20px 110px;min-height:100vh}
+.slide.active{display:block;animation:pop .45s ease}
+@keyframes pop{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.badge{display:inline-block;background:#fff;color:var(--purple);font-weight:800;font-size:.76rem;letter-spacing:.6px;padding:5px 14px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:12px;text-transform:uppercase}
+.slide h2{font-size:2rem;margin-bottom:6px}
+.sub{color:#5b6b8c;margin-bottom:20px;font-weight:600}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.cover{text-align:center;padding:56px 26px;background:linear-gradient(160deg,#ffffff,#f0f9ff)}
+.cover h1{font-size:2.5rem}
+.float-emoji{font-size:2.4rem;letter-spacing:8px;margin:12px 0}
+.word-chips{margin:18px 0 24px}
+.chip{display:inline-block;background:var(--purple-l);color:var(--purple);padding:6px 14px;border-radius:999px;font-weight:800;margin:4px;font-family:'Baloo 2'}
+.hint{color:#64748b;font-size:.9rem;margin-top:16px;font-weight:600}
+.goal{display:flex;flex-direction:column}
+.goal p{font-size:.92rem;color:#475569;font-weight:600;margin-top:6px;line-height:1.55}
+.gemoji{font-size:2.2rem}
+.tipcard{background:var(--yellow-l)}
+.gtitle{margin:20px 0 10px;font-size:1.3rem}
+.t-a{color:var(--blue)}.t-b{color:var(--orange)}.t-c{color:var(--purple)}.t-d{color:var(--red)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:14px}
+.vcard{border-radius:16px;padding:16px;cursor:pointer;transition:.2s;user-select:none}
+.vcard:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow)}
+.vword{font-family:'Baloo 2';font-size:1.45rem;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.vphon{font-size:.82rem;color:#64748b;font-weight:700;font-family:'Nunito'}
+.vmean{font-weight:800;font-size:.93rem;margin:6px 0}
+.vex{font-size:.86rem;color:#475569;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.g-a{background:var(--blue-l)}.g-a .vword{color:var(--blue)}
+.g-b{background:var(--orange-l)}.g-b .vword{color:var(--orange)}
+.g-c{background:var(--purple-l)}.g-c .vword{color:var(--purple)}
+.g-d{background:var(--red-l)}.g-d .vword{color:var(--red)}
+.mini{border:none;background:rgba(255,255,255,.9);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.14);flex-shrink:0;transition:.15s;display:inline-flex;align-items:center;justify-content:center}
+.mini:hover{transform:scale(1.15)}
+.tw{background:linear-gradient(transparent 55%,#fde68a 55%);padding:0 3px;border-radius:4px;cursor:pointer;font-weight:800;color:#92400e}
+.mtable{width:100%;border-collapse:separate;border-spacing:10px}
+.mtable th{font-family:'Baloo 2';font-size:1rem;color:#334155;padding:6px}
+.mtable .rowlab{background:#fff;border-radius:14px;box-shadow:var(--shadow);width:132px}
+.mtable td{border-radius:16px;padding:16px 12px;box-shadow:var(--shadow);vertical-align:top;text-align:center}
+.mtable .big{font-family:'Baloo 2';font-size:1.7rem;display:block}
+.c-a{background:var(--blue-l)}.c-a .big{color:var(--blue)}
+.c-b{background:var(--purple-l)}.c-b .big{color:var(--purple)}
+.cex{font-size:.92rem;font-weight:800;margin:8px 0 6px;display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.mtable small{color:#64748b;font-weight:700}
+.warnbox{background:var(--yellow-l);border:2px dashed #f59e0b;border-radius:14px;padding:12px 16px;font-weight:700;margin-top:16px;line-height:1.6}
+.two-things{display:flex;justify-content:center;gap:18px;font-size:3.2rem;margin:4px 0 16px}
+.wcard{border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.wcard>p{font-weight:700;color:#475569;font-size:.92rem;margin-top:4px;line-height:1.7}
+.w-green{background:var(--green-l)}.w-green h3{color:var(--green)}
+.w-blue{background:var(--blue-l)}.w-blue h3{color:var(--blue)}
+.w-red{background:var(--red-l)}.w-red h3{color:var(--red)}
+.w-orange{background:var(--orange-l)}.w-orange h3{color:var(--orange)}
+.w-purple{background:var(--purple-l)}.w-purple h3{color:var(--purple)}
+.wex{background:rgba(255,255,255,.78);border-radius:10px;padding:8px 10px;font-weight:800;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+.formulabox{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:16px;padding:16px 20px;margin-top:16px;font-weight:800;text-align:center;box-shadow:var(--shadow);font-size:1.05rem;line-height:1.6}
+.formulabox .fex{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;font-family:'Baloo 2';font-size:1.08rem;flex-wrap:wrap}
+.formulabox .fex .mini{background:rgba(255,255,255,.92)}
+.irtable{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin-top:8px}
+.irtable th{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-family:'Baloo 2';padding:12px 10px;font-size:1rem}
+.irtable td{padding:11px 10px;text-align:center;font-weight:800;border-bottom:2px solid #f1f5f9}
+.irtable tr:last-child td{border-bottom:none}
+.irtable .base{font-family:'Baloo 2';font-size:1.15rem}
+.irtable .er{color:var(--blue)}
+.irtable .est{color:var(--orange)}
+.irtable .arti{color:#64748b;font-weight:700}
+.irtable .snd{width:56px}
+.choserow{display:flex;gap:16px;align-items:center;margin-bottom:12px}
+.dots{display:flex;gap:8px;align-items:center;min-width:150px;justify-content:center;background:#f8fafc;padding:12px;border-radius:14px;box-shadow:var(--shadow)}
+.d{width:26px;height:26px;border-radius:50%;background:#cbd5e1;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0}
+.d.pick{background:#f43f5e;box-shadow:0 0 0 4px #fecdd3;transform:scale(1.12)}
+.d.no::after{content:'✕';color:#64748b;font-size:.9rem}
+.d.new{background:#10b981;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.45}}
+.chtxt{flex:1;font-weight:700}
+.chtxt .ex{display:flex;align-items:center;gap:8px;color:#475569;font-size:.92rem;margin-top:5px}
+.exlist{display:flex;flex-direction:column;gap:10px}
+.exrow{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:14px;padding:13px 16px;box-shadow:var(--shadow)}
+.exrow .en{font-weight:800;font-size:1.03rem}
+.exrow .id{color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
+.dialogue{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.line{display:flex;gap:10px;align-items:flex-start}
+.line.right{flex-direction:row-reverse}
+.who{font-size:1.55rem;line-height:1.2}
+.bubble{background:#fff;border-radius:16px;padding:10px 15px;box-shadow:var(--shadow);max-width:78%;font-weight:600;line-height:1.5}
+.line.right .bubble{text-align:left}
+.bubble .name{display:block;font-size:.7rem;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.b-b{background:var(--blue-l)}
+.b-p{background:var(--purple-l)}
+.b-o{background:var(--orange-l)}
+.q-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;border-left:6px solid var(--sky)}
+.q-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.q-num{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';flex-shrink:0}
+.q-type{background:var(--yellow-l);color:#a16207;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px}
+.q-text{font-weight:800;margin-bottom:12px;font-size:1.02rem;line-height:1.55}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{text-align:left;border:2px solid #e2e8f0;background:#f8fafc;border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s;display:flex;gap:8px;font-size:.94rem}
+.opt:hover{border-color:var(--sky)}
+.opt .letter{font-weight:800;color:#94a3b8;flex-shrink:0}
+.opt.selected{border-color:var(--blue);background:var(--blue-l)}
+.opt.correct{border-color:var(--green);background:var(--green-l)}
+.opt.wrong{border-color:var(--red);background:var(--red-l)}
+.opt:disabled{cursor:default}
+.btn{border:none;font-family:inherit;font-weight:800;border-radius:999px;padding:11px 22px;cursor:pointer;transition:.15s;font-size:.95rem}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 6px 16px rgba(99,102,241,.4)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.primary:disabled{background:#cbd5e1;box-shadow:none;cursor:not-allowed;transform:none}
+.btn.ghost{background:var(--purple-l);color:var(--purple)}
+.btn.check{background:var(--yellow-l);color:#a16207;margin-top:10px}
+.pembahasan{margin-top:12px;background:var(--yellow-l);border-radius:12px;padding:12px 14px;font-size:.92rem;font-weight:600;border:2px dashed #f59e0b;line-height:1.6}
+.q-result{margin-left:auto;font-weight:800;font-size:.9rem}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabbtn{border:none;background:rgba(255,255,255,.85);padding:9px 16px;border-radius:999px;font-family:inherit;font-weight:800;cursor:pointer;color:#64748b;box-shadow:0 3px 10px rgba(0,0,0,.06);font-size:.87rem;transition:.15s}
+.tabbtn:hover{transform:translateY(-2px)}
+.tabbtn.active{background:var(--purple);color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:pop .35s ease}
+.sit-card h3{font-size:1.3rem;margin-bottom:6px}
+.ctx{background:var(--pink-l);border-radius:12px;padding:10px 14px;font-weight:700;margin-bottom:12px;line-height:1.55}
+.tutor-line{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.tav{font-size:1.5rem}
+label.turn{font-weight:800;color:var(--purple);font-size:.92rem;display:block;margin-top:8px}
+label.turn small{color:#64748b;font-weight:700}
+.st-input{width:100%;border:2px solid #e2e8f0;border-radius:12px;padding:11px 14px;font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);margin:6px 0 10px;background:#f8fafc}
+.st-input:focus{outline:none;border-color:var(--purple);background:#fff}
+.sample{background:var(--green-l);border-radius:12px;padding:12px 16px;margin-top:10px;font-weight:700;display:flex;flex-direction:column;gap:8px}
+.sample>div{display:flex;justify-content:space-between;align-items:center;gap:10px;line-height:1.55}
+.starmsg{color:#b45309;font-weight:800}
+.scorebox{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-weight:800}
+.finalbanner{display:none;margin-top:6px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:16px;padding:18px;text-align:center;font-family:'Baloo 2';font-size:1.3rem;box-shadow:var(--shadow)}
+.finalbanner .fscore{font-size:1.1rem;font-weight:800;margin-top:4px;font-family:'Nunito'}
+.para{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+.para p{font-weight:600;line-height:1.7;flex:1}
+.moral{background:linear-gradient(135deg,var(--green-l),var(--blue-l));border-radius:16px;padding:16px 20px;font-weight:800;font-size:1.05rem;text-align:center;box-shadow:var(--shadow)}
+.moral small{display:block;font-family:'Nunito';color:#475569;font-weight:700;margin-top:4px}
+.refl-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 16px}
+.refl{background:#fff;border:none;border-radius:18px;box-shadow:var(--shadow);padding:20px;cursor:pointer;font-family:inherit;font-weight:800;font-size:1rem;color:var(--ink);transition:.2s;display:flex;flex-direction:column;gap:8px;align-items:center}
+.refl:hover{transform:translateY(-4px)}
+.refl .em{font-size:2.6rem}
+.refl-msg{background:var(--green-l);border-radius:14px;padding:14px 18px;font-weight:800;text-align:center;margin-bottom:16px}
+.sumcard ul{margin-top:8px;padding-left:20px;font-weight:600;line-height:1.95}
+.bigbanner{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:18px;padding:18px 22px;font-weight:800;text-align:center;font-size:1.02rem;box-shadow:var(--shadow);line-height:1.8;margin-top:16px}
+.thanks{text-align:center;padding:64px 24px;background:linear-gradient(160deg,#fff,#fef9c3)}
+.thanks h1{font-size:2.8rem}
+.navbar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);z-index:50}
+.navbtn{border:none;width:46px;height:46px;border-radius:50%;background:var(--blue-l);font-size:1.1rem;cursor:pointer;font-weight:800;color:var(--blue);transition:.15s}
+.navbtn:hover:not(:disabled){background:var(--blue);color:#fff}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+#counter{font-weight:800;min-width:64px;text-align:center;color:#475569}
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:80;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.menu-box{background:#fff;border-radius:20px;padding:24px;max-width:520px;width:92%;max-height:80vh;overflow:auto;box-shadow:var(--shadow)}
+.menu-item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:none;background:#f8fafc;border-radius:12px;padding:10px 14px;margin:5px 0;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s}
+.menu-item:hover{background:var(--purple-l)}
+.menu-item .n{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0}
+.confetti{position:fixed;top:-20px;z-index:99;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(108vh) rotate(720deg)}}
+@media(max-width:720px){
+.grid2,.grid3,.opts{grid-template-columns:1fr}
+.refl-row{grid-template-columns:1fr}
+.slide{padding:74px 12px 104px}
+.slide h2{font-size:1.45rem}
+.cover h1{font-size:1.75rem}
+.mtable{border-spacing:5px}
+.mtable td{padding:10px 6px}
+.mtable .big{font-size:1.2rem}
+.mtable .rowlab{width:76px;font-size:.78rem}
+.irtable th,.irtable td{padding:8px 4px;font-size:.85rem}
+.brand{font-size:.82rem}
+.bubble{max-width:94%}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">📚 English Fun • Bigger, Better, The Best!</span>
+  <div class="tools">
+    <button class="chip-btn" id="muteBtn">🔈 Suara ON</button>
+    <button class="chip-btn" onclick="openMenu()">☰ Daftar Slide</button>
+  </div>
+</header>
+<div class="progress"><div id="progressFill"></div></div>
+<main id="deck">
+
+<section class="slide active" data-title="Cover">
+  <div class="card cover">
+    <div class="badge">English Class • Sekolah Dasar</div>
+    <div class="float-emoji">📈 👑 🐘 🐇 🐭</div>
+    <h1>Bigger, Better,<br>The Best! ✨</h1>
+    <p class="sub">Belajar Comparative &amp; Superlative — Lebih (-er / more) dan Paling (-est / the most)<br>Bersama Cio dan Miss Nanda!</p>
+    <div class="word-chips">
+      <span class="chip">taller</span><span class="chip">bigger</span><span class="chip">happier</span><span class="chip">the tallest</span><span class="chip">the biggest</span><span class="chip">more beautiful</span><span class="chip">the most expensive</span><span class="chip">better</span><span class="chip">best</span><span class="chip">worse</span><span class="chip">worst</span><span class="chip">more</span><span class="chip">less</span><span class="chip">least</span>
+    </div>
+    <button class="btn primary" onclick="goTo(1)">Mulai Belajar 🚀</button>
+    <p class="hint">🔊 Nyalakan volume, ya! Klik kartu dan tombol 🔊 untuk mendengar bahasa Inggris.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Tujuan Pembelajaran">
+  <span class="badge">Tujuan</span>
+  <h2>Apa yang Akan Kita Pelajari Hari Ini? 🎯</h2>
+  <p class="sub">Ada 5 hal seru yang menantimu. Siap? Ayo mulai!</p>
+  <div class="grid3">
+    <div class="card goal"><span class="gemoji">🗣️</span><h4>1. Melafalkan</h4><p>Ucapkan kata-kata -er, -est, dan kata ajaib seperti <b>better, best, worse, worst</b> dengan benar. Klik kartu kosakata untuk mendengarkan!</p></div>
+    <div class="card goal"><span class="gemoji">📈</span><h4>2. Lebih (-ER)</h4><p>Gunakan <b>taller, bigger, faster</b> + <b>than</b> untuk membandingkan DUA benda atau orang.</p></div>
+    <div class="card goal"><span class="gemoji">👑</span><h4>3. Paling (THE + -EST)</h4><p>Gunakan <b>the tallest, the biggest, the happiest</b> untuk membandingkan BANYAK benda (3 atau lebih).</p></div>
+    <div class="card goal"><span class="gemoji">🚂</span><h4>4. Kata Panjang</h4><p>Kata sifat panjang naik kereta: pakai <b>more</b> (lebih) dan <b>the most</b> (paling) — more beautiful, the most expensive!</p></div>
+    <div class="card goal"><span class="gemoji">✨</span><h4>5. Kata Ajaib</h4><p>Hafal bentuk tak beraturan: <b>good → better → best</b>, <b>bad → worse → worst</b>, <b>more, most, less, least</b>!</p></div>
+    <div class="card goal tipcard"><span class="gemoji">💡</span><h4>Tips Penting</h4><p>Klik tombol 🔊 di mana saja untuk mendengar pelafalan bahasa Inggris. Dengarkan dengan saksama, lalu ulangi dengan suara keras, ya!</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kartu Kosakata">
+  <span class="badge">Kosakata</span>
+  <h2>Kata-kata Lebih &amp; Paling ✨</h2>
+  <p class="sub">👆 Klik setiap kartu untuk mendengar pelafalannya! Kartu merah berisi kata-kata ajaib yang harus dihafal.</p>
+
+  <h3 class="gtitle t-a">📈 Kata Lebih (Comparative: -ER)</h3>
+  <div class="vgrid">
+    <div class="vcard g-a" data-say="taller" title="Klik untuk mendengar!">
+      <div class="vword">taller<span class="vphon">/ˈtɔːlər/</span></div>
+      <div class="vmean">lebih tinggi</div>
+      <div class="vex">“Rian is taller.” 🧒<button class="mini" data-say="Rian is taller.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="bigger" title="Klik untuk mendengar!">
+      <div class="vword">bigger<span class="vphon">/ˈbɪɡər/</span></div>
+      <div class="vmean">lebih besar</div>
+      <div class="vex">“My fish is bigger.” 🐟<button class="mini" data-say="My fish is bigger.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="faster" title="Klik untuk mendengar!">
+      <div class="vword">faster<span class="vphon">/ˈfæstər/</span></div>
+      <div class="vmean">lebih cepat</div>
+      <div class="vex">“Trains are faster.” 🚄<button class="mini" data-say="Trains are faster.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="happier" title="Klik untuk mendengar!">
+      <div class="vword">happier<span class="vphon">/ˈhæpiər/</span></div>
+      <div class="vmean">lebih bahagia</div>
+      <div class="vex">“I am happier now.” 😄<button class="mini" data-say="I am happier now.">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-b">👑 Kata Paling (Superlative: THE + -EST)</h3>
+  <div class="vgrid">
+    <div class="vcard g-b" data-say="the tallest" title="Klik untuk mendengar!">
+      <div class="vword">the tallest<span class="vphon">/ðə ˈtɔːlɪst/</span></div>
+      <div class="vmean">paling tinggi</div>
+      <div class="vex">“He is the tallest.” 🧍<button class="mini" data-say="He is the tallest.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="the biggest" title="Klik untuk mendengar!">
+      <div class="vword">the biggest<span class="vphon">/ðə ˈbɪɡɪst/</span></div>
+      <div class="vmean">paling besar</div>
+      <div class="vex">“It is the biggest.” 🐘<button class="mini" data-say="It is the biggest.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="the fastest" title="Klik untuk mendengar!">
+      <div class="vword">the fastest<span class="vphon">/ðə ˈfæstɪst/</span></div>
+      <div class="vmean">paling cepat</div>
+      <div class="vex">“She is the fastest.” 🏃‍♀️<button class="mini" data-say="She is the fastest.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="the happiest" title="Klik untuk mendengar!">
+      <div class="vword">the happiest<span class="vphon">/ðə ˈhæpiɪst/</span></div>
+      <div class="vmean">paling bahagia</div>
+      <div class="vex">“Today I am the happiest!” 🎉<button class="mini" data-say="Today I am the happiest!">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-c">🚂 Kata Panjang (MORE &amp; THE MOST)</h3>
+  <div class="vgrid">
+    <div class="vcard g-c" data-say="more beautiful" title="Klik untuk mendengar!">
+      <div class="vword">more beautiful<span class="vphon">/mɔːr ˈbjuːtɪfl/</span></div>
+      <div class="vmean">lebih cantik</div>
+      <div class="vex">“Roses are more beautiful.” 🌹<button class="mini" data-say="Roses are more beautiful.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="the most beautiful" title="Klik untuk mendengar!">
+      <div class="vword">the most beautiful<span class="vphon">/ðə moʊst ˈbjuːtɪfl/</span></div>
+      <div class="vmean">paling cantik</div>
+      <div class="vex">“She is the most beautiful.” 👸<button class="mini" data-say="She is the most beautiful.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="more expensive" title="Klik untuk mendengar!">
+      <div class="vword">more expensive<span class="vphon">/mɔːr ɪkˈspensɪv/</span></div>
+      <div class="vmean">lebih mahal</div>
+      <div class="vex">“Gold is more expensive.” 💰<button class="mini" data-say="Gold is more expensive.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="the most expensive" title="Klik untuk mendengar!">
+      <div class="vword">the most expensive<span class="vphon">/ðə moʊst ɪkˈspensɪv/</span></div>
+      <div class="vmean">paling mahal</div>
+      <div class="vex">“Diamonds are the most expensive.” 💎<button class="mini" data-say="Diamonds are the most expensive.">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-d">✨ Kata Ajaib Tak Beraturan (Harus Dihafal!)</h3>
+  <div class="vgrid">
+    <div class="vcard g-d" data-say="better" title="Klik untuk mendengar!">
+      <div class="vword">better<span class="vphon">/ˈbetər/</span></div>
+      <div class="vmean">lebih baik</div>
+      <div class="vex">“This book is better.” 📖<button class="mini" data-say="This book is better.">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="best" title="Klik untuk mendengar!">
+      <div class="vword">best<span class="vphon">/best/</span></div>
+      <div class="vmean">paling baik</div>
+      <div class="vex">“This is the best!” 🏆<button class="mini" data-say="This is the best!">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="worse" title="Klik untuk mendengar!">
+      <div class="vword">worse<span class="vphon">/wɜːrs/</span></div>
+      <div class="vmean">lebih buruk</div>
+      <div class="vex">“Today is worse.” 😖<button class="mini" data-say="Today is worse.">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="worst" title="Klik untuk mendengar!">
+      <div class="vword">worst<span class="vphon">/wɜːrst/</span></div>
+      <div class="vmean">paling buruk</div>
+      <div class="vex">“The worst day ever!” 🌧️<button class="mini" data-say="The worst day ever!">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="more" title="Klik untuk mendengar!">
+      <div class="vword">more<span class="vphon">/mɔːr/</span></div>
+      <div class="vmean">lebih banyak</div>
+      <div class="vex">“I need more time.” ⏰<button class="mini" data-say="I need more time.">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="most" title="Klik untuk mendengar!">
+      <div class="vword">most<span class="vphon">/moʊst/</span></div>
+      <div class="vmean">paling banyak</div>
+      <div class="vex">“He has the most toys.” 🧸<button class="mini" data-say="He has the most toys.">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="less" title="Klik untuk mendengar!">
+      <div class="vword">less<span class="vphon">/les/</span></div>
+      <div class="vmean">lebih sedikit</div>
+      <div class="vex">“Use less sugar.” 🍬<button class="mini" data-say="Use less sugar.">🔊</button></div>
+    </div>
+    <div class="vcard g-d" data-say="least" title="Klik untuk mendengar!">
+      <div class="vword">least<span class="vphon">/liːst/</span></div>
+      <div class="vmean">paling sedikit</div>
+      <div class="vex">“He has the least.” 🥄<button class="mini" data-say="He has the least.">🔊</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Lebih: -ER">
+  <span class="badge">Materi 1</span>
+  <h2>Lebih... : Tambahkan -ER 📈</h2>
+  <p class="sub">Comparative dipakai untuk membandingkan DUA benda atau orang. Ada 4 aturan ejaannya!</p>
+  <div class="grid2">
+    <div class="wcard w-blue">
+      <h3>1️⃣ Kata pendek → + ER</h3>
+      <p>tall → taller 📏<br>fast → faster 🏃<br>long → longer</p>
+      <div class="wex">“A train is faster than a bus.” 🚄<button class="mini" data-say="A train is faster than a bus.">🔊</button></div>
+    </div>
+    <div class="wcard w-green">
+      <h3>2️⃣ Berakhiran -E → cukup + R</h3>
+      <p>nice → nicer 😊<br>large → larger<br>safe → safer</p>
+      <div class="wex">“This bag is nicer than that one.” 👜<button class="mini" data-say="This bag is nicer than that one.">🔊</button></div>
+    </div>
+    <div class="wcard w-orange">
+      <h3>3️⃣ Konsonan–Vokal–Konsonan → GANDAKAN + ER</h3>
+      <p>big → bigger 🐘<br>hot → hotter 🔥<br>thin → thinner</p>
+      <div class="wex">“An elephant is bigger than a horse.” 🐴<button class="mini" data-say="An elephant is bigger than a horse.">🔊</button></div>
+    </div>
+    <div class="wcard w-purple">
+      <h3>4️⃣ Berakhiran -Y → GANTI jadi IER</h3>
+      <p>happy → happier 😄<br>easy → easier<br>funny → funnier 😂</p>
+      <div class="wex">“Cio is happier today.” 🎉<button class="mini" data-say="Cio is happier today.">🔊</button></div>
+    </div>
+  </div>
+  <div class="formulabox">📈 Rumus Lebih: <b>A + is/are + kata sifat-ER + THAN + B</b>
+    <span class="fex">“Rian is taller than Dita.”<button class="mini" data-say="Rian is taller than Dita.">🔊</button></span>
+  </div>
+  <div class="warnbox">💡 <b>THAN</b> artinya “daripada”. Jangan lupa pakai <b>than</b> setiap kali kamu membandingkan dua benda atau dua orang, ya!</div>
+</section>
+
+<section class="slide" data-title="Paling: THE + -EST">
+  <span class="badge">Materi 2</span>
+  <h2>Paling... : Tambahkan THE + -EST 👑</h2>
+  <p class="sub">Superlative dipakai untuk membandingkan BANYAK benda (3 atau lebih). Aturan ejanya sama dengan -ER!</p>
+  <div class="grid2">
+    <div class="wcard w-blue">
+      <h3>1️⃣ Kata pendek → THE + EST</h3>
+      <p>the tallest 👑<br>the fastest<br>the longest</p>
+      <div class="wex">“The cheetah is the fastest animal.” 🐆<button class="mini" data-say="The cheetah is the fastest animal.">🔊</button></div>
+    </div>
+    <div class="wcard w-green">
+      <h3>2️⃣ Berakhiran -E → + ST</h3>
+      <p>the nicest<br>the largest<br>the safest</p>
+      <div class="wex">“This is the nicest bag in the shop.” 👜<button class="mini" data-say="This is the nicest bag in the shop.">🔊</button></div>
+    </div>
+    <div class="wcard w-orange">
+      <h3>3️⃣ Konsonan–Vokal–Konsonan → GANDAKAN + EST</h3>
+      <p>the biggest<br>the hottest<br>the thinnest</p>
+      <div class="wex">“July is the hottest month.” ☀️<button class="mini" data-say="July is the hottest month.">🔊</button></div>
+    </div>
+    <div class="wcard w-purple">
+      <h3>4️⃣ Berakhiran -Y → IEST</h3>
+      <p>the happiest<br>the easiest<br>the funniest</p>
+      <div class="wex">“Today is the happiest day!” 🎉<button class="mini" data-say="Today is the happiest day!">🔊</button></div>
+    </div>
+  </div>
+  <div class="formulabox">👑 Rumus Paling: <b>A + is/are + THE + kata sifat-EST + in/of ...</b>
+    <span class="fex">“Rian is the tallest in his class.”<button class="mini" data-say="Rian is the tallest in his class.">🔊</button></span>
+  </div>
+  <div class="warnbox">⚠️ Superlative <b>SELALU</b> memakai <b>THE</b> 👑 — the tallest, the biggest, the happiest. Tanpa THE, kalimatmu jadi tergelincir! 😄</div>
+</section>
+
+<section class="slide" data-title="More &amp; The Most">
+  <span class="badge">Materi 3</span>
+  <h2>Kata Panjang: MORE &amp; THE MOST 🚂</h2>
+  <p class="sub">Kata sifat yang panjang (2 suku kata atau lebih) tidak pakai -er/-est. Dia naik kereta MORE dan THE MOST!</p>
+  <div class="grid2">
+    <div class="wcard w-purple">
+      <h3>MORE = lebih 🌹</h3>
+      <p>more beautiful = lebih cantik<br>more expensive = lebih mahal<br>more difficult = lebih sulit</p>
+      <div class="wex">“Gold is more expensive than silver.”<button class="mini" data-say="Gold is more expensive than silver.">🔊</button></div>
+    </div>
+    <div class="wcard w-purple">
+      <h3>THE MOST = paling 👸</h3>
+      <p>the most beautiful = paling cantik<br>the most expensive = paling mahal<br>the most difficult = paling sulit</p>
+      <div class="wex">“Diamonds are the most expensive.” 💎<button class="mini" data-say="Diamonds are the most expensive.">🔊</button></div>
+    </div>
+  </div>
+  <div class="formulabox">🚂 Rumus Kata Panjang: <b>MORE + kata sifat (lebih)</b> • <b>THE MOST + kata sifat (paling)</b>
+    <span class="fex">“This movie is more exciting than that one.”<button class="mini" data-say="This movie is more exciting than that one.">🔊</button></span>
+  </div>
+  <div class="warnbox">💡 Contoh kata panjang: <b>beautiful, expensive, difficult, exciting, interesting, delicious</b>. Jangan pernah bilang “beautifuller”, ya! 😄</div>
+</section>
+
+<section class="slide" data-title="Kata Ajaib (Irregular)">
+  <span class="badge">Materi 4</span>
+  <h2>Kata Ajaib Tak Beraturan ✨</h2>
+  <p class="sub">Kata-kata ini TIDAK ikut aturan -er/-est. Bentuknya berubah total — harus dihafal! Klik 🔊 untuk mendengar.</p>
+  <table class="irtable">
+    <tr><th>Asli</th><th>Lebih (-er)</th><th>Paling (-est)</th><th>Arti</th><th>🔊</th></tr>
+    <tr><td class="base">good</td><td class="er">better</td><td class="est">the best</td><td class="arti">baik</td><td class="snd"><button class="mini" data-say="good, better, best">🔊</button></td></tr>
+    <tr><td class="base">bad</td><td class="er">worse</td><td class="est">the worst</td><td class="arti">buruk</td><td class="snd"><button class="mini" data-say="bad, worse, worst">🔊</button></td></tr>
+    <tr><td class="base">many / much</td><td class="er">more</td><td class="est">the most</td><td class="arti">banyak</td><td class="snd"><button class="mini" data-say="many, much, more, most">🔊</button></td></tr>
+    <tr><td class="base">little</td><td class="er">less</td><td class="est">the least</td><td class="arti">sedikit</td><td class="snd"><button class="mini" data-say="little, less, least">🔊</button></td></tr>
+    <tr><td class="base">far</td><td class="er">farther</td><td class="est">the farthest</td><td class="arti">jauh</td><td class="snd"><button class="mini" data-say="far, farther, farthest">🔊</button></td></tr>
+  </table>
+  <div class="warnbox">⚠️ <b>Jangan bilang</b> “gooder” atau “badder”, ya! Yang benar: <b>better</b> = lebih baik, <b>best</b> = paling baik, <b>worse</b> = lebih buruk, <b>worst</b> = paling buruk, <b>more</b> = lebih banyak, <b>less</b> = lebih sedikit. 💪</div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 1">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>-ER &amp; -EST dalam Kalimat 📖</h2>
+  <p class="sub">Klik tombol 🔊 untuk mendengar setiap kalimat. Kata kuning bisa diklik juga, lalu ulangi!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="Rian is taller than Dita.">🔊</button><div><div class="en">Rian is <b class="tw" data-say="taller">taller</b> than Dita.</div><div class="id">Rian lebih tinggi daripada Dita.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="My bag is heavier than yours.">🔊</button><div><div class="en">My bag is <b class="tw" data-say="heavier">heavier</b> than yours.</div><div class="id">Tasku lebih berat daripada tas-mu.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Today is hotter than yesterday.">🔊</button><div><div class="en">Today is <b class="tw" data-say="hotter">hotter</b> than yesterday.</div><div class="id">Hari ini lebih panas daripada kemarin.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="My sister is happier today.">🔊</button><div><div class="en">My sister is <b class="tw" data-say="happier">happier</b> today.</div><div class="id">Kakakku lebih bahagia hari ini.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="This road is longer than that road.">🔊</button><div><div class="en">This road is <b class="tw" data-say="longer">longer</b> than that road.</div><div class="id">Jalan ini lebih panjang daripada jalan itu.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="The cheetah is the fastest animal on land.">🔊</button><div><div class="en">The cheetah is <b class="tw" data-say="the fastest">the fastest</b> animal on land.</div><div class="id">Cheeta adalah hewan tercepat di darat.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="An elephant is the biggest animal in the zoo.">🔊</button><div><div class="en">An elephant is <b class="tw" data-say="the biggest">the biggest</b> animal in the zoo.</div><div class="id">Gajah adalah hewan terbesar di kebun binatang.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Rian is the tallest in his class.">🔊</button><div><div class="en">Rian is <b class="tw" data-say="the tallest">the tallest</b> in his class.</div><div class="id">Rian paling tinggi di kelasnya.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 2">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>MORE &amp; THE MOST dalam Kalimat 📖</h2>
+  <p class="sub">Semua kalimat ini memakai kata sifat panjang. Perhatikan MORE dan THE MOST-nya!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="Diamonds are more expensive than gold.">🔊</button><div><div class="en">Diamonds are <b class="tw" data-say="more expensive">more expensive</b> than gold.</div><div class="id">Berlian lebih mahal daripada emas.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="This movie is more exciting than that one.">🔊</button><div><div class="en">This movie is <b class="tw" data-say="more exciting">more exciting</b> than that one.</div><div class="id">Film ini lebih menarik daripada yang itu.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Math is more difficult than English for me.">🔊</button><div><div class="en">Math is <b class="tw" data-say="more difficult">more difficult</b> than English for me.</div><div class="id">Matematika lebih sulit daripada bahasa Inggris bagiku.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="She is the most beautiful girl in my class.">🔊</button><div><div class="en">She is <b class="tw" data-say="the most beautiful">the most beautiful</b> girl in my class.</div><div class="id">Dia gadis paling cantik di kelasku.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="This is the most delicious cake in the shop.">🔊</button><div><div class="en">This is <b class="tw" data-say="the most delicious">the most delicious</b> cake in the shop.</div><div class="id">Ini kue paling lezat di toko itu.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="My homework is the most difficult of all.">🔊</button><div><div class="en">My homework is <b class="tw" data-say="the most difficult">the most difficult</b> of all.</div><div class="id">PRku paling sulit dari semuanya.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 3">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Kata Ajaib dalam Kalimat 📖</h2>
+  <p class="sub">better, best, worse, worst, more, most, less, least — semuanya ada di sini!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="My grade is better than last month.">🔊</button><div><div class="en">My grade is <b class="tw" data-say="better">better</b> than last month.</div><div class="id">Nilaiku lebih baik daripada bulan lalu.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="This is the best day ever!">🔊</button><div><div class="en">This is <b class="tw" data-say="the best">the best</b> day ever!</div><div class="id">Ini hari terbaik!</div></div></div>
+    <div class="exrow"><button class="mini" data-say="The weather is worse today.">🔊</button><div><div class="en">The weather is <b class="tw" data-say="worse">worse</b> today.</div><div class="id">Cuaca hari ini lebih buruk.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="That was the worst movie of the year.">🔊</button><div><div class="en">That was <b class="tw" data-say="the worst">the worst</b> movie of the year.</div><div class="id">Itu film terburuk tahun ini.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="I need more time, please.">🔊</button><div><div class="en">I need <b class="tw" data-say="more">more</b> time, please.</div><div class="id">Aku butuh lebih banyak waktu.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Rio has the most toys in our class.">🔊</button><div><div class="en">Rio has <b class="tw" data-say="the most">the most</b> toys in our class.</div><div class="id">Rio punya mainan paling banyak di kelasku.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Please use less sugar.">🔊</button><div><div class="en">Please use <b class="tw" data-say="less">less</b> sugar.</div><div class="id">Tolong pakai gula lebih sedikit.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Pip has the least candy of all.">🔊</button><div><div class="en">Pip has <b class="tw" data-say="the least">the least</b> candy of all.</div><div class="id">Pip punya permen paling sedikit dari semua.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Percakapan: Cio &amp; Miss Nanda">
+  <span class="badge">Percakapan</span>
+  <h2>Memilih Tas Sekolah 🛍️</h2>
+  <p class="sub">Cio 🧒 ingin membeli tas sekolah baru. Ia bertemu Miss Nanda 👩‍🏫 di toko tas. Kata kuning bisa diklik — coba klik katanya!</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Percakapan</button>
+    <div class="dialogue" id="mainDialog"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Percakapan">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Percakapan Tadi 🧠</h2>
+  <p class="sub">Jawab 5 soal tentang percakapan Cio &amp; Miss Nanda. Pilih jawaban, lalu klik <b>Cek Jawaban</b> untuk melihat pembahasannya!</p>
+  <div id="convQs"></div>
+</section>
+
+<section class="slide" data-title="5 Percakapan Seru">
+  <span class="badge">Percakapan</span>
+  <h2>5 Percakapan, 5 Tempat Berbeda! 🌍</h2>
+  <p class="sub">Klik tombol untuk ganti percakapan. Klik 🔊 untuk mendengar satu kalimat, atau ▶ untuk mendengar semuanya.</p>
+  <div class="tab-wrap" id="dlgTabs">
+    <div class="tabs" id="dlgTabBtns"></div>
+    <div id="dlgPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Latihan Berbicara">
+  <span class="badge">Praktik</span>
+  <h2>Latihan Berbicara 🎤</h2>
+  <p class="sub">Dengarkan tutor, tulis kalimatmu sendiri di kotak jawaban, lalu bandingkan dengan contoh. Beranilah berbicara!</p>
+  <div class="tab-wrap" id="sitTabs">
+    <div class="tabs" id="sitTabBtns"></div>
+    <div id="sitPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kuis 10 Soal">
+  <span class="badge">Kuis</span>
+  <h2>Kuis Besar: 10 Soal 🏆</h2>
+  <p class="sub">Pilih jawaban yang paling tepat, lalu klik Cek Jawaban. Kumpulkan skor tertinggi!</p>
+  <div class="scorebox"><span>⭐ Skor: <b id="quizScore">0</b>/10</span><span id="quizDone">Terjawab: 0/10</span></div>
+  <div id="quizQs"></div>
+  <div class="finalbanner" id="finalBanner"></div>
+</section>
+
+<section class="slide" data-title="Fabel: Pip si Tikus Kecil">
+  <span class="badge">Story Time</span>
+  <h2>Pip the Smallest Mouse 🐭</h2>
+  <p class="sub">Sebuah fabel tentang tiga sahabat di Green Forest. Kata berwarna <span class="tw">kuning</span> bisa diklik! Klik ▶ untuk mendengarkan ceritanya.</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Cerita</button>
+    <div class="para">
+      <p><span class="line-en">Rex the rabbit, Ellie the elephant, and Pip the mouse are best friends in Green Forest. Rex is the <b class="tw" data-say="the fastest">fastest</b> runner. Ellie is the <b class="tw" data-say="the biggest">biggest</b> and the <b class="tw" data-say="the strongest">strongest</b> animal. And Pip? He is the <b class="tw" data-say="the smallest">smallest</b> and the <b class="tw" data-say="the quietest">quietest</b> of them all. One sunny day, the three friends find a jar of honey between two big rocks. “Yum! This is the <b class="tw" data-say="the sweetest">sweetest</b> honey in the forest!” says Rex.</span></p>
+      <button class="mini saybtn" data-say="Rex the rabbit, Ellie the elephant, and Pip the mouse are best friends in Green Forest. Rex is the fastest runner. Ellie is the biggest and the strongest animal. And Pip? He is the smallest and the quietest of them all. One sunny day, the three friends find a jar of honey between two big rocks. Yum! This is the sweetest honey in the forest! says Rex.">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">The jar is inside a narrow crack. Rex tries first. He is fast, but the crack is too narrow for his big paws. “Ouch!” Then Ellie pushes the rocks with her trunk. She is the strongest, but the rocks do not move. “This is <b class="tw" data-say="harder">harder</b> than I thought!” she sighs. The three friends sit down sadly. The honey is so close, but nobody can reach it.</span></p>
+      <button class="mini saybtn" data-say="The jar is inside a narrow crack. Rex tries first. He is fast, but the crack is too narrow for his big paws. Ouch! Then Ellie pushes the rocks with her trunk. She is the strongest, but the rocks do not move. This is harder than I thought! she sighs. The three friends sit down sadly. The honey is so close, but nobody can reach it.">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">Then Pip quietly stands up. “Let me try. I am the smallest, so I fit in narrow places!” He walks into the crack and pushes the jar out slowly. “Hooray for Pip!” Rex and Ellie shout happily. “You are small, but today you are <b class="tw" data-say="the best">the best</b> of us all!” Then the three friends share the sweetest honey together. 🍯</span></p>
+      <button class="mini saybtn" data-say="Then Pip quietly stands up. Let me try. I am the smallest, so I fit in narrow places! He walks into the crack and pushes the jar out slowly. Hooray for Pip! Rex and Ellie shout happily. You are small, but today you are the best of us all! Then the three friends share the sweetest honey together.">🔊</button>
+    </div>
+    <div class="moral">🌱 Moral of the story: <b>Everyone has their own strength — even the smallest one!</b><small>Setiap orang punya kelebihan masing-masing, sekecil apa pun ukurannya.</small></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Fabel">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Cerita Pip 🐭</h2>
+  <p class="sub">Jawab 5 soal berikut berdasarkan fabel yang baru saja kamu baca atau dengar!</p>
+  <div id="fableQs"></div>
+  <button class="btn ghost" onclick="show(15)">📖 Baca Ulang Cerita</button>
+</section>
+
+<section class="slide" data-title="Kesimpulan">
+  <span class="badge">Kesimpulan</span>
+  <h2>Ingat 3 Kelompok Kata Ini! 📌</h2>
+  <p class="sub">Ini rangkuman materi hari ini. Simpan baik-baik di kepalamu, ya!</p>
+  <div class="grid3">
+    <div class="card sumcard" style="background:var(--blue-l)">
+      <h3 style="color:var(--blue)">📈 Lebih (-ER) + THAN</h3>
+      <ul>
+        <li>kata pendek: tall → <b>taller</b></li>
+        <li>berakhir -e: nice → <b>nicer</b></li>
+        <li>big → <b>bigger</b> (gandakan)</li>
+        <li>happy → <b>happier</b> (y → ier)</li>
+        <li>selalu pakai <b>than</b></li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--orange-l)">
+      <h3 style="color:var(--orange)">👑 Paling (THE + -EST)</h3>
+      <ul>
+        <li>the <b>tallest</b>, the <b>nicest</b></li>
+        <li>the <b>biggest</b>, the <b>happiest</b></li>
+        <li>selalu pakai <b>the</b></li>
+        <li>untuk 3 benda atau lebih</li>
+        <li>in / of di akhir kalimat</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--purple-l)">
+      <h3 style="color:var(--purple)">🌈 Panjang &amp; Kata Ajaib</h3>
+      <ul>
+        <li>panjang: <b>more</b> / <b>the most</b></li>
+        <li>good → <b>better</b> → <b>best</b></li>
+        <li>bad → <b>worse</b> → <b>worst</b></li>
+        <li>many → <b>more</b> → <b>most</b></li>
+        <li>little → <b>less</b> → <b>least</b></li>
+        <li>far → <b>farther</b> → <b>farthest</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bigbanner">🎯 Pendek → <b>-er / -est</b> &nbsp;•&nbsp; Panjang → <b>more / the most</b> &nbsp;•&nbsp; Ajaib → <b>better/best, worse/worst, more/most, less/least</b></div>
+</section>
+
+<section class="slide" data-title="Refleksi">
+  <span class="badge">Refleksi</span>
+  <h2>Bagaimana Perasaanmu Hari Ini? 🪞</h2>
+  <p class="sub">Klik emoji yang paling sesuai dengan perasaanmu setelah belajar!</p>
+  <div class="refl-row">
+    <button class="refl" data-msg="Kerja bagus! Kamu sudah jago comparative dan superlative! 🌟"><span class="em">😊</span><span>Paham sekali!</span></button>
+    <button class="refl" data-msg="Tidak apa-apa! Coba baca lagi tabel kata ajaibnya, ya. 💪"><span class="em">😐</span><span>Cukup paham</span></button>
+    <button class="refl" data-msg="Santai! Minta gurumu mengulang materinya. Kita belajar bersama-sama! 🤗"><span class="em">😕</span><span>Masih bingung</span></button>
+  </div>
+  <div id="reflMsg" class="refl-msg" style="display:none"></div>
+  <div class="card">
+    <h3>Coba jawab di buatumu ✏️</h3>
+    <ul style="margin-top:10px;padding-left:22px;font-weight:600;line-height:2">
+      <li>Bentuk -er mana yang paling mudah menurutmu: taller, bigger, atau happier?</li>
+      <li>Apa bahasa Inggris dari “lebih baik” dan “paling buruk”?</li>
+      <li>Buat satu kalimat dengan kata <b>better than</b>!</li>
+      <li>Hewan apa yang menurutmu <b>the cutest</b> di dunia? 😻</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-title="Thank You!">
+  <div class="card thanks">
+    <div style="font-size:3.6rem">🌟🏆🌟</div>
+    <h1>Thank You for Today!</h1>
+    <p class="sub" style="margin-top:10px">Kamu sudah bisa memakai -er, -est, more/the most, dan kata ajaib seperti better, best, worse, worst. Hebat sekali!</p>
+    <p style="font-weight:800;color:#475569">Great job, everyone! See you in the next lesson. 👋</p>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn primary" onclick="confetti();speak('Great job, everyone! Thank you for today! See you next time!')">🎉 Celebrate!</button>
+      <button class="btn ghost" onclick="show(0)">🔁 Kembali ke Awal</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="navbtn" id="prevBtn" title="Sebelumnya">◀</button>
+  <span id="counter">1 / 20</span>
+  <button class="navbtn" id="nextBtn" title="Berikutnya">▶</button>
+</nav>
+
+<div class="overlay" id="menuOverlay">
+  <div class="menu-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>📚 Daftar Slide</h3>
+      <button class="chip-btn" onclick="closeMenu()">✕ Tutup</button>
+    </div>
+    <div id="menuList"></div>
+  </div>
+</div>
+<script>
+/* ================= DATA PERCAKAPAN ================= */
+const MAIN = {
+  who: ["Miss Nanda", "Cio"], av: ["👩‍🏫", "🧒"],
+  lines: [
+    {s:0, text:"Good morning, Cio! Welcome to my shop! 🛍️"},
+    {s:1, text:"Good morning, Miss Nanda! I need a new school bag. My old one is broken. It is *the worst* bag in the world!"},
+    {s:0, text:"Haha, poor Cio! Look at these three bags. The red one is fifty thousand rupiah, the blue one is seventy-five thousand, and the green one is one hundred thousand."},
+    {s:1, text:"Wow! The green bag is *the most expensive*!"},
+    {s:0, text:"Yes, but it is also *the strongest* and *the most beautiful* of the three."},
+    {s:1, text:"Hmm... the blue bag is *more expensive than* the red one, but cheaper than the green one."},
+    {s:0, text:"Correct! And look — the blue bag is *bigger than* the red one too."},
+    {s:1, text:"The green one is *the biggest*, but I only have eighty thousand rupiah."},
+    {s:0, text:"So, which bag do you want to buy?"},
+    {s:1, text:"The blue bag, please! It is not too cheap and not too expensive. It is *the best* bag for me!"},
+    {s:0, text:"Great choice, Cio! Remember: quality is *more important than* price! 😊"}
+  ]
+};
+
+const DIALOGUES = [
+  {emoji:"🦁", title:"Di Kebun Binatang", who:["Dita","Rio"], av:["👧","🧒"], lines:[
+    {s:0, text:"Wow, look at the giraffe! It is the *tallest* animal in the zoo! 🦒"},
+    {s:1, text:"And the elephant is *the biggest*. It is heavier than the giraffe too! 🐘"},
+    {s:0, text:"The monkey is *smaller* than the elephant, but it is *funnier*!"},
+    {s:1, text:"Look! The tiger runs *faster* than the lion! 🐅"},
+    {s:0, text:"Hmm, but I think the lion is *more beautiful* than the tiger."},
+    {s:1, text:"For me, the panda is *the cutest* animal here! 🐼"}
+  ]},
+  {emoji:"🏃", title:"Hari Olahraga", who:["Miss Nanda","Cio"], av:["👩‍🏫","🧒"], lines:[
+    {s:0, text:"Ready, kids? Who is the *fastest* runner in this class?"},
+    {s:1, text:"Rian is, Miss! He runs *faster* than all of us!"},
+    {s:0, text:"And who jumps *higher* than Rian?"},
+    {s:1, text:"Dita does! And Rio is *the strongest* — he lifts the heaviest box!"},
+    {s:0, text:"Haha! But the *funniest* player today is Cio. He fell two times! 😄"},
+    {s:1, text:"That is okay, Miss. Today I run *faster* than yesterday!"}
+  ]},
+  {emoji:"🍰", title:"Di Kantin", who:["Sasa","Nina"], av:["🧒","👧"], lines:[
+    {s:0, text:"Yum! This chocolate cake is *more delicious* than the vanilla one! 🍰"},
+    {s:1, text:"Hmm, for me the vanilla cake is *better*. It is *sweeter*!"},
+    {s:0, text:"Look at the price! The strawberry cake is *the most expensive* — fifteen thousand rupiah!"},
+    {s:1, text:"And the chocolate one is *the cheapest*, only five thousand rupiah."},
+    {s:0, text:"Cheap or expensive, the chocolate cake is still *the best* for me!"},
+    {s:1, text:"(laughs) And you eat *more* cakes than everyone in this school! 😄"}
+  ]},
+  {emoji:"🌞", title:"Hari yang Panas", who:["Mom","Dita"], av:["👩","👧"], lines:[
+    {s:0, text:"Phew! Today is *hotter* than yesterday!"},
+    {s:1, text:"Yes, Mom. It is *the hottest* day this week! 🥵"},
+    {s:0, text:"Oh no, the fan is broken. This is *the worst* news today!"},
+    {s:1, text:"Don't worry! I will bring you a *bigger* glass of iced tea. 🥤"},
+    {s:0, text:"Thank you, dear. You are *the best* daughter in the world!"},
+    {s:1, text:"Hehe, now my job is *easier* and my heart is *happier*!"}
+  ]},
+  {emoji:"📚", title:"Di Perpustakaan", who:["Ben","Rian"], av:["🧒","🧑"], lines:[
+    {s:0, text:"This comic is *funnier* than that novel! 😂"},
+    {s:1, text:"Novels are *more interesting* for me. This one is *the best* story ever!"},
+    {s:0, text:"But the comic is *thinner* than your novel. I can finish it *faster*!"},
+    {s:1, text:"Ha! My novel is *thicker*, but the story is *more exciting*."},
+    {s:0, text:"Okay, okay... Let's read both. Reading is always *better* than sleeping!"},
+    {s:1, text:"Agree! It is *the most fun* thing to do on a rainy day! 🌧️"}
+  ]}
+];
+
+const SITUATIONS = [
+  {emoji:"🏓", title:"Di Lapangan", tav:"👩‍🏫",
+   ctx:"Kamu dan Rian baru saja berlomba di lapangan. Tutor bertanya hasil lomba.",
+   t1:"Who ran faster, you or Rian?",
+   hint1:"coba pakai “faster than”",
+   t2:"Wow, congrats! Then who is the fastest runner in your class?",
+   hint2:"coba pakai “the fastest”",
+   s1:"I ran faster than Rian!",
+   s2:"Me! I am the fastest runner in my class!"},
+  {emoji:"🍉", title:"Di Pasar Buah", tav:"👩",
+   ctx:"Kamu belanja buah bersama Ibu. Apel harganya Rp5.000, semangka Rp30.000.",
+   t1:"The apple is Rp5,000 and the watermelon is Rp30,000. Which one is more expensive?",
+   hint1:"coba pakai “more expensive than”",
+   t2:"And which fruit is the most delicious for you?",
+   hint2:"coba pakai “the most delicious”",
+   s1:"The watermelon is more expensive than the apple!",
+   s2:"For me, the watermelon is the most delicious fruit!"},
+  {emoji:"🎒", title:"Tas yang Berat", tav:"👩",
+   ctx:"Tas sekolahmu sangat penuh hari ini karena ada banyak buku.",
+   t1:"Oh my, your school bag looks so heavy today!",
+   hint1:"coba pakai “heavier than”",
+   t2:"Really? Then whose bag is the heaviest in your house?",
+   hint2:"coba pakai “the heaviest”",
+   s1:"Yes, my bag is heavier than my sister's bag!",
+   s2:"Dad's bag is the heaviest of all!"},
+  {emoji:"📝", title:"Nilai Ujian", tav:"👩‍🏫",
+   ctx:"Kamu baru saja menerima nilai ujian dan bercerita kepada tutor.",
+   t1:"How was your English test this week?",
+   hint1:"coba pakai “better than”",
+   t2:"That is great! Was your score better than last month too?",
+   hint2:"coba pakai “better” dan “the happiest”",
+   s1:"My English test is better than my Math test!",
+   s2:"Yes! It is better than last month. I am the happiest student today!"},
+  {emoji:"🍦", title:"Tiga Es Krim", tav:"👩",
+   ctx:"Tutor menawarkan dua es krim: cokelat dan vanila. Kemudian muncul kejutan!",
+   t1:"You may choose one ice cream: chocolate or vanilla?",
+   hint1:"coba pakai “sweeter than”",
+   t2:"Wait! I also have a BIG vanilla ice cream. Now, which one is the best for you?",
+   hint2:"coba pakai “the best”",
+   s1:"The chocolate one, please! It is sweeter than the vanilla one.",
+   s2:"The big vanilla is the best of all! Can I have it, please?"}
+];
+
+/* ================= DATA SOAL ================= */
+const CONV_QS = [
+  {type:"Percakapan 📖", q:"Why does Cio need a new school bag?",
+   opts:["He wants to look cool.","His old bag is broken.","His bag is too big.","Miss Nanda asks him to buy one."],
+   a:1,
+   exp:"Cio berkata, “My old one is broken. It is the worst bag in the world!” Kata worst = paling buruk, bentuk tak beraturan dari bad."},
+  {type:"Percakapan 📖", q:"Which bag is the most expensive?",
+   opts:["The red bag (Rp50.000)","The blue bag (Rp75.000)","The green bag (Rp100.000)","His old bag"],
+   a:2,
+   exp:"Harga tas hijau Rp100.000 = paling mahal. Cio juga berkata, “The green bag is the most expensive!” The most expensive = paling mahal."},
+  {type:"Percakapan 📖", q:"What does Miss Nanda say about the green bag?",
+   opts:["It is the cheapest.","It is the strongest and the most beautiful.","It is the smallest.","It is the worst."],
+   a:1,
+   exp:"Miss Nanda berkata, “Yes, but it is also the strongest and the most beautiful of the three.” Superlative dipakai karena membandingkan TIGA tas."},
+  {type:"Percakapan 📖", q:"How much money does Cio have?",
+   opts:["Rp50.000","Rp75.000","Rp80.000","Rp100.000"],
+   a:2,
+   exp:"Cio berkata, “The green one is the biggest, but I only have Rp80,000.” Jadi tas hijau (Rp100.000) terlalu mahal untuknya."},
+  {type:"Percakapan 📖", q:"Why is the blue bag “the best bag” for Cio?",
+   opts:["Because it is the cheapest.","Because it is not too cheap and not too expensive.","Because it is the biggest.","Because it is red."],
+   a:1,
+   exp:"Cio berkata, “It is not too cheap and not too expensive. It is the best bag for me!” Di akhir percakapan Miss Nanda mengingatkan: quality is more important than price (kualitas lebih penting daripada harga)."}
+];
+
+const QUIZ = [
+  {type:"Lengkapi Kata 📝", q:"Rian is ______ than Dita. (tall)",
+   opts:["tall","tallest","taller","more tall"], a:2,
+   exp:"Membandingkan DUA orang (Rian vs Dita) dengan kata pendek → tall + er = taller, lalu tambahkan than."},
+  {type:"Lengkapi Kata 📝", q:"An elephant is the ______ animal in the zoo. (big)",
+   opts:["big","bigger","the biggest","more big"], a:2,
+   exp:"Membandingkan di antara BANYAK hewan → the + big (gandakan g) + est = the biggest."},
+  {type:"Lengkapi Kata 📝", q:"This comic is ______ than that novel. (interesting)",
+   opts:["interestinger","more interesting","most interesting","the most interesting"], a:1,
+   exp:"Interesting adalah kata panjang → pakai MORE untuk bentuk lebih: more interesting."},
+  {type:"Pilih Kalimat ✅", q:"Which sentence is correct?",
+   opts:["Today is the baddest day!","Today is the worsest day!","Today is the badder day!","Today is the worst day!"], a:3,
+   exp:"Bad tidak beraturan: bad → worse → the worst. Jadi yang benar: “Today is the worst day!”"},
+  {type:"Lengkapi Kata 📝", q:"My test score is ______ than last month. I got 90! (good)",
+   opts:["gooder","more good","better","the best"], a:2,
+   exp:"Good tidak beraturan: good → better → the best. Bentuk lebih dari good adalah better."},
+  {type:"Lengkapi Kata 📝", q:"Please put ______ sugar in my tea. It is too sweet! (little)",
+   opts:["less","least","littler","the least"], a:0,
+   exp:"Little tidak beraturan: little → less → the least. “Less sugar” = gula lebih sedikit."},
+  {type:"Eja Kata 🔤", q:"Which is the correct spelling of /ˈhæpiər/ (lebih bahagia)?",
+   opts:["happyer","happier","happiier","hapyer"], a:1,
+   exp:"Happy berakhiran -y → ganti y menjadi i, lalu tambah -er → happier."},
+  {type:"Eja Kata 🔤", q:"Which is the correct spelling of the word that means “paling buruk”?",
+   opts:["wost","worst","woorst","worste"], a:1,
+   exp:"“Paling buruk” = w-o-r-s-t → worst. Bentuk lebihnya adalah worse (lebih buruk)."},
+  {type:"Lengkapi Kata 📝", q:"I am thirsty! I need ______ water, please. (much)",
+   opts:["mucher","more","most","the most"], a:1,
+   exp:"Much/many tidak beraturan: much → more → the most. “More water” = lebih banyak air."},
+  {type:"Pilih Kalimat ✅", q:"Which sentence is correct?",
+   opts:["Today is more hot than yesterday.","Today is hoter than yesterday.","Today is hotter than yesterday.","Today is the hotter than yesterday."], a:2,
+   exp:"Hot = konsonan-vokal-konsonan → gandakan t + er → hotter. Bukan “more hot” dan bukan “hoter”."}
+];
+
+const FABLE_QS = [
+  {type:"Cerita 🐭", q:"Who is the biggest and the strongest animal in the story?",
+   opts:["Rex the rabbit","Ellie the elephant","Pip the mouse","Lion the king"], a:1,
+   exp:"Paragraf 1: “Ellie is the biggest and the strongest animal.”"},
+  {type:"Cerita 🐭", q:"What do the three friends find between two big rocks?",
+   opts:["A jar of honey","A big apple","A new school bag","A magic book"], a:0,
+   exp:"Paragraf 1: “the three friends find a jar of honey between two big rocks.”"},
+  {type:"Cerita 🐭", q:"Why can't Rex reach the honey?",
+   opts:["Because he is too slow.","Because the crack is too narrow for his big paws.","Because he is afraid of bees.","Because he does not like honey."], a:1,
+   exp:"Paragraf 2: “He is fast, but the crack is too narrow for his big paws.” Meski Rex tercepat, celahnya terlalu sempit."},
+  {type:"Cerita 🐭", q:"Who can take the honey jar out? Why?",
+   opts:["Ellie, because she is the strongest.","Rex, because he is the fastest.","Pip, because he is the smallest so he fits in the narrow place.","Nobody can take it out."], a:2,
+   exp:"Pip berkata, “I am the smallest, so I fit in narrow places!” Lalu ia mendorong toples keluar. Justru karena paling kecil, Pip berhasil!"},
+  {type:"Cerita 🐭", q:"What can we learn from the story?",
+   opts:["Big animals always win.","Being small is useless.","Everyone has their own strength — even the smallest one.","Honey is the best food."], a:2,
+   exp:"Pip paling kecil tetapi menjadi penolong terbaik hari itu. Pesan cerita: setiap orang punya kelebihan masing-masing, sekecil apa pun ukurannya. 🤝"}
+];
+
+/* ================= SUARA (TEXT TO SPEECH) ================= */
+let voices = [];
+let muted = false;
+function loadVoices(){
+  if(!('speechSynthesis' in window)) return;
+  voices = speechSynthesis.getVoices().filter(function(v){ return /^en/i.test(v.lang); });
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+let readToken = 0, playBtn = null;
+function resetReader(){
+  if(playBtn){
+    playBtn.textContent = playBtn.dataset.orig;
+    playBtn.classList.remove('playing');
+    playBtn = null;
+  }
+}
+function speak(text){
+  if(muted || !('speechSynthesis' in window)) return;
+  readToken++; resetReader();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+  if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+  speechSynthesis.speak(u);
+}
+function readSeq(btn){
+  readToken++;
+  const myId = readToken;
+  if(playBtn === btn){ speechSynthesis.cancel(); resetReader(); return; }
+  speechSynthesis.cancel(); resetReader();
+  const cont = btn.closest('.read-container');
+  if(!cont) return;
+  const texts = Array.from(cont.querySelectorAll('.saybtn[data-say]')).map(function(b){ return b.dataset.say; });
+  if(!texts.length) return;
+  playBtn = btn; btn.classList.add('playing'); btn.textContent = '⏹ Berhenti';
+  let i = 0;
+  (function next(){
+    if(myId !== readToken) return;
+    if(i >= texts.length){ readToken++; resetReader(); return; }
+    const u = new SpeechSynthesisUtterance(texts[i++]);
+    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+    if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+    u.onend = next;
+    u.onerror = function(){ if(myId === readToken){ readToken++; resetReader(); } };
+    speechSynthesis.speak(u);
+  })();
+}
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-say]');
+  if(el) speak(el.dataset.say);
+});
+
+/* ================= NAVIGASI SLIDE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+let cur = 0;
+function show(i){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, k){ s.classList.toggle('active', k === cur); });
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('progressFill').style.width = ((cur + 1) / slides.length * 100) + '%';
+  document.getElementById('prevBtn').disabled = (cur === 0);
+  document.getElementById('nextBtn').disabled = (cur === slides.length - 1);
+  window.scrollTo({top:0, behavior:'smooth'});
+  closeMenu();
+}
+function goTo(i){ show(i); }
+function nextSlide(){ show(cur + 1); }
+function prevSlide(){ show(cur - 1); }
+document.addEventListener('keydown', function(e){
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
+  if(e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+});
+
+/* ================= MENU SLIDE ================= */
+function openMenu(){ document.getElementById('menuOverlay').classList.add('open'); }
+function closeMenu(){ document.getElementById('menuOverlay').classList.remove('open'); }
+const menuList = document.getElementById('menuList');
+slides.forEach(function(s, i){
+  const b = document.createElement('button');
+  b.className = 'menu-item';
+  b.innerHTML = '<span class="n">' + (i + 1) + '</span> ' + (s.dataset.title || ('Slide ' + (i + 1)));
+  b.onclick = function(){ show(i); };
+  menuList.appendChild(b);
+});
+document.getElementById('menuOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeMenu();
+});
+
+/* ================= TOMBOL SUARA ================= */
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', function(){
+  muted = !muted;
+  muteBtn.textContent = muted ? '🔇 Suara OFF' : '🔈 Suara ON';
+  if(muted){ speechSynthesis.cancel(); readToken++; resetReader(); }
+});
+
+/* ================= RENDER PERCAKAPAN ================= */
+function fmt(t){
+  return t.replace(/\*(.+?)\*/g, function(m, w){
+    return '<b class="tw" data-say="' + w + '">' + w + '</b>';
+  });
+}
+function plain(t){ return t.replace(/\*/g, ''); }
+function linesHtml(d){
+  return d.lines.map(function(l){
+    const side = l.s === 0 ? '' : ' right';
+    const bub = l.s === 0 ? 'b-b' : 'b-p';
+    return '<div class="line' + side + '"><span class="who">' + d.av[l.s] + '</span>' +
+      '<div class="bubble ' + bub + '"><span class="name">' + d.who[l.s] + '</span>' +
+      '<span class="line-en">' + fmt(l.text) + '</span></div>' +
+      '<button class="mini saybtn" data-say="' + plain(l.text) + '">🔊</button></div>';
+  }).join('');
+}
+function renderDialogueTabs(){
+  const panels = document.getElementById('dlgPanels');
+  const btns = document.getElementById('dlgTabBtns');
+  DIALOGUES.forEach(function(d, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#dp' + i;
+    pb.textContent = d.emoji + ' ' + d.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'dp' + i;
+    panel.innerHTML = '<div class="read-container"><button class="btn primary readall" style="margin-bottom:12px">▶ Baca Percakapan</button><div class="dialogue">' + linesHtml(d) + '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function renderSituations(){
+  const panels = document.getElementById('sitPanels');
+  const btns = document.getElementById('sitTabBtns');
+  SITUATIONS.forEach(function(s, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#sp' + i;
+    pb.textContent = s.emoji + ' ' + (i + 1) + '. ' + s.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'sp' + i;
+    panel.innerHTML =
+      '<div class="card sit-card">' +
+      '<h3>' + s.emoji + ' Situasi ' + (i + 1) + ': ' + s.title + '</h3>' +
+      '<p class="ctx">🎬 ' + s.ctx + '</p>' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t1 + '”</div><button class="mini saybtn" data-say="' + s.t1 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 1 <small>(' + s.hint1 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'a" placeholder="Tulis kalimatmu di sini..." autocomplete="off">' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t2 + '”</div><button class="mini saybtn" data-say="' + s.t2 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 2 <small>(' + s.hint2 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'b" placeholder="Tulis balasanmu di sini..." autocomplete="off">' +
+      '<button class="btn ghost" onclick="revealSit(' + i + ')">💡 Lihat Contoh Jawaban</button>' +
+      '<div class="sample" id="sample' + i + '" style="display:none">' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t1 + '” → Kamu: <b>“' + s.s1 + '”</b></span><button class="mini saybtn" data-say="' + s.s1 + '">🔊</button></div>' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t2 + '” → Kamu: <b>“' + s.s2 + '”</b></span><button class="mini saybtn" data-say="' + s.s2 + '">🔊</button></div>' +
+      '<div class="starmsg" id="star' + i + '"></div>' +
+      '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function revealSit(i){
+  document.getElementById('sample' + i).style.display = 'flex';
+  const a = document.getElementById('s' + i + 'a').value.trim();
+  const b = document.getElementById('s' + i + 'b').value.trim();
+  const st = document.getElementById('star' + i);
+  st.textContent = (a && b) ? '⭐ Hebat! Kamu sudah berani berbicara bahasa Inggris!' : '💪 Ayo isi jawabanmu dulu, lalu bandingkan dengan contoh!';
+}
+
+/* ================= RENDER SOAL PILIHAN GANDA ================= */
+function renderMC(mountId, list, opt){
+  opt = opt || {};
+  const mount = document.getElementById(mountId);
+  let answered = 0, correct = 0;
+  list.forEach(function(item, idx){
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    const optsHtml = item.opts.map(function(o, i){
+      return '<button class="opt" data-i="' + i + '"><span class="letter">' + 'ABCD'[i] + '.</span><span>' + o + '</span></button>';
+    }).join('');
+    card.innerHTML =
+      '<div class="q-head"><span class="q-num">' + (idx + 1) + '</span>' +
+      (item.type ? '<span class="q-type">' + item.type + '</span>' : '') +
+      '<span class="q-result"></span></div>' +
+      '<div class="q-text">' + item.q + '</div>' +
+      '<div class="opts">' + optsHtml + '</div>' +
+      '<button class="btn check" disabled>Cek Jawaban ✅</button>' +
+      '<div class="pembahasan" style="display:none"><b>💡 Pembahasan:</b> ' + item.exp + '</div>';
+    let picked = null, done = false;
+    card.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(done) return;
+        card.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        picked = parseInt(btn.dataset.i, 10);
+        card.querySelector('.check').disabled = false;
+      });
+    });
+    card.querySelector('.check').addEventListener('click', function(){
+      if(picked === null || done) return;
+      done = true; answered++;
+      const right = item.a;
+      card.querySelectorAll('.opt').forEach(function(b){
+        b.disabled = true;
+        if(parseInt(b.dataset.i, 10) === right) b.classList.add('correct');
+        else if(parseInt(b.dataset.i, 10) === picked) b.classList.add('wrong');
+      });
+      const ok = (picked === right);
+      if(ok) correct++;
+      const res = card.querySelector('.q-result');
+      res.textContent = ok ? 'Benar! 🎉' : 'Belum tepat 😅';
+      res.style.color = ok ? 'var(--green)' : 'var(--red)';
+      card.querySelector('.pembahasan').style.display = 'block';
+      card.querySelector('.check').disabled = true;
+      if(opt.onAnswer) opt.onAnswer(answered, correct, list.length, ok);
+    });
+    mount.appendChild(card);
+  });
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tabs').forEach(function(tg){
+  tg.addEventListener('click', function(e){
+    const btn = e.target.closest('.tabbtn');
+    if(!btn) return;
+    const wrap = tg.closest('.tab-wrap');
+    wrap.querySelectorAll('.tabbtn').forEach(function(b){ b.classList.remove('active'); });
+    wrap.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    wrap.querySelector(btn.dataset.target).classList.add('active');
+  });
+});
+
+/* ================= REFLEKSI ================= */
+document.querySelectorAll('.refl').forEach(function(b){
+  b.addEventListener('click', function(){
+    const m = document.getElementById('reflMsg');
+    m.textContent = b.dataset.msg;
+    m.style.display = 'block';
+  });
+});
+
+/* ================= CONFETTI ================= */
+function confetti(n){
+  n = n || 90;
+  const colors = ['#f43f5e','#f59e0b','#10b981','#3b82f6','#8b5cf6','#ec4899'];
+  for(let k = 0; k < n; k++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (Math.random() * 100) + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (2.2 + Math.random() * 1.8) + 's';
+    c.style.animationDelay = (Math.random() * 0.6) + 's';
+    const size = (7 + Math.random() * 8) + 'px';
+    c.style.width = size; c.style.height = size;
+    if(Math.random() < 0.5) c.style.borderRadius = '50%';
+    document.body.appendChild(c);
+    setTimeout(function(){ c.remove(); }, 5400);
+  }
+}
+
+/* ================= INISIALISASI ================= */
+document.getElementById('mainDialog').innerHTML = linesHtml(MAIN);
+renderDialogueTabs();
+renderSituations();
+renderMC('convQs', CONV_QS);
+renderMC('quizQs', QUIZ, {
+  onAnswer: function(ans, corr, total){
+    document.getElementById('quizScore').textContent = corr;
+    document.getElementById('quizDone').textContent = 'Terjawab: ' + ans + '/' + total;
+    if(ans === total){
+      const fb = document.getElementById('finalBanner');
+      let msg;
+      if(corr === total) msg = '🏆 SEMPURNA! Kamu jenius comparative & superlative!';
+      else if(corr >= 8) msg = '🌟 HEBAT! Sedikit lagi sempurna!';
+      else if(corr >= 6) msg = '👍 BAGUS! Terus berlatih ya!';
+      else msg = '💪 Jangan menyerah! Ayo pelajari lagi materinya!';
+      fb.innerHTML = '<div>' + msg + '</div><div class="fscore">Skor akhir: ' + corr + '/' + total + '</div>';
+      fb.style.display = 'block';
+      confetti();
+    }
+  }
+});
+renderMC('fableQs', FABLE_QS);
+document.querySelectorAll('.readall').forEach(function(b){
+  b.dataset.orig = b.textContent;
+  b.addEventListener('click', function(){ readSeq(b); });
+});
+document.getElementById('prevBtn').addEventListener('click', prevSlide);
+document.getElementById('nextBtn').addEventListener('click', nextSlide);
+show(0);
+</script>
+</body>
+</html>
