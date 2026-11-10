@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Should &amp; Shouldn't — Keep It Clean! — English Fun untuk SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--ink:#2b3a55;--card:#fff;
+--blue:#2563eb;--blue-l:#dbeafe;
+--purple:#7c3aed;--purple-l:#ede9fe;
+--orange:#ea580c;--orange-l:#ffedd5;
+--green:#059669;--green-l:#d1fae5;
+--red:#dc2626;--red-l:#fee2e2;
+--yellow-l:#fef9c3;--pink-l:#fce7f3;
+--sky:#0ea5e9;
+--shadow:0 10px 30px rgba(43,58,85,.14);--radius:18px}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito','Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#bae6fd 0%,#e0e7ff 45%,#fbcfe8 100%);background-attachment:fixed;color:var(--ink);min-height:100vh}
+h1,h2,h3,h4{font-family:'Baloo 2','Nunito',cursive;line-height:1.25}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:50;box-shadow:0 2px 12px rgba(43,58,85,.08)}
+.topbar .brand{font-weight:800;font-family:'Baloo 2';font-size:1.02rem;color:var(--blue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .tools{display:flex;gap:8px;flex-shrink:0}
+.chip-btn{border:none;background:var(--blue-l);color:var(--blue);font-weight:800;padding:7px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:.83rem;transition:.15s}
+.chip-btn:hover{filter:brightness(.94);transform:translateY(-1px)}
+.progress{position:fixed;top:56px;left:0;right:0;height:5px;background:rgba(255,255,255,.55);z-index:50}
+#progressFill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .3s}
+.slide{display:none;max-width:1080px;margin:0 auto;padding:84px 20px 110px;min-height:100vh}
+.slide.active{display:block;animation:pop .45s ease}
+@keyframes pop{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.badge{display:inline-block;background:#fff;color:var(--purple);font-weight:800;font-size:.76rem;letter-spacing:.6px;padding:5px 14px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:12px;text-transform:uppercase}
+.slide h2{font-size:2rem;margin-bottom:6px}
+.sub{color:#5b6b8c;margin-bottom:20px;font-weight:600}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* cover */
+.cover{text-align:center;padding:56px 26px;background:linear-gradient(160deg,#ffffff,#f0fdf4)}
+.cover h1{font-size:2.5rem}
+.float-emoji{font-size:2.4rem;letter-spacing:8px;margin:12px 0}
+.word-chips{margin:18px 0 24px}
+.chip{display:inline-block;background:var(--green-l);color:var(--green);padding:6px 14px;border-radius:999px;font-weight:800;margin:4px;font-family:'Baloo 2'}
+.hint{color:#64748b;font-size:.9rem;margin-top:16px;font-weight:600}
+/* tujuan */
+.goal{display:flex;flex-direction:column}
+.goal p{font-size:.92rem;color:#475569;font-weight:600;margin-top:6px;line-height:1.55}
+.gemoji{font-size:2.2rem}
+.tipcard{background:var(--yellow-l)}
+/* kartu kosakata */
+.gtitle{margin:20px 0 10px;font-size:1.3rem}
+.t-a{color:var(--blue)}.t-b{color:var(--orange)}.t-c{color:var(--purple)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:14px}
+.vcard{border-radius:16px;padding:16px;cursor:pointer;transition:.2s;user-select:none}
+.vcard:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow)}
+.vword{font-family:'Baloo 2';font-size:1.45rem;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.vphon{font-size:.82rem;color:#64748b;font-weight:700;font-family:'Nunito'}
+.vmean{font-weight:800;font-size:.93rem;margin:6px 0}
+.vex{font-size:.86rem;color:#475569;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.g-a{background:var(--blue-l)}.g-a .vword{color:var(--blue)}
+.g-b{background:var(--orange-l)}.g-b .vword{color:var(--orange)}
+.g-c{background:var(--purple-l)}.g-c .vword{color:var(--purple)}
+.mini{border:none;background:rgba(255,255,255,.9);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.14);flex-shrink:0;transition:.15s;display:inline-flex;align-items:center;justify-content:center}
+.mini:hover{transform:scale(1.15)}
+/* kata tunjuk */
+.tw{background:linear-gradient(transparent 55%,#fde68a 55%);padding:0 3px;border-radius:4px;cursor:pointer;font-weight:800;color:#92400e}
+.mtable{width:100%;border-collapse:separate;border-spacing:10px}
+.mtable th{font-family:'Baloo 2';font-size:1rem;color:#334155;padding:6px}
+.mtable .rowlab{background:#fff;border-radius:14px;box-shadow:var(--shadow);width:132px}
+.mtable td{border-radius:16px;padding:16px 12px;box-shadow:var(--shadow);vertical-align:top;text-align:center}
+.mtable .big{font-family:'Baloo 2';font-size:1.7rem;display:block}
+.c-a{background:var(--blue-l)}.c-a .big{color:var(--blue)}
+.c-b{background:var(--purple-l)}.c-b .big{color:var(--purple)}
+.cex{font-size:.92rem;font-weight:800;margin:8px 0 6px;display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.mtable small{color:#64748b;font-weight:700}
+.warnbox{background:var(--yellow-l);border:2px dashed #f59e0b;border-radius:14px;padding:12px 16px;font-weight:700;margin-top:16px;line-height:1.6}
+/* formula saran */
+.formula{background:linear-gradient(135deg,var(--blue-l),var(--purple-l));border-radius:14px;padding:14px 18px;font-weight:800;text-align:center;font-size:1.05rem;margin:4px 0 16px;line-height:1.8}
+.formula b{font-family:'Baloo 2';color:var(--purple);font-size:1.18rem}
+/* wcard saran */
+.wcard{border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.wcard>p{font-weight:700;color:#475569;font-size:.92rem;margin-top:4px}
+.w-green{background:var(--green-l)}.w-green h3{color:var(--green)}
+.w-blue{background:var(--blue-l)}.w-blue h3{color:var(--blue)}
+.w-red{background:var(--red-l)}.w-red h3{color:var(--red)}
+.wex{background:rgba(255,255,255,.78);border-radius:10px;padding:8px 10px;font-weight:800;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+/* contoh kalimat */
+.exlist{display:flex;flex-direction:column;gap:10px}
+.exrow{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:14px;padding:13px 16px;box-shadow:var(--shadow)}
+.exrow .en{font-weight:800;font-size:1.03rem}
+.exrow .id{color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
+/* percakapan */
+.read-container{position:relative}
+.dialogue{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.line{display:flex;gap:10px;align-items:flex-start}
+.line.right{flex-direction:row-reverse}
+.who{font-size:1.55rem;line-height:1.2}
+.bubble{background:#fff;border-radius:16px;padding:10px 15px;box-shadow:var(--shadow);max-width:78%;font-weight:600;line-height:1.5}
+.line.right .bubble{text-align:left}
+.bubble .name{display:block;font-size:.7rem;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.b-b{background:var(--blue-l)}
+.b-p{background:var(--purple-l)}
+.b-o{background:var(--orange-l)}
+/* soal */
+.q-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;border-left:6px solid var(--sky)}
+.q-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.q-num{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';flex-shrink:0}
+.q-type{background:var(--yellow-l);color:#a16207;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px}
+.q-text{font-weight:800;margin-bottom:12px;font-size:1.02rem;line-height:1.55}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{text-align:left;border:2px solid #e2e8f0;background:#f8fafc;border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s;display:flex;gap:8px;font-size:.94rem}
+.opt:hover{border-color:var(--sky)}
+.opt .letter{font-weight:800;color:#94a3b8;flex-shrink:0}
+.opt.selected{border-color:var(--blue);background:var(--blue-l)}
+.opt.correct{border-color:var(--green);background:var(--green-l)}
+.opt.wrong{border-color:var(--red);background:var(--red-l)}
+.opt:disabled{cursor:default}
+.btn{border:none;font-family:inherit;font-weight:800;border-radius:999px;padding:11px 22px;cursor:pointer;transition:.15s;font-size:.95rem}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:0 6px 16px rgba(99,102,241,.4)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.primary:disabled{background:#cbd5e1;box-shadow:none;cursor:not-allowed;transform:none}
+.btn.ghost{background:var(--purple-l);color:var(--purple)}
+.btn.check{background:var(--yellow-l);color:#a16207;margin-top:10px}
+.pembahasan{margin-top:12px;background:var(--yellow-l);border-radius:12px;padding:12px 14px;font-size:.92rem;font-weight:600;border:2px dashed #f59e0b;line-height:1.6}
+.q-result{margin-left:auto;font-weight:800;font-size:.9rem}
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabbtn{border:none;background:rgba(255,255,255,.85);padding:9px 16px;border-radius:999px;font-family:inherit;font-weight:800;cursor:pointer;color:#64748b;box-shadow:0 3px 10px rgba(0,0,0,.06);font-size:.87rem;transition:.15s}
+.tabbtn:hover{transform:translateY(-2px)}
+.tabbtn.active{background:var(--purple);color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:pop .35s ease}
+/* latihan bicara */
+.sit-card h3{font-size:1.3rem;margin-bottom:6px}
+.ctx{background:var(--pink-l);border-radius:12px;padding:10px 14px;font-weight:700;margin-bottom:12px;line-height:1.55}
+.tutor-line{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.tav{font-size:1.5rem}
+label.turn{font-weight:800;color:var(--purple);font-size:.92rem;display:block;margin-top:8px}
+label.turn small{color:#64748b;font-weight:700}
+.st-input{width:100%;border:2px solid #e2e8f0;border-radius:12px;padding:11px 14px;font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);margin:6px 0 10px;background:#f8fafc}
+.st-input:focus{outline:none;border-color:var(--purple);background:#fff}
+.sample{background:var(--green-l);border-radius:12px;padding:12px 16px;margin-top:10px;font-weight:700;display:flex;flex-direction:column;gap:8px}
+.sample>div{display:flex;justify-content:space-between;align-items:center;gap:10px;line-height:1.55}
+.starmsg{color:#b45309;font-weight:800}
+/* kuis */
+.scorebox{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-weight:800}
+.finalbanner{display:none;margin-top:6px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:16px;padding:18px;text-align:center;font-family:'Baloo 2';font-size:1.3rem;box-shadow:var(--shadow)}
+.finalbanner .fscore{font-size:1.1rem;font-weight:800;margin-top:4px;font-family:'Nunito'}
+/* fabel */
+.para{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+.para p{font-weight:600;line-height:1.7;flex:1}
+.moral{background:linear-gradient(135deg,var(--green-l),var(--blue-l));border-radius:16px;padding:16px 20px;font-weight:800;font-size:1.05rem;text-align:center;box-shadow:var(--shadow)}
+.moral small{display:block;font-family:'Nunito';color:#475569;font-weight:700;margin-top:4px}
+/* refleksi */
+.refl-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 16px}
+.refl{background:#fff;border:none;border-radius:18px;box-shadow:var(--shadow);padding:20px;cursor:pointer;font-family:inherit;font-weight:800;font-size:1rem;color:var(--ink);transition:.2s;display:flex;flex-direction:column;gap:8px;align-items:center}
+.refl:hover{transform:translateY(-4px)}
+.refl .em{font-size:2.6rem}
+.refl-msg{background:var(--green-l);border-radius:14px;padding:14px 18px;font-weight:800;text-align:center;margin-bottom:16px}
+/* kesimpulan */
+.sumcard ul{margin-top:8px;padding-left:20px;font-weight:600;line-height:1.95}
+.bigbanner{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border-radius:18px;padding:18px 22px;font-weight:800;text-align:center;font-size:1.02rem;box-shadow:var(--shadow);line-height:1.8;margin-top:16px}
+/* thanks */
+.thanks{text-align:center;padding:64px 24px;background:linear-gradient(160deg,#fff,#d1fae5)}
+.thanks h1{font-size:2.8rem}
+/* navbar & overlay */
+.navbar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);z-index:50}
+.navbtn{border:none;width:46px;height:46px;border-radius:50%;background:var(--blue-l);font-size:1.1rem;cursor:pointer;font-weight:800;color:var(--blue);transition:.15s}
+.navbtn:hover:not(:disabled){background:var(--blue);color:#fff}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+#counter{font-weight:800;min-width:64px;text-align:center;color:#475569}
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:80;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.menu-box{background:#fff;border-radius:20px;padding:24px;max-width:520px;width:92%;max-height:80vh;overflow:auto;box-shadow:var(--shadow)}
+.menu-item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:none;background:#f8fafc;border-radius:12px;padding:10px 14px;margin:5px 0;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s}
+.menu-item:hover{background:var(--purple-l)}
+.menu-item .n{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0}
+/* confetti */
+.confetti{position:fixed;top:-20px;z-index:99;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(108vh) rotate(720deg)}}
+@media(max-width:720px){
+.grid2,.grid3,.opts{grid-template-columns:1fr}
+.refl-row{grid-template-columns:1fr}
+.slide{padding:74px 12px 104px}
+.slide h2{font-size:1.45rem}
+.cover h1{font-size:1.75rem}
+.mtable{border-spacing:5px}
+.mtable td{padding:10px 6px}
+.mtable .big{font-size:1.2rem}
+.mtable .rowlab{width:76px;font-size:.78rem}
+.wcard{padding:14px}
+.brand{font-size:.82rem}
+.bubble{max-width:94%}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">📚 English Fun • Should &amp; Shouldn't — Keep It Clean!</span>
+  <div class="tools">
+    <button class="chip-btn" id="muteBtn">🔈 Suara ON</button>
+    <button class="chip-btn" onclick="openMenu()">☰ Daftar Slide</button>
+  </div>
+</header>
+<div class="progress"><div id="progressFill"></div></div>
+<main id="deck">
+
+<section class="slide active" data-title="Cover">
+  <div class="card cover">
+    <div class="badge">English Class • Sekolah Dasar</div>
+    <div class="float-emoji">🧼 🪥 🚿 🧹 🗑️</div>
+    <h1>Should &amp; Shouldn't:<br>Keep It Clean! ✨</h1>
+    <p class="sub">Belajar Memberi Saran dalam Bahasa Inggris sambil Menjaga Kebersihan<br>Bersama Cio dan Miss Nanda yang ceria!</p>
+    <div class="word-chips">
+      <span class="chip">should</span><span class="chip">shouldn't</span><span class="chip">wash</span><span class="chip">brush</span><span class="chip">sweep</span><span class="chip">tidy</span><span class="chip">clean</span><span class="chip">healthy</span>
+    </div>
+    <button class="btn primary" onclick="goTo(1)">Mulai Belajar 🚀</button>
+    <p class="hint">🔊 Nyalakan volume, ya! Klik kartu dan tombol 🔊 untuk mendengar bahasa Inggris.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Tujuan Pembelajaran">
+  <span class="badge">Tujuan</span>
+  <h2>Apa yang Akan Kita Pelajari Hari Ini? 🎯</h2>
+  <p class="sub">Ada 5 hal seru yang menantimu. Siap? Ayo mulai!</p>
+  <div class="grid3">
+    <div class="card goal"><span class="gemoji">🗣️</span><h4>1. Melafalkan</h4><p>Ucapkan <b>30 kata kebersihan</b> yang sering dipakai setiap hari: <i>soap, towel, sweep, germs</i>, dan masih banyak lagi. Klik kartu untuk mendengarkannya!</p></div>
+    <div class="card goal"><span class="gemoji">✅</span><h4>2. Memberi Saran</h4><p>Gunakan <b>should</b> untuk memberi saran yang baik: <i>“You should wash your hands.”</i> — Kamu sebaiknya mencuci tangan.</p></div>
+    <div class="card goal"><span class="gemoji">❌</span><h4>3. Memberi Larangan</h4><p>Gunakan <b>shouldn't</b> (should not) untuk melarang hal yang kurang baik: <i>“You shouldn't litter.”</i> — Jangan buang sampah sembarangan.</p></div>
+    <div class="card goal"><span class="gemoji">❓</span><h4>4. Bertanya &amp; Menjawab</h4><p>Tanya saran dengan <b>Should I...?</b> lalu jawab <i>Yes, you should</i> ✅ atau <i>No, you shouldn't</i> ❌.</p></div>
+    <div class="card goal"><span class="gemoji">🏆</span><h4>5. Berlatih &amp; Bermain</h4><p>Baca percakapan, isi latihan berbicara, kerjakan kuis 10 soal, dan baca fabel seru tentang Momo si monyet berantakan!</p></div>
+    <div class="card goal tipcard"><span class="gemoji">💡</span><h4>Tips Penting</h4><p>Klik tombol 🔊 di mana saja untuk mendengar pelafalan bahasa Inggris. Dengarkan dengan saksama, lalu ulangi dengan suara keras, ya!</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kosakata 1: Kebersihan Diri">
+  <span class="badge">Kosakata 1 dari 2</span>
+  <h2>30 Kata Kebersihan: Diri Kita 🧼</h2>
+  <p class="sub">👆 Klik setiap kartu untuk mendengar pelafalannya dalam bahasa Inggris! Dengarkan, lalu ulangi.</p>
+
+  <h3 class="gtitle t-a">🔵 Kebersihan Diri (Personal Hygiene)</h3>
+  <div class="vgrid">
+    <div class="vcard g-a" data-say="clean" title="Klik untuk mendengar!">
+      <div class="vword">clean<span class="vphon">/kliːn/</span></div>
+      <div class="vmean">bersih</div>
+      <div class="vex">“My hands are clean.” 🙌<button class="mini" data-say="My hands are clean.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="dirty" title="Klik untuk mendengar!">
+      <div class="vword">dirty<span class="vphon">/ˈdɜːrti/</span></div>
+      <div class="vmean">kotor</div>
+      <div class="vex">“Don't touch dirty water.” 🚫<button class="mini" data-say="Don't touch dirty water.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="wash" title="Klik untuk mendengar!">
+      <div class="vword">wash<span class="vphon">/wɒʃ/</span></div>
+      <div class="vmean">mencuci</div>
+      <div class="vex">“Wash your hands now.” 🧼<button class="mini" data-say="Wash your hands now.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="soap" title="Klik untuk mendengar!">
+      <div class="vword">soap<span class="vphon">/soʊp/</span></div>
+      <div class="vmean">sabun</div>
+      <div class="vex">“Use soap and water.” 🧴<button class="mini" data-say="Use soap and water.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="bath" title="Klik untuk mendengar!">
+      <div class="vword">bath<span class="vphon">/bæθ/</span></div>
+      <div class="vmean">mandi (bak)</div>
+      <div class="vex">“I take a bath at six.” 🛁<button class="mini" data-say="I take a bath at six.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="shower" title="Klik untuk mendengar!">
+      <div class="vword">shower<span class="vphon">/ˈʃaʊər/</span></div>
+      <div class="vmean">mandi pancuran</div>
+      <div class="vex">“Take a shower, please.” 🚿<button class="mini" data-say="Take a shower, please.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="brush" title="Klik untuk mendengar!">
+      <div class="vword">brush<span class="vphon">/brʌʃ/</span></div>
+      <div class="vmean">menyikat</div>
+      <div class="vex">“Brush your teeth twice a day.” 🪥<button class="mini" data-say="Brush your teeth twice a day.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="toothbrush" title="Klik untuk mendengar!">
+      <div class="vword">toothbrush<span class="vphon">/ˈtuːθbrʌʃ/</span></div>
+      <div class="vmean">sikat gigi</div>
+      <div class="vex">“This is my toothbrush.” 😁<button class="mini" data-say="This is my toothbrush.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="toothpaste" title="Klik untuk mendengar!">
+      <div class="vword">toothpaste<span class="vphon">/ˈtuːθpeɪst/</span></div>
+      <div class="vmean">pasta gigi</div>
+      <div class="vex">“Put toothpaste on the brush.” 🦷<button class="mini" data-say="Put toothpaste on the brush.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="shampoo" title="Klik untuk mendengar!">
+      <div class="vword">shampoo<span class="vphon">/ʃæmˈpuː/</span></div>
+      <div class="vmean">sampo</div>
+      <div class="vex">“Wash your hair with shampoo.” 💇<button class="mini" data-say="Wash your hair with shampoo.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="comb" title="Klik untuk mendengar!">
+      <div class="vword">comb<span class="vphon">/koʊm/</span></div>
+      <div class="vmean">sisir • menyisir</div>
+      <div class="vex">“Comb your hair every day.” 😊<button class="mini" data-say="Comb your hair every day.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="towel" title="Klik untuk mendengar!">
+      <div class="vword">towel<span class="vphon">/ˈtaʊəl/</span></div>
+      <div class="vmean">handuk</div>
+      <div class="vex">“Dry your hands with a towel.” 🧺<button class="mini" data-say="Dry your hands with a towel.">🔊</button></div>
+    </div>
+  </div>
+  <div class="warnbox">📌 Kata 1–12 tentang <b>kebersihan diri</b>. Lanjut ke slide berikutnya untuk kata tentang rumah, kelas, dan kuman!</div>
+</section>
+
+<section class="slide" data-title="Kosakata 2: Rumah &amp; Kuman">
+  <span class="badge">Kosakata 2 dari 2</span>
+  <h2>30 Kata Kebersihan: Rumah &amp; Kuman 🧹</h2>
+  <p class="sub">Sekarang kata-kata untuk membersihkan rumah, kelas, dan menjaga tubuh tetap sehat!</p>
+
+  <h3 class="gtitle t-b">🟠 Kebersihan Rumah &amp; Kelas</h3>
+  <div class="vgrid">
+    <div class="vcard g-b" data-say="sweep" title="Klik untuk mendengar!">
+      <div class="vword">sweep<span class="vphon">/swiːp/</span></div>
+      <div class="vmean">menyapu</div>
+      <div class="vex">“Sweep the floor, please.” 🧹<button class="mini" data-say="Sweep the floor, please.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="mop" title="Klik untuk mendengar!">
+      <div class="vword">mop<span class="vphon">/mɒp/</span></div>
+      <div class="vmean">mengepel</div>
+      <div class="vex">“Mom mops the floor.” 🪣<button class="mini" data-say="Mom mops the floor.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="wipe" title="Klik untuk mendengar!">
+      <div class="vword">wipe<span class="vphon">/waɪp/</span></div>
+      <div class="vmean">menyeka / mengelap</div>
+      <div class="vex">“Wipe the table after eating.” 🧽<button class="mini" data-say="Wipe the table after eating.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="dust" title="Klik untuk mendengar!">
+      <div class="vword">dust<span class="vphon">/dʌst/</span></div>
+      <div class="vmean">debu</div>
+      <div class="vex">“There is dust on the shelf.” 🌫️<button class="mini" data-say="There is dust on the shelf.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="tidy" title="Klik untuk mendengar!">
+      <div class="vword">tidy<span class="vphon">/ˈtaɪdi/</span></div>
+      <div class="vmean">rapi</div>
+      <div class="vex">“Keep your room tidy.” 📚<button class="mini" data-say="Keep your room tidy.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="messy" title="Klik untuk mendengar!">
+      <div class="vword">messy<span class="vphon">/ˈmesi/</span></div>
+      <div class="vmean">berantakan</div>
+      <div class="vex">“My desk is so messy!” 😖<button class="mini" data-say="My desk is so messy!">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="trash" title="Klik untuk mendengar!">
+      <div class="vword">trash<span class="vphon">/træʃ/</span></div>
+      <div class="vmean">sampah</div>
+      <div class="vex">“Put the trash in the bin.” 🗑️<button class="mini" data-say="Put the trash in the bin.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="trash bin" title="Klik untuk mendengar!">
+      <div class="vword">trash bin<span class="vphon">/træʃ bɪn/</span></div>
+      <div class="vmean">tempat sampah</div>
+      <div class="vex">“Throw it in the trash bin.” 🗑️<button class="mini" data-say="Throw it in the trash bin.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="rubbish" title="Klik untuk mendengar!">
+      <div class="vword">rubbish<span class="vphon">/ˈrʌbɪʃ/</span></div>
+      <div class="vmean">sampah (Inggris UK)</div>
+      <div class="vex">“Don't drop rubbish here.” 🚯<button class="mini" data-say="Don't drop rubbish here.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="laundry" title="Klik untuk mendengar!">
+      <div class="vword">laundry<span class="vphon">/ˈlɔːndri/</span></div>
+      <div class="vmean">cucian pakaian</div>
+      <div class="vex">“Wash the laundry on Sunday.” 👕<button class="mini" data-say="Wash the laundry on Sunday.">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-c">🟣 Kuman &amp; Tubuh Sehat</h3>
+  <div class="vgrid">
+    <div class="vcard g-c" data-say="germ" title="Klik untuk mendengar!">
+      <div class="vword">germ<span class="vphon">/dʒɜːrm/</span></div>
+      <div class="vmean">kuman</div>
+      <div class="vex">“Germs are very small.” 🦠<button class="mini" data-say="Germs are very small.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="nail" title="Klik untuk mendengar!">
+      <div class="vword">nail<span class="vphon">/neɪl/</span></div>
+      <div class="vmean">kuku</div>
+      <div class="vex">“Cut your nails, Cio.” 💅<button class="mini" data-say="Cut your nails, Cio.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="handkerchief" title="Klik untuk mendengar!">
+      <div class="vword">handkerchief<span class="vphon">/ˈhæŋkərtʃɪf/</span></div>
+      <div class="vmean">sapu tangan</div>
+      <div class="vex">“Use your handkerchief.” 🤧<button class="mini" data-say="Use your handkerchief.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="tissue" title="Klik untuk mendengar!">
+      <div class="vword">tissue<span class="vphon">/ˈtɪʃuː/</span></div>
+      <div class="vmean">tisu</div>
+      <div class="vex">“May I have a tissue?” 🧻<button class="mini" data-say="May I have a tissue?">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="faucet" title="Klik untuk mendengar!">
+      <div class="vword">faucet<span class="vphon">/ˈfɔːsɪt/</span></div>
+      <div class="vmean">keran air</div>
+      <div class="vex">“Turn off the faucet.” 🚰<button class="mini" data-say="Turn off the faucet.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="flush" title="Klik untuk mendengar!">
+      <div class="vword">flush<span class="vphon">/flʌʃ/</span></div>
+      <div class="vmean">menyiram (toilet)</div>
+      <div class="vex">“Flush the toilet, please.” 🚽<button class="mini" data-say="Flush the toilet, please.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="water" title="Klik untuk mendengar!">
+      <div class="vword">water<span class="vphon">/ˈwɔːtər/</span></div>
+      <div class="vmean">air</div>
+      <div class="vex">“Wash with clean water.” 💧<button class="mini" data-say="Wash with clean water.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="healthy" title="Klik untuk mendengar!">
+      <div class="vword">healthy<span class="vphon">/ˈhelθi/</span></div>
+      <div class="vmean">sehat</div>
+      <div class="vex">“Clean kids are healthy kids.” 💪<button class="mini" data-say="Clean kids are healthy kids.">🔊</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Materi 1: Should">
+  <span class="badge">Materi 1</span>
+  <h2>Should: Saran yang Baik ✅</h2>
+  <p class="sub"><b class="tw" data-say="should">Should</b> artinya <b>“sebaiknya”</b> atau <b>“seharusnya”</b>. Kita memakainya untuk memberi nasihat dan saran yang baik!</p>
+  <div class="formula">📌 Rumus: <b>Subject + should + Verb 1</b><br><small>kata kerjanya TIDAK pernah berubah!</small></div>
+  <div class="card">
+    <table class="mtable">
+      <tr><th>Siapa? 👤</th><th>Contoh Kalimat 💬</th></tr>
+      <tr>
+        <th class="rowlab">I, You,<br>We, They</th>
+        <td class="c-a"><div class="cex">“We <span class="big" style="font-size:1.35rem;color:var(--blue)">should wash</span> our hands before eating.” 🧼<button class="mini" data-say="We should wash our hands before eating.">🔊</button></div><small>should + wash (bentuk dasar)</small></td>
+      </tr>
+      <tr>
+        <th class="rowlab">He, She, It</th>
+        <td class="c-b"><div class="cex">“Rina <span class="big" style="font-size:1.35rem;color:var(--purple)">should brush</span> her teeth twice a day.” 🪥<button class="mini" data-say="Rina should brush her teeth twice a day.">🔊</button></div><small>tetap brush, BUKAN brushes!</small></td>
+      </tr>
+    </table>
+  </div>
+  <div class="warnbox">💡 <b>Jurus hafal cepat:</b> setelah <b>should</b>, kata kerja selalu <b>BENTUK DASAR</b>. <i>should wash</i> ✅ — bukan <i>should washes</i> ❌, bukan <i>should to wash</i> ❌, dan bukan <i>should washing</i> ❌!</div>
+</section>
+
+<section class="slide" data-title="Materi 2: Shouldn't">
+  <span class="badge">Materi 2</span>
+  <h2>Shouldn't: Jangan Lakukan Itu! ❌</h2>
+  <p class="sub"><b class="tw" data-say="shouldn't">Shouldn't</b> = <b>should not</b>. Artinya <b>“jangan”</b> atau <b>“sebaiknya jangan”</b> — untuk melarang hal yang kurang baik.</p>
+  <div class="formula">📌 Rumus: <b>Subject + shouldn't + Verb 1</b><br><small>shouldn't = should not</small></div>
+  <div class="grid3">
+    <div class="wcard w-red">
+      <h3>🗑️ Jangan Buang Sampah</h3>
+      <p>Sampah harus masuk ke tempatnya, bukan di lantai atau di sungai.</p>
+      <div class="wex">“You shouldn't throw trash on the floor.”<button class="mini" data-say="You shouldn't throw trash on the floor.">🔊</button></div>
+    </div>
+    <div class="wcard w-red">
+      <h3>🚰 Hemat Air</h3>
+      <p>Jangan biarkan keran mengalir terus — air itu berharga!</p>
+      <div class="wex">“He shouldn't leave the faucet open.”<button class="mini" data-say="He shouldn't leave the faucet open.">🔊</button></div>
+    </div>
+    <div class="wcard w-red">
+      <h3>🚽 Jangan Lupa Siram</h3>
+      <p>Setelah pakai toilet, selalu siram supaya tetap bersih.</p>
+      <div class="wex">“She shouldn't forget to flush.”<button class="mini" data-say="She shouldn't forget to flush.">🔊</button></div>
+    </div>
+  </div>
+  <div class="warnbox">⚠️ <b>Hati-hati!</b> <i>Shouldn't</i> adalah bentuk singkat dari <b>should not</b>. Keduanya sama saja: <i>You shouldn't litter</i> = <i>You should not litter</i>. Dan ingat: setelah <b>shouldn't</b>, kata kerja juga tetap <b>bentuk dasar</b> — <i>shouldn't throw</i> ✅, bukan <i>shouldn't throws</i> ❌!</div>
+</section>
+
+<section class="slide" data-title="Materi 3: Should I...?">
+  <span class="badge">Materi 3</span>
+  <h2>Bertanya Saran: Should I...? ❓</h2>
+  <p class="sub">Saat kita tidak tahu apa yang baik untuk dilakukan, kita bertanya dengan <b class="tw" data-say="should">should</b>. Letakkan <b>should</b> di <b>DEPAN</b> kalimat!</p>
+  <div class="formula">📌 Rumus Tanya: <b>Should + Subject + Verb 1 ?</b></div>
+  <div class="card">
+    <table class="mtable">
+      <tr><th>Pertanyaan ❓</th><th>Jawaban: Ya ✅</th><th>Jawaban: Tidak ❌</th></tr>
+      <tr>
+        <td style="background:var(--blue-l)"><div class="cex">“Should I wash my hands now?” 🧼<button class="mini" data-say="Should I wash my hands now?">🔊</button></div></td>
+        <td style="background:var(--green-l)"><div class="cex">“Yes, you should.” ✅<button class="mini" data-say="Yes, you should.">🔊</button></div></td>
+        <td style="background:var(--red-l)"><div class="cex">“No, you shouldn't.” ❌<button class="mini" data-say="No, you shouldn't.">🔊</button></div></td>
+      </tr>
+      <tr>
+        <td style="background:var(--blue-l)"><div class="cex">“Should she cut her nails?” ✂️<button class="mini" data-say="Should she cut her nails?">🔊</button></div></td>
+        <td style="background:var(--green-l)"><div class="cex">“Yes, she should.” ✅<button class="mini" data-say="Yes, she should.">🔊</button></div></td>
+        <td style="background:var(--red-l)"><div class="cex">“No, she shouldn't.” ❌<button class="mini" data-say="No, she shouldn't.">🔊</button></div></td>
+      </tr>
+    </table>
+  </div>
+  <div class="bigbanner">🆘 Kalau bingung mau apa, tanyakan: <b>“What should I do?”</b> (Apa yang sebaiknya aku lakukan?) → <i>“You should clean your desk.”</i> 🧹</div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 1">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Should dalam Kalimat 📖</h2>
+  <p class="sub">Klik tombol 🔊 untuk mendengar setiap kalimat, lalu ulangi dengan keras! Semuanya saran yang baik, ya!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="You should wash your hands with soap before eating.">🔊</button><div><div class="en">You <b class="tw" data-say="should">should</b> wash your hands with soap before eating.</div><div class="id">Kamu sebaiknya mencuci tangan dengan sabun sebelum makan.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="We should brush our teeth twice a day.">🔊</button><div><div class="en">We <b class="tw" data-say="should">should</b> brush our teeth twice a day.</div><div class="id">Kita sebaiknya menyikat gigi dua kali sehari.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="She should take a bath every morning.">🔊</button><div><div class="en">She <b class="tw" data-say="should">should</b> take a bath every morning.</div><div class="id">Dia sebaiknya mandi setiap pagi.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="You should throw your trash into the trash bin.">🔊</button><div><div class="en">You <b class="tw" data-say="should">should</b> throw your trash into the trash bin.</div><div class="id">Kamu sebaiknya membuang sampahmu ke tempat sampah.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="We should keep our classroom clean and tidy.">🔊</button><div><div class="en">We <b class="tw" data-say="should">should</b> keep our classroom clean and tidy.</div><div class="id">Kita sebaiknya menjaga kelas tetap bersih dan rapi.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="He should drink clean water every day.">🔊</button><div><div class="en">He <b class="tw" data-say="should">should</b> drink clean water every day.</div><div class="id">Dia sebaiknya minum air bersih setiap hari.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 2">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Shouldn't dalam Kalimat 📖</h2>
+  <p class="sub">Semua kalimat ini larangan. Coba perhatikan: kata kerjanya tetap bentuk dasar!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="You shouldn't throw rubbish in the river.">🔊</button><div><div class="en">You <b class="tw" data-say="shouldn't">shouldn't</b> throw rubbish in the river.</div><div class="id">Kamu jangan membuang sampah di sungai.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="He shouldn't leave the faucet open.">🔊</button><div><div class="en">He <b class="tw" data-say="shouldn't">shouldn't</b> leave the faucet open.</div><div class="id">Dia jangan membiarkan keran terbuka.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="You shouldn't walk on the wet floor.">🔊</button><div><div class="en">You <b class="tw" data-say="shouldn't">shouldn't</b> walk on the wet floor.</div><div class="id">Kamu jangan berjalan di lantai yang basah.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="She shouldn't forget to flush the toilet.">🔊</button><div><div class="en">She <b class="tw" data-say="shouldn't">shouldn't</b> forget to flush the toilet.</div><div class="id">Dia jangan lupa menyiram toilet.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="We shouldn't share a toothbrush with our friends.">🔊</button><div><div class="en">We <b class="tw" data-say="shouldn't">shouldn't</b> share a toothbrush with our friends.</div><div class="id">Kita jangan berbagi sikat gigi dengan teman.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="They shouldn't spit on the floor.">🔊</button><div><div class="en">They <b class="tw" data-say="shouldn't">shouldn't</b> spit on the floor.</div><div class="id">Mereka jangan meludah di lantai.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 3">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Bertanya Saran dalam Kalimat 📖</h2>
+  <p class="sub">Ungkapan ini sangat berguna saat kamu ragu harus berbuat apa. Coba ucapkan!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="Should I wash my hands now?">🔊</button><div><div class="en"><b class="tw" data-say="Should I wash my hands now">Should I wash</b> my hands now?</div><div class="id">Apakah aku sebaiknya mencuci tangan sekarang?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="What should I do with this dirty tissue?">🔊</button><div><div class="en"><b class="tw" data-say="What should I do">What should I do</b> with this dirty tissue?</div><div class="id">Apa yang sebaiknya aku lakukan dengan tisu kotor ini?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Yes, you should brush your teeth before bed.">🔊</button><div><div class="en">Yes, you <b class="tw" data-say="should">should</b> brush your teeth before bed.</div><div class="id">Ya, kamu sebaiknya menggosok gigi sebelum tidur.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="No, you shouldn't drink that dirty water!">🔊</button><div><div class="en">No, you <b class="tw" data-say="shouldn't">shouldn't</b> drink that dirty water!</div><div class="id">Tidak, kamu jangan minum air kotor itu!</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Should we bring a towel to school?">🔊</button><div><div class="en"><b class="tw" data-say="Should we bring">Should we bring</b> a towel to school?</div><div class="id">Apakah kita perlu membawa handuk ke sekolah?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="You should be proud of your clean room!">🔊</button><div><div class="en">You <b class="tw" data-say="should">should</b> be proud of your clean room!</div><div class="id">Kamu patut bangga dengan kamarmu yang bersih!</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Percakapan: Cio &amp; Miss Nanda">
+  <span class="badge">Percakapan</span>
+  <h2>Cio, Cuci Tanganmu! 🧼</h2>
+  <p class="sub">Cio 🧒 baru pulang bermain bola dan tangannya kotor. Ia bertemu Miss Nanda 👩‍🏫 di kelas. Kata <i>should</i> dan <i>shouldn't</i> ditandai <span class="tw">kuning</span> — coba klik katanya!</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Percakapan</button>
+    <div class="dialogue" id="mainDialog"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Percakapan">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Percakapan Tadi 🧠</h2>
+  <p class="sub">Jawab 5 soal tentang percakapan Cio &amp; Miss Nanda. Pilih jawaban, lalu klik <b>Cek Jawaban</b> untuk melihat pembahasannya!</p>
+  <div id="convQs"></div>
+</section>
+
+<section class="slide" data-title="5 Percakapan Seru">
+  <span class="badge">Percakapan</span>
+  <h2>5 Percakapan, 5 Tempat Berbeda! 🌍</h2>
+  <p class="sub">Klik tombol untuk ganti percakapan. Klik 🔊 untuk mendengar satu kalimat, atau ▶ untuk mendengar semuanya.</p>
+  <div class="tab-wrap" id="dlgTabs">
+    <div class="tabs" id="dlgTabBtns"></div>
+    <div id="dlgPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Latihan Berbicara">
+  <span class="badge">Praktik</span>
+  <h2>Latihan Berbicara 🎤</h2>
+  <p class="sub">Dengarkan tutor, tulis kalimatmu sendiri di kotak jawaban, lalu bandingkan dengan contoh. Beranilah berbicara!</p>
+  <div class="tab-wrap" id="sitTabs">
+    <div class="tabs" id="sitTabBtns"></div>
+    <div id="sitPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kuis 10 Soal">
+  <span class="badge">Kuis</span>
+  <h2>Kuis Besar: 10 Soal 🏆</h2>
+  <p class="sub">Pilih jawaban yang paling tepat, lalu klik Cek Jawaban. Kumpulkan skor tertinggi!</p>
+  <div class="scorebox"><span>⭐ Skor: <b id="quizScore">0</b>/10</span><span id="quizDone">Terjawab: 0/10</span></div>
+  <div id="quizQs"></div>
+  <div class="finalbanner" id="finalBanner"></div>
+</section>
+
+<section class="slide" data-title="Fabel: Momo si Monyet">
+  <span class="badge">Story Time</span>
+  <h2>Momo the Messy Monkey 🐒</h2>
+  <p class="sub">Sebuah fabel tentang monyet kecil yang malas membersihkan diri. Kata berwarna <span class="tw">kuning</span> bisa diklik! Klik ▶ untuk mendengarkan ceritanya.</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Cerita</button>
+    <div class="para">
+      <p><span class="line-en">Momo is a little monkey. He lives in a tall mango tree in the green jungle. Momo is cute, but he is very <b class="tw" data-say="messy">messy</b>. He never washes his hands, he never brushes his teeth, and his room is full of banana skins and <b class="tw" data-say="trash">trash</b>. His mother always says, “Momo, you <b class="tw" data-say="should">should</b> take a <b class="tw" data-say="bath">bath</b> every day. You <b class="tw" data-say="should">should</b> clean your room!” But Momo always answers, “Later, Mom! I want to play!” 🍌</span></p>
+      <button class="mini saybtn" data-say="Momo is a little monkey. He lives in a tall mango tree in the green jungle. Momo is cute, but he is very messy. He never washes his hands, he never brushes his teeth, and his room is full of banana skins and trash. His mother always says, Momo, you should take a bath every day. You should clean your room! But Momo always answers, Later, Mom! I want to play!">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">One sunny day, Momo's friends come to play. “Eww! Your fur is <b class="tw" data-say="dirty">dirty</b> and your breath smells bad, Momo!” says Lala the rabbit. “We <b class="tw" data-say="shouldn't">shouldn't</b> play with a dirty monkey,” says Toto the tiger, and they all go away. Momo feels very sad. That night, his tooth hurts too. “Ouch! Ouch!” The doctor says, “You <b class="tw" data-say="shouldn't">shouldn't</b> eat too many sweets. You <b class="tw" data-say="should">should</b> <b class="tw" data-say="brush">brush</b> your teeth twice a day, and you <b class="tw" data-say="should">should</b> keep your room <b class="tw" data-say="tidy">tidy</b>.” 🦷</span></p>
+      <button class="mini saybtn" data-say="One sunny day, Momo's friends come to play. Eww! Your fur is dirty and your breath smells bad, Momo! says Lala the rabbit. We shouldn't play with a dirty monkey, says Toto the tiger, and they all go away. Momo feels very sad. That night, his tooth hurts too. Ouch! Ouch! The doctor says, You shouldn't eat too many sweets. You should brush your teeth twice a day, and you should keep your room tidy.">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">Momo listens to the doctor. He takes a <b class="tw" data-say="bath">bath</b>, brushes his teeth, and <b class="tw" data-say="sweep">sweeps</b> his room. He <b class="tw" data-say="wipe">wipes</b> the floor and throws all the trash into the <b class="tw" data-say="trash bin">trash bin</b>. The next morning, his friends come back. “Wow! Momo, you smell so nice, and your room is so <b class="tw" data-say="clean">clean</b>!” they say. Now Momo is happy and <b class="tw" data-say="healthy">healthy</b>. He <b class="tw" data-say="should">should</b> be very proud — and he is! 🐒✨</span></p>
+      <button class="mini saybtn" data-say="Momo listens to the doctor. He takes a bath, brushes his teeth, and sweeps his room. He wipes the floor and throws all the trash into the trash bin. The next morning, his friends come back. Wow! Momo, you smell so nice, and your room is so clean! they say. Now Momo is happy and healthy. He should be very proud — and he is!">🔊</button>
+    </div>
+    <div class="moral">🌱 Moral of the story: <b>Clean body, clean room, happy friends!</b><small>Tubuh bersih, kamar bersih, teman-teman pun bahagia!</small></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Fabel">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Cerita Momo 🐒</h2>
+  <p class="sub">Jawab 5 soal berikut berdasarkan fabel yang baru saja kamu baca atau dengar!</p>
+  <div id="fableQs"></div>
+  <button class="btn ghost" onclick="show(15)">📖 Baca Ulang Cerita</button>
+</section>
+
+<section class="slide" data-title="Kesimpulan">
+  <span class="badge">Kesimpulan</span>
+  <h2>Ingat 3 Hal Ini! 📌</h2>
+  <p class="sub">Ini rangkuman materi hari ini. Simpan baik-baik di kepalamu, ya!</p>
+  <div class="grid3">
+    <div class="card sumcard" style="background:var(--green-l)">
+      <h3 style="color:var(--green)">✅ Should (+)</h3>
+      <ul>
+        <li>Artinya: <b>sebaiknya / seharusnya</b></li>
+        <li>Rumus: <b>Subject + should + Verb 1</b></li>
+        <li><b>You should wash your hands.</b></li>
+        <li>Kata kerja tetap bentuk dasar!</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--red-l)">
+      <h3 style="color:var(--red)">❌ Shouldn't (−)</h3>
+      <ul>
+        <li><b>shouldn't = should not</b></li>
+        <li>Artinya: <b>jangan</b></li>
+        <li><b>You shouldn't litter.</b></li>
+        <li>Kata kerjanya juga bentuk dasar!</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--purple-l)">
+      <h3 style="color:var(--purple)">🧼 30 Kata Kebersihan</h3>
+      <ul>
+        <li><b>Diri:</b> wash, soap, bath, brush, towel</li>
+        <li><b>Rumah:</b> sweep, mop, wipe, tidy, trash bin</li>
+        <li><b>Sehat:</b> germs, faucet, flush, healthy</li>
+        <li>Dan masih banyak lagi!</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bigbanner">🎯 Saran baik → <b>should + Verb 1</b> &nbsp;•&nbsp; Larangan → <b>shouldn't + Verb 1</b> &nbsp;•&nbsp; Bertanya → <b>Should I...? / What should I do?</b> &nbsp;•&nbsp; Dan ingat: <b>keep it clean!</b> 🧼✨</div>
+</section>
+
+<section class="slide" data-title="Refleksi">
+  <span class="badge">Refleksi</span>
+  <h2>Bagaimana Perasaanmu Hari Ini? 🪞</h2>
+  <p class="sub">Klik emoji yang paling sesuai dengan perasaanmu setelah belajar!</p>
+  <div class="refl-row">
+    <button class="refl" data-msg="Kerja bagus! Kamu sudah jago memberi saran dengan should dan shouldn't! 🌟"><span class="em">😊</span><span>Paham sekali!</span></button>
+    <button class="refl" data-msg="Tidak apa-apa! Coba baca lagi Materi 1 dan Materi 2, ya. 💪"><span class="em">😐</span><span>Cukup paham</span></button>
+    <button class="refl" data-msg="Santai! Minta gurumu mengulang materinya. Kita belajar bersama-sama! 🤗"><span class="em">😕</span><span>Masih bingung</span></button>
+  </div>
+  <div id="reflMsg" class="refl-msg" style="display:none"></div>
+  <div class="card">
+    <h3>Coba jawab di bukumu ✏️</h3>
+    <ul style="margin-top:10px;padding-left:22px;font-weight:600;line-height:2">
+      <li>Kebiasaan kebersihan apa yang sudah kamu lakukan hari ini? Jawab dengan <b>“I should...”</b>!</li>
+      <li>Buat satu kalimat <b>“You shouldn't...”</b> tentang sampah!</li>
+      <li>Should I wash my hands before eating? Bagaimana jawabannya?</li>
+      <li>Menurutmu, mengapa kita tidak boleh membuang sampah di sungai? 🐟</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-title="Thank You!">
+  <div class="card thanks">
+    <div style="font-size:3.6rem">🌟🎉🌟</div>
+    <h1>Thank You for Today!</h1>
+    <p class="sub" style="margin-top:10px">Kamu sudah belajar <b>should</b>, <b>shouldn't</b>, dan <b>30 kata kebersihan</b> baru hari ini. Hebat sekali!</p>
+    <p style="font-weight:800;color:#475569">Great job, everyone! See you in the next lesson. 👋</p>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn primary" onclick="confetti();speak('Great job, everyone! Thank you for today! See you next time!')">🎉 Celebrate!</button>
+      <button class="btn ghost" onclick="show(0)">🔁 Kembali ke Awal</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="navbtn" id="prevBtn" title="Sebelumnya">◀</button>
+  <span id="counter">1 / 20</span>
+  <button class="navbtn" id="nextBtn" title="Berikutnya">▶</button>
+</nav>
+
+<div class="overlay" id="menuOverlay">
+  <div class="menu-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>📚 Daftar Slide</h3>
+      <button class="chip-btn" onclick="closeMenu()">✕ Tutup</button>
+    </div>
+    <div id="menuList"></div>
+  </div>
+</div>
+<script>
+/* ================= DATA PERCAKAPAN ================= */
+const MAIN = {
+  who: ["Miss Nanda", "Cio"], av: ["👩‍🏫", "🧒"],
+  lines: [
+    {s:0, text:"Good morning, Cio! Why are your hands so dirty? 😲"},
+    {s:1, text:"Good morning, Miss Nanda! I played football in the muddy field. ⚽"},
+    {s:0, text:"Oh no! You *should* wash your hands with soap. Germs love dirty hands!"},
+    {s:1, text:"Yes, Miss. But... what *should* I do first?"},
+    {s:0, text:"First, you *should* go to the washroom. Then you *should* dry your hands with a *towel*."},
+    {s:1, text:"Okay, Miss. And *should* I cut my nails too? They are so long! ✂️"},
+    {s:0, text:"Yes, you *should*! Long nails are a home for germs. Hmm... and your desk is very *messy*."},
+    {s:1, text:"I know... I *shouldn't* leave my books and trash on the desk."},
+    {s:0, text:"That's right! And you *shouldn't* throw *rubbish* on the floor. Where *should* the rubbish go?"},
+    {s:1, text:"It *should* go into the *trash bin*! I will clean my desk after class. 🧹"},
+    {s:0, text:"Excellent! A clean student is a *healthy* student. 💪"}
+  ]
+};
+
+const DIALOGUES = [
+  {emoji:"🚻", title:"Di Kamar Mandi", who:["Rina","Mom"], av:["👧","👩"], lines:[
+    {s:1, text:"Rina, it's bath time! You *should* take a *bath* now."},
+    {s:0, text:"Okay, Mom. Should I wash my hair with *shampoo* too?"},
+    {s:1, text:"Yes, you *should*. Your hair is dirty after school."},
+    {s:0, text:"And should I dry myself with the small *towel*?"},
+    {s:1, text:"No, you *shouldn't*. Use the big one — the small one is for your hands."},
+    {s:0, text:"Got it, Mom! I will be quick and clean! 🛁"}
+  ]},
+  {emoji:"🏫", title:"Kerja Bakti di Kelas", who:["Cio","Dita"], av:["🧒","👧"], lines:[
+    {s:1, text:"It's clean-up time, Cio! What *should* we do first?"},
+    {s:0, text:"We *should* *sweep* the floor. Look at all that *dust*!"},
+    {s:1, text:"You're right. I will sweep, and you *should* *wipe* the desks."},
+    {s:0, text:"Okay! Should we throw the old papers away?"},
+    {s:1, text:"Yes, we *should*. But we *shouldn't* throw them on the floor — put them in the *trash bin*!"},
+    {s:0, text:"Haha, of course! Our classroom *should* be *clean* and *tidy*. 🧹"}
+  ]},
+  {emoji:"🍽️", title:"Di Kantin", who:["Ben","Bu Kantin"], av:["🧒","👩‍🍳"], lines:[
+    {s:1, text:"Welcome, Ben! What do you want to eat?"},
+    {s:0, text:"Fried rice, please! Oh wait — should I *wash* my hands first?"},
+    {s:1, text:"Yes, you *should*! You *shouldn't* eat with dirty hands. Germs! 🦠"},
+    {s:0, text:"Where is the washroom, Ma'am?"},
+    {s:1, text:"Over there. And don't forget — you *shouldn't* leave your trash on the table."},
+    {s:0, text:"I won't, Ma'am. My trash *should* go into the bin! 🍚"}
+  ]},
+  {emoji:"🌳", title:"Di Taman", who:["Sasa","Rio"], av:["👧","🧒"], lines:[
+    {s:0, text:"The park is so beautiful! Mmm, this candy is yummy. 🍬"},
+    {s:1, text:"Sasa, where *should* you put the candy wrapper?"},
+    {s:0, text:"Umm... on the grass?"},
+    {s:1, text:"No! You *shouldn't* litter in the park. You *should* keep it in your pocket."},
+    {s:0, text:"Oh, I see. And we *should* throw it into the *trash bin* later."},
+    {s:1, text:"That's right! A clean park should make everyone happy. 🌳"}
+  ]},
+  {emoji:"🛏️", title:"Kamar yang Berantakan", who:["Rian","Dad"], av:["🧒","👨"], lines:[
+    {s:1, text:"Rian! Your room is so *messy*. You *should* tidy it up now."},
+    {s:0, text:"But Dad, I want to play first!"},
+    {s:1, text:"You *shouldn't* leave your toys and clothes on the floor."},
+    {s:0, text:"Okay, okay... What *should* I do with these dirty clothes?"},
+    {s:1, text:"You *should* put them in the *laundry* basket. And make your bed!"},
+    {s:0, text:"Done! Wow, my room looks bigger when it is tidy. 😄"}
+  ]}
+];
+
+const SITUATIONS = [
+  {emoji:"🧼", title:"Sebelum Makan", tav:"👩",
+   ctx:"Tanganmu kotor setelah bermain. Ibu memanggilmu untuk makan malam.",
+   t1:"Dinner is ready! But look at your hands. What should you do?",
+   hint1:"coba pakai “should wash”",
+   t2:"Right! And what should you use to make your hands clean?",
+   hint2:"coba pakai “soap”",
+   s1:"I should wash my hands first, Mom.",
+   s2:"I should wash them with soap and water!"},
+  {emoji:"🍬", title:"Permen dan Kertasnya", tav:"🧒",
+   ctx:"Kamu baru saja makan permen. Kertas pembungkusnya ada di tanganmu, tapi tidak ada tempat sampah di dekatmu.",
+   t1:"You have a candy wrapper in your hand. What shouldn't you do?",
+   hint1:"coba pakai “shouldn't throw”",
+   t2:"Good! So what should you do with the wrapper?",
+   hint2:"coba pakai “keep it in my pocket”",
+   s1:"I shouldn't throw it on the ground.",
+   s2:"I should keep it in my pocket and put it in the trash bin later."},
+  {emoji:"🦷", title:"Sebelum Tidur", tav:"👩",
+   ctx:"Kamu sangat mengantuk dan ingin langsung tidur tanpa menggosok gigi.",
+   t1:"You look so sleepy! Should you go to bed without brushing your teeth?",
+   hint1:"jawab dengan “No, I shouldn't”",
+   t2:"So what should you do first?",
+   hint2:"coba pakai “brush my teeth”",
+   s1:"No, I shouldn't. That is bad for my teeth.",
+   s2:"I should brush my teeth before I sleep."},
+  {emoji:"🚰", title:"Keran yang Terbuka", tav:"👦",
+   ctx:"Kakakmu lupa menutup keran setelah mencuci tangan. Air terus mengalir.",
+   t1:"Look! The faucet is open. What should we do?",
+   hint1:"coba pakai “turn off the faucet”",
+   t2:"Why should we turn it off quickly?",
+   hint2:"coba pakai “save water”",
+   s1:"We should turn off the faucet.",
+   s2:"Because we should save water! Water is precious."},
+  {emoji:"🤧", title:"Batuk di Kelas", tav:"👧",
+   ctx:"Temanmu sedang batuk-batuk di kelas tanpa menutup mulutnya.",
+   t1:"Your friend is coughing without covering his mouth. What should he do?",
+   hint1:"coba pakai “handkerchief” atau “tissue”",
+   t2:"And what should YOU do to stay healthy?",
+   hint2:"coba pakai “wash my hands”",
+   s1:"He should cover his mouth with a handkerchief or a tissue.",
+   s2:"I should wash my hands often."}
+];
+
+/* ================= DATA SOAL ================= */
+const CONV_QS = [
+  {type:"Percakapan 📖", q:"Why are Cio's hands dirty?",
+   opts:["He painted the wall.","He played football in the muddy field.","He helped his mom cook.","He forgot to use soap."],
+   a:1,
+   exp:"Cio berkata, “I played football in the muddy field.” Jadi tangannya kotor karena bermain bola di lapangan berlumpur. ⚽"},
+  {type:"Percakapan 📖", q:"What should Cio do FIRST, according to Miss Nanda?",
+   opts:["Clean his desk","Cut his nails","Wash his hands with soap","Go home"],
+   a:2,
+   exp:"Miss Nanda berkata, “You should wash your hands with soap.” Itu saran pertama, sebelum memotong kuku atau merapikan meja."},
+  {type:"Percakapan 📖", q:"Why should Cio cut his nails?",
+   opts:["Long nails are a home for germs.","Because nails are too long to wash.","Because his friends say so.","Because Miss Nanda has short nails."],
+   a:0,
+   exp:"Miss Nanda berkata, “Long nails are a home for germs.” Kuku panjang adalah tempat persembunyian kuman. 🦠"},
+  {type:"Percakapan 📖", q:"Which one is Cio's BAD habit? (kebiasaan buruk)",
+   opts:["He dries his hands with a towel.","He leaves books and trash on his desk.","He plays football.","He says thank you."],
+   a:1,
+   exp:"Cio berkata, “I shouldn't leave my books and trash on the desk.” Artinya kebiasaan buruknya adalah meninggalkan buku dan sampah di meja."},
+  {type:"Percakapan 📖", q:"Where should the rubbish go?",
+   opts:["On the floor","Into the trash bin","Under the desk","Out of the window"],
+   a:1,
+   exp:"Cio menjawab, “It should go into the trash bin!” Sampah harus masuk ke tempat sampah. 🗑️"}
+];
+
+const QUIZ = [
+  {type:"Lengkapi Kata 📝", q:"Your hands are dirty. You ______ wash them with soap.",
+   opts:["should","shouldn't","don't","aren't"], a:0,
+   exp:"Tangan kotor → saran yang baik: You SHOULD wash them with soap. (Kamu sebaiknya mencucinya dengan sabun.)"},
+  {type:"Lengkapi Kata 📝", q:"We ______ throw trash into the river. The fish can get sick!",
+   opts:["should","shouldn't","can","will"], a:1,
+   exp:"Membuang sampah ke sungai itu buruk → shouldn't (jangan!). Ikan-ikan bisa sakit. 🐟"},
+  {type:"Lengkapi Kata 📝", q:"______ I bring a towel for PE class?",
+   opts:["Do","Am","Should","Is"], a:2,
+   exp:"Bertanya saran → Should + subject + verb 1: “Should I bring a towel?” (Apakah aku perlu membawa handuk?)"},
+  {type:"Lengkapi Kata 📝", q:"You should wash your hands ______ soap and water.",
+   opts:["with","use","on","for"], a:0,
+   exp:"“with soap and water” = dengan sabun dan air. Kata yang tepat adalah with."},
+  {type:"Lengkapi Kata 📝", q:"Ben is sick. He ______ eat too many sweets.",
+   opts:["should","shouldn't","shoulds","should to"], a:1,
+   exp:"Makan terlalu banyak permen itu buruk → shouldn't. Ingat: shouldn't + verb 1 (tanpa to, tanpa -s)."},
+  {type:"Pilih Kalimat ✅", q:"Which sentence is CORRECT?",
+   opts:["You should to brush your teeth.","You should brushing your teeth.","You should brush your teeth.","You shoulds brush your teeth."], a:2,
+   exp:"Setelah should, kata kerja bentuk dasar: should brush ✅. Should to brush ❌, should brushing ❌, shoulds ❌."},
+  {type:"Eja Kata 🔤", q:"Which is the correct spelling of “sabun”?",
+   opts:["saop","sope","soap","sowp"], a:2,
+   exp:"Sabun dalam bahasa Inggris dieja s-o-a-p → soap. 🧼"},
+  {type:"Arti Kata 🇮🇩", q:"“Menyapu lantai” in English is...",
+   opts:["mop the floor","sweep the floor","wipe the floor","flush the floor"], a:1,
+   exp:"Menyapu = sweep, mengepel = mop, menyeka = wipe. Jadi menyapu lantai = sweep the floor. 🧹"},
+  {type:"Lengkapi Kata 📝", q:"After using the toilet, we should ______ it.",
+   opts:["flush","wash","sweep","comb"], a:0,
+   exp:"Flush the toilet = menyiram toilet. Setelah pakai toilet, kita harus menyiramnya agar tetap bersih. 🚽"},
+  {type:"Pilih Kalimat ✅", q:"Your friend always leaves trash on the floor. What do you say?",
+   opts:["You shouldn't throw trash on the floor!","You should throw trash on the floor!","You shouldn't keep our class clean.","You should leave your trash there!"], a:0,
+   exp:"Untuk menghentikan kebiasaan buruk, pakai shouldn't: “You shouldn't throw trash on the floor!” (Jangan buang sampah di lantai!)"}
+];
+
+const FABLE_QS = [
+  {type:"Cerita 🐒", q:"What is Momo's problem at the beginning of the story?",
+   opts:["He is very messy and never cleans himself.","He is a big tiger.","He has no tree to live in.","He is always sick."], a:0,
+   exp:"Paragraf 1: “Momo is cute, but he is very messy. He never washes his hands, he never brushes his teeth...”"},
+  {type:"Cerita 🐒", q:"What does Momo's mother always say?",
+   opts:["“You should play all day!”","“You should take a bath and clean your room!”","“You shouldn't eat bananas!”","“You should sleep late!”"], a:1,
+   exp:"Paragraf 1: “Momo, you should take a bath every day. You should clean your room!”"},
+  {type:"Cerita 🐒", q:"Why do Lala and Toto go away?",
+   opts:["They are hungry.","They want to sleep.","Momo is dirty, so they shouldn't play with him.","Momo's room is too big."], a:2,
+   exp:"Toto berkata, “We shouldn't play with a dirty monkey.” Momo kotor, jadi teman-temannya pergi. 😢"},
+  {type:"Cerita 🐒", q:"What does the doctor tell Momo to do?",
+   opts:["Eat more sweets","Brush his teeth twice a day and keep his room tidy","Never take a bath","Play outside all night"], a:1,
+   exp:"Dokter berkata: “You shouldn't eat too many sweets. You should brush your teeth twice a day, and you should keep your room tidy.”"},
+  {type:"Cerita 🐒", q:"What can we learn from the story?",
+   opts:["Cleaning is not important.","Play first, clean later.","Keeping clean makes us healthy and happy with friends.","Monkeys don't need a bath."], a:2,
+   exp:"Setelah Momo bersih, teman-temannya kembali dan dia sehat. Pesan cerita: menjaga kebersihan membuat kita sehat dan disayangi teman! 🧼"}
+];
+
+/* ================= SUARA (TEXT TO SPEECH) ================= */
+let voices = [];
+let muted = false;
+function loadVoices(){
+  if(!('speechSynthesis' in window)) return;
+  voices = speechSynthesis.getVoices().filter(function(v){ return /^en/i.test(v.lang); });
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+let readToken = 0, playBtn = null;
+function resetReader(){
+  if(playBtn){
+    playBtn.textContent = playBtn.dataset.orig;
+    playBtn.classList.remove('playing');
+    playBtn = null;
+  }
+}
+function speak(text){
+  if(muted || !('speechSynthesis' in window)) return;
+  readToken++; resetReader();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+  if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+  speechSynthesis.speak(u);
+}
+function readSeq(btn){
+  readToken++;
+  const myId = readToken;
+  if(playBtn === btn){ speechSynthesis.cancel(); resetReader(); return; }
+  speechSynthesis.cancel(); resetReader();
+  const cont = btn.closest('.read-container');
+  if(!cont) return;
+  const texts = Array.from(cont.querySelectorAll('.saybtn[data-say]')).map(function(b){ return b.dataset.say; });
+  if(!texts.length) return;
+  playBtn = btn; btn.classList.add('playing'); btn.textContent = '⏹ Berhenti';
+  let i = 0;
+  (function next(){
+    if(myId !== readToken) return;
+    if(i >= texts.length){ readToken++; resetReader(); return; }
+    const u = new SpeechSynthesisUtterance(texts[i++]);
+    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+    if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+    u.onend = next;
+    u.onerror = function(){ if(myId === readToken){ readToken++; resetReader(); } };
+    speechSynthesis.speak(u);
+  })();
+}
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-say]');
+  if(el) speak(el.dataset.say);
+});
+
+/* ================= NAVIGASI SLIDE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+let cur = 0;
+function show(i){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, k){ s.classList.toggle('active', k === cur); });
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('progressFill').style.width = ((cur + 1) / slides.length * 100) + '%';
+  document.getElementById('prevBtn').disabled = (cur === 0);
+  document.getElementById('nextBtn').disabled = (cur === slides.length - 1);
+  window.scrollTo({top:0, behavior:'smooth'});
+  closeMenu();
+}
+function goTo(i){ show(i); }
+function nextSlide(){ show(cur + 1); }
+function prevSlide(){ show(cur - 1); }
+document.addEventListener('keydown', function(e){
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
+  if(e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+});
+
+/* ================= MENU SLIDE ================= */
+function openMenu(){ document.getElementById('menuOverlay').classList.add('open'); }
+function closeMenu(){ document.getElementById('menuOverlay').classList.remove('open'); }
+const menuList = document.getElementById('menuList');
+slides.forEach(function(s, i){
+  const b = document.createElement('button');
+  b.className = 'menu-item';
+  b.innerHTML = '<span class="n">' + (i + 1) + '</span> ' + (s.dataset.title || ('Slide ' + (i + 1)));
+  b.onclick = function(){ show(i); };
+  menuList.appendChild(b);
+});
+document.getElementById('menuOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeMenu();
+});
+
+/* ================= TOMBOL SUARA ================= */
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', function(){
+  muted = !muted;
+  muteBtn.textContent = muted ? '🔇 Suara OFF' : '🔈 Suara ON';
+  if(muted){ speechSynthesis.cancel(); readToken++; resetReader(); }
+});
+
+/* ================= RENDER PERCAKAPAN ================= */
+function fmt(t){
+  return t.replace(/\*(.+?)\*/g, function(m, w){
+    return '<b class="tw" data-say="' + w + '">' + w + '</b>';
+  });
+}
+function plain(t){ return t.replace(/\*/g, ''); }
+function linesHtml(d){
+  return d.lines.map(function(l){
+    const side = l.s === 0 ? '' : ' right';
+    const bub = l.s === 0 ? 'b-b' : 'b-p';
+    return '<div class="line' + side + '"><span class="who">' + d.av[l.s] + '</span>' +
+      '<div class="bubble ' + bub + '"><span class="name">' + d.who[l.s] + '</span>' +
+      '<span class="line-en">' + fmt(l.text) + '</span></div>' +
+      '<button class="mini saybtn" data-say="' + plain(l.text) + '">🔊</button></div>';
+  }).join('');
+}
+function renderDialogueTabs(){
+  const panels = document.getElementById('dlgPanels');
+  const btns = document.getElementById('dlgTabBtns');
+  DIALOGUES.forEach(function(d, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#dp' + i;
+    pb.textContent = d.emoji + ' ' + d.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'dp' + i;
+    panel.innerHTML = '<div class="read-container"><button class="btn primary readall" style="margin-bottom:12px">▶ Baca Percakapan</button><div class="dialogue">' + linesHtml(d) + '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function renderSituations(){
+  const panels = document.getElementById('sitPanels');
+  const btns = document.getElementById('sitTabBtns');
+  SITUATIONS.forEach(function(s, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#sp' + i;
+    pb.textContent = s.emoji + ' ' + (i + 1) + '. ' + s.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'sp' + i;
+    panel.innerHTML =
+      '<div class="card sit-card">' +
+      '<h3>' + s.emoji + ' Situasi ' + (i + 1) + ': ' + s.title + '</h3>' +
+      '<p class="ctx">🎬 ' + s.ctx + '</p>' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t1 + '”</div><button class="mini saybtn" data-say="' + s.t1 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 1 <small>(' + s.hint1 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'a" placeholder="Tulis kalimatmu di sini..." autocomplete="off">' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t2 + '”</div><button class="mini saybtn" data-say="' + s.t2 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 2 <small>(' + s.hint2 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'b" placeholder="Tulis balasanmu di sini..." autocomplete="off">' +
+      '<button class="btn ghost" onclick="revealSit(' + i + ')">💡 Lihat Contoh Jawaban</button>' +
+      '<div class="sample" id="sample' + i + '" style="display:none">' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t1 + '” → Kamu: <b>“' + s.s1 + '”</b></span><button class="mini saybtn" data-say="' + s.s1 + '">🔊</button></div>' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t2 + '” → Kamu: <b>“' + s.s2 + '”</b></span><button class="mini saybtn" data-say="' + s.s2 + '">🔊</button></div>' +
+      '<div class="starmsg" id="star' + i + '"></div>' +
+      '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function revealSit(i){
+  document.getElementById('sample' + i).style.display = 'flex';
+  const a = document.getElementById('s' + i + 'a').value.trim();
+  const b = document.getElementById('s' + i + 'b').value.trim();
+  const st = document.getElementById('star' + i);
+  st.textContent = (a && b) ? '⭐ Hebat! Kamu sudah berani berbicara bahasa Inggris!' : '💪 Ayo isi jawabanmu dulu, lalu bandingkan dengan contoh!';
+}
+
+/* ================= RENDER SOAL PILIHAN GANDA ================= */
+function renderMC(mountId, list, opt){
+  opt = opt || {};
+  const mount = document.getElementById(mountId);
+  let answered = 0, correct = 0;
+  list.forEach(function(item, idx){
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    const optsHtml = item.opts.map(function(o, i){
+      return '<button class="opt" data-i="' + i + '"><span class="letter">' + 'ABCD'[i] + '.</span><span>' + o + '</span></button>';
+    }).join('');
+    card.innerHTML =
+      '<div class="q-head"><span class="q-num">' + (idx + 1) + '</span>' +
+      (item.type ? '<span class="q-type">' + item.type + '</span>' : '') +
+      '<span class="q-result"></span></div>' +
+      '<div class="q-text">' + item.q + '</div>' +
+      '<div class="opts">' + optsHtml + '</div>' +
+      '<button class="btn check" disabled>Cek Jawaban ✅</button>' +
+      '<div class="pembahasan" style="display:none"><b>💡 Pembahasan:</b> ' + item.exp + '</div>';
+    let picked = null, done = false;
+    card.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(done) return;
+        card.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        picked = parseInt(btn.dataset.i, 10);
+        card.querySelector('.check').disabled = false;
+      });
+    });
+    card.querySelector('.check').addEventListener('click', function(){
+      if(picked === null || done) return;
+      done = true; answered++;
+      const right = item.a;
+      card.querySelectorAll('.opt').forEach(function(b){
+        b.disabled = true;
+        if(parseInt(b.dataset.i, 10) === right) b.classList.add('correct');
+        else if(parseInt(b.dataset.i, 10) === picked) b.classList.add('wrong');
+      });
+      const ok = (picked === right);
+      if(ok) correct++;
+      const res = card.querySelector('.q-result');
+      res.textContent = ok ? 'Benar! 🎉' : 'Belum tepat 😅';
+      res.style.color = ok ? 'var(--green)' : 'var(--red)';
+      card.querySelector('.pembahasan').style.display = 'block';
+      card.querySelector('.check').disabled = true;
+      if(opt.onAnswer) opt.onAnswer(answered, correct, list.length, ok);
+    });
+    mount.appendChild(card);
+  });
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tabs').forEach(function(tg){
+  tg.addEventListener('click', function(e){
+    const btn = e.target.closest('.tabbtn');
+    if(!btn) return;
+    const wrap = tg.closest('.tab-wrap');
+    wrap.querySelectorAll('.tabbtn').forEach(function(b){ b.classList.remove('active'); });
+    wrap.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    wrap.querySelector(btn.dataset.target).classList.add('active');
+  });
+});
+
+/* ================= REFLEKSI ================= */
+document.querySelectorAll('.refl').forEach(function(b){
+  b.addEventListener('click', function(){
+    const m = document.getElementById('reflMsg');
+    m.textContent = b.dataset.msg;
+    m.style.display = 'block';
+  });
+});
+
+/* ================= CONFETTI ================= */
+function confetti(n){
+  n = n || 90;
+  const colors = ['#f43f5e','#f59e0b','#10b981','#3b82f6','#8b5cf6','#ec4899'];
+  for(let k = 0; k < n; k++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (Math.random() * 100) + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (2.2 + Math.random() * 1.8) + 's';
+    c.style.animationDelay = (Math.random() * 0.6) + 's';
+    const size = (7 + Math.random() * 8) + 'px';
+    c.style.width = size; c.style.height = size;
+    if(Math.random() < 0.5) c.style.borderRadius = '50%';
+    document.body.appendChild(c);
+    setTimeout(function(){ c.remove(); }, 5400);
+  }
+}
+
+/* ================= INISIALISASI ================= */
+document.getElementById('mainDialog').innerHTML = linesHtml(MAIN);
+renderDialogueTabs();
+renderSituations();
+renderMC('convQs', CONV_QS);
+renderMC('quizQs', QUIZ, {
+  onAnswer: function(ans, corr, total){
+    document.getElementById('quizScore').textContent = corr;
+    document.getElementById('quizDone').textContent = 'Terjawab: ' + ans + '/' + total;
+    if(ans === total){
+      const fb = document.getElementById('finalBanner');
+      let msg;
+      if(corr === total) msg = '🏆 SEMPURNA! Kamu jenius should & shouldn\'t!';
+      else if(corr >= 8) msg = '🌟 HEBAT! Sedikit lagi sempurna!';
+      else if(corr >= 6) msg = '👍 BAGUS! Terus berlatih ya!';
+      else msg = '💪 Jangan menyerah! Ayo pelajari lagi materinya!';
+      fb.innerHTML = '<div>' + msg + '</div><div class="fscore">Skor akhir: ' + corr + '/' + total + '</div>';
+      fb.style.display = 'block';
+      confetti();
+    }
+  }
+});
+renderMC('fableQs', FABLE_QS);
+document.querySelectorAll('.readall').forEach(function(b){
+  b.dataset.orig = b.textContent;
+  b.addEventListener('click', function(){ readSeq(b); });
+});
+document.getElementById('prevBtn').addEventListener('click', prevSlide);
+document.getElementById('nextBtn').addEventListener('click', nextSlide);
+show(0);
+</script>
+</body>
+</html>
