@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Was &amp; Were — How Were You Yesterday? — English Fun untuk SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--ink:#2b3a55;--card:#fff;
+--blue:#2563eb;--blue-l:#dbeafe;
+--purple:#7c3aed;--purple-l:#ede9fe;
+--orange:#ea580c;--orange-l:#ffedd5;
+--green:#059669;--green-l:#d1fae5;
+--red:#dc2626;--red-l:#fee2e2;
+--yellow-l:#fef9c3;--pink-l:#fce7f3;
+--sky:#0ea5e9;
+--rose:#e11d48;--rose-l:#ffe4e6;--amber:#d97706;--amber-l:#fef3c7;
+--shadow:0 10px 30px rgba(43,58,85,.14);--radius:18px}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito','Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#fecdd3 0%,#fef3c7 50%,#fbcfe8 100%);background-attachment:fixed;color:var(--ink);min-height:100vh}
+h1,h2,h3,h4{font-family:'Baloo 2','Nunito',cursive;line-height:1.25}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:50;box-shadow:0 2px 12px rgba(43,58,85,.08)}
+.topbar .brand{font-weight:800;font-family:'Baloo 2';font-size:1.02rem;color:var(--rose);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .tools{display:flex;gap:8px;flex-shrink:0}
+.chip-btn{border:none;background:var(--rose-l);color:var(--rose);font-weight:800;padding:7px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-size:.83rem;transition:.15s}
+.chip-btn:hover{filter:brightness(.94);transform:translateY(-1px)}
+.progress{position:fixed;top:56px;left:0;right:0;height:5px;background:rgba(255,255,255,.55);z-index:50}
+#progressFill{height:100%;width:0;background:linear-gradient(90deg,var(--rose),#f59e0b);transition:width .3s}
+.slide{display:none;max-width:1080px;margin:0 auto;padding:84px 20px 110px;min-height:100vh}
+.slide.active{display:block;animation:pop .45s ease}
+@keyframes pop{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.badge{display:inline-block;background:#fff;color:var(--rose);font-weight:800;font-size:.76rem;letter-spacing:.6px;padding:5px 14px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:12px;text-transform:uppercase}
+.slide h2{font-size:2rem;margin-bottom:6px}
+.sub{color:#5b6b8c;margin-bottom:20px;font-weight:600}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* cover */
+.cover{text-align:center;padding:56px 26px;background:linear-gradient(160deg,#ffffff,#fff1f2)}
+.cover h1{font-size:2.5rem}
+.float-emoji{font-size:2.4rem;letter-spacing:8px;margin:12px 0}
+.word-chips{margin:18px 0 24px}
+.chip{display:inline-block;background:var(--rose-l);color:#be123c;padding:6px 14px;border-radius:999px;font-weight:800;margin:4px;font-family:'Baloo 2'}
+.hint{color:#64748b;font-size:.9rem;margin-top:16px;font-weight:600}
+/* tujuan */
+.goal{display:flex;flex-direction:column}
+.goal p{font-size:.92rem;color:#475569;font-weight:600;margin-top:6px;line-height:1.55}
+.gemoji{font-size:2.2rem}
+.tipcard{background:var(--yellow-l)}
+/* kartu kosakata */
+.gtitle{margin:20px 0 10px;font-size:1.3rem}
+.t-a{color:var(--amber)}.t-b{color:var(--blue)}.t-c{color:var(--green)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:14px}
+.vcard{border-radius:16px;padding:16px;cursor:pointer;transition:.2s;user-select:none}
+.vcard:hover{transform:translateY(-5px) scale(1.02);box-shadow:var(--shadow)}
+.vword{font-family:'Baloo 2';font-size:1.45rem;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.vphon{font-size:.82rem;color:#64748b;font-weight:700;font-family:'Nunito'}
+.vmean{font-weight:800;font-size:.93rem;margin:6px 0}
+.vex{font-size:.86rem;color:#475569;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.g-a{background:var(--amber-l)}.g-a .vword{color:var(--amber)}
+.g-b{background:var(--blue-l)}.g-b .vword{color:var(--blue)}
+.g-c{background:var(--green-l)}.g-c .vword{color:var(--green)}
+.mini{border:none;background:rgba(255,255,255,.9);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.14);flex-shrink:0;transition:.15s;display:inline-flex;align-items:center;justify-content:center}
+.mini:hover{transform:scale(1.15)}
+/* kata tunjuk */
+.tw{background:linear-gradient(transparent 55%,#fde68a 55%);padding:0 3px;border-radius:4px;cursor:pointer;font-weight:800;color:#92400e}
+.mtable{width:100%;border-collapse:separate;border-spacing:10px}
+.mtable th{font-family:'Baloo 2';font-size:1rem;color:#334155;padding:6px}
+.mtable .rowlab{background:#fff;border-radius:14px;box-shadow:var(--shadow);width:132px}
+.mtable td{border-radius:16px;padding:16px 12px;box-shadow:var(--shadow);vertical-align:top;text-align:center}
+.mtable .big{font-family:'Baloo 2';font-size:1.7rem;display:block}
+.c-a{background:var(--rose-l)}.c-a .big{color:var(--rose)}
+.c-b{background:var(--amber-l)}.c-b .big{color:var(--amber)}
+.cex{font-size:.92rem;font-weight:800;margin:8px 0 6px;display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.mtable small{color:#64748b;font-weight:700}
+.warnbox{background:var(--yellow-l);border:2px dashed #f59e0b;border-radius:14px;padding:12px 16px;font-weight:700;margin-top:16px;line-height:1.6}
+/* formula saran */
+.formula{background:linear-gradient(135deg,var(--blue-l),var(--purple-l));border-radius:14px;padding:14px 18px;font-weight:800;text-align:center;font-size:1.05rem;margin:4px 0 16px;line-height:1.8}
+.formula b{font-family:'Baloo 2';color:var(--purple);font-size:1.18rem}
+/* wcard saran */
+.wcard{border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.wcard>p{font-weight:700;color:#475569;font-size:.92rem;margin-top:4px}
+.w-green{background:var(--green-l)}.w-green h3{color:var(--green)}
+.w-blue{background:var(--blue-l)}.w-blue h3{color:var(--blue)}
+.w-red{background:var(--red-l)}.w-red h3{color:var(--red)}
+.wex{background:rgba(255,255,255,.78);border-radius:10px;padding:8px 10px;font-weight:800;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+/* contoh kalimat */
+.exlist{display:flex;flex-direction:column;gap:10px}
+.exrow{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:14px;padding:13px 16px;box-shadow:var(--shadow)}
+.exrow .en{font-weight:800;font-size:1.03rem}
+.exrow .id{color:#64748b;font-size:.88rem;font-weight:600;margin-top:2px}
+/* percakapan */
+.read-container{position:relative}
+.dialogue{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.line{display:flex;gap:10px;align-items:flex-start}
+.line.right{flex-direction:row-reverse}
+.who{font-size:1.55rem;line-height:1.2}
+.bubble{background:#fff;border-radius:16px;padding:10px 15px;box-shadow:var(--shadow);max-width:78%;font-weight:600;line-height:1.5}
+.line.right .bubble{text-align:left}
+.bubble .name{display:block;font-size:.7rem;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+.b-b{background:var(--blue-l)}
+.b-p{background:var(--purple-l)}
+.b-o{background:var(--orange-l)}
+/* soal */
+.q-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px;border-left:6px solid var(--sky)}
+.q-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.q-num{width:30px;height:30px;border-radius:50%;background:var(--rose);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';flex-shrink:0}
+.q-type{background:var(--yellow-l);color:#a16207;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px}
+.q-text{font-weight:800;margin-bottom:12px;font-size:1.02rem;line-height:1.55}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{text-align:left;border:2px solid #e2e8f0;background:#f8fafc;border-radius:12px;padding:10px 12px;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s;display:flex;gap:8px;font-size:.94rem}
+.opt:hover{border-color:var(--sky)}
+.opt .letter{font-weight:800;color:#94a3b8;flex-shrink:0}
+.opt.selected{border-color:var(--rose);background:var(--rose-l)}
+.opt.correct{border-color:var(--green);background:var(--green-l)}
+.opt.wrong{border-color:var(--red);background:var(--red-l)}
+.opt:disabled{cursor:default}
+.btn{border:none;font-family:inherit;font-weight:800;border-radius:999px;padding:11px 22px;cursor:pointer;transition:.15s;font-size:.95rem}
+.btn.primary{background:linear-gradient(135deg,var(--rose),#f97316);color:#fff;box-shadow:0 6px 16px rgba(225,29,72,.4)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.primary:disabled{background:#cbd5e1;box-shadow:none;cursor:not-allowed;transform:none}
+.btn.ghost{background:var(--purple-l);color:var(--purple)}
+.btn.check{background:var(--yellow-l);color:#a16207;margin-top:10px}
+.pembahasan{margin-top:12px;background:var(--yellow-l);border-radius:12px;padding:12px 14px;font-size:.92rem;font-weight:600;border:2px dashed #f59e0b;line-height:1.6}
+.q-result{margin-left:auto;font-weight:800;font-size:.9rem}
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabbtn{border:none;background:rgba(255,255,255,.85);padding:9px 16px;border-radius:999px;font-family:inherit;font-weight:800;cursor:pointer;color:#64748b;box-shadow:0 3px 10px rgba(0,0,0,.06);font-size:.87rem;transition:.15s}
+.tabbtn:hover{transform:translateY(-2px)}
+.tabbtn.active{background:var(--rose);color:#fff}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:pop .35s ease}
+/* latihan bicara */
+.sit-card h3{font-size:1.3rem;margin-bottom:6px}
+.ctx{background:var(--pink-l);border-radius:12px;padding:10px 14px;font-weight:700;margin-bottom:12px;line-height:1.55}
+.tutor-line{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.tav{font-size:1.5rem}
+label.turn{font-weight:800;color:var(--purple);font-size:.92rem;display:block;margin-top:8px}
+label.turn small{color:#64748b;font-weight:700}
+.st-input{width:100%;border:2px solid #e2e8f0;border-radius:12px;padding:11px 14px;font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);margin:6px 0 10px;background:#f8fafc}
+.st-input:focus{outline:none;border-color:var(--purple);background:#fff}
+.sample{background:var(--green-l);border-radius:12px;padding:12px 16px;margin-top:10px;font-weight:700;display:flex;flex-direction:column;gap:8px}
+.sample>div{display:flex;justify-content:space-between;align-items:center;gap:10px;line-height:1.55}
+.starmsg{color:#b45309;font-weight:800}
+/* kuis */
+.scorebox{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-weight:800}
+.finalbanner{display:none;margin-top:6px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border-radius:16px;padding:18px;text-align:center;font-family:'Baloo 2';font-size:1.3rem;box-shadow:var(--shadow)}
+.finalbanner .fscore{font-size:1.1rem;font-weight:800;margin-top:4px;font-family:'Nunito'}
+/* fabel */
+.para{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start}
+.para p{font-weight:600;line-height:1.7;flex:1}
+.moral{background:linear-gradient(135deg,var(--green-l),var(--blue-l));border-radius:16px;padding:16px 20px;font-weight:800;font-size:1.05rem;text-align:center;box-shadow:var(--shadow)}
+.moral small{display:block;font-family:'Nunito';color:#475569;font-weight:700;margin-top:4px}
+/* refleksi */
+.refl-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 16px}
+.refl{background:#fff;border:none;border-radius:18px;box-shadow:var(--shadow);padding:20px;cursor:pointer;font-family:inherit;font-weight:800;font-size:1rem;color:var(--ink);transition:.2s;display:flex;flex-direction:column;gap:8px;align-items:center}
+.refl:hover{transform:translateY(-4px)}
+.refl .em{font-size:2.6rem}
+.refl-msg{background:var(--green-l);border-radius:14px;padding:14px 18px;font-weight:800;text-align:center;margin-bottom:16px}
+/* kesimpulan */
+.sumcard ul{margin-top:8px;padding-left:20px;font-weight:600;line-height:1.95}
+.bigbanner{background:linear-gradient(135deg,var(--rose),#f97316);color:#fff;border-radius:18px;padding:18px 22px;font-weight:800;text-align:center;font-size:1.02rem;box-shadow:var(--shadow);line-height:1.8;margin-top:16px}
+/* thanks */
+.thanks{text-align:center;padding:64px 24px;background:linear-gradient(160deg,#fff,#ffe4e6)}
+.thanks h1{font-size:2.8rem}
+/* navbar & overlay */
+.navbar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);z-index:50}
+.navbtn{border:none;width:46px;height:46px;border-radius:50%;background:var(--rose-l);font-size:1.1rem;cursor:pointer;font-weight:800;color:var(--rose);transition:.15s}
+.navbtn:hover:not(:disabled){background:var(--rose);color:#fff}
+.navbtn:disabled{opacity:.35;cursor:not-allowed}
+#counter{font-weight:800;min-width:64px;text-align:center;color:#475569}
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:80;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.menu-box{background:#fff;border-radius:20px;padding:24px;max-width:520px;width:92%;max-height:80vh;overflow:auto;box-shadow:var(--shadow)}
+.menu-item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:none;background:#f8fafc;border-radius:12px;padding:10px 14px;margin:5px 0;cursor:pointer;font-family:inherit;font-weight:700;color:var(--ink);transition:.15s}
+.menu-item:hover{background:var(--purple-l)}
+.menu-item .n{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0}
+/* confetti */
+.confetti{position:fixed;top:-20px;z-index:99;animation:fall linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(108vh) rotate(720deg)}}
+@media(max-width:720px){
+.grid2,.grid3,.opts{grid-template-columns:1fr}
+.refl-row{grid-template-columns:1fr}
+.slide{padding:74px 12px 104px}
+.slide h2{font-size:1.45rem}
+.cover h1{font-size:1.75rem}
+.mtable{border-spacing:5px}
+.mtable td{padding:10px 6px}
+.mtable .big{font-size:1.2rem}
+.mtable .rowlab{width:76px;font-size:.78rem}
+.wcard{padding:14px}
+.brand{font-size:.82rem}
+.bubble{max-width:94%}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">📚 English Fun • Was &amp; Were — Feelings</span>
+  <div class="tools">
+    <button class="chip-btn" id="muteBtn">🔈 Suara ON</button>
+    <button class="chip-btn" onclick="openMenu()">☰ Daftar Slide</button>
+  </div>
+</header>
+<div class="progress"><div id="progressFill"></div></div>
+<main id="deck">
+
+<section class="slide active" data-title="Cover">
+  <div class="card cover">
+    <div class="badge">English Class • Sekolah Dasar</div>
+    <div class="float-emoji">😊 😢 😨 😴 😤 🎉</div>
+    <h1>Was &amp; Were:<br>How Were You Yesterday? 🎈</h1>
+    <p class="sub">Menceritakan Perasaan di Masa Lalu dalam Bahasa Inggris<br>Bersama Cio dan Miss Nanda yang ceria!</p>
+    <div class="word-chips">
+      <span class="chip">was</span><span class="chip">were</span><span class="chip">happy</span><span class="chip">sad</span><span class="chip">excited</span><span class="chip">scared</span><span class="chip">tired</span><span class="chip">proud</span>
+    </div>
+    <button class="btn primary" onclick="goTo(1)">Mulai Belajar 🚀</button>
+    <p class="hint">🔊 Nyalakan volume, ya! Klik kartu dan tombol 🔊 untuk mendengar bahasa Inggris.</p>
+  </div>
+</section>
+
+<section class="slide" data-title="Tujuan Pembelajaran">
+  <span class="badge">Tujuan</span>
+  <h2>Apa yang Akan Kita Pelajari Hari Ini? 🎯</h2>
+  <p class="sub">Ada 5 hal seru yang menantimu. Siap? Ayo mulai!</p>
+  <div class="grid3">
+    <div class="card goal"><span class="gemoji">🗣️</span><h4>1. Melafalkan</h4><p>Ucapkan <b>30 kata perasaan</b> yang sering dipakai setiap hari: <i>happy, sad, angry, scared, excited, proud</i>, dan masih banyak lagi. Klik kartu untuk mendengarkannya!</p></div>
+    <div class="card goal"><span class="gemoji">🔵</span><h4>2. Kata Lampau “Was”</h4><p><b>Was</b> adalah bentuk lampau dari <i>is/am</i>, untuk <b>I, He, She, It</b>: <i>“I was happy yesterday.”</i> — Aku bahagia kemarin.</p></div>
+    <div class="card goal"><span class="gemoji">🟠</span><h4>3. Kata Lampau “Were”</h4><p><b>Were</b> adalah bentuk lampau dari <i>are</i>, untuk <b>You, We, They</b>: <i>“We were tired last night.”</i> — Kami lelah semalam.</p></div>
+    <div class="card goal"><span class="gemoji">❓</span><h4>4. Bertanya &amp; Menjawab</h4><p>Tanya perasaan dengan <b>Was he...?</b> atau <b>Were you...?</b> lalu jawab <i>Yes, I was</i> ✅ atau <i>No, I wasn't</i> ❌.</p></div>
+    <div class="card goal"><span class="gemoji">🏆</span><h4>5. Berlatih &amp; Bermain</h4><p>Baca percakapan, isi latihan berbicara, kerjakan kuis 10 soal, dan baca fabel seru tentang Ollie si gurita yang kesepian!</p></div>
+    <div class="card goal tipcard"><span class="gemoji">💡</span><h4>Tips Penting</h4><p>Kata penanda waktu lalu: <i>yesterday, last night, last week</i>. Kalau waktunya sudah lewat, pakai <b>was</b> atau <b>were</b>, ya!</p></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kosakata 1: Perasaan Senang">
+  <span class="badge">Kosakata 1 dari 2</span>
+  <h2>30 Kata Perasaan: Senang &amp; Nyaman 😊</h2>
+  <p class="sub">👆 Klik setiap kartu untuk mendengar pelafalannya dalam bahasa Inggris! Dengarkan, lalu ulangi.</p>
+
+  <h3 class="gtitle t-a">😊 Perasaan Senang (Happy Feelings)</h3>
+  <div class="vgrid">
+    <div class="vcard g-a" data-say="happy" title="Klik untuk mendengar!">
+      <div class="vword">happy<span class="vphon">/ˈhæpi/</span></div>
+      <div class="vmean">bahagia</div>
+      <div class="vex">“I was so happy yesterday.” 😄<button class="mini" data-say="I was so happy yesterday.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="glad" title="Klik untuk mendengar!">
+      <div class="vword">glad<span class="vphon">/ɡlæd/</span></div>
+      <div class="vmean">senang</div>
+      <div class="vex">“She was glad to see me.” 😊<button class="mini" data-say="She was glad to see me.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="cheerful" title="Klik untuk mendengar!">
+      <div class="vword">cheerful<span class="vphon">/ˈtʃɪrfəl/</span></div>
+      <div class="vmean">gembira, riang</div>
+      <div class="vex">“He was cheerful all day.” 🌞<button class="mini" data-say="He was cheerful all day.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="excited" title="Klik untuk mendengar!">
+      <div class="vword">excited<span class="vphon">/ɪkˈsaɪtɪd/</span></div>
+      <div class="vmean">bersemangat</div>
+      <div class="vex">“I was excited about the trip.” 🎢<button class="mini" data-say="I was excited about the trip.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="proud" title="Klik untuk mendengar!">
+      <div class="vword">proud<span class="vphon">/praʊd/</span></div>
+      <div class="vmean">bangga</div>
+      <div class="vex">“Mom was proud of me.” 🏅<button class="mini" data-say="Mom was proud of me.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="brave" title="Klik untuk mendengar!">
+      <div class="vword">brave<span class="vphon">/breɪv/</span></div>
+      <div class="vmean">berani</div>
+      <div class="vex">“He was brave at the doctor.” 💪<button class="mini" data-say="He was brave at the doctor.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="calm" title="Klik untuk mendengar!">
+      <div class="vword">calm<span class="vphon">/kɑːm/</span></div>
+      <div class="vmean">tenang</div>
+      <div class="vex">“The baby was calm.” 🍼<button class="mini" data-say="The baby was calm.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="fun" title="Klik untuk mendengar!">
+      <div class="vword">fun<span class="vphon">/fʌn/</span></div>
+      <div class="vmean">menyenangkan</div>
+      <div class="vex">“The party was fun.” 🎉<button class="mini" data-say="The party was fun.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="lucky" title="Klik untuk mendengar!">
+      <div class="vword">lucky<span class="vphon">/ˈlʌki/</span></div>
+      <div class="vmean">beruntung</div>
+      <div class="vex">“I was lucky yesterday.” 🍀<button class="mini" data-say="I was lucky yesterday.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="curious" title="Klik untuk mendengar!">
+      <div class="vword">curious<span class="vphon">/ˈkjʊriəs/</span></div>
+      <div class="vmean">penasaran</div>
+      <div class="vex">“I was curious about the gift.” 🎁<button class="mini" data-say="I was curious about the gift.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="comfortable" title="Klik untuk mendengar!">
+      <div class="vword">comfortable<span class="vphon">/ˈkʌmfərtəbl/</span></div>
+      <div class="vmean">nyaman</div>
+      <div class="vex">“My bed was comfortable.” 🛏️<button class="mini" data-say="My bed was comfortable.">🔊</button></div>
+    </div>
+    <div class="vcard g-a" data-say="grateful" title="Klik untuk mendengar!">
+      <div class="vword">grateful<span class="vphon">/ˈɡreɪtfəl/</span></div>
+      <div class="vmean">bersyukur</div>
+      <div class="vex">“I was grateful for the help.” 🙏<button class="mini" data-say="I was grateful for the help.">🔊</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kosakata 2: Sedih & Tubuh">
+  <span class="badge">Kosakata 2 dari 2</span>
+  <h2>30 Kata Perasaan: Sedih, Takut &amp; Tubuh 🥺</h2>
+  <p class="sub">Perasaan sedih dan takut itu normal, ya! Semua orang pernah merasakannya. Klik kartunya untuk mendengar!</p>
+
+  <h3 class="gtitle t-b">😢 Perasaan Sedih &amp; Takut (Sad &amp; Scared)</h3>
+  <div class="vgrid">
+    <div class="vcard g-b" data-say="sad" title="Klik untuk mendengar!">
+      <div class="vword">sad<span class="vphon">/sæd/</span></div>
+      <div class="vmean">sedih</div>
+      <div class="vex">“He was sad this morning.” 😢<button class="mini" data-say="He was sad this morning.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="angry" title="Klik untuk mendengar!">
+      <div class="vword">angry<span class="vphon">/ˈæŋɡri/</span></div>
+      <div class="vmean">marah</div>
+      <div class="vex">“Dad was angry yesterday.” 😤<button class="mini" data-say="Dad was angry yesterday.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="scared" title="Klik untuk mendengar!">
+      <div class="vword">scared<span class="vphon">/skerd/</span></div>
+      <div class="vmean">takut</div>
+      <div class="vex">“I was scared of the dark.” 😨<button class="mini" data-say="I was scared of the dark.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="worried" title="Klik untuk mendengar!">
+      <div class="vword">worried<span class="vphon">/ˈwɜːrid/</span></div>
+      <div class="vmean">khawatir</div>
+      <div class="vex">“Mom was worried about me.” 😟<button class="mini" data-say="Mom was worried about me.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="tired" title="Klik untuk mendengar!">
+      <div class="vword">tired<span class="vphon">/ˈtaɪərd/</span></div>
+      <div class="vmean">lelah</div>
+      <div class="vex">“We were tired after PE.” 😫<button class="mini" data-say="We were tired after PE.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="sleepy" title="Klik untuk mendengar!">
+      <div class="vword">sleepy<span class="vphon">/ˈsliːpi/</span></div>
+      <div class="vmean">mengantuk</div>
+      <div class="vex">“I was sleepy in class.” 🥱<button class="mini" data-say="I was sleepy in class.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="lonely" title="Klik untuk mendengar!">
+      <div class="vword">lonely<span class="vphon">/ˈloʊnli/</span></div>
+      <div class="vmean">kesepian</div>
+      <div class="vex">“The puppy was lonely.” 🐶<button class="mini" data-say="The puppy was lonely.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="shy" title="Klik untuk mendengar!">
+      <div class="vword">shy<span class="vphon">/ʃaɪ/</span></div>
+      <div class="vmean">pemalu</div>
+      <div class="vex">“She was shy on stage.” 😳<button class="mini" data-say="She was shy on stage.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="bored" title="Klik untuk mendengar!">
+      <div class="vword">bored<span class="vphon">/bɔːrd/</span></div>
+      <div class="vmean">bosan</div>
+      <div class="vex">“I was bored at home.” 😑<button class="mini" data-say="I was bored at home.">🔊</button></div>
+    </div>
+    <div class="vcard g-b" data-say="upset" title="Klik untuk mendengar!">
+      <div class="vword">upset<span class="vphon">/ʌpˈset/</span></div>
+      <div class="vmean">kecewa</div>
+      <div class="vex">“He was upset about the game.” 😞<button class="mini" data-say="He was upset about the game.">🔊</button></div>
+    </div>
+  </div>
+
+  <h3 class="gtitle t-c">🤒 Perasaan Tubuh (Body Feelings)</h3>
+  <div class="vgrid">
+    <div class="vcard g-c" data-say="hungry" title="Klik untuk mendengar!">
+      <div class="vword">hungry<span class="vphon">/ˈhʌŋɡri/</span></div>
+      <div class="vmean">lapar</div>
+      <div class="vex">“I was hungry after school.” 🍚<button class="mini" data-say="I was hungry after school.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="thirsty" title="Klik untuk mendengar!">
+      <div class="vword">thirsty<span class="vphon">/ˈθɜːrsti/</span></div>
+      <div class="vmean">haus</div>
+      <div class="vex">“We were thirsty and hot.” 🥤<button class="mini" data-say="We were thirsty and hot.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="sick" title="Klik untuk mendengar!">
+      <div class="vword">sick<span class="vphon">/sɪk/</span></div>
+      <div class="vmean">sakit</div>
+      <div class="vex">“She was sick yesterday.” 🤒<button class="mini" data-say="She was sick yesterday.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="fine" title="Klik untuk mendengar!">
+      <div class="vword">fine<span class="vphon">/faɪn/</span></div>
+      <div class="vmean">baik-baik saja</div>
+      <div class="vex">“I was fine after the rest.” 👍<button class="mini" data-say="I was fine after the rest.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="full" title="Klik untuk mendengar!">
+      <div class="vword">full<span class="vphon">/fʊl/</span></div>
+      <div class="vmean">kenyang</div>
+      <div class="vex">“I was full after dinner.” 🍽️<button class="mini" data-say="I was full after dinner.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="hot" title="Klik untuk mendengar!">
+      <div class="vword">hot<span class="vphon">/hɒt/</span></div>
+      <div class="vmean">panas</div>
+      <div class="vex">“It was hot last Sunday.” ☀️<button class="mini" data-say="It was hot last Sunday.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="cold" title="Klik untuk mendengar!">
+      <div class="vword">cold<span class="vphon">/koʊld/</span></div>
+      <div class="vmean">dingin</div>
+      <div class="vex">“My hands were cold.” 🥶<button class="mini" data-say="My hands were cold.">🔊</button></div>
+    </div>
+    <div class="vcard g-c" data-say="dizzy" title="Klik untuk mendengar!">
+      <div class="vword">dizzy<span class="vphon">/ˈdɪzi/</span></div>
+      <div class="vmean">pusing</div>
+      <div class="vex">“I was dizzy after the ride.” 😵<button class="mini" data-say="I was dizzy after the ride.">🔊</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-title="Materi 1: Was">
+  <span class="badge">Materi 1</span>
+  <h2>Was: Cerita Perasaan Kemarin 🔵</h2>
+  <p class="sub"><b class="tw" data-say="was">Was</b> adalah bentuk lampau dari <b>is</b> dan <b>am</b>. Pakai <b>was</b> untuk menceritakan perasaan yang sudah lewat: kemarin, tadi pagi, minggu lalu!</p>
+  <div class="formula">📌 Rumus: <b>I / He / She / It + was + kata sifat perasaan</b><br><small>kata sifat perasaan: happy, sad, angry, tired, scared, ...</small></div>
+  <div class="card">
+    <table class="mtable">
+      <tr><th>Siapa? 👤</th><th>Contoh Kalimat 💬</th></tr>
+      <tr>
+        <th class="rowlab">I</th>
+        <td class="c-a"><div class="cex">“<span class="big" style="font-size:1.35rem;color:var(--rose)">I was</span> so happy at the party.” 🎉<button class="mini" data-say="I was so happy at the party.">🔊</button></div><small>I → was (bukan is atau am!)</small></td>
+      </tr>
+      <tr>
+        <th class="rowlab">He, She,<br>It</th>
+        <td class="c-b"><div class="cex">“Dita <span class="big" style="font-size:1.35rem;color:var(--amber)">was</span> tired last night.” 😫<button class="mini" data-say="Dita was tired last night.">🔊</button></div><small>Dita = she → was</small></td>
+      </tr>
+    </table>
+  </div>
+  <div class="warnbox">💡 <b>Jurus hafal cepat:</b> <b>was</b> untuk <b>satu orang, seekor, atau satu benda</b> — I, he, she, it. <i>I was happy.</i> ✅ — bukan <i>I were happy</i> ❌! Kata sifat perasaan langsung mengikuti was: <i>was + happy / sad / tired</i>.</div>
+</section>
+
+<section class="slide" data-title="Materi 2: Were">
+  <span class="badge">Materi 2</span>
+  <h2>Were: Kamu, Kami, dan Mereka 🟠</h2>
+  <p class="sub"><b class="tw" data-say="were">Were</b> adalah bentuk lampau dari <b>are</b>. Pakai <b>were</b> untuk <b>You, We, They</b> — atau bila orangnya lebih dari satu!</p>
+  <div class="formula">📌 Rumus: <b>You / We / They + were + kata sifat perasaan</b><br><small>you tunggal maupun jamak → tetap were</small></div>
+  <div class="grid3">
+    <div class="wcard w-blue">
+      <h3>😫 Lelah Setelah Bermain</h3>
+      <p>Kami bermain sepak bola tadi siang, jadi badan kami lelah sekali.</p>
+      <div class="wex">“We were tired after the game.”<button class="mini" data-say="We were tired after the game.">🔊</button></div>
+    </div>
+    <div class="wcard w-blue">
+      <h3>🐒 Senang di Kebun Binatang</h3>
+      <p>Mereka melihat banyak hewan lucu di kebun binatang kemarin.</p>
+      <div class="wex">“They were happy at the zoo.”<button class="mini" data-say="They were happy at the zoo.">🔊</button></div>
+    </div>
+    <div class="wcard w-blue">
+      <h3>🥱 Mengantuk Pagi Hari</h3>
+      <p>Kamu tidur terlalu malam, jadi pagi tadi kamu mengantuk.</p>
+      <div class="wex">“You were sleepy this morning.”<button class="mini" data-say="You were sleepy this morning.">🔊</button></div>
+    </div>
+  </div>
+  <div class="warnbox">⚠️ <b>Hati-hati!</b> <b>You</b> selalu berpasangan dengan <b>were</b>, walaupun hanya satu orang: <i>You were late.</i> ✅. Dan jangan pernah menulis <i>we was</i> ❌ atau <i>they was</i> ❌ — We, You, They → <b>were</b>!</div>
+</section>
+
+<section class="slide" data-title="Materi 3: Was Were Tanya">
+  <span class="badge">Materi 3</span>
+  <h2>Bertanya Perasaan: Was I...? Were You...? ❓</h2>
+  <p class="sub">Mau tahu perasaan temanmu kemarin? Letakkan <b class="tw" data-say="was">was</b> atau <b class="tw" data-say="were">were</b> di <b>DEPAN</b> kalimat!</p>
+  <div class="formula">📌 Rumus Tanya: <b>Was / Were + Subject + kata sifat ?</b><br><small>wasn't = was not • weren't = were not</small></div>
+  <div class="card">
+    <table class="mtable">
+      <tr><th>Pertanyaan ❓</th><th>Jawaban: Ya ✅</th><th>Jawaban: Tidak ❌</th></tr>
+      <tr>
+        <td style="background:var(--blue-l)"><div class="cex">“Were you scared last night?” 😨<button class="mini" data-say="Were you scared last night?">🔊</button></div></td>
+        <td style="background:var(--green-l)"><div class="cex">“Yes, I was.” ✅<button class="mini" data-say="Yes, I was.">🔊</button></div></td>
+        <td style="background:var(--red-l)"><div class="cex">“No, I wasn't.” ❌<button class="mini" data-say="No, I wasn't.">🔊</button></div></td>
+      </tr>
+      <tr>
+        <td style="background:var(--blue-l)"><div class="cex">“Was she happy at the party?” 🎉<button class="mini" data-say="Was she happy at the party?">🔊</button></div></td>
+        <td style="background:var(--green-l)"><div class="cex">“Yes, she was.” ✅<button class="mini" data-say="Yes, she was.">🔊</button></div></td>
+        <td style="background:var(--red-l)"><div class="cex">“No, she wasn't.” ❌<button class="mini" data-say="No, she wasn't.">🔊</button></div></td>
+      </tr>
+    </table>
+  </div>
+  <div class="bigbanner">🌈 Tanya perasaan dengan kata tanya: <b>“How was your day?”</b> (Bagaimana harimu?) atau <b>“How were you yesterday?”</b> → <i>“It was great!”</i> 😄</div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 1">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Was dalam Kalimat 📖</h2>
+  <p class="sub">Klik tombol 🔊 untuk mendengar setiap kalimat, lalu ulangi dengan keras! Semuanya tentang perasaan kemarin, ya!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="I was so happy at the birthday party.">🔊</button><div><div class="en">I <b class="tw" data-say="was">was</b> so happy at the birthday party.</div><div class="id">Aku sangat bahagia di pesta ulang tahun.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="She was excited about the school trip.">🔊</button><div><div class="en">She <b class="tw" data-say="was">was</b> excited about the school trip.</div><div class="id">Dia bersemangat tentang study tour sekolah.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="He was scared of the thunder last night.">🔊</button><div><div class="en">He <b class="tw" data-say="was">was</b> scared of the thunder last night.</div><div class="id">Dia takut suara petir semalam.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="My cat was sleepy all afternoon.">🔊</button><div><div class="en">My cat <b class="tw" data-say="was">was</b> sleepy all afternoon.</div><div class="id">Kucingku mengantuk sepanjang siang.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="It was hot last Sunday.">🔊</button><div><div class="en">It <b class="tw" data-say="was">was</b> hot last Sunday.</div><div class="id">Hari Minggu lalu cuacanya panas.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Dad was proud of my drawing.">🔊</button><div><div class="en">Dad <b class="tw" data-say="was">was</b> proud of my drawing.</div><div class="id">Ayah bangga dengan hasil gambarku.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 2">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Were dalam Kalimat 📖</h2>
+  <p class="sub">Semua kalimat ini untuk You, We, atau They. Coba perhatikan: were berpasangan dengan banyak orang!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="We were tired after the football game.">🔊</button><div><div class="en">We <b class="tw" data-say="were">were</b> tired after the football game.</div><div class="id">Kami lelah setelah pertandingan sepak bola.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="They were happy at the zoo.">🔊</button><div><div class="en">They <b class="tw" data-say="were">were</b> happy at the zoo.</div><div class="id">Mereka senang di kebun binatang.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="You were sleepy in class this morning.">🔊</button><div><div class="en">You <b class="tw" data-say="were">were</b> sleepy in class this morning.</div><div class="id">Kamu mengantuk di kelas pagi tadi.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="My friends were sad on the last day of school.">🔊</button><div><div class="en">My friends <b class="tw" data-say="were">were</b> sad on the last day of school.</div><div class="id">Teman-temanku sedih di hari terakhir sekolah.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="We were hungry after the long trip.">🔊</button><div><div class="en">We <b class="tw" data-say="were">were</b> hungry after the long trip.</div><div class="id">Kami lapar setelah perjalanan yang panjang.</div></div></div>
+    <div class="exrow"><button class="mini" data-say="They were bored because the movie was long.">🔊</button><div><div class="en">They <b class="tw" data-say="were">were</b> bored because the movie was long.</div><div class="id">Mereka bosan karena filmnya panjang.</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Contoh Kalimat 3">
+  <span class="badge">Contoh Kalimat</span>
+  <h2>Bertanya Perasaan dalam Kalimat 📖</h2>
+  <p class="sub">Tanya temanmu, bagaimana perasaannya kemarin. Coba ucapkan dengan intonasi bertanya, ya!</p>
+  <div class="exlist">
+    <div class="exrow"><button class="mini" data-say="Were you scared last night?">🔊</button><div><div class="en"><b class="tw" data-say="Were you scared">Were you scared</b> last night?</div><div class="id">Apakah kamu takut semalam?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Was your mom angry about the broken vase?">🔊</button><div><div class="en"><b class="tw" data-say="Was your mom angry">Was your mom angry</b> about the broken vase?</div><div class="id">Apakah ibumu marah soal vas yang pecah?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Yes, we were excited about the movie!">🔊</button><div><div class="en">Yes, we <b class="tw" data-say="were">were</b> excited about the movie!</div><div class="id">Ya, kami bersemangat menonton film itu!</div></div></div>
+    <div class="exrow"><button class="mini" data-say="No, I wasn't bored — the story was fun!">🔊</button><div><div class="en">No, I <b class="tw" data-say="wasn't">wasn't</b> bored — the story was fun!</div><div class="id">Tidak, aku tidak bosan — ceritanya menyenangkan!</div></div></div>
+    <div class="exrow"><button class="mini" data-say="How was your weekend?">🔊</button><div><div class="en"><b class="tw" data-say="How was your weekend">How was your weekend</b>?</div><div class="id">Bagaimana akhir pekanmu?</div></div></div>
+    <div class="exrow"><button class="mini" data-say="Where were you yesterday?">🔊</button><div><div class="en"><b class="tw" data-say="Where were you yesterday">Where were you yesterday</b>?</div><div class="id">Di mana kamu kemarin?</div></div></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Percakapan: Cio &amp; Miss Nanda">
+  <span class="badge">Percakapan</span>
+  <h2>Kemarin Aku Sakit, Sekarang Sehat! 🤒</h2>
+  <p class="sub">Cio 🧒 baru datang ke sekolah setelah absen lama. Miss Nanda 👩‍🏫 penasaran dengan ceritanya. Kata <i>was</i> dan <i>were</i> ditandai <span class="tw">kuning</span> — coba klik katanya!</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Percakapan</button>
+    <div class="dialogue" id="mainDialog"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Percakapan">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Percakapan Tadi 🧠</h2>
+  <p class="sub">Jawab 5 soal tentang percakapan Cio &amp; Miss Nanda. Pilih jawaban, lalu klik <b>Cek Jawaban</b> untuk melihat pembahasannya!</p>
+  <div id="convQs"></div>
+</section>
+
+<section class="slide" data-title="5 Percakapan Seru">
+  <span class="badge">Percakapan</span>
+  <h2>5 Percakapan, 5 Tempat Berbeda! 🌍</h2>
+  <p class="sub">Klik tombol untuk ganti percakapan. Klik 🔊 untuk mendengar satu kalimat, atau ▶ untuk mendengar semuanya.</p>
+  <div class="tab-wrap" id="dlgTabs">
+    <div class="tabs" id="dlgTabBtns"></div>
+    <div id="dlgPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Latihan Berbicara">
+  <span class="badge">Praktik</span>
+  <h2>Latihan Berbicara 🎤</h2>
+  <p class="sub">Dengarkan tutor, tulis kalimatmu sendiri di kotak jawaban, lalu bandingkan dengan contoh. Beranilah berbicara!</p>
+  <div class="tab-wrap" id="sitTabs">
+    <div class="tabs" id="sitTabBtns"></div>
+    <div id="sitPanels"></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Kuis 10 Soal">
+  <span class="badge">Kuis</span>
+  <h2>Kuis Besar: 10 Soal 🏆</h2>
+  <p class="sub">Pilih jawaban yang paling tepat, lalu klik Cek Jawaban. Kumpulkan skor tertinggi!</p>
+  <div class="scorebox"><span>⭐ Skor: <b id="quizScore">0</b>/10</span><span id="quizDone">Terjawab: 0/10</span></div>
+  <div id="quizQs"></div>
+  <div class="finalbanner" id="finalBanner"></div>
+</section>
+
+<section class="slide" data-title="Fabel: Ollie si Gurita">
+  <span class="badge">Story Time</span>
+  <h2>Ollie the Lonely Octopus 🐙</h2>
+  <p class="sub">Sebuah fabel tentang gurita kecil yang kesepian karena ia berbeda. Kata berwarna <span class="tw">kuning</span> bisa diklik! Klik ▶ untuk mendengarkan ceritanya.</p>
+  <div class="read-container">
+    <button class="btn primary readall">▶ Baca Cerita</button>
+    <div class="para">
+      <p><span class="line-en">Ollie is a little octopus with eight long arms. Yesterday, Ollie <b class="tw" data-say="was">was</b> very <b class="tw" data-say="sad">sad</b>. He <b class="tw" data-say="was">was</b> <b class="tw" data-say="lonely">lonely</b> because the small fish <b class="tw" data-say="were">were</b> <b class="tw" data-say="scared">scared</b> of his arms. “Why am I different?” he cried. His heart <b class="tw" data-say="was">was</b> heavy, and his eyes <b class="tw" data-say="were">were</b> wet. He <b class="tw" data-say="was">was</b> <b class="tw" data-say="worried">worried</b> that he would never have a friend. 🐙</span></p>
+      <button class="mini saybtn" data-say="Ollie is a little octopus with eight long arms. Yesterday, Ollie was very sad. He was lonely because the small fish were scared of his arms. Why am I different? he cried. His heart was heavy, and his eyes were wet. He was worried that he would never have a friend.">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">Then, one sunny morning, a loud cry came. Toto the little fish <b class="tw" data-say="was">was</b> stuck between two rocks! He <b class="tw" data-say="was">was</b> very <b class="tw" data-say="scared">scared</b>, and his voice <b class="tw" data-say="was">was</b> shaking. “Help! Help!” The other fish <b class="tw" data-say="were">were</b> too <b class="tw" data-say="scared">scared</b> to come near. But Ollie <b class="tw" data-say="was">was</b> <b class="tw" data-say="brave">brave</b>! His eight arms <b class="tw" data-say="were">were</b> strong and quick. He moved the rocks, and Toto <b class="tw" data-say="was">was</b> free. The fish <b class="tw" data-say="were">were</b> so surprised — and so <b class="tw" data-say="happy">happy</b>! 🎉</span></p>
+      <button class="mini saybtn" data-say="Then, one sunny morning, a loud cry came. Toto the little fish was stuck between two rocks! He was very scared, and his voice was shaking. Help! Help! The other fish were too scared to come near. But Ollie was brave! His eight arms were strong and quick. He moved the rocks, and Toto was free. The fish were so surprised — and so happy!">🔊</button>
+    </div>
+    <div class="para">
+      <p><span class="line-en">Now, Ollie is never lonely. After that day, the sea friends were kind to him. Every afternoon, the little fish <b class="tw" data-say="were">were</b> <b class="tw" data-say="excited">excited</b> to play with him. “Your arms <b class="tw" data-say="were">were</b> very <b class="tw" data-say="brave">brave</b> yesterday!” they say. Ollie <b class="tw" data-say="was">was</b> <b class="tw" data-say="proud">proud</b>, and his heart <b class="tw" data-say="was">was</b> light. He <b class="tw" data-say="was">was</b> not different in a bad way — he <b class="tw" data-say="was">was</b> different in a wonderful way! 🐙✨</span></p>
+      <button class="mini saybtn" data-say="Now, Ollie is never lonely. After that day, the sea friends were kind to him. Every afternoon, the little fish were excited to play with him. Your arms were very brave yesterday! they say. Ollie was proud, and his heart was light. He was not different in a bad way — he was different in a wonderful way!">🔊</button>
+    </div>
+    <div class="moral">🌱 Moral of the story: <b>Sad days do not last. Be brave and kind — happy days will come!</b><small>Hari sedih tidak bertahan lama. Beranilah menolong — hari bahagia pasti datang!</small></div>
+  </div>
+</section>
+
+<section class="slide" data-title="Soal Fabel">
+  <span class="badge">Latihan Soal</span>
+  <h2>Pahami Cerita Ollie 🐙</h2>
+  <p class="sub">Jawab 5 soal berikut berdasarkan fabel yang baru saja kamu baca atau dengar!</p>
+  <div id="fableQs"></div>
+  <button class="btn ghost" onclick="show(15)">📖 Baca Ulang Cerita</button>
+</section>
+
+<section class="slide" data-title="Kesimpulan">
+  <span class="badge">Kesimpulan</span>
+  <h2>Ingat 3 Hal Ini! 📌</h2>
+  <p class="sub">Ini rangkuman materi hari ini. Simpan baik-baik di kepalamu, ya!</p>
+  <div class="grid3">
+    <div class="card sumcard" style="background:var(--blue-l)">
+      <h3 style="color:var(--blue)">🔵 Was (I/He/She/It)</h3>
+      <ul>
+        <li><b>was</b> = bentuk lampau dari <i>is/am</i></li>
+        <li>Untuk: <b>I, he, she, it</b></li>
+        <li><b>I was happy yesterday.</b></li>
+        <li>Satu orang / satu benda → was!</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--orange-l)">
+      <h3 style="color:var(--orange)">🟠 Were (You/We/They)</h3>
+      <ul>
+        <li><b>were</b> = bentuk lampau dari <i>are</i></li>
+        <li>Untuk: <b>you, we, they</b></li>
+        <li><b>We were tired last night.</b></li>
+        <li>You tunggal maupun jamak → were!</li>
+      </ul>
+    </div>
+    <div class="card sumcard" style="background:var(--purple-l)">
+      <h3 style="color:var(--purple)">😊 30 Kata Perasaan</h3>
+      <ul>
+        <li><b>Senang:</b> happy, glad, excited, proud, brave</li>
+        <li><b>Sedih:</b> sad, angry, scared, lonely, shy</li>
+        <li><b>Tubuh:</b> hungry, thirsty, sick, tired</li>
+        <li>Dan masih banyak lagi!</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bigbanner">🎯 I / he / she / it → <b>was</b> &nbsp;•&nbsp; You / we / they → <b>were</b> &nbsp;•&nbsp; Bertanya → <b>Were you...? / How was your day?</b> &nbsp;•&nbsp; Dan ingat: perasaan bisa berubah! 😊✨</div>
+</section>
+
+<section class="slide" data-title="Refleksi">
+  <span class="badge">Refleksi</span>
+  <h2>Bagaimana Perasaanmu Hari Ini? 🪞</h2>
+  <p class="sub">Klik emoji yang paling sesuai dengan perasaanmu setelah belajar!</p>
+  <div class="refl-row">
+    <button class="refl" data-msg="Kerja bagus! Kamu sudah jago menceritakan perasaan dengan was dan were! 🌟"><span class="em">😊</span><span>Paham sekali!</span></button>
+    <button class="refl" data-msg="Tidak apa-apa! Coba baca lagi Materi 1 dan Materi 2, ya. 💪"><span class="em">😐</span><span>Cukup paham</span></button>
+    <button class="refl" data-msg="Santai! Minta gurumu mengulang materinya. Kita belajar bersama-sama! 🤗"><span class="em">😕</span><span>Masih bingung</span></button>
+  </div>
+  <div id="reflMsg" class="refl-msg" style="display:none"></div>
+  <div class="card">
+    <h3>Coba jawab di bukumu ✏️</h3>
+    <ul style="margin-top:10px;padding-left:22px;font-weight:600;line-height:2">
+      <li>Kemarin kamu merasa apa? Buat kalimatnya: <b>“Yesterday, I was...”</b>!</li>
+      <li>Kapan kamu terakhir merasa excited? Ceritakan dengan <b>“I was excited when...”</b>!</li>
+      <li>Ubah kalimat ini ke masa lalu: <b>“I am happy.”</b> → ...?</li>
+      <li>Mengapa perasaan bisa berubah dari sad menjadi happy? 🌈</li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-title="Thank You!">
+  <div class="card thanks">
+    <div style="font-size:3.6rem">🌟🎉🌟</div>
+    <h1>Thank You for Today!</h1>
+    <p class="sub" style="margin-top:10px">Kamu sudah belajar <b>was</b>, <b>were</b>, dan <b>30 kata perasaan</b> baru hari ini. Hebat sekali!</p>
+    <p style="font-weight:800;color:#475569">Great job, everyone! See you in the next lesson. 👋</p>
+    <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn primary" onclick="confetti();speak('Great job, everyone! Thank you for today! See you next time!')">🎉 Celebrate!</button>
+      <button class="btn ghost" onclick="show(0)">🔁 Kembali ke Awal</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<nav class="navbar">
+  <button class="navbtn" id="prevBtn" title="Sebelumnya">◀</button>
+  <span id="counter">1 / 20</span>
+  <button class="navbtn" id="nextBtn" title="Berikutnya">▶</button>
+</nav>
+
+<div class="overlay" id="menuOverlay">
+  <div class="menu-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>📚 Daftar Slide</h3>
+      <button class="chip-btn" onclick="closeMenu()">✕ Tutup</button>
+    </div>
+    <div id="menuList"></div>
+  </div>
+</div>
+<script>
+/* ================= DATA PERCAKAPAN ================= */
+const MAIN = {
+  who: ["Miss Nanda", "Cio"], av: ["👩‍🏫", "🧒"],
+  lines: [
+    {s:0, text:"Good morning, Cio! You look so happy today. How was your weekend? 😊"},
+    {s:1, text:"It was great, Miss! On Saturday, I was very excited about the football match. ⚽"},
+    {s:0, text:"Great! And *were* you the winner?"},
+    {s:1, text:"Yes, we *were*! But on Sunday, I was not happy. I *was* sick."},
+    {s:0, text:"Oh no! What *was* wrong?"},
+    {s:1, text:"My head *was* dizzy and my body *was* hot. I had a fever."},
+    {s:0, text:"*Were* you scared, Cio?"},
+    {s:1, text:"Yes, I *was*! But Mom was with me. She *was* calm and kind. 💗"},
+    {s:0, text:"What a great mom! *Were* you okay in the morning?"},
+    {s:1, text:"Yes, I *was*! I *was* fine after a long sleep. Now I am healthy again! 💪"},
+    {s:0, text:"Perfect! So yesterday you *were* sick, and today you are happy. Feelings can change! 😊"}
+  ]
+};
+
+const DIALOGUES = [
+  {emoji:"🏫", title:"Di Kelas", who:["Dita","Cio"], av:["👧","🧒"], lines:[
+    {s:0, text:"Hi Cio! *Were* you nervous about the English test yesterday?"},
+    {s:1, text:"Yes, I *was*! I *was* scared because the words were difficult."},
+    {s:0, text:"But the test was easy for me. I *was* calm."},
+    {s:1, text:"Wow! *Was* your score good?"},
+    {s:0, text:"Yes, it *was*! My mom was *proud* of me."},
+    {s:1, text:"My mom was proud too — I got 90! I *was* so happy! 😄"}
+  ]},
+  {emoji:"🏥", title:"Di Puskesmas", who:["Rian","Doctor"], av:["🧒","👨‍⚕️"], lines:[
+    {s:1, text:"Good morning, Rian! How *was* your night?"},
+    {s:0, text:"It *was* bad, Doctor. I *was* sick. My body *was* hot and my head *was* dizzy."},
+    {s:1, text:"*Were* you hungry yesterday?"},
+    {s:0, text:"Yes, I *was*, but my hands were dirty. I forgot to wash them."},
+    {s:1, text:"Ah, that *was* the problem! Wash your hands before eating, okay?"},
+    {s:0, text:"Okay, Doctor. I *was* *scared* before, but now I am happy. 😊"}
+  ]},
+  {emoji:"🎪", title:"Pesta Ulang Tahun", who:["Lala","Sasa"], av:["👧","👧"], lines:[
+    {s:0, text:"Sasa! How *was* Ben's birthday party yesterday?"},
+    {s:1, text:"It *was* so fun! I *was* excited all day! 🎉"},
+    {s:0, text:"Wow! *Was* the clown funny?"},
+    {s:1, text:"The games *were* *fun*, but the clowns were scary!"},
+    {s:0, text:"*Were* you scared?"},
+    {s:1, text:"Yes, I *was*! But the cake was delicious, so I was happy again. 🎂"}
+  ]},
+  {emoji:"⛈️", title:"Malam Berbadai Petir", who:["Ben","Dad"], av:["🧒","👨"], lines:[
+    {s:0, text:"Dad, last night *was* so scary! The thunder was so loud! ⛈️"},
+    {s:1, text:"*Were* you scared, son?"},
+    {s:0, text:"Yes, I *was*! My hands *were* cold and my heart was fast."},
+    {s:1, text:"It's okay. I *was* beside you, remember?"},
+    {s:0, text:"Yes! You *were* calm, so I was calm too."},
+    {s:1, text:"That's my brave boy. The storm is gone, and the sky is blue now! 🌈"}
+  ]},
+  {emoji:"🐶", title:"Anak Anjing Kesepian", who:["Rina","Dita"], av:["👧","👧"], lines:[
+    {s:1, text:"Rina, why *were* you sad at recess?"},
+    {s:0, text:"I *was* worried about my puppy. He was alone at home. 🐶"},
+    {s:1, text:"*Was* he lonely?"},
+    {s:0, text:"Yes, he *was*. He was noisy all morning, and he was hungry too!"},
+    {s:1, text:"Poor puppy! *Was* he happy when you came home?"},
+    {s:0, text:"Very happy! He *was* full after dinner, and I was happy too. 😄"}
+  ]}
+];
+
+const SITUATIONS = [
+  {emoji:"😢", title:"Tas yang Hilang", tav:"👩",
+   ctx:"Kemarin tas barumu hilang di sekolah. Hari ini kamu menceritakannya kepada Ibu.",
+   t1:"Your new bag was lost yesterday. How were you?",
+   hint1:"coba pakai “I was sad”",
+   t2:"And your mom? Was she angry?",
+   hint2:"jawab dengan “Yes, she was” atau “No, she wasn't”",
+   s1:"I was very sad. My eyes were wet.",
+   s2:"No, she wasn't angry. She was kind, and we looked for it together."},
+  {emoji:"🎢", title:"Naik Roller Coaster", tav:"🧒",
+   ctx:"Kemarin kamu naik roller coaster untuk pertama kalinya di taman hiburan.",
+   t1:"You rode a roller coaster yesterday! How was it?",
+   hint1:"coba pakai “It was exciting”",
+   t2:"Were you scared before the ride?",
+   hint2:"jawab dengan “Yes, I was”",
+   s1:"It was so exciting! I was excited all morning.",
+   s2:"Yes, I was scared before the ride, but I was happy after it!"},
+  {emoji:"🤒", title:"Demam di Malam Hari", tav:"👩",
+   ctx:"Tadi malam kamu demam, dan ibu menjagamu sampai pagi.",
+   t1:"You were sick last night. How was your body?",
+   hint1:"coba pakai “hot” atau “dizzy”",
+   t2:"Was your mom with you?",
+   hint2:"jawab dan sebutkan perasaan ibumu",
+   s1:"My body was hot and my head was dizzy.",
+   s2:"Yes, she was. She was worried, but she was very calm. I love my mom!"},
+  {emoji:"😴", title:"Mengantuk di Kelas", tav:"👨",
+   ctx:"Kemarin kamu tidur terlalu malam karena menonton film.",
+   t1:"You went to bed very late yesterday. Were you sleepy in class?",
+   hint1:"jawab dengan “Yes, I was”",
+   t2:"So what happened to your eyes?",
+   hint2:"sebutkan kata “sleepy” dan “tired”",
+   s1:"Yes, I was. I was so sleepy in class!",
+   s2:"I was tired and sleepy, so my eyes were closed. Sorry, Dad!"},
+  {emoji:"🏆", title:"Juara Kelas", tav:"👧",
+   ctx:"Kemarin namamu diumumkan sebagai juara kelas!",
+   t1:"You were the winner of the class! How were you?",
+   hint1:"coba pakai “happy” atau “proud”",
+   t2:"And your friends? Were they happy for you?",
+   hint2:"jawab dengan “Yes, they were”",
+   s1:"I was very happy and proud. It was the best day!",
+   s2:"Yes, they were! They were excited too, and we celebrated together."}
+];
+
+/* ================= DATA SOAL ================= */
+const CONV_QS = [
+  {type:"Percakapan 📖", q:"How was Cio's Saturday?",
+   opts:["It was boring.","It was great — he was excited about a football match.","It was rainy and sad.","It was lazy at home."],
+   a:1,
+   exp:"Cio berkata, “On Saturday, I was very excited about the football match.” Sabtunya luar biasa! ⚽"},
+  {type:"Percakapan 📖", q:"What was wrong with Cio on Sunday?",
+   opts:["His head was dizzy and his body was hot.","His hands were dirty.","His foot was hurt.","His book was lost."],
+   a:0,
+   exp:"Cio berkata, “My head was dizzy and my body was hot. I had a fever.” Dia demam. 🤒"},
+  {type:"Percakapan 📖", q:"Was Cio scared when he was sick?",
+   opts:["No, he wasn't.","Yes, he was.","Yes, they were.","No, she wasn't."],
+   a:1,
+   exp:"Cio menjawab, “Yes, I was!” Dia memang takut saat sakit."},
+  {type:"Percakapan 📖", q:"Who was with Cio when he was sick?",
+   opts:["His teacher","His friends","His mom — she was calm and kind","Nobody"],
+   a:2,
+   exp:"“But Mom was with me. She was calm and kind.” Ibu ada di sampingnya. 💗"},
+  {type:"Percakapan 📖", q:"How is Cio TODAY?",
+   opts:["He is sick again.","He is sleepy.","He is happy and healthy again.","He was dizzy."],
+   a:2,
+   exp:"Hari ini Cio berkata, “Now I am healthy again!” Karena waktunya SEKARANG, kita pakai am/is/are — bukan was! 💪"}
+];
+
+const QUIZ = [
+  {type:"Lengkapi Kata 📝", q:"Yesterday, I ______ very happy because it was my birthday.",
+   opts:["am","is","was","were"], a:2,
+   exp:"“Yesterday” menandai waktu lalu, dan I berpasangan dengan was: “I was very happy.” 🎂"},
+  {type:"Lengkapi Kata 📝", q:"We ______ tired after the football game last week.",
+   opts:["was","were","is","are"], a:1,
+   exp:"We → were: “We were tired.” Bukan “we was”, ya! 😫"},
+  {type:"Lengkapi Kata 📝", q:"______ you scared of the thunder last night?",
+   opts:["Are","Were","Was","Is"], a:1,
+   exp:"Bertanya perasaan masa lalu untuk you → Were: “Were you scared?” ⛈️"},
+  {type:"Lengkapi Kata 📝", q:"She ______ sad because her balloon flew away.",
+   opts:["were","was","are","is"], a:1,
+   exp:"She → was: “She was sad.” Balonnya terbang, jadi dia sedih. 🎈"},
+  {type:"Lengkapi Kata 📝", q:"They ______ excited about the zoo trip.",
+   opts:["was","were","is","am"], a:1,
+   exp:"They → were: “They were excited.” Mereka bersemangat ke kebun binatang. 🐒"},
+  {type:"Pilih Kalimat ✅", q:"Which sentence is CORRECT?",
+   opts:["We was happy at the party.","We were happy at the party.","I were happy yesterday.","She were sad last night."], a:1,
+   exp:"I/he/she/it → was; you/we/they → were. Jadi “We were happy” ✅."},
+  {type:"Lengkapi Kata 📝", q:"Were you sleepy this morning? Yes, I ______.",
+   opts:["was","were","am","did"], a:0,
+   exp:"Jawaban singkat untuk “Were you...?” adalah “Yes, I was.” — pakai was, bukan were!"},
+  {type:"Arti Kata 🇮🇩", q:"“Excited” artinya...",
+   opts:["bosan","bersemangat","takut","kesepian"], a:1,
+   exp:"excited = bersemangat; bored = bosan; scared = takut; lonely = kesepian. 🎢"},
+  {type:"Eja Kata 🔤", q:"Which is the correct spelling of “berani”?",
+   opts:["brave","braev","breve","brav"], a:0,
+   exp:"Berani dalam bahasa Inggris dieja b-r-a-v-e → brave. 💪"},
+  {type:"Pilih Kalimat ✅", q:"Your friend lost his cat yesterday. What do you ask?",
+   opts:["Are you sad yesterday?","Were you sad yesterday?","Was you sad yesterday?","You was sad yesterday?"], a:1,
+   exp:"Kata penanda “yesterday” → masa lalu, dan subject-nya you → “Were you sad yesterday?” 🐱"}
+];
+
+const FABLE_QS = [
+  {type:"Cerita 🐙", q:"Why was Ollie lonely at the beginning?",
+   opts:["He was too big.","The small fish were scared of his arms.","He had no house.","He was sick."], a:1,
+   exp:"Paragraf 1: “He was lonely because the small fish were scared of his arms.”"},
+  {type:"Cerita 🐙", q:"How was Ollie's heart in the first paragraph?",
+   opts:["It was light.","It was heavy.","It was fast.","It was full."], a:1,
+   exp:"Paragraf 1: “His heart was heavy, and his eyes were wet.” Hatinya berat — dia sedih sekali. 😢"},
+  {type:"Cerita 🐙", q:"What happened to Toto the little fish?",
+   opts:["He was stuck between two rocks.","He was hungry.","He was lost at home.","He was sleeping."], a:0,
+   exp:"Paragraf 2: “Toto the little fish was stuck between two rocks!” Toto terjepit di antara dua batu. 🪨"},
+  {type:"Cerita 🐙", q:"How were Ollie's arms when he helped?",
+   opts:["They were short.","They were weak.","They were strong and quick.","They were wet."], a:2,
+   exp:"“His eight arms were strong and quick.” Lengan Ollie kuat dan cepat, jadi Toto bebas! 💪"},
+  {type:"Cerita 🐙", q:"How did Ollie feel at the end of the story?",
+   opts:["He was still lonely.","He was angry.","He was proud and happy.","He was scared."], a:2,
+   exp:"“Ollie was proud, and his heart was light.” Sekarang dia bangga dan bahagia — tidak kesepian lagi! 🐙✨"}
+];
+
+/* ================= SUARA (TEXT TO SPEECH) ================= */
+let voices = [];
+let muted = false;
+function loadVoices(){
+  if(!('speechSynthesis' in window)) return;
+  voices = speechSynthesis.getVoices().filter(function(v){ return /^en/i.test(v.lang); });
+}
+if('speechSynthesis' in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+let readToken = 0, playBtn = null;
+function resetReader(){
+  if(playBtn){
+    playBtn.textContent = playBtn.dataset.orig;
+    playBtn.classList.remove('playing');
+    playBtn = null;
+  }
+}
+function speak(text){
+  if(muted || !('speechSynthesis' in window)) return;
+  readToken++; resetReader();
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+  if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+  speechSynthesis.speak(u);
+}
+function readSeq(btn){
+  readToken++;
+  const myId = readToken;
+  if(playBtn === btn){ speechSynthesis.cancel(); resetReader(); return; }
+  speechSynthesis.cancel(); resetReader();
+  const cont = btn.closest('.read-container');
+  if(!cont) return;
+  const texts = Array.from(cont.querySelectorAll('.saybtn[data-say]')).map(function(b){ return b.dataset.say; });
+  if(!texts.length) return;
+  playBtn = btn; btn.classList.add('playing'); btn.textContent = '⏹ Berhenti';
+  let i = 0;
+  (function next(){
+    if(myId !== readToken) return;
+    if(i >= texts.length){ readToken++; resetReader(); return; }
+    const u = new SpeechSynthesisUtterance(texts[i++]);
+    u.lang = 'en-US'; u.rate = 0.85; u.pitch = 1.05;
+    if(voices.length) u.voice = voices.find(function(v){ return /en[-_]US/i.test(v.lang); }) || voices[0];
+    u.onend = next;
+    u.onerror = function(){ if(myId === readToken){ readToken++; resetReader(); } };
+    speechSynthesis.speak(u);
+  })();
+}
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[data-say]');
+  if(el) speak(el.dataset.say);
+});
+
+/* ================= NAVIGASI SLIDE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+let cur = 0;
+function show(i){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach(function(s, k){ s.classList.toggle('active', k === cur); });
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+  document.getElementById('progressFill').style.width = ((cur + 1) / slides.length * 100) + '%';
+  document.getElementById('prevBtn').disabled = (cur === 0);
+  document.getElementById('nextBtn').disabled = (cur === slides.length - 1);
+  window.scrollTo({top:0, behavior:'smooth'});
+  closeMenu();
+}
+function goTo(i){ show(i); }
+function nextSlide(){ show(cur + 1); }
+function prevSlide(){ show(cur - 1); }
+document.addEventListener('keydown', function(e){
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.key === 'ArrowRight' || e.key === 'PageDown') nextSlide();
+  if(e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+});
+
+/* ================= MENU SLIDE ================= */
+function openMenu(){ document.getElementById('menuOverlay').classList.add('open'); }
+function closeMenu(){ document.getElementById('menuOverlay').classList.remove('open'); }
+const menuList = document.getElementById('menuList');
+slides.forEach(function(s, i){
+  const b = document.createElement('button');
+  b.className = 'menu-item';
+  b.innerHTML = '<span class="n">' + (i + 1) + '</span> ' + (s.dataset.title || ('Slide ' + (i + 1)));
+  b.onclick = function(){ show(i); };
+  menuList.appendChild(b);
+});
+document.getElementById('menuOverlay').addEventListener('click', function(e){
+  if(e.target === this) closeMenu();
+});
+
+/* ================= TOMBOL SUARA ================= */
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', function(){
+  muted = !muted;
+  muteBtn.textContent = muted ? '🔇 Suara OFF' : '🔈 Suara ON';
+  if(muted){ speechSynthesis.cancel(); readToken++; resetReader(); }
+});
+
+/* ================= RENDER PERCAKAPAN ================= */
+function fmt(t){
+  return t.replace(/\*(.+?)\*/g, function(m, w){
+    return '<b class="tw" data-say="' + w + '">' + w + '</b>';
+  });
+}
+function plain(t){ return t.replace(/\*/g, ''); }
+function linesHtml(d){
+  return d.lines.map(function(l){
+    const side = l.s === 0 ? '' : ' right';
+    const bub = l.s === 0 ? 'b-b' : 'b-p';
+    return '<div class="line' + side + '"><span class="who">' + d.av[l.s] + '</span>' +
+      '<div class="bubble ' + bub + '"><span class="name">' + d.who[l.s] + '</span>' +
+      '<span class="line-en">' + fmt(l.text) + '</span></div>' +
+      '<button class="mini saybtn" data-say="' + plain(l.text) + '">🔊</button></div>';
+  }).join('');
+}
+function renderDialogueTabs(){
+  const panels = document.getElementById('dlgPanels');
+  const btns = document.getElementById('dlgTabBtns');
+  DIALOGUES.forEach(function(d, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#dp' + i;
+    pb.textContent = d.emoji + ' ' + d.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'dp' + i;
+    panel.innerHTML = '<div class="read-container"><button class="btn primary readall" style="margin-bottom:12px">▶ Baca Percakapan</button><div class="dialogue">' + linesHtml(d) + '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function renderSituations(){
+  const panels = document.getElementById('sitPanels');
+  const btns = document.getElementById('sitTabBtns');
+  SITUATIONS.forEach(function(s, i){
+    const pb = document.createElement('button');
+    pb.className = 'tabbtn' + (i === 0 ? ' active' : '');
+    pb.dataset.target = '#sp' + i;
+    pb.textContent = s.emoji + ' ' + (i + 1) + '. ' + s.title;
+    btns.appendChild(pb);
+    const panel = document.createElement('div');
+    panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'sp' + i;
+    panel.innerHTML =
+      '<div class="card sit-card">' +
+      '<h3>' + s.emoji + ' Situasi ' + (i + 1) + ': ' + s.title + '</h3>' +
+      '<p class="ctx">🎬 ' + s.ctx + '</p>' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t1 + '”</div><button class="mini saybtn" data-say="' + s.t1 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 1 <small>(' + s.hint1 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'a" placeholder="Tulis kalimatmu di sini..." autocomplete="off">' +
+      '<div class="tutor-line"><span class="tav">' + s.tav + '</span><div class="bubble b-o"><span class="name">Tutor</span>“' + s.t2 + '”</div><button class="mini saybtn" data-say="' + s.t2 + '">🔊</button></div>' +
+      '<label class="turn">✍️ Giliranmu 2 <small>(' + s.hint2 + ')</small></label>' +
+      '<input class="st-input" id="s' + i + 'b" placeholder="Tulis balasanmu di sini..." autocomplete="off">' +
+      '<button class="btn ghost" onclick="revealSit(' + i + ')">💡 Lihat Contoh Jawaban</button>' +
+      '<div class="sample" id="sample' + i + '" style="display:none">' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t1 + '” → Kamu: <b>“' + s.s1 + '”</b></span><button class="mini saybtn" data-say="' + s.s1 + '">🔊</button></div>' +
+      '<div><span>' + s.tav + ' Tutor: “' + s.t2 + '” → Kamu: <b>“' + s.s2 + '”</b></span><button class="mini saybtn" data-say="' + s.s2 + '">🔊</button></div>' +
+      '<div class="starmsg" id="star' + i + '"></div>' +
+      '</div></div>';
+    panels.appendChild(panel);
+  });
+}
+function revealSit(i){
+  document.getElementById('sample' + i).style.display = 'flex';
+  const a = document.getElementById('s' + i + 'a').value.trim();
+  const b = document.getElementById('s' + i + 'b').value.trim();
+  const st = document.getElementById('star' + i);
+  st.textContent = (a && b) ? '⭐ Hebat! Kamu sudah berani berbicara bahasa Inggris!' : '💪 Ayo isi jawabanmu dulu, lalu bandingkan dengan contoh!';
+}
+
+/* ================= RENDER SOAL PILIHAN GANDA ================= */
+function renderMC(mountId, list, opt){
+  opt = opt || {};
+  const mount = document.getElementById(mountId);
+  let answered = 0, correct = 0;
+  list.forEach(function(item, idx){
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    const optsHtml = item.opts.map(function(o, i){
+      return '<button class="opt" data-i="' + i + '"><span class="letter">' + 'ABCD'[i] + '.</span><span>' + o + '</span></button>';
+    }).join('');
+    card.innerHTML =
+      '<div class="q-head"><span class="q-num">' + (idx + 1) + '</span>' +
+      (item.type ? '<span class="q-type">' + item.type + '</span>' : '') +
+      '<span class="q-result"></span></div>' +
+      '<div class="q-text">' + item.q + '</div>' +
+      '<div class="opts">' + optsHtml + '</div>' +
+      '<button class="btn check" disabled>Cek Jawaban ✅</button>' +
+      '<div class="pembahasan" style="display:none"><b>💡 Pembahasan:</b> ' + item.exp + '</div>';
+    let picked = null, done = false;
+    card.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(done) return;
+        card.querySelectorAll('.opt').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        picked = parseInt(btn.dataset.i, 10);
+        card.querySelector('.check').disabled = false;
+      });
+    });
+    card.querySelector('.check').addEventListener('click', function(){
+      if(picked === null || done) return;
+      done = true; answered++;
+      const right = item.a;
+      card.querySelectorAll('.opt').forEach(function(b){
+        b.disabled = true;
+        if(parseInt(b.dataset.i, 10) === right) b.classList.add('correct');
+        else if(parseInt(b.dataset.i, 10) === picked) b.classList.add('wrong');
+      });
+      const ok = (picked === right);
+      if(ok) correct++;
+      const res = card.querySelector('.q-result');
+      res.textContent = ok ? 'Benar! 🎉' : 'Belum tepat 😅';
+      res.style.color = ok ? 'var(--green)' : 'var(--red)';
+      card.querySelector('.pembahasan').style.display = 'block';
+      card.querySelector('.check').disabled = true;
+      if(opt.onAnswer) opt.onAnswer(answered, correct, list.length, ok);
+    });
+    mount.appendChild(card);
+  });
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tabs').forEach(function(tg){
+  tg.addEventListener('click', function(e){
+    const btn = e.target.closest('.tabbtn');
+    if(!btn) return;
+    const wrap = tg.closest('.tab-wrap');
+    wrap.querySelectorAll('.tabbtn').forEach(function(b){ b.classList.remove('active'); });
+    wrap.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    btn.classList.add('active');
+    wrap.querySelector(btn.dataset.target).classList.add('active');
+  });
+});
+
+/* ================= REFLEKSI ================= */
+document.querySelectorAll('.refl').forEach(function(b){
+  b.addEventListener('click', function(){
+    const m = document.getElementById('reflMsg');
+    m.textContent = b.dataset.msg;
+    m.style.display = 'block';
+  });
+});
+
+/* ================= CONFETTI ================= */
+function confetti(n){
+  n = n || 90;
+  const colors = ['#f43f5e','#f59e0b','#10b981','#3b82f6','#8b5cf6','#ec4899'];
+  for(let k = 0; k < n; k++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (Math.random() * 100) + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (2.2 + Math.random() * 1.8) + 's';
+    c.style.animationDelay = (Math.random() * 0.6) + 's';
+    const size = (7 + Math.random() * 8) + 'px';
+    c.style.width = size; c.style.height = size;
+    if(Math.random() < 0.5) c.style.borderRadius = '50%';
+    document.body.appendChild(c);
+    setTimeout(function(){ c.remove(); }, 5400);
+  }
+}
+
+/* ================= INISIALISASI ================= */
+document.getElementById('mainDialog').innerHTML = linesHtml(MAIN);
+renderDialogueTabs();
+renderSituations();
+renderMC('convQs', CONV_QS);
+renderMC('quizQs', QUIZ, {
+  onAnswer: function(ans, corr, total){
+    document.getElementById('quizScore').textContent = corr;
+    document.getElementById('quizDone').textContent = 'Terjawab: ' + ans + '/' + total;
+    if(ans === total){
+      const fb = document.getElementById('finalBanner');
+      let msg;
+      if(corr === total) msg = '🏆 SEMPURNA! Kamu jenius was & were!';
+      else if(corr >= 8) msg = '🌟 HEBAT! Sedikit lagi sempurna!';
+      else if(corr >= 6) msg = '👍 BAGUS! Terus berlatih ya!';
+      else msg = '💪 Jangan menyerah! Ayo pelajari lagi materinya!';
+      fb.innerHTML = '<div>' + msg + '</div><div class="fscore">Skor akhir: ' + corr + '/' + total + '</div>';
+      fb.style.display = 'block';
+      confetti();
+    }
+  }
+});
+renderMC('fableQs', FABLE_QS);
+document.querySelectorAll('.readall').forEach(function(b){
+  b.dataset.orig = b.textContent;
+  b.addEventListener('click', function(){ readSeq(b); });
+});
+document.getElementById('prevBtn').addEventListener('click', prevSlide);
+document.getElementById('nextBtn').addEventListener('click', nextSlide);
+show(0);
+</script>
+</body>
+</html>
